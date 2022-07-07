@@ -1,0 +1,5 @@
+node_modules
+coverage
+__snapshots__
+generated/*
+dmmf.json
