@@ -1,4 +1,5 @@
 import { fakePrismaSchema } from '@/tests/fakePrismaSchema';
+import { fakePrismaSchemaSimple } from '@/tests/fakePrismaSchemaSimple';
 import { DMMF } from '@prisma/generator-helper';
 import * as PrismaSDK from '@prisma/sdk'
 import generateInputs from '.';
