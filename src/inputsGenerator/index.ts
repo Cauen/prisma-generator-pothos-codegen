@@ -55,6 +55,14 @@ const Json = builder.scalarType('Json', {
   },
 });
 
+const Bigint = builder.scalarType('BigInt', {
+  serialize: (val) => (val).toString(),
+  parseValue: (val) => {
+    if (typeof val !== 'string' && typeof val !== 'number') throw new Error("This is not parsable to bigint")
+    return BigInt(val)
+  },
+});
+
 const NEVER = builder.scalarType('NEVER', {
   serialize: (value) => value,
   description: "Never fill this, its created for inputs that dont have fields"
@@ -84,7 +92,11 @@ const NEVER = builder.scalarType('NEVER', {
             return `t.${fLLower(fieldType)}(${JSON.stringify(props)})`
           } else {
             const removeQuotationMarksFromType = (str: string) => str.replace(/(type.+:)"(.+)"/, '$1$2')
-            const fieldType = isList ? `[${type}]` : type.toString()
+            const renamedType = (() => {
+              if (type === "BigInt") return "Bigint" // BigInt is reserved
+              return type
+            })()
+            const fieldType = isList ? `[${renamedType}]` : renamedType.toString()
             const relationProps = { ...props, type: fieldType }
             // "type":"CommentUncheckedCreateNestedManyWithoutAuthorInput"} -> "type":CommentUncheckedCreateNestedManyWithoutAuthorInput}
             return `t.field(${removeQuotationMarksFromType(JSON.stringify(relationProps))})`

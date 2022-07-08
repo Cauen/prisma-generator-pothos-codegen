@@ -86,6 +86,7 @@ model WithScalars {
   int      Int?
   float    Float?
   decimal  Decimal?
+  bigint   BigInt?
   datetime DateTime? @db.Timestamp(6)
   json     Json?
   bytes    Bytes?

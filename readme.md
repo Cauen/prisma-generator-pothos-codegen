@@ -52,3 +52,6 @@ builder.queryFields((t) => ({
 # Disclosures
 ## Models with only relations
 - We create a custom scalar `NEVER` that avoids this error: `Input Object type FollowUpdateManyMutationInput must define one or more fields.` from Graphql. if you have models that are relations-only. Like N-N fields without `no relation fields` or id-only models, we set field `_` of some operations to this scalar. If you fill this fake property, the operation will result in a error.
+
+## BigInt rename
+- As `BigInt` is reserved, we export `Bigint` for the BigInt scalar.
