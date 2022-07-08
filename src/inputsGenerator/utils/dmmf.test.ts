@@ -27,38 +27,68 @@ describe('getMainInput', () => {
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
     const list: InputType[] = [
       {
-        "type": "IntFilter",
-        "namespace": "prisma",
-        "location": "inputObjectTypes",
-        "isList": false
+        type: "IntFilter",
+        namespace: "prisma",
+        location: "inputObjectTypes",
+        isList: false
       },
       {
-        "type": "Int",
-        "location": "scalar",
-        "isList": false
+        type: "Int",
+        location: "scalar",
+        isList: false
       }
     ]
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
     expect(getMainInput().priorizeNotScalar(list)?.namespace).toBe('prisma')
     const list2: InputType[] = [
       {
-        "type": "DateTimeNullableWithAggregatesFilter",
-        "namespace": "prisma",
-        "location": "inputObjectTypes",
-        "isList": false
+        type: "DateTimeNullableWithAggregatesFilter",
+        namespace: "prisma",
+        location: "inputObjectTypes",
+        isList: false
       },
       {
-        "type": "DateTime",
-        "location": "scalar",
-        "isList": false
+        type: "DateTime",
+        location: "scalar",
+        isList: false
       },
       {
-        "type": "Null",
-        "location": "scalar",
-        "isList": false
+        type: "Null",
+        location: "scalar",
+        isList: false
       }
     ]
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
     expect(getMainInput().priorizeNotScalar(list2)?.namespace).toBe('prisma')
+  })
+
+  test('should priorize json', () => {
+    const list: InputType[] = [
+      {
+        type: "Json",
+        location: "scalar",
+        isList: false
+      },
+      {
+        type: "Null",
+        location: "scalar",
+        isList: false
+      }
+    ]
+    expect(getMainInput().priorizeJson(list)?.type).toBe('Json')
+    const list2: InputType[] = [
+      {
+        type: "NullableJsonNullValueInput",
+        namespace: "prisma",
+        location: "enumTypes",
+        isList: false
+      },
+      {
+        type: "Json",
+        location: "scalar",
+        isList: false
+      }
+    ]
+    expect(getMainInput().priorizeJson(list2)?.type).toBe('Json')
   })
 })

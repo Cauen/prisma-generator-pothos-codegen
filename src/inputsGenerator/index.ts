@@ -14,17 +14,47 @@ export default async function generateInputs(dmmf: DMMF.Document): Promise<strin
   const header = `import { Prisma } from "../prisma/client"
 import { builder } from "./builder"`
   const scalars = `const DateTime = builder.scalarType('DateTime', {
-  serialize: (value) => new Date(value).toISOString(),
+  parseValue(value) {
+    const isDateParsable = typeof value === 'string' || typeof value === 'number'
+    if (!isDateParsable) throw new Error("DateTime input date")
+    const date = new Date(value)
+    const isInvalidDate = date.toString() === 'Invalid Date'
+    if (isInvalidDate) throw new Error("Invalid input date")
+    return new Date(value)
+  },
+  serialize(value) {
+    return value ? new Date(value) : null;
+  },
 });
+
 const Decimal = builder.scalarType('Decimal', {
-  serialize: (value) => value,
+  serialize: (val) => (val),
+  parseValue: (val) => Number(val),
 });
+
 const Bytes = builder.scalarType('Bytes', {
-  serialize: (value) => value,
+  serialize: (value) => {
+    return value
+  },
+  parseValue: value => {
+    // check type to know how to parse
+    if (Array.isArray(value)) {
+      return Buffer.from(value)
+    }
+    if (typeof value === "string") {
+      return Buffer.from(value, 'utf8')
+    }
+
+    throw new Error("Bytes must be string or array")
+  }
 });
+
 const Json = builder.scalarType('Json', {
-  serialize: (value) => value,
+  serialize: (value) => {
+    return value
+  },
 });
+
 const NEVER = builder.scalarType('NEVER', {
   serialize: (value) => value,
   description: "Never fill this, its created for inputs that dont have fields"
@@ -38,14 +68,14 @@ const NEVER = builder.scalarType('NEVER', {
     const inputName = input.name
     const fields = (() => {
       if (!input.fields.length) return `_: t.field({type: NEVER}),`
-      const fieldsString =  input.fields.map(field => {
+      const fieldsString = input.fields.map(field => {
         const props = { required: field.isRequired, description: undefined }
         const input = getMainInput().run(field.inputTypes)
         if (!field.inputTypes[0]?.isList && !field.inputTypes[1]?.isList) debugLog(field)
         const { isList, type, location } = input!
         const defaultScalarList = ['String', 'Int', 'Float', 'Boolean']
         const isScalar = location === "scalar" && defaultScalarList.includes(type.toString())
-  
+
         const key = field.name
         const value = (() => {
           if (isScalar) {
@@ -71,7 +101,7 @@ export const ${inputName} = builder.inputRef<Prisma.${inputName}>('${inputName}'
   })
 })`
   })
-  const text = [header, '', scalars, ...enumString, ...inputsString].join('\n')
+  const text = [header, '', scalars, '', ...enumString, ...inputsString].join('\n')
 
   const written = await write(text)
 

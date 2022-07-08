@@ -8,6 +8,14 @@ export type InputType = DMMF.SchemaArgInputType
  */
 export function getMainInput() {
   // If one list, priorize it
+  const priorizeJson = (inputs: InputType[]) => {
+    const listInputs = inputs.find(el => el.type === "Json")
+    if (listInputs) {
+      return listInputs
+    }
+  }
+
+  // If one list, priorize it
   const priorizeList = (inputs: InputType[]) => {
     const listInputs = inputs.filter(el => el.isList)
     const exactlyOneIsList = listInputs.length === 1
@@ -31,6 +39,9 @@ export function getMainInput() {
     const second = inputs[1]
     if (first && !second) return first
 
+    const isJsonPriority = priorizeJson(inputs)
+    if (isJsonPriority) return isJsonPriority
+
     const isListPriority = priorizeList(inputs)
     if (isListPriority) return isListPriority
 
@@ -42,6 +53,7 @@ export function getMainInput() {
 
   return {
     run,
+    priorizeJson,
     priorizeNotScalar,
     priorizeList,
   }
