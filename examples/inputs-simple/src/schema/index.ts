@@ -1,15 +1,23 @@
-import SchemaBuilder from '@pothos/core';
-import PrismaPlugin from '@pothos/plugin-prisma';
-import { db } from '../db';
-import { Scalars } from '../../../../src/inputsGenerator/types'
+import { builder } from "./builder";
+import './user'
+import './objects' // rest example
 
-export const builder = new SchemaBuilder<{
-  Scalars: Scalars,
-}>({
-  plugins: [PrismaPlugin],
-  prisma: {
-    client: db,
-  },
+builder.queryType({
+  fields: (t) => ({
+    // testQuery: t.field({
+    //   type: 'String',
+    //   resolve: () => "Ok",
+    // })
+  }),
+});
+
+builder.mutationType({
+  fields: (t) => ({
+    // testMutation: t.field({
+    //   type: 'String',
+    //   resolve: () => "Ok",
+    // })
+  }),
 });
 
 export const schema = builder.toSchema({});

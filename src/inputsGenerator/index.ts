@@ -4,9 +4,9 @@ import { fLLower } from "./utils/string";
 import { DMMF } from '@prisma/generator-helper';
 import { getMainInput, getUsedScalars } from './utils/dmmf';
 import { getScalarsFromConfigs } from './scalars';
+import { Configs } from '..';
 
-export default async function generateInputs(dmmf: DMMF.Document): Promise<string> {
-  console.log("GENERATING")
+export default async function generateInputs(dmmf: DMMF.Document, configs: Configs): Promise<string> {
   const inputs = dmmf.schema.inputObjectTypes.prisma
   const enums = [...dmmf.schema.enumTypes.prisma, ...dmmf.datamodel.enums.map(el => ({ ...el, values: el.values.map(el => el.name) }))]
 
@@ -28,7 +28,6 @@ import { builder } from "./builder"`
       const fieldsString = input.fields.map(field => {
         const props = { required: field.isRequired, description: undefined }
         const input = getMainInput().run(field.inputTypes)
-        if (!field.inputTypes[0]?.isList && !field.inputTypes[1]?.isList) debugLog(field)
         const { isList, type, location } = input!
         const defaultScalarList = ['String', 'Int', 'Float', 'Boolean']
         const isScalar = location === "scalar" && defaultScalarList.includes(type.toString())
@@ -64,7 +63,7 @@ export const ${inputName} = builder.inputRef<Prisma.${inputName}>('${inputName}'
   })
   const text = [header, '', scalars, '', ...enumString, ...inputsString].join('\n')
 
-  const written = await write(text)
+  const written = await write(text, configs.output?.value)
 
   return written
 }

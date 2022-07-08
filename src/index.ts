@@ -1,7 +1,9 @@
-import { generatorHandler } from '@prisma/generator-helper';
+import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
+import { debugLog } from './inputsGenerator/utils/filesystem';
 
-export type Options = { inputsOutput?: string }
+export type ConfigsExtra = { inputsOutput?: string }
+export type Configs = ConfigsExtra & { output: GeneratorConfig['output'] }
 
 generatorHandler({
   onManifest: () => ({
@@ -9,8 +11,10 @@ generatorHandler({
     requiresGenerators: ['prisma-client-js'],
   }),
   onGenerate: async (options) => {
-    const config = options.generator.config as Options
+    const config = options.generator.config
+    const configs: Configs = { ...config, output: options.generator.output }
+    debugLog(configs)
 
-    await generateInputs(options.dmmf)
+    await generateInputs(options.dmmf, configs)
   }
 });

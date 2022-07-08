@@ -15,7 +15,7 @@ export const write = async (content: any, filePath = './generated/inputs.ts') =>
   return new Promise<string>((resolve, reject) => {
     return writeFile(filePath, parsedContent, (err) => {
       if (err) {
-        console.log({ err })
+        debugLog({ writeFileError: err })
         reject(err);
       } else {
         resolve(content);
