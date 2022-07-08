@@ -16,7 +16,7 @@ export function getMainInput() {
     }
   }
 
-  // If two, priorize not scalar
+  // If not list, priorize not scalar
   const priorizeNotScalar = (inputs: InputType[]) => {
     const listInputs = inputs.filter(el => el.isList)
     const exactlyOneIsList = listInputs.length === 0
@@ -37,7 +37,7 @@ export function getMainInput() {
     const isNotScalarPriority = priorizeNotScalar(inputs)
     if (isNotScalarPriority) return isNotScalarPriority
 
-    return inputs[0]!
+    return first
   }
 
   return {

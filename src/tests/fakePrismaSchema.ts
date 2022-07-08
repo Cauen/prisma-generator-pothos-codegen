@@ -66,6 +66,10 @@ model Unrelated {
   name String?
 }
 
+model IdOnly {
+  id   Int     @id @default(autoincrement())
+}
+
 model WithoutID {
   name String @unique
 }
