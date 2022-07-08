@@ -1,5 +1,11 @@
-import { existsSync, mkdirSync, mkdir, writeFile, access } from 'fs';
+import { existsSync, mkdirSync, mkdir, writeFile, appendFile, access } from 'fs';
 import * as path from 'path'
+
+export const debugLog = (value: any, timestamp?: boolean) => {
+  appendFile('log.txt', `${timestamp ? `${new Date().toISOString()}: ` : ''}${JSON.stringify(value)},\n`, (err) => {
+    if (err) throw err;
+  })
+}
 
 export const write = async (content: any, filePath = './generated/inputs.ts') => {
   const parsedContent = (typeof content === "string") ? content : JSON.stringify(content, null, 2);

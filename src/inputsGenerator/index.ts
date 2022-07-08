@@ -1,7 +1,8 @@
 import { dmmf } from '@prisma/client';
-import { write } from './utils/filesystem'
+import { debugLog, write } from './utils/filesystem'
 import { fLLower } from "./utils/string";
 import { DMMF } from '@prisma/generator-helper';
+import { getMainInput } from './utils/dmmf';
 
 export default async function generateInputs(dmmf: DMMF.Document): Promise<string> {
   console.log("GENERATING")
@@ -12,7 +13,7 @@ export default async function generateInputs(dmmf: DMMF.Document): Promise<strin
 
   const header = `import { Prisma } from "../prisma/client"
 import { builder } from "./builder"`
-const scalars = `const DateTime = builder.scalarType('DateTime', {
+  const scalars = `const DateTime = builder.scalarType('DateTime', {
   serialize: (date) => new Date(date).toISOString(),
 });
 const Decimal = builder.scalarType('Decimal', {
@@ -33,8 +34,8 @@ const Json = builder.scalarType('Json', {
     const inputName = input.name
     const fields = input.fields.map(field => {
       const props = { required: field.isRequired, description: undefined }
-      const input = field.inputTypes.length > 1 ? field.inputTypes.find(el => el.location === "scalar") || field.inputTypes[0] : field.inputTypes[0]
-      if (field.inputTypes.length > 1) console.log(field.inputTypes.length)
+      const input = getMainInput().run(field.inputTypes)
+      if (!field.inputTypes[0]?.isList && !field.inputTypes[1]?.isList) debugLog(field)
       const { isList, type, location } = input!
       const defaultScalarList = ['String', 'Int', 'Float', 'Boolean']
       const isScalar = location === "scalar" && defaultScalarList.includes(type.toString())

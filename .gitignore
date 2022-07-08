@@ -3,3 +3,5 @@ coverage
 __snapshots__
 generated/*
 dmmf.json
+log.txt
+yarn*.log
