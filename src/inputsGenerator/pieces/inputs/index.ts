@@ -1,12 +1,18 @@
 import { getMainInput } from "./utils/dmmf"
 import { fLLower } from "./utils/string"
 import { DMMF } from '@prisma/generator-helper';
+import { Configs } from "@/generator";
 
-export const getInputs = (dmmf: DMMF.Document) => {
+export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Configs }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma
+  const { excludeInputs } = configs  
 
   const inputsStrings = inputs.map(input => {
     const inputName = input.name
+    if (excludeInputs?.includes(inputName)) {
+      return `// ${inputName} was excluded from configs.excludeInputs`
+    }
+
     const fields = (() => {
       if (!input.fields.length) return `_: t.field({type: NEVER}),`
       const fieldsString = input.fields.map(field => {
