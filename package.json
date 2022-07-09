@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-pothos-codegen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A prisma generator that generate input types for Pothos",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -27,6 +27,7 @@
     "test": "jest",
     "build": "tsc",
     "prebuild": "yarn clean",
+    "postbuild": "yarn copyfiles ./readme.md ./dist",
     "clean": "rimraf dist",
     "pub": "cd dist && npm publish"
   },
@@ -39,6 +40,7 @@
     "@prisma/client": "3.12",
     "@prisma/sdk": "3.12",
     "@types/fs-extra": "^9.0.13",
+    "copyfiles": "^2.4.1",
     "graphql": "^16.5.0",
     "prisma": "3.12",
     "ts-node": "^10.8.2",
