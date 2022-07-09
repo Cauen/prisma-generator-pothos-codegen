@@ -88,9 +88,9 @@ The generator currently supports a few options:
 | excludeScalars        | undefined                               | String list of scalars to be not generated, ie: ['DateTime']                                         |
 
 The tested environments:
-| **Prisma Version** | **Database** | **State** |
-|--------------------|--------------|-----------|
-| 3.12               | Postgres     | ✅         |
+| **Prisma Version** | **Database**      | **State** |
+|--------------------|-------------------|-----------|
+| 3.12 - 4.00        | Postgres - Sqlite | ✅        |
 
 
 ### Example

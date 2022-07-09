@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "lib": ["es2021"],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@prisma-generator-pothos-codegen": [
+        "../../src/*"
+      ],
+    },
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
