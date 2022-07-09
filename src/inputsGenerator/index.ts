@@ -3,7 +3,7 @@ import { debugLog, write } from './utils/filesystem'
 import { fLLower } from "./utils/string";
 import { DMMF } from '@prisma/generator-helper';
 import { getMainInput, getUsedScalars } from './utils/dmmf';
-import { getScalarsFromConfigs } from './scalars';
+import { getScalarsToExport } from './scalars';
 import { Configs } from '../generator';
 
 export default async function generateInputs(dmmf: DMMF.Document, configs: Configs): Promise<string> {
@@ -14,8 +14,7 @@ export default async function generateInputs(dmmf: DMMF.Document, configs: Confi
 
   const header = `${configs.inputsPrismaImporter || `import { Prisma } from ".prisma/client"`}
 ${configs.inputsBuilderImporter || `import { builder } from "./builder"`}`
-  const exportedScalars = getUsedScalars(dmmf.schema.inputObjectTypes.prisma)
-  const scalars = getScalarsFromConfigs(exportedScalars)
+  const scalars = getScalarsToExport({ inputs, excludeScalars: configs.excludeScalars })
   const enumString = enums.map(el => {
     return `export const ${el.name} = builder.enumType('${el.name}', {
   values: ${JSON.stringify(el.values)} as const,

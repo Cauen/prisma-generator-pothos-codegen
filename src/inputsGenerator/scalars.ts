@@ -1,4 +1,5 @@
-import { ScalarExportConfigs } from "./utils/dmmf"
+import { getUsedScalars, ScalarExportConfigs } from "./utils/dmmf"
+import { DMMF } from '@prisma/generator-helper';
 
 const dateTimeScalar = `const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
@@ -55,14 +56,25 @@ const neverScalar = `const NEVER = builder.scalarType('NEVER', {
   description: "Never fill this, its created for inputs that dont have fields"
 });`
 
-export const getScalarsFromConfigs = (configs: ScalarExportConfigs): string => {
+const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars: string[]): string => {
+  const isDatetimeExcluded = excludeScalars.includes('DateTime')
+  const isDecimalExcluded = excludeScalars.includes('Decimal')
+  const isBytesExcluded = excludeScalars.includes('Bytes')
+  const isJsonExcluded = excludeScalars.includes('Json')
+  const isBigIntExcluded = excludeScalars.includes('BigInt')
+  const isNeverExcluded = excludeScalars.includes('NEVER')
   const scalars = [
-    ...(configs.hasDateTime ? [dateTimeScalar] : []),
-    ...(configs.hasDecimal ? [decimalScalar] : []),
-    ...(configs.hasBytes ? [bytesScalar] : []),
-    ...(configs.hasJson ? [jsonScalar] : []),
-    ...(configs.hasBigInt ? [bigIntScalar] : []),
-    ...(configs.hasNEVER ? [neverScalar] : []),
+    ...(usedScalars.hasDateTime && !isDatetimeExcluded ? [dateTimeScalar] : []),
+    ...(usedScalars.hasDecimal && !isDecimalExcluded ? [decimalScalar] : []),
+    ...(usedScalars.hasBytes && !isBytesExcluded ? [bytesScalar] : []),
+    ...(usedScalars.hasJson && !isJsonExcluded ? [jsonScalar] : []),
+    ...(usedScalars.hasBigInt && !isBigIntExcluded ? [bigIntScalar] : []),
+    ...(usedScalars.hasNEVER && !isNeverExcluded ? [neverScalar] : []),
   ]
   return scalars.join('\n')
+}
+
+export const getScalarsToExport = ({ excludeScalars, inputs }: { inputs: DMMF.InputType[], excludeScalars: string[] }) => {
+  const used = getUsedScalars(inputs)
+  return getScalarsFromConfigs(used, excludeScalars)
 }

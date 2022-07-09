@@ -5,6 +5,8 @@ import { debugLog } from './inputsGenerator/utils/filesystem';
 export type ConfigsExtra = {
   inputsPrismaImporter?: string
   inputsBuilderImporter?: string
+  excludeInputs?: string[]
+  excludeScalars?: string[]
 }
 export type Configs = ConfigsExtra & { output: GeneratorConfig['output'] }
 
