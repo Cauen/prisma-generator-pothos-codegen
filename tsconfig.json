@@ -5,9 +5,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": false,
@@ -24,11 +22,9 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-    },
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src", "./package.json"],
-  "exclude": ["node_modules", "dist", "*test.ts"]
+  "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts", "src/**/tests/**/*.ts"],
 }
