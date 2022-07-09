@@ -17,6 +17,7 @@ generator pothos {
 generator pothosCrud {
   provider = "ts-node --transpile-only ../../src/index.ts"
   output   = "../src/generated/inputs.ts"
+  inputsBuilderImporter = "import { builder } from \"../schema/builder\";"
 }
 
 model User {

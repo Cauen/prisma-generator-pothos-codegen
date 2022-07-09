@@ -12,8 +12,8 @@ export default async function generateInputs(dmmf: DMMF.Document, configs: Confi
 
   await write(dmmf, 'dmmf.json')
 
-  const header = `import { Prisma } from "../prisma/client"
-import { builder } from "./builder"`
+  const header = `${configs.inputsPrismaImporter || `import { Prisma } from ".prisma/client"`}
+${configs.inputsBuilderImporter || `import { builder } from "./builder"`}`
   const exportedScalars = getUsedScalars(dmmf.schema.inputObjectTypes.prisma)
   const scalars = getScalarsFromConfigs(exportedScalars)
   const enumString = enums.map(el => {

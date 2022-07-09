@@ -2,7 +2,10 @@ import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
 import { debugLog } from './inputsGenerator/utils/filesystem';
 
-export type ConfigsExtra = { inputsOutput?: string }
+export type ConfigsExtra = {
+  inputsPrismaImporter?: string
+  inputsBuilderImporter?: string
+}
 export type Configs = ConfigsExtra & { output: GeneratorConfig['output'] }
 
 generatorHandler({
