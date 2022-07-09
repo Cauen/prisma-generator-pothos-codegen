@@ -12,6 +12,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "pretty": true,
+    "strict": true,
     "removeComments": false,
     "skipLibCheck": false,
     "sourceMap": true,

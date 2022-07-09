@@ -1,5 +1,6 @@
 import { getUsedScalars, ScalarExportConfigs } from "./utils/dmmf"
 import { DMMF } from '@prisma/generator-helper';
+import { Configs } from "@/generator";
 
 const dateTimeScalar = `const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
@@ -56,13 +57,13 @@ const neverScalar = `const NEVER = builder.scalarType('NEVER', {
   description: "Never fill this, its created for inputs that dont have fields"
 });`
 
-const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars: string[]): string => {
-  const isDatetimeExcluded = excludeScalars.includes('DateTime')
-  const isDecimalExcluded = excludeScalars.includes('Decimal')
-  const isBytesExcluded = excludeScalars.includes('Bytes')
-  const isJsonExcluded = excludeScalars.includes('Json')
-  const isBigIntExcluded = excludeScalars.includes('BigInt')
-  const isNeverExcluded = excludeScalars.includes('NEVER')
+const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars?: string[]): string => {
+  const isDatetimeExcluded = excludeScalars?.includes('DateTime')
+  const isDecimalExcluded = excludeScalars?.includes('Decimal')
+  const isBytesExcluded = excludeScalars?.includes('Bytes')
+  const isJsonExcluded = excludeScalars?.includes('Json')
+  const isBigIntExcluded = excludeScalars?.includes('BigInt')
+  const isNeverExcluded = excludeScalars?.includes('NEVER')
   const scalars = [
     ...(usedScalars.hasDateTime && !isDatetimeExcluded ? [dateTimeScalar] : []),
     ...(usedScalars.hasDecimal && !isDecimalExcluded ? [decimalScalar] : []),
@@ -74,7 +75,9 @@ const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars:
   return scalars.join('\n')
 }
 
-export const getScalarsToExport = ({ excludeScalars, inputs }: { inputs: DMMF.InputType[], excludeScalars: string[] }) => {
+export const getScalars = ({ configs, dmmf }: { dmmf: DMMF.Document, configs: Configs }) => {
+  const inputs = dmmf.schema.inputObjectTypes.prisma
   const used = getUsedScalars(inputs)
+  const { excludeScalars } = configs
   return getScalarsFromConfigs(used, excludeScalars)
 }

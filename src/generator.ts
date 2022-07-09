@@ -18,7 +18,6 @@ generatorHandler({
   onGenerate: async (options) => {
     const config = options.generator.config
     const configs: Configs = { ...config, output: options.generator.output }
-    debugLog(configs)
 
     await generateInputs(options.dmmf, configs)
   }
