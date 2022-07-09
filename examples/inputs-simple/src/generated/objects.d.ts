@@ -1,4 +1,4 @@
-import type { Prisma, User, Post, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from "./client";
+import type { Prisma, User, Post, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
 export default interface PrismaTypes {
     User: {
         Name: "User";

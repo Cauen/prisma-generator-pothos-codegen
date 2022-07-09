@@ -12,9 +12,10 @@ export const Comment = builder.prismaObject('Comment', {
 });
 
 export const Follow = builder.prismaObject('Follow', {
-  findUnique: ({ id }) => ({ id: Number.parseInt(String(id || 1), 10) }),
+  findUnique: ({ fromId, toId }) => ({ compositeID: { fromId, toId } }),
   fields: (t) => ({
-    id: t.exposeID('id'),
+    fromId: t.exposeID('fromId'),
+    toId: t.exposeID('toId'),
   }),
 });
 
@@ -54,8 +55,8 @@ export const WithScalars = builder.prismaObject('WithScalars', {
 });
 
 export const WithoutID = builder.prismaObject('WithoutID', {
-  findUnique: ({ id }) => ({ id: Number.parseInt(String(id || 1), 10) }),
+  findUnique: ({ name }) => ({ name }),
   fields: (t) => ({
-    id: t.exposeID('id'),
+    id: t.exposeID('name'),
   }),
 });
