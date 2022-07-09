@@ -13,6 +13,7 @@ export function getMainInput() {
     if (listInputs) {
       return listInputs
     }
+    return undefined
   }
 
   // If one list, priorize it
@@ -22,6 +23,7 @@ export function getMainInput() {
     if (exactlyOneIsList) {
       return listInputs[0]
     }
+    return undefined
   }
 
   // If not list, priorize not scalar
@@ -31,6 +33,7 @@ export function getMainInput() {
     if (exactlyOneIsList) {
       return inputs.find(el => el.location !== 'scalar')
     }
+    return undefined
   }
 
   const run = (inputs: InputType[]): InputType => {

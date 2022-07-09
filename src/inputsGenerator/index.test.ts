@@ -9,7 +9,7 @@ describe('inputsGenerator', () => {
     const dmmf = await PrismaSDK.getDMMF({
       datamodel: fakePrismaSchema,
     })
-    const inputs = await generateInputs(dmmf);
+    const inputs = await generateInputs(dmmf, { output: { value: "/generated/inputs.ts", fromEnvVar: null } });
     expect(inputs).toBeTruthy();
   })
 })

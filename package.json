@@ -1,7 +1,37 @@
 {
-  "version": "0.1.0",
+  "name": "prisma-generator-pothos-codegen",
+  "version": "0.0.1",
+  "description": "A prisma generator that generate input types for Pothos",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "module": "./src/index.js",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cauen/prisma-generator-pothos-codegen.git"
+  },
+  "author": "Emanuel Cauê",
+  "keywords": [
+    "pothos",
+    "graphql",
+    "typescript",
+    "prisma",
+    "db",
+    "postgres",
+    "codegen"
+  ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "prebuild": "yarn clean",
+    "clean": "rimraf dist",
+    "pub": "cd dist && npm publish"
+  },
+  "bin": {
+    "prisma-generator-pothos-codegen": "./src/bin.js"
   },
   "devDependencies": {
     "@pothos/core": "^3.12.2",

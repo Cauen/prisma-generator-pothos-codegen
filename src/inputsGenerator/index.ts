@@ -4,7 +4,7 @@ import { fLLower } from "./utils/string";
 import { DMMF } from '@prisma/generator-helper';
 import { getMainInput, getUsedScalars } from './utils/dmmf';
 import { getScalarsFromConfigs } from './scalars';
-import { Configs } from '..';
+import { Configs } from '../generator';
 
 export default async function generateInputs(dmmf: DMMF.Document, configs: Configs): Promise<string> {
   const inputs = dmmf.schema.inputObjectTypes.prisma

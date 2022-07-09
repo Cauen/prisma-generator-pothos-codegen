@@ -1,23 +1,34 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "target": "es6",
+    "experimentalDecorators": false,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "esnext"
+    ],
+    "module": "commonjs",
     "moduleResolution": "node",
+    "noEmitOnError": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "removeComments": false,
+    "skipLibCheck": false,
     "sourceMap": true,
     "outDir": "dist",
-    "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
+    "target": "es2019",
+    "composite": true,
+    "resolveJsonModule": true,
+    "declaration": true,
     "baseUrl": ".",
-    "lib": ["es2021"],
     "paths": {
       "@/*": [
         "src/*"
       ],
     },
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "./package.json"],
+  "exclude": ["node_modules", "dist", "*test.ts"]
 }
