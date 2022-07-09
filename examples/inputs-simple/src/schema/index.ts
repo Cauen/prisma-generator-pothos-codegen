@@ -1,23 +1,9 @@
 import { builder } from "./builder";
 import './user'
+import './post'
 import './objects' // rest example
 
-builder.queryType({
-  fields: (t) => ({
-    // testQuery: t.field({
-    //   type: 'String',
-    //   resolve: () => "Ok",
-    // })
-  }),
-});
-
-builder.mutationType({
-  fields: (t) => ({
-    // testMutation: t.field({
-    //   type: 'String',
-    //   resolve: () => "Ok",
-    // })
-  }),
-});
+builder.queryType({});
+builder.mutationType({});
 
 export const schema = builder.toSchema({});

@@ -26,13 +26,6 @@ export const IdOnly = builder.prismaObject('IdOnly', {
   }),
 });
 
-export const Post = builder.prismaObject('Post', {
-  findUnique: ({ id }) => ({ id: Number.parseInt(String(id || 1), 10) }),
-  fields: (t) => ({
-    id: t.exposeID('id'),
-  }),
-});
-
 export const Profile = builder.prismaObject('Profile', {
   findUnique: ({ id }) => ({ id: Number.parseInt(String(id || 1), 10) }),
   fields: (t) => ({
