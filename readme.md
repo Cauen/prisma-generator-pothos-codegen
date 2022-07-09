@@ -49,6 +49,14 @@ builder.queryFields((t) => ({
 
 ```
 
+The generator currently supports a few options
+
+|          Key          |              Default Value              |                                              Description                                             |
+|:---------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------------------:|
+| inputsPrismaImporter  | import { Prisma } from ".prisma/client" | When the file was generated, its needed to import Prisma. Here we can set from where to import.      |
+| inputsBuilderImporter | import { builder } from "./builder"     | When the file was generated, its needed to import the builder. Here we can set from where to import. |
+| output                | /generated/inputs.ts                    | Where the inputs are generated                                                                       |
+
 # Disclosures
 ## Models with only relations
 - We create a custom scalar `NEVER` that avoids this error: `Input Object type FollowUpdateManyMutationInput must define one or more fields.` from Graphql. if you have models that are relations-only. Like N-N fields without `no relation fields` or id-only models, we set field `_` of some operations to this scalar. If you fill this fake property, the operation will result in a error.
