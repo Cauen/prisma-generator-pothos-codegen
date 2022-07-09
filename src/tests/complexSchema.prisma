@@ -1,4 +1,3 @@
-export const fakePrismaSchema = `
 datasource db {
   provider = "postgresql"
   url      = "postgresql://postgres:mysecretpassword@localhost:5432/pothos-tests"
@@ -91,4 +90,3 @@ model WithScalars {
   json     Json?
   bytes    Bytes?
 }
-`
