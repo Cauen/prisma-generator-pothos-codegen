@@ -1,7 +1,13 @@
 # Prisma Generator Pothos Codegen
 This is a prisma generator that auto generate all input types for Crud Operations to Pothos. Use it as args for crud operations.
 
-## Usage
+## Getting Started
+
+### Install
+
+`yarn add prisma-generator-pothos-codegen` or `npm install prisma-generator-pothos-codegen`
+
+### Usage
 
 ```
 generator client {
@@ -48,6 +54,11 @@ builder.queryFields((t) => ({
 }))
 
 ```
+
+### Example
+Check for the [example](/examples/inputs-simple) for a running sample
+![image](https://user-images.githubusercontent.com/8796757/178087266-0a852f43-a7b5-48a0-bc13-a3ece9788457.png)
+
 
 The generator currently supports a few options
 
