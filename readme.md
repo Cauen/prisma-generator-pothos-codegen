@@ -14,6 +14,8 @@ This is a prisma generator that auto generate all input types for Crud Operation
 
 ### Usage
 
+#### Add generator
+
 ```
 generator client {
   provider = "prisma-client-js"
@@ -29,6 +31,21 @@ model User {
   id  String  @id
 }
 ```
+
+#### Add scalar types to builder
+
+```ts
+import { Scalars } from 'prisma-generator-pothos-codegen'
+
+export const builder = new SchemaBuilder<{
+  Scalars: Scalars,
+}>({
+  ...
+});
+```
+
+#### Import inputs from the generated file, and add as args.
+
 ```ts
 import * as Inputs from './generated/inputs'
 
@@ -60,16 +77,20 @@ builder.queryFields((t) => ({
 
 ```
 
-The generator currently supports a few options
+The generator currently supports a few options:
 
 |          Key          |              Default Value              |                                              Description                                             |
-|:---------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------------------:|
+|:----------------------|:----------------------------------------|:-----------------------------------------------------------------------------------------------------|
 | inputsPrismaImporter  | import { Prisma } from ".prisma/client" | When the file was generated, its needed to import Prisma. Here we can set from where to import.      |
 | inputsBuilderImporter | import { builder } from "./builder"     | When the file was generated, its needed to import the builder. Here we can set from where to import. |
 | output                | /generated/inputs.ts                    | Where the inputs are generated                                                                       |
 | excludeInputs         | undefined                               | String list of inputs to be not generated, ie: ['UserCreateInput']                                   |
 | excludeScalars        | undefined                               | String list of scalars to be not generated, ie: ['DateTime']                                         |
 
+The tested environments:
+| **Prisma Version** | **Database** | **State** |
+|--------------------|--------------|-----------|
+| 3.12               | Postgres     | ✅         |
 
 
 ### Example
@@ -82,3 +103,8 @@ Check for the [example](/examples/inputs-simple) for a running sample
 
 ## BigInt rename
 - As `BigInt` is reserved, we export `Bigint` for the BigInt scalar.
+
+# Publishing
+
+- Run `npm run build`
+- Run `npm run pub`
