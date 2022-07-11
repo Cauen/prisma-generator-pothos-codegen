@@ -7,6 +7,15 @@ export const User = builder.prismaObject('User', {
     id: t.exposeID('id'),
     firstName: t.exposeString('firstName'),
     lastName: t.exposeString('lastName'),
+    createdAt: t.field({
+      type: "DateTime",
+      resolve: (parent, args, ctx) => parent.createdAt
+    }),
+    updatedAt: t.field({
+      type: "DateTime",
+      nullable: true,
+      resolve: (parent, args, ctx) => parent.updatedAt
+    }),
     // Computed field
     fullName: t.string({
       resolve: (user, args, ctx, info) => {

@@ -4,13 +4,6 @@ import { builder } from "./builder";
  * Here we defined the rest of the example objects
  */
 
-export const Comment = builder.prismaObject('Comment', {
-  findUnique: ({ id }) => ({ id: Number.parseInt(String(id || 1), 10) }),
-  fields: (t) => ({
-    id: t.exposeID('id'),
-  }),
-});
-
 export const Follow = builder.prismaObject('Follow', {
   findUnique: ({ fromId, toId }) => ({ compositeID: { fromId, toId } }),
   fields: (t) => ({
