@@ -1,6 +1,6 @@
 import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
-import { debugLog } from './inputsGenerator/utils/filesystem';
+import { debugLog } from './utils/filesystem';
 
 export type ConfigsExtra = {
   inputsPrismaImporter?: string
