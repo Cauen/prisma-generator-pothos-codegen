@@ -1,5 +1,8 @@
 import { parseTemplateGlobal } from "@/projectGenerator/utils/parseTemplateGlobal"
 import { ModelGenerateOptions } from ".."
+import { getDescriptionSrc } from "./pieces/description"
+import { getFieldsSrc } from "./pieces/fields"
+import { getFindUniqueSrc } from "./pieces/unique"
 
 const template = `
 // importing builder + inputs
@@ -16,36 +19,20 @@ export const #{model} = builder.prismaObject('#{model}', {
 
 export const getObjectSrc = (options: ModelGenerateOptions): string => {
   const { dmmf, model } = options
+  const dmmfModel = dmmf.datamodel.models.find(m => m.name === model)
+  if (!dmmfModel) return template
+
   const globalParsed = parseTemplateGlobal(template)
-  const parsed1 = globalParsed.replace(/#{model}/g, options.model)
 
-  const findUniqueSrc = (() => {
-    const foundModel = dmmf.datamodel.models.find(m => m.name === model)
-    const idField = foundModel?.fields.find(f => f.isId)
+  const uniqueSrc = getFindUniqueSrc(dmmfModel)
+  const fieldsSrc = getFieldsSrc(dmmfModel)
+  const descriptionSrc = getDescriptionSrc(dmmfModel)
 
-    if (!idField) return undefined
-    return `({ ${idField.name} }) => ({ ${idField.name} })`
-  })()
-  const parsed2 = findUniqueSrc ? parsed1.replace(/#{findUnique}/g, findUniqueSrc) : parsed1
+  const parsed = globalParsed
+    .replace(/#{model}/g, model)
+    .replace(/#{findUnique}/g, uniqueSrc)
+    .replace(/#{fields}/g, fieldsSrc)
+    .replace(/#{description}/g, descriptionSrc)
 
-  const fieldsSrc = (() => { 
-    const foundModel = dmmf.datamodel.models.find(m => m.name === model)
-    if (!foundModel) return undefined
-    const fields = foundModel.fields.map(field => {
-      const fieldType = field.isId ? 'ID' : field.type
-      return `${field.name}: t.expose${fieldType}('${field.name}'),`
-    }).join('\n    ')
-    return fields
-  })()
-  const parsed3 = fieldsSrc ? parsed2.replace(/#{fields}/g, fieldsSrc) : parsed2
-
-  const descriptionSrc = (() => {
-    const foundModel = dmmf.datamodel.models.find(m => m.name === model)
-    if (!foundModel) return undefined
-    const description = foundModel.documentation || undefined
-    return description ? `"${description}"` : 'undefined'
-  })()
-  const parsed4 = descriptionSrc ? parsed3.replace(/#{description}/g, descriptionSrc) : parsed3
-
-  return parsed4
+  return parsed
 }
