@@ -14,7 +14,7 @@ export const #{model} = builder.prismaObject('#{model}', {
 });
 `
 
-export const getObjectSrc = (options: ModelGenerateOptions) => {
+export const getObjectSrc = (options: ModelGenerateOptions): string => {
   const { dmmf, model } = options
   const globalParsed = parseTemplateGlobal(template)
   const parsed1 = globalParsed.replace(/#{model}/g, options.model)
