@@ -13,7 +13,7 @@ export default function generateInputs(dmmf: DMMF.Document, configs: Configs) {
     return dmmf.datamodel.models.map((model) => {
       return `export * from './${model.name}'`
     }).join("\n")
-  })(), `${dirname}/index.ts`)
+  })(), `${dirname}/objects.ts`)
 
   return gen
 }
