@@ -36,9 +36,10 @@ model User {
 
 ```ts
 import { Scalars } from 'prisma-generator-pothos-codegen'
+import { Prisma } from '.prisma/client'
 
 export const builder = new SchemaBuilder<{
-  Scalars: Scalars,
+  Scalars: Scalars<Prisma.Decimal, Prisma.InputJsonValue | null, Prisma.InputJsonValue>,
 }>({
   ...
 });
