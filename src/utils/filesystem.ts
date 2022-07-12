@@ -10,11 +10,13 @@ export const debugLog = (value: any, timestamp?: boolean) => {
   })
 }
 
-export const writeFileSafely = async (content: string, writeLocation: string) => {
+export const writeFileSafely = async (content: string, writeLocation: string, rewrite = true) => {
   debugLog(`Writing to ${writeLocation}`)
 
   try {
     await fsExtra.ensureDir(path.dirname(writeLocation))
+    const ensured = fs.existsSync(writeLocation)
+    if (ensured && !rewrite) return content
     await fsExtra.writeFile(writeLocation, content)
     return content
   } catch (err) {

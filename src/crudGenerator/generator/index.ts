@@ -12,8 +12,8 @@ export default function modelGenerate(options: ModelGenerateOptions) {
   const object = getObjectSrc(options)
 
   const dirname = path.dirname(options.configs.output?.value || "./generated")
-  writeFileSafely(object, `${dirname}/${options.model}/object.ts`)
-  writeFileSafely(`export * from './object'`, `${dirname}/${options.model}/index.ts`)
+  writeFileSafely(object, `${dirname}/${options.model}/object.ts`, false)
+  writeFileSafely(`export * from './object'`, `${dirname}/${options.model}/index.ts`, false)
 
   return {
     object,
