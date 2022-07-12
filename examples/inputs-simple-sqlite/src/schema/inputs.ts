@@ -1,5 +1,5 @@
-import { Prisma } from ".prisma/client"
-  import { builder } from "@/schema/builder";
+import { Prisma } from ".prisma/client";
+import { builder } from "./builder"
 
 const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {

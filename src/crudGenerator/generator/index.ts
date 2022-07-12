@@ -11,7 +11,9 @@ export type ModelGenerateOptions = { dmmf: DMMF.Document, configs: Configs, mode
 export default function modelGenerate(options: ModelGenerateOptions) {
   const object = getObjectSrc(options)
 
-  const dirname = path.dirname(options.configs.crud?.outputPath || "./generated")
+  // ./src/schema -> ./src/schema/User/object.ts +./src/schema/User/index.ts
+  const dirname = options.configs.crud?.outputFolderPath || "./generated"
+
   writeFileSafely(object, `${dirname}/${options.model}/object.ts`, false)
   writeFileSafely(`export * from './object'`, `${dirname}/${options.model}/index.ts`, false)
 

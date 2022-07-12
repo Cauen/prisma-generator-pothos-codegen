@@ -22,6 +22,6 @@ export default async function generateInputs(dmmf: DMMF.Document, configs: Confi
   
   const text = [imports, '', scalars, '', enums, inputs].join('\n')
 
-  const written = writeFileSafely(text, configs.inputs?.outputPath || './generated/inputs.ts')
+  const written = writeFileSafely(text, configs.inputs?.outputFilePath || './generated/inputs.ts')
   return written
 }

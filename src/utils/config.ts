@@ -7,12 +7,12 @@ export type ImportedConfigsOptions = {
     builderImporter?: string
     excludeInputs?: string[]
     excludeScalars?: string[]
-    outputPath?: string
+    outputFilePath?: string
   },
   crud?: {
     inputsImporter?: string
     builderImporter?: string
-    outputPath?: string
+    outputFolderPath?: string
   }
 }
 export type ConfigsOptions = ImportedConfigsOptions

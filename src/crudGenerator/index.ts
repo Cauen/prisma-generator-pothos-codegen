@@ -8,7 +8,7 @@ export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
   const gen = dmmf.datamodel.models.map((model) => {
     return modelGenerate({ configs, dmmf, model: model.name })
   })
-  const dirname = path.dirname(configs.crud?.outputPath || "./generated")
+  const dirname = configs.crud?.outputFolderPath || "./generated"
   writeFileSafely((() => {
     return dmmf.datamodel.models.map((model) => {
       return `export * from './${model.name}'`
