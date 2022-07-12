@@ -1,5 +1,5 @@
 import { dmmf } from '@prisma/client';
-import { debugLog, writeFileSafely } from '../utils/filesystem'
+import { debugLog, replaceAndWriteFileSafely, writeFileSafely } from '../utils/filesystem'
 import { fLLower } from "./pieces/inputs/utils/string";
 import { DMMF } from '@prisma/generator-helper';
 import { getScalars } from './pieces/scalars';
@@ -22,6 +22,6 @@ export default async function generateInputs(dmmf: DMMF.Document, configs: Confi
   
   const text = [imports, '', scalars, '', enums, inputs].join('\n')
 
-  const written = writeFileSafely(text, configs.inputs?.outputFilePath || './generated/inputs.ts')
+  const written = replaceAndWriteFileSafely(configs, 'inputs')(text, configs.inputs?.outputFilePath || './generated/inputs.ts')
   return written
 }

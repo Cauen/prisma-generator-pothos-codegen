@@ -1,13 +1,14 @@
 import { Configs } from "../generator";
 import { DMMF } from '@prisma/generator-helper';
 import modelGenerate from './generator'
-import { writeFileSafely } from "../utils/filesystem";
+import { replaceAndWriteFileSafely } from "../utils/filesystem";
 import path from 'path'
 
-export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
-  const gen = dmmf.datamodel.models.map((model) => {
-    return modelGenerate({ configs, dmmf, model: model.name })
-  })
+/**
+ * - Export all the models
+ * - Export Prisma Objects (BatchPayload)
+ */
+const writeObjects = (dmmf: DMMF.Document, configs: Configs) => {
   const dirname = configs.crud?.outputFolderPath || "./generated"
   const exportedModels = (() => {
     return dmmf.datamodel.models.map((model) => {
@@ -28,8 +29,22 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
   `
 
   const objectsSrc = `${exportedModels}\n\n${batchPayload}`
-  writeFileSafely(objectsSrc, `${dirname}/objects.ts`)
+  replaceAndWriteFileSafely(configs, 'crud.objects')(objectsSrc, `${dirname}/objects.ts`)
+}
 
+/**
+ * This generates:
+ * - All content inside ./src/schema/User/...
+ * - ./src/schema/objects.ts
+ */
+export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
+  // Gerating User, Comment, ...
+  const gen = dmmf.datamodel.models.map((model) => {
+    return modelGenerate({ configs, dmmf, model: model.name })
+  })
+
+  // Generating objects.ts
+  writeObjects(dmmf, configs)
 
   return gen
 }

@@ -1,5 +1,6 @@
 import { ExtendedGeneratorOptions } from "../generator";
 import path from 'path'
+import { ReplacerPosition } from "./filesystem";
 
 export type ImportedConfigsOptions = {
   inputs?: {
@@ -8,6 +9,7 @@ export type ImportedConfigsOptions = {
     excludeInputs?: string[] // default: undefined
     excludeScalars?: string[] // default: undefined
     outputFilePath?: string // path to generate file, from project root
+    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
   },
   crud?: {
     excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
@@ -17,6 +19,10 @@ export type ImportedConfigsOptions = {
     inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
     builderImporter?: string // default: import { builder } from "./builder"
     outputFolderPath?: string // path to generate files, from project root. default: ./generated
+    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
+  },
+  global?: {
+    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
   }
 }
 export type ConfigsOptions = ImportedConfigsOptions
