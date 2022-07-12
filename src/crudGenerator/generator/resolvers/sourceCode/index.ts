@@ -39,7 +39,7 @@ const isExcludedResolver = (options: ModelGenerateOptions, name: string) => {
 
 
 const parseSrc = (template: string, options: ModelGenerateOptions) => {
-  const firstLetterLowercase = (s: string) => s[0].toLowerCase() + s.slice(1)
+  const firstLetterLowercase = (s: string) => s[0]?.toLowerCase() + s.slice(1)
 
   return template
     .replace(/#{model}/g, options.model)

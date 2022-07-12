@@ -3,7 +3,7 @@
  * We receive as generics
  */
 
-export type Scalars<DecimalType = number, JsonType = any> =  {
+export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  {
   DateTime: {
     Input: Date;
     Output: Date;
@@ -17,8 +17,8 @@ export type Scalars<DecimalType = number, JsonType = any> =  {
     Output: bigint;
   };
   Json: {
-    Input: JsonType;
-    Output: JsonType;
+    Input: JsonInput;
+    Output: JsonOutput;
   };
   Bytes: {
     Input: any;
