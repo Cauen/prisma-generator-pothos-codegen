@@ -1,6 +1,5 @@
-import { Comment } from "@/schema/Comment"
+import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
-import { db } from "@/db"
 import { builder } from "@/schema/builder"
 
 const createOneComment = builder.mutationFields((t) => ({
@@ -11,11 +10,11 @@ const createOneComment = builder.mutationFields((t) => ({
       data: t.arg({ type: Inputs.CommentCreateInput, required: true }),
     },
     resolve: async (root, args, context, info) => {
-      const user = await db.comment.create({
+      const created = await context.db.comment.create({
         data: args.data,
       })
 
-      return user
+      return created
     }
   })
 }))

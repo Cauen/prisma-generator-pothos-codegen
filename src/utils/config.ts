@@ -10,6 +10,10 @@ export type ImportedConfigsOptions = {
     outputFilePath?: string // path to generate file, from project root
   },
   crud?: {
+    excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
+    excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
+    resolversImports?: string // default: what to import inside resolver
+    dbCaller?: string // how to call prisma. default: context.db
     inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
     builderImporter?: string // default: import { builder } from "./builder"
     outputFolderPath?: string // path to generate files, from project root. default: ./generated

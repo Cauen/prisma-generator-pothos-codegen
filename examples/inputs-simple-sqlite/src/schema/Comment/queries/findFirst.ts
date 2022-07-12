@@ -1,10 +1,9 @@
-import { Comment } from "@/schema/Comment"
+import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
-import { db } from "@/db"
 import { builder } from "@/schema/builder"
 
-const querys = builder.queryFields((t) => ({
-  findFirstComment: t.field({
+const findFirstComment = builder.queryFields((t) => ({
+  findFirstComment: t.prismaField({
     type: Comment,
     nullable: true,
     args: {
@@ -15,19 +14,20 @@ const querys = builder.queryFields((t) => ({
       skip: t.arg({ type: 'Int', required: false }),
       distinct: t.arg({ type: [Inputs.CommentScalarFieldEnum], required: false }),
     },
-    resolve: async (root, args) => {
-      const user = await db.comment.findFirst({
+    resolve: async (query, root, args, context) => {
+      const found = await context.db.comment.findFirst({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,
         distinct: args.distinct || undefined,
         skip: args.skip || undefined,
         orderBy: args.orderBy || undefined,
+        ...query,
       })
 
-      return user
+      return found
     }
   })
 }))
 
-export default querys
+export default findFirstComment

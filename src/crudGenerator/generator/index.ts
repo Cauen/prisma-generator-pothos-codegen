@@ -2,6 +2,7 @@ import { DMMF } from '@prisma/generator-helper';
 import { Configs } from '../../generator';
 import { writeFileSafely } from '../../utils/filesystem';
 import { getObjectSrc } from './object';
+import { writeResolvers } from './resolvers';
 import path from 'path'
 
 /**
@@ -15,9 +16,17 @@ export default function modelGenerate(options: ModelGenerateOptions) {
   const dirname = options.configs.crud?.outputFolderPath || "./generated"
 
   writeFileSafely(object, `${dirname}/${options.model}/object.ts`, false)
-  writeFileSafely(`export * from './object'`, `${dirname}/${options.model}/index.ts`, false)
+  
+  const { hasMutation, hasQuery } = writeResolvers(options)
+  const rootSrc = [
+    `export * from './object'`,
+    ...(hasMutation ? [`export * from './mutations'`] : []),
+    ...(hasQuery ? [`export * from './queries'`] : []),
+  ].join("\n")
+
+  writeFileSafely(rootSrc, `${dirname}/${options.model}/index.ts`, true)
 
   return {
-    object,
+    object, hasMutation, hasQuery,
   }
 }
