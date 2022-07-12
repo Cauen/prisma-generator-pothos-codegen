@@ -1,17 +1,15 @@
-import { Decimal } from '@prisma/client/runtime';
-
 export type PrismaJsonValue = string | number | boolean | JsonObject | JsonArray | null
 type JsonObject = {[Key in string]?: PrismaJsonValue}
 interface JsonArray extends Array<PrismaJsonValue> {}
 
-export type Scalars =  {
+export type Scalars<DecimalType = number> =  {
   DateTime: {
     Input: Date;
     Output: Date;
   };
   Decimal: {
     Input: number;
-    Output: Decimal;
+    Output: DecimalType;
   };
   BigInt: {
     Input: bigint;

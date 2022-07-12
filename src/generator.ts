@@ -1,5 +1,6 @@
 import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
+import projectGenerator from './projectGenerator';
 import { debugLog } from './utils/filesystem';
 
 export type ConfigsExtra = {
@@ -20,5 +21,6 @@ generatorHandler({
     const configs: Configs = { ...config, output: options.generator.output }
 
     await generateInputs(options.dmmf, configs)
+    projectGenerator(options.dmmf, configs)
   }
 });

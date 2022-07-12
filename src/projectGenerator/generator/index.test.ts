@@ -4,7 +4,7 @@ import modelGenerate from '.'
 
 describe('projectGenerator', () => {
   it('should files', async () => {
-    const dmmf = await getSampleDMMF('simple')
+    const dmmf = await getSampleDMMF('complex')
     const model = await modelGenerate({
       configs: {
         output: { value: "./generated/inputs.ts", fromEnvVar: null },

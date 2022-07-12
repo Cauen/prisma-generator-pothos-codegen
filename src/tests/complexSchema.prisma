@@ -10,19 +10,21 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  firstName String
+  id            Int         @id @default(autoincrement())
+  firstName     String
   /// lastname description
-  lastName  String
+  lastName      String
   /// relation desc
-  posts     Post[]
-  Comments  Comment[]
+  posts         Post[]
+  Comments      Comment[]
   /// createdAt description
-  createdAt DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt DateTime? @updatedAt
-  Profile   Profile[]
-  followers Follow[]  @relation("followers")
-  following Follow[]  @relation("following")
+  createdAt     DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime?   @updatedAt
+  Profile       Profile?
+  scalar        WithScalars @relation(fields: [withScalarsId], references: [id])
+  followers     Follow[]    @relation("followers")
+  following     Follow[]    @relation("following")
+  withScalarsId Int
 }
 
 model Post {
@@ -66,7 +68,7 @@ model Unrelated {
 }
 
 model IdOnly {
-  id   Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 }
 
 model WithoutID {
@@ -89,4 +91,5 @@ model WithScalars {
   datetime DateTime? @db.Timestamp(6)
   json     Json?
   bytes    Bytes?
+  User     User[]
 }

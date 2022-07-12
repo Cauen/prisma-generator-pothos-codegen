@@ -1,6 +1,6 @@
 import { getUsedScalars, ScalarExportConfigs } from "./utils/dmmf"
 import { DMMF } from '@prisma/generator-helper';
-import { Configs } from "@/generator";
+import { Configs } from "../../../generator";
 
 const dateTimeScalar = `const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {

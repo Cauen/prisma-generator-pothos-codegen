@@ -1,4 +1,4 @@
-import { Configs } from "@/generator"
+import { Configs } from "../../../generator";
 
 export const getImports = (configs: Configs) => {
   return `${configs.inputsPrismaImporter || `import { Prisma } from ".prisma/client"`}

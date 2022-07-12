@@ -1,7 +1,7 @@
 import { getMainInput } from "./utils/dmmf"
 import { fLLower } from "./utils/string"
 import { DMMF } from '@prisma/generator-helper';
-import { Configs } from "@/generator";
+import { Configs } from "../../../generator";
 
 export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Configs }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma

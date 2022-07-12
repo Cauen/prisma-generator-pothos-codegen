@@ -1,8 +1,8 @@
-import { parseTemplateGlobal } from "@/projectGenerator/utils/parseTemplateGlobal"
+import { parseTemplateGlobal } from "../../../projectGenerator/utils/parseTemplateGlobal"
 import { ModelGenerateOptions } from ".."
 import { getDescriptionSrc } from "./pieces/description"
 import { getFieldsSrc } from "./pieces/fields"
-import { getFindUniqueSrc } from "./pieces/unique"
+import { getFindUniqueSrc } from "./pieces/findUnique"
 
 const template = `
 // importing builder + inputs

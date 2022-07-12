@@ -1,5 +1,5 @@
 const getImports = () => {
-  return `import { builder } from "../builder";
+  return `import { builder } from "../../schema/builder";
 import * as Inputs from "@/generated/inputs";`
 }
 
