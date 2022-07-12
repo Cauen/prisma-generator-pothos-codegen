@@ -1,6 +1,7 @@
 export const findMany = `import { #{model} } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 const findMany#{model} = builder.queryFields((t) => ({
   findMany#{model}: t.prismaField({
@@ -15,7 +16,7 @@ const findMany#{model} = builder.queryFields((t) => ({
       distinct: t.arg({ type: [Inputs.#{model}ScalarFieldEnum], required: false }),
     },
     resolve: async (query, root, args, context) => {
-      const list = await context.db.#{modelLowercase}.findMany({
+      const list = await #{db}.#{modelLowercase}.findMany({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

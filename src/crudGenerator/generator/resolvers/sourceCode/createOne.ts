@@ -11,7 +11,7 @@ const createOne#{model} = builder.mutationFields((t) => ({
       data: t.arg({ type: Inputs.#{model}CreateInput, required: true }),
     },
     resolve: async (root, args, context, info) => {
-      const created = await #{db}.comment.create({
+      const created = await #{db}.#{modelLowercase}.create({
         data: args.data,
       })
 

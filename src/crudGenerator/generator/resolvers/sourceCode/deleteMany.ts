@@ -1,6 +1,7 @@
 export const deleteMany = `import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
+#{imports}
 
 const deleteMany#{model} = builder.mutationFields((t) => ({
   deleteMany#{model}: t.field({
@@ -10,7 +11,7 @@ const deleteMany#{model} = builder.mutationFields((t) => ({
       where: t.arg({ type: Inputs.#{model}WhereInput, required: true }),
     },
     resolve: async (root, args, context) => {
-      const deletedBatch = await context.db.#{modelLowercase}.deleteMany({
+      const deletedBatch = await #{db}.#{modelLowercase}.deleteMany({
         where: args.where,
       })
 

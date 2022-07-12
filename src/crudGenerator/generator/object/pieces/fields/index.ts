@@ -31,9 +31,9 @@ const getFieldValue = (field: DMMF.Field) => {
         orderBy: args.orderBy || undefined,
       })` : ''}
     })`
-  // DateTime, Json ...
+  // DateTime, Json ... ENUMS
   return `t.field({
-      type: "${type}",
+      type: Inputs.${type},
       ${description}
       ${nullable}
       resolve: (parent, args, ctx) => parent.${name}

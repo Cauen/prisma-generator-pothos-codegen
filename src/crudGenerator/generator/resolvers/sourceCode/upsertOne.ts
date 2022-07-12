@@ -1,6 +1,7 @@
 export const upsertOne = `import { #{model} } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 const upsertOne#{model} = builder.mutationFields((t) => ({
   upsertOne#{model}: t.prismaField({
@@ -12,7 +13,7 @@ const upsertOne#{model} = builder.mutationFields((t) => ({
       update: t.arg({ type: Inputs.#{model}UpdateInput, required: true }),
     },
     resolve: async (query, root, args, context) => {
-      const upserted = await context.db.#{modelLowercase}.upsert({
+      const upserted = await #{db}.#{modelLowercase}.upsert({
         where: args.where,
         create: args.create,
         update: args.update,

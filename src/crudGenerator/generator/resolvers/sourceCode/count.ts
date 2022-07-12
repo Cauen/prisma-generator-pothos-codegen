@@ -1,5 +1,6 @@
 export const count = `import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 export const count#{model} = builder.queryFields((t) => ({
   count#{model}: t.field({
@@ -14,7 +15,7 @@ export const count#{model} = builder.queryFields((t) => ({
       distinct: t.arg({ type: [Inputs.#{model}ScalarFieldEnum], required: false }),
     },
     resolve: async (root, args, context) => {
-      const count = await context.db.#{modelLowercase}.count({
+      const count = await #{db}.#{modelLowercase}.count({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

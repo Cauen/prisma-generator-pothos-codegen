@@ -1,8 +1,9 @@
-export type PrismaJsonValue = string | number | boolean | JsonObject | JsonArray | null
-type JsonObject = {[Key in string]?: PrismaJsonValue}
-interface JsonArray extends Array<PrismaJsonValue> {}
+/**
+ * Every version of prisma, the types are different.
+ * We receive as generics
+ */
 
-export type Scalars<DecimalType = number> =  {
+export type Scalars<DecimalType = number, JsonType = any> =  {
   DateTime: {
     Input: Date;
     Output: Date;
@@ -16,8 +17,8 @@ export type Scalars<DecimalType = number> =  {
     Output: bigint;
   };
   Json: {
-    Input: PrismaJsonValue;
-    Output: PrismaJsonValue;
+    Input: JsonType;
+    Output: JsonType;
   };
   Bytes: {
     Input: any;

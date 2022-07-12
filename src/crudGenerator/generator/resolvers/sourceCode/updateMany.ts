@@ -1,6 +1,7 @@
 export const updateMany = `import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
+#{imports}
 
 const updateMany#{model} = builder.mutationFields((t) => ({
   updateMany#{model}: t.field({
@@ -11,7 +12,7 @@ const updateMany#{model} = builder.mutationFields((t) => ({
       data: t.arg({ type: Inputs.#{model}UpdateManyMutationInput, required: true }),
     },
     resolve: async (root, args, context) => {
-      const updatedBatch = await context.db.#{modelLowercase}.updateMany({
+      const updatedBatch = await #{db}.#{modelLowercase}.updateMany({
         where: args.where || undefined,
         data: args.data,
       })

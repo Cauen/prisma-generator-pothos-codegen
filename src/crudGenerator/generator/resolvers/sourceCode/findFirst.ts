@@ -1,6 +1,7 @@
 export const findFirst = `import { #{model} } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 const findFirst#{model} = builder.queryFields((t) => ({
   findFirst#{model}: t.prismaField({
@@ -15,7 +16,7 @@ const findFirst#{model} = builder.queryFields((t) => ({
       distinct: t.arg({ type: [Inputs.#{model}ScalarFieldEnum], required: false }),
     },
     resolve: async (query, root, args, context) => {
-      const found = await context.db.#{modelLowercase}.findFirst({
+      const found = await #{db}.#{modelLowercase}.findFirst({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

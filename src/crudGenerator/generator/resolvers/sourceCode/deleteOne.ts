@@ -1,6 +1,7 @@
 export const deleteOne = `import { #{model} } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 const deleteOne#{model} = builder.mutationFields((t) => ({
   deleteOne#{model}: t.prismaField({
@@ -10,7 +11,7 @@ const deleteOne#{model} = builder.mutationFields((t) => ({
       where: t.arg({ type: Inputs.#{model}WhereUniqueInput, required: true }),
     },
     resolve: async (query, root, args, context) => {
-      const deleted = await context.db.#{modelLowercase}.delete({
+      const deleted = await #{db}.#{modelLowercase}.delete({
         where: args.where,
         ...query,
       })

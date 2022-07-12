@@ -1,6 +1,7 @@
 export const createMany = `import { #{model} } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
+#{imports}
 
 export const createMany#{model} = builder.mutationFields((t) => ({
   createMany#{model}: t.prismaField({
@@ -10,8 +11,8 @@ export const createMany#{model} = builder.mutationFields((t) => ({
       data: t.arg({ type: [Inputs.#{model}CreateInput], required: true }),
     },
     resolve: async (query, root, args, context, info) => {
-      const list = await context.db.$transaction(
-        args.data.map((data) => context.db.#{modelLowercase}.create({
+      const list = await #{db}.$transaction(
+        args.data.map((data) => #{db}.#{modelLowercase}.create({
           data: data,
         }))
       )

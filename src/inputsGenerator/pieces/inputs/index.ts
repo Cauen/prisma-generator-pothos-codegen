@@ -5,7 +5,7 @@ import { Configs } from "../../../generator";
 
 export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Configs }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma
-  const { excludeInputs } = configs  
+  const excludeInputs = configs.inputs?.excludeInputs
 
   const inputsStrings = inputs.map(input => {
     const inputName = input.name
