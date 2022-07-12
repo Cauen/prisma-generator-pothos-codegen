@@ -81,8 +81,10 @@ The generator currently supports a few options:
 
 |          Key          |              Default Value              |                                              Description                                             |
 |:----------------------|:----------------------------------------|:-----------------------------------------------------------------------------------------------------|
-| inputsPrismaImporter  | import { Prisma } from ".prisma/client" | When the file was generated, its needed to import Prisma. Here we can set from where to import.      |
-| inputsBuilderImporter | import { builder } from "./builder"     | When the file was generated, its needed to import the builder. Here we can set from where to import. |
+| inputsPrismaImporter  | import { Prisma } from ".prisma/client"; | When the file was generated, its needed to import Prisma. Here we can set from where to import.      |
+| inputsBuilderImporter | import { builder } from "@/schema/builder";  | When the file was generated, its needed to import the builder. Here we can set from where to import. |
+| crudBuilderImporter   | import { builder } from "@/schema/builder";     | When the files was generated, its needed to import the builder. Here we can set from where to import. |
+| crudInputsImporter    | import * as Inputs from "@/generated/inputs";     | When the files was generated, its needed to import the inputs. Here we can set from where to import. |
 | output                | /generated/inputs.ts                    | Where the inputs are generated                                                                       |
 | excludeInputs         | undefined                               | String list of inputs to be not generated, ie: ['UserCreateInput']                                   |
 | excludeScalars        | undefined                               | String list of scalars to be not generated, ie: ['DateTime']                                         |

@@ -1,4 +1,4 @@
-import { parseTemplateGlobal } from "../../../projectGenerator/utils/parseTemplateGlobal"
+import { parseTemplateGlobal } from "../../utils/parseTemplateGlobal"
 import { ModelGenerateOptions } from ".."
 import { getDescriptionSrc } from "./pieces/description"
 import { getFieldsSrc } from "./pieces/fields"
@@ -22,7 +22,7 @@ export const getObjectSrc = (options: ModelGenerateOptions): string => {
   const dmmfModel = dmmf.datamodel.models.find(m => m.name === model)
   if (!dmmfModel) return template
 
-  const globalParsed = parseTemplateGlobal(template)
+  const globalParsed = parseTemplateGlobal(template, options)
 
   const uniqueSrc = getFindUniqueSrc(dmmfModel)
   const fieldsSrc = getFieldsSrc(dmmfModel)

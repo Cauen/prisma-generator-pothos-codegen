@@ -1,11 +1,13 @@
 import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
-import projectGenerator from './projectGenerator';
+import crudGenerator from './crudGenerator';
 import { debugLog } from './utils/filesystem';
 
 export type ConfigsExtra = {
   inputsPrismaImporter?: string
   inputsBuilderImporter?: string
+  crudInputsImporter?: string
+  crudBuilderImporter?: string
   excludeInputs?: string[]
   excludeScalars?: string[]
 }
@@ -21,6 +23,6 @@ generatorHandler({
     const configs: Configs = { ...config, output: options.generator.output }
 
     await generateInputs(options.dmmf, configs)
-    projectGenerator(options.dmmf, configs)
+    crudGenerator(options.dmmf, configs)
   }
 });
