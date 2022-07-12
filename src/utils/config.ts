@@ -3,16 +3,16 @@ import path from 'path'
 
 export type ImportedConfigsOptions = {
   inputs?: {
-    prismaImporter?: string
-    builderImporter?: string
-    excludeInputs?: string[]
-    excludeScalars?: string[]
-    outputFilePath?: string
+    prismaImporter?: string // default: import { Prisma } from ".prisma/client"
+    builderImporter?: string // default: import { builder } from "./builder"
+    excludeInputs?: string[] // default: undefined
+    excludeScalars?: string[] // default: undefined
+    outputFilePath?: string // path to generate file, from project root
   },
   crud?: {
-    inputsImporter?: string
-    builderImporter?: string
-    outputFolderPath?: string
+    inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
+    builderImporter?: string // default: import { builder } from "./builder"
+    outputFolderPath?: string // path to generate files, from project root. default: ./generated
   }
 }
 export type ConfigsOptions = ImportedConfigsOptions

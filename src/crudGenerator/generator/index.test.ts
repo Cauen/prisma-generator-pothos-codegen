@@ -8,7 +8,7 @@ describe('crudGenerator', () => {
     const model = modelGenerate({
       configs: {
         crud: {
-          outputFolderPath: "./generated/crud/"
+          outputFolderPath: "./generated/"
         }
       },
       dmmf,
