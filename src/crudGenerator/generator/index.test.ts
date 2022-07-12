@@ -7,8 +7,9 @@ describe('crudGenerator', () => {
     const dmmf = await getSampleDMMF('complex')
     const model = modelGenerate({
       configs: {
-        output: { value: "./generated/inputs.ts", fromEnvVar: null },
-        excludeInputs: ['UserCreateInput'],
+        crud: {
+          outputPath: "./generated/crud/"
+        }
       },
       dmmf,
       model: "User"

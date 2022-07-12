@@ -4,11 +4,11 @@ import modelGenerate from './generator'
 import { writeFileSafely } from "../utils/filesystem";
 import path from 'path'
 
-export default function generateInputs(dmmf: DMMF.Document, configs: Configs) {
+export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
   const gen = dmmf.datamodel.models.map((model) => {
     return modelGenerate({ configs, dmmf, model: model.name })
   })
-  const dirname = path.dirname(configs.output?.value || "./generated")
+  const dirname = path.dirname(configs.crud?.outputPath || "./generated")
   writeFileSafely((() => {
     return dmmf.datamodel.models.map((model) => {
       return `export * from './${model.name}'`
