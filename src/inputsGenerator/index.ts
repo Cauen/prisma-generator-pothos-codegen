@@ -9,10 +9,19 @@ import { getEnums } from './pieces/enums';
 import { getInputs } from './pieces/inputs';
 import { envs } from '../envs';
 
+var fs = require('fs');
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname +  '/dmmf.json', {flags : 'w'});
+// var log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+};
+
 export default async function generateInputs(dmmf: DMMF.Document, configs: Configs): Promise<string> {
-  if (envs.isTesting) {
+  if (true) {
     // debug propuse
-    writeFileSafely(JSON.stringify(dmmf, null, 2), 'dmmf.json')
+    console.log(JSON.stringify(dmmf, null, 2))
   }
 
   const imports = getImports(configs)

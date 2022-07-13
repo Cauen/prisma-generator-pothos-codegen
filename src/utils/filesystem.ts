@@ -62,7 +62,7 @@ export const writeFileSafely = async (
     await fsExtra.ensureDir(path.dirname(writeLocation));
     const ensured = fs.existsSync(writeLocation);
     if (ensured && !rewrite) return content;
-    await fsExtra.writeFile(writeLocation, content);
+    fs.createWriteStream(writeLocation, { flags: "w" }).write(content)
     return content;
   } catch (err) {
     debugLog(JSON.stringify(err));
