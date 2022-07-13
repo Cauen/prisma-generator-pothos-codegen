@@ -19,7 +19,7 @@ generatorHandler({
   onGenerate: async (options) => {
     const config = options.generator.config
     const generatorConfigs: ExtendedGeneratorOptions = { ...options, generatorConfigPath: config.generatorConfigPath }
-    const configs = getConfig(generatorConfigs)
+    const configs = await getConfig(generatorConfigs)
 
     await generateInputs(options.dmmf, configs)
     crudGenerator(options.dmmf, configs)

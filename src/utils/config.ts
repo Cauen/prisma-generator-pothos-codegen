@@ -36,11 +36,11 @@ export type Configs = ImportedConfigsOptions
  * Receives the config path from generator options
  * Load the configs from file, and return it
  */
-export const getConfig = (extendedGeneratorOptions: ExtendedGeneratorOptions): Configs => {
+export const getConfig = async (extendedGeneratorOptions: ExtendedGeneratorOptions): Promise<Configs> => {
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath)
   const optionsPath = path.join(schemaDirName, extendedGeneratorOptions.generatorConfigPath || 'crud-generator-configs.ts')
 
-  const optionsRequired = require(optionsPath)
+  const optionsRequired = await import(optionsPath)
   const loadedConfigs: ImportedConfigsOptions = optionsRequired.configs || {
   }
 
