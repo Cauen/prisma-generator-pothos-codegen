@@ -1,24 +1,27 @@
-import { generatorHandler, GeneratorConfig } from '@prisma/generator-helper';
+import { generatorHandler, GeneratorConfig, GeneratorOptions } from '@prisma/generator-helper';
 import generateInputs from './inputsGenerator';
-import { debugLog } from './inputsGenerator/utils/filesystem';
+import crudGenerator from './crudGenerator';
+import { getConfig } from './utils/config';
+export { Configs } from './utils/config'
 
-export type ConfigsExtra = {
-  inputsPrismaImporter?: string
-  inputsBuilderImporter?: string
-  excludeInputs?: string[]
-  excludeScalars?: string[]
+// Types from the generator, in `schema.prisma`
+type SchemaGeneratorExtensionOptions = {
+  generatorConfigPath?: string
 }
-export type Configs = ConfigsExtra & { output: GeneratorConfig['output'] }
+export type ExtendedGeneratorOptions = SchemaGeneratorExtensionOptions & GeneratorOptions // default configs from generator, with the path option
 
 generatorHandler({
   onManifest: () => ({
     prettyName: 'Pothos Codegen for Prisma Crud InputTypes',
     requiresGenerators: ['prisma-client-js'],
+    defaultOutput: "./generated/inputs.ts",
   }),
   onGenerate: async (options) => {
     const config = options.generator.config
-    const configs: Configs = { ...config, output: options.generator.output }
+    const generatorConfigs: ExtendedGeneratorOptions = { ...options, generatorConfigPath: config.generatorConfigPath }
+    const configs = getConfig(generatorConfigs)
 
     await generateInputs(options.dmmf, configs)
+    crudGenerator(options.dmmf, configs)
   }
 });

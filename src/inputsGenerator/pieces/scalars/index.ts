@@ -1,8 +1,8 @@
 import { getUsedScalars, ScalarExportConfigs } from "./utils/dmmf"
 import { DMMF } from '@prisma/generator-helper';
-import { Configs } from "@/generator";
+import { Configs } from "../../../generator";
 
-const dateTimeScalar = `const DateTime = builder.scalarType('DateTime', {
+const dateTimeScalar = `export const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
     const isDateParsable = typeof value === 'string' || typeof value === 'number'
     if (!isDateParsable) throw new Error("DateTime input date")
@@ -16,12 +16,15 @@ const dateTimeScalar = `const DateTime = builder.scalarType('DateTime', {
   },
 });`
 
-const decimalScalar = `const Decimal = builder.scalarType('Decimal', {
+const decimalScalar = `export const Decimal = builder.scalarType('Decimal', {
   serialize: (val) => (val),
-  parseValue: (val) => Number(val),
+  parseValue: (val) => {
+    if (typeof val !== 'number' && typeof val !== 'string') throw new Error("Invalid decimal")
+    return new Prisma.Decimal(val)
+  },
 });`
 
-const bytesScalar = `const Bytes = builder.scalarType('Bytes', {
+const bytesScalar = `export const Bytes = builder.scalarType('Bytes', {
   serialize: (value) => {
     return value
   },
@@ -38,13 +41,13 @@ const bytesScalar = `const Bytes = builder.scalarType('Bytes', {
   }
 });`
 
-const jsonScalar = `const Json = builder.scalarType('Json', {
+const jsonScalar = `export const Json = builder.scalarType('Json', {
   serialize: (value) => {
     return value
   },
 });`
 
-const bigIntScalar = `const Bigint = builder.scalarType('BigInt', {
+const bigIntScalar = `export const Bigint = builder.scalarType('BigInt', {
   serialize: (val) => (val).toString(),
   parseValue: (val) => {
     if (typeof val !== 'string' && typeof val !== 'number') throw new Error("This is not parsable to bigint")
@@ -52,7 +55,7 @@ const bigIntScalar = `const Bigint = builder.scalarType('BigInt', {
   },
 });`
 
-const neverScalar = `const NEVER = builder.scalarType('NEVER', {
+const neverScalar = `export const NEVER = builder.scalarType('NEVER', {
   serialize: (value) => value,
   description: "Never fill this, its created for inputs that dont have fields"
 });`
@@ -78,6 +81,6 @@ const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars?
 export const getScalars = ({ configs, dmmf }: { dmmf: DMMF.Document, configs: Configs }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma
   const used = getUsedScalars(inputs)
-  const { excludeScalars } = configs
+  const excludeScalars = configs.inputs?.excludeScalars
   return getScalarsFromConfigs(used, excludeScalars)
 }

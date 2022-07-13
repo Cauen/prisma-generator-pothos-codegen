@@ -1,25 +1,24 @@
-import { Decimal } from '@prisma/client/runtime';
+/**
+ * Every version of prisma, the types are different.
+ * We receive as generics
+ */
 
-export type PrismaJsonValue = string | number | boolean | JsonObject | JsonArray | null
-type JsonObject = {[Key in string]?: PrismaJsonValue}
-interface JsonArray extends Array<PrismaJsonValue> {}
-
-export type Scalars =  {
+export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  {
   DateTime: {
     Input: Date;
     Output: Date;
   };
   Decimal: {
-    Input: number;
-    Output: Decimal;
+    Input: DecimalType;
+    Output: DecimalType;
   };
   BigInt: {
     Input: bigint;
     Output: bigint;
   };
   Json: {
-    Input: PrismaJsonValue;
-    Output: PrismaJsonValue;
+    Input: JsonInput;
+    Output: JsonOutput;
   };
   Bytes: {
     Input: any;

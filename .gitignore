@@ -7,3 +7,4 @@ log.txt
 yarn*.log
 dist
 tsconfig.tsbuildinfo
+TEST-*

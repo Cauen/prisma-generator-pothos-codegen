@@ -15,9 +15,8 @@ generator pothos {
 }
 
 generator pothosCrud {
-  provider = "ts-node --transpile-only ../../src/generator.ts"
-  output   = "../src/generated/inputs.ts"
-  inputsBuilderImporter = "import { builder } from \"../schema/builder\";"
+  provider            = "ts-node --transpile-only ../../src/generator.ts"
+  generatorConfigPath = "../src/schema/configs.ts"
 }
 
 model User {
@@ -29,7 +28,7 @@ model User {
   Posts     Post[]
   Comments  Comment[]
   /// createdAt description
-  createdAt DateTime  @default(now()) 
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   Profile   Profile[]
   Followers Follow[]  @relation("followers")
@@ -92,6 +91,6 @@ model WithScalars {
   float    Float?
   decimal  Decimal?
   bigint   BigInt?
-  datetime DateTime? 
+  datetime DateTime?
   bytes    Bytes?
 }
