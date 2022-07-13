@@ -24,13 +24,21 @@ const writeQueriesAndMutationsIndex = (options: ModelGenerateOptions, { queries,
   const { configs, model } = options
   const dirname = configs.crud?.outputFolderPath || "./generated"
 
-  replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(mutationExports, `${dirname}/${model}/mutations/index.ts`, true)
-  replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(queryExports, `${dirname}/${model}/queries/index.ts`, true)
-
+  if (mutationExports.length) {
+    replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(mutationExports, `${dirname}/${model}/mutations/index.ts`, true)
+  }
+  if (queryExports.length) {
+    replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(queryExports, `${dirname}/${model}/queries/index.ts`, true)
+  }
 }
 
 export const writeResolvers = (options: ModelGenerateOptions) => {
   const srcs = getResolversSrcs(options)
+
+  // const withInputsSrcs = srcs.filter(el => el.src.includes("Inputs.")).map(el => el.src)
+  // const unifiedSrc = withInputsSrcs.join('')
+  // const matches = unifiedSrc.match(/Inputs\.(\w+)/g)?.map(el => el.replace('Inputs.', ''))
+  // const usedInputs = [...new Set(matches)];
 
   for (const src of srcs) {
     writeResolver(options, src)
@@ -47,5 +55,6 @@ export const writeResolvers = (options: ModelGenerateOptions) => {
   return {
     hasMutation,
     hasQuery,
+    // usedInputs,
   }
 }

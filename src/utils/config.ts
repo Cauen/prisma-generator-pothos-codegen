@@ -13,6 +13,8 @@ export type ImportedConfigsOptions = {
   },
   crud?: {
     disabled?: boolean // default: false
+    includeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
+    includeResolversContain?: string[] // default: undefined. ie: ['createOne']
     excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
     excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
     resolversImports?: string // default: what to import inside resolver

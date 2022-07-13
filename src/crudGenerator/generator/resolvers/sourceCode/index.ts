@@ -28,7 +28,14 @@ const resolvers: ResolverProps[] = [
 ]
 
 const isExcludedResolver = (options: ModelGenerateOptions, name: string) => {
-  const { excludeResolversContain, excludeResolversExact } = options.configs.crud || {}
+  const { excludeResolversContain, excludeResolversExact, includeResolversContain, includeResolversExact } = options.configs.crud || {}
+  if (includeResolversExact) {
+    return !includeResolversExact.includes(name)
+  }
+  if (includeResolversContain) {
+    return !includeResolversContain.some(include => name.includes(include))
+  }
+
   if (excludeResolversExact && excludeResolversExact.includes(name)) {
     return true
   }
@@ -52,7 +59,11 @@ const parseSrc = (template: string, options: ModelGenerateOptions) => {
 
 export const getResolversSrcs = (options: ModelGenerateOptions) => {
   return resolvers
-    .filter(r => !isExcludedResolver(options, r.name))
+    .filter(r => {
+      const nameWithModel = `${r.name}${options.model}` // findFirstUser
+      const excluded = isExcludedResolver(options, nameWithModel)
+      return !excluded
+    })
     .map(({ type, name, srcTemplate }) => ({
       type, // Query or Mutation
       name, // findFirst

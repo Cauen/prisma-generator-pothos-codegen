@@ -7,7 +7,9 @@ export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Con
   const inputs = dmmf.schema.inputObjectTypes.prisma
   const excludeInputs = configs.inputs?.excludeInputs
 
-  const inputsStrings = inputs.map(input => {
+  // Unchecked is inputs that can create with ID number
+  // Its dont used
+  const inputsStrings = inputs.filter(el => !el.name.includes("Unchecked")).map(input => {
     const inputName = input.name
     if (excludeInputs?.includes(inputName)) {
       return `// ${inputName} was excluded from configs.excludeInputs`
