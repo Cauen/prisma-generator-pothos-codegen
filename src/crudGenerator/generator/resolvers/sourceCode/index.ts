@@ -1,3 +1,4 @@
+import { firstLetterUppercase } from '../../../utils/string'
 import { ModelGenerateOptions } from '../..'
 import { count } from './count'
 import { createMany } from './createMany'
@@ -44,6 +45,7 @@ const parseSrc = (template: string, options: ModelGenerateOptions) => {
   return template
     .replace(/#{model}/g, options.model)
     .replace(/#{modelLowercase}/g, firstLetterLowercase(options.model))
+    .replace(/#{modelUppercase}/g, firstLetterUppercase(options.model))
     .replace(/#{db}/g, options.configs.crud?.dbCaller || "context.db")
     .replace(/#{imports}\n/g, options.configs.crud?.resolversImports || '')
 }

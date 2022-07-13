@@ -1,5 +1,9 @@
 import { DMMF } from '@prisma/generator-helper';
 
+const getCompositeName = (fields: string[]) => {
+  return fields.map(f => (f)).join('_')
+}
+
 export const getFindUniqueSrc = (foundModel: DMMF.Model) => {
   const idField = foundModel.fields.find(f => f.isId)
 
@@ -8,9 +12,9 @@ export const getFindUniqueSrc = (foundModel: DMMF.Model) => {
   }
 
   if (foundModel.primaryKey?.fields) {
-    return `(fields) => ({ compositeID: fields })`
+    return `(fields) => ({ ${foundModel.primaryKey.name || getCompositeName(foundModel.primaryKey.fields)}: fields })`
   }
 
-  // props = { name: string } for example
+  // props with unique = { name: string } for example
   return `(props) => ({ ...props  })`
 }

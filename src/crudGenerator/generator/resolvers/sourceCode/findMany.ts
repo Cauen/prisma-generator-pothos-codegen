@@ -13,7 +13,7 @@ const findMany#{model} = builder.queryFields((t) => ({
       cursor: t.arg({ type: Inputs.#{model}WhereUniqueInput, required: false }),
       take: t.arg({ type: 'Int', required: false }),
       skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.#{model}ScalarFieldEnum], required: false }),
+      distinct: t.arg({ type: [Inputs.#{modelUppercase}ScalarFieldEnum], required: false }),
     },
     resolve: async (query, root, args, context) => {
       const list = await #{db}.#{modelLowercase}.findMany({
