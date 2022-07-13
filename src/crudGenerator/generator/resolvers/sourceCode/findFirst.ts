@@ -3,7 +3,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 #{imports}
 
-const findFirst#{model} = builder.queryFields((t) => ({
+export const findFirst#{model} = builder.queryFields((t) => ({
   findFirst#{model}: t.prismaField({
     type: #{model},
     nullable: true,
@@ -29,6 +29,4 @@ const findFirst#{model} = builder.queryFields((t) => ({
       return found
     }
   })
-}))
-
-export default findFirst#{model}`
+}))`

@@ -3,7 +3,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 #{imports}
 
-const updateOne#{model} = builder.mutationFields((t) => ({
+export const updateOne#{model} = builder.mutationFields((t) => ({
   updateOne#{model}: t.prismaField({
     type: #{model},
     nullable: true,
@@ -21,6 +21,4 @@ const updateOne#{model} = builder.mutationFields((t) => ({
       return found
     }
   })
-}))
-
-export default updateOne#{model}`
+}))`

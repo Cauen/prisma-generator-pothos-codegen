@@ -3,23 +3,22 @@ import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 #{imports}
 
-const updateMany#{model} = builder.mutationFields((t) => ({
-  updateMany#{model}: t.field({
+export const updateMany#{model} = builder.mutationFields((t) => ({
+  updateMany#{model}: t.prismaField({
     type: BatchPayload,
     nullable: false,
     args: {
       where: t.arg({ type: Inputs.#{model}WhereInput, required: false }),
       data: t.arg({ type: Inputs.#{model}UpdateManyMutationInput, required: true }),
     },
-    resolve: async (root, args, context) => {
+    resolve: async (query, root, args, context) => {
       const updatedBatch = await #{db}.#{modelLowercase}.updateMany({
         where: args.where || undefined,
         data: args.data,
+        ...query,
       })
 
       return updatedBatch
     }
   })
-}))
-
-export default updateMany#{model}`
+}))`

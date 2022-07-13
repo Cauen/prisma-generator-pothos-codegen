@@ -3,7 +3,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 #{imports}
 
-const deleteOne#{model} = builder.mutationFields((t) => ({
+export const deleteOne#{model} = builder.mutationFields((t) => ({
   deleteOne#{model}: t.prismaField({
     type: #{model},
     nullable: true,
@@ -19,6 +19,4 @@ const deleteOne#{model} = builder.mutationFields((t) => ({
       return deleted
     }
   })
-}))
-
-export default deleteOne#{model}`
+}))`

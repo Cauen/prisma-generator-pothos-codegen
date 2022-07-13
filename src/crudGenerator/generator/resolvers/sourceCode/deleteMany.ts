@@ -3,21 +3,20 @@ import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 #{imports}
 
-const deleteMany#{model} = builder.mutationFields((t) => ({
-  deleteMany#{model}: t.field({
+export const deleteMany#{model} = builder.mutationFields((t) => ({
+  deleteMany#{model}: t.prismaField({
     type: BatchPayload,
     nullable: true,
     args: {
       where: t.arg({ type: Inputs.#{model}WhereInput, required: true }),
     },
-    resolve: async (root, args, context) => {
+    resolve: async (query, root, args, context) => {
       const deletedBatch = await #{db}.#{modelLowercase}.deleteMany({
         where: args.where,
+        ...query,
       })
 
       return deletedBatch
     }
   })
-}))
-
-export default deleteMany#{model}`
+}))`
