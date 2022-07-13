@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-pothos-codegen",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A prisma generator that generate input types for Pothos. And optionally generate all crud.",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
