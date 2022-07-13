@@ -91,4 +91,47 @@ describe('getMainInput', () => {
     ]
     expect(getMainInput().priorizeJson(list2)?.type).toBe('Json')
   })
+
+  test('should priorize WhereInput over RelationFilter', () => {
+    const list: InputType[] = [
+      {
+        type: "ProfileRelationFilter",
+        namespace: "prisma",
+        location: "inputObjectTypes",
+        isList: false
+      },
+      {
+        type: "ProfileWhereInput",
+        namespace: "prisma",
+        location: "inputObjectTypes",
+        isList: false
+      },
+      {
+        type: "Null",
+        location: "scalar",
+        isList: false
+      }
+    ]
+    expect(getMainInput().priorizeWhereInput(list)?.type).toBe('ProfileWhereInput')
+    expect(getMainInput().run(list)?.type).toBe('ProfileWhereInput')
+  })
+
+  test('in update, should priorize "set" instead of directly set', () => {
+    const list: InputType[] = [
+      {
+        type: "PAYMENT_METHOD",
+        namespace: "model",
+        location: "enumTypes",
+        isList: false
+      },
+      {
+        type: "EnumPAYMENT_METHODFieldUpdateOperationsInput",
+        namespace: "prisma",
+        location: "inputObjectTypes",
+        isList: false
+      }
+    ]
+    expect(getMainInput().priorizeSetUpdateAlternative(list)?.type).toBe('EnumPAYMENT_METHODFieldUpdateOperationsInput')
+    expect(getMainInput().run(list)?.type).toBe('EnumPAYMENT_METHODFieldUpdateOperationsInput')
+  })
 })
