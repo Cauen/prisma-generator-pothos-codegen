@@ -9,6 +9,10 @@ describe('getObjectSrc', () => {
       dmmf,
       model: "User"
     });
-    expect(src.length > 1).toBeTruthy();
+    expect(src.hasQuery).toBeTruthy();
+    expect(src.hasMutation).toBeTruthy();
+    expect(src.writtenIndexes.mutationExports.includes(`export *`)).toBeTruthy();
+    expect(src.writtenIndexes.queryExports.includes(`export *`)).toBeTruthy();
+    expect(src.writtenResolvers.find(el => el.includes("#{"))).toBeFalsy();
   })
 })

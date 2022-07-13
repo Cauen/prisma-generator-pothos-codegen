@@ -8,7 +8,7 @@ describe('getInputs', () => {
 
     const includedInputs = getInputs({ dmmf, configs: {} })
     expect(includedInputs.includes(builtString)).toBe(true)
-    const scalars = getInputs({ dmmf, configs: { excludeInputs: ['UserCreateInput'] } })
+    const scalars = getInputs({ dmmf, configs: { inputs: { excludeInputs: ['UserCreateInput'] } } })
     expect(scalars.includes(builtString)).toBe(false)
   })
 })
