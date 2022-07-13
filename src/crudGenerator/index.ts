@@ -38,6 +38,8 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
  * - ./src/schema/objects.ts
  */
 export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
+  if (configs.crud?.disabled) return
+
   // Gerating User, Comment, ...
   const gen = dmmf.datamodel.models.map((model) => {
     return modelGenerate({ configs, dmmf, model: model.name })

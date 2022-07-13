@@ -18,7 +18,10 @@ const dateTimeScalar = `export const DateTime = builder.scalarType('DateTime', {
 
 const decimalScalar = `export const Decimal = builder.scalarType('Decimal', {
   serialize: (val) => (val),
-  parseValue: (val) => Number(val),
+  parseValue: (val) => {
+    if (typeof val !== 'number' && typeof val !== 'string') throw new Error("Invalid decimal")
+    return new Prisma.Decimal(val)
+  },
 });`
 
 const bytesScalar = `export const Bytes = builder.scalarType('Bytes', {

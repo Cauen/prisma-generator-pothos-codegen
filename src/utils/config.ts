@@ -12,6 +12,7 @@ export type ImportedConfigsOptions = {
     replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
   },
   crud?: {
+    disabled?: boolean // default: false
     excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
     excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
     resolversImports?: string // default: what to import inside resolver

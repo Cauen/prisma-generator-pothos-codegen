@@ -9,7 +9,7 @@ export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  
     Output: Date;
   };
   Decimal: {
-    Input: number;
+    Input: DecimalType;
     Output: DecimalType;
   };
   BigInt: {
