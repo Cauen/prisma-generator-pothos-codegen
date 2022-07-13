@@ -1,10 +1,14 @@
 # Prisma Generator Pothos Codegen
 This is a prisma generator that auto generate all input types for Crud Operations to Pothos. Use it as args for crud operations.
 
+And generate all `crud` operations automatically.
+Optionally you can disable crud generation inside configs file.
+Just set: `configs.crud.disabled` to `true`
+
 **The roadmap:**
 
 - [x] Generator code for all input fields.
-- [ ] Generator for all `Objects`, `Queries` and `Mutations`. Something like `prisma-tools` do with Prisma and Nexus.
+- [x] Generator for all `Objects`, `Queries` and `Mutations`. Something like `prisma-tools` do with Prisma and Nexus.
 
 ## Getting Started
 
@@ -23,6 +27,7 @@ generator client {
 
 generator nexusPrisma {
    provider = "prisma-generator-pothos-codegen"
+   generatorConfigPath = "../src/schema/configs.ts"
 }
 
 /// This is a user!
@@ -95,11 +100,23 @@ The generator currently supports a few options:
       excludeInputs?: string[] // default: undefined
       excludeScalars?: string[] // default: undefined
       outputFilePath?: string // path to generate file, from project root
+      replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
     },
     crud?: {
+      disabled?: boolean // disable generaton of crud. default: false
+      includeResolversExact?: string[] // generate only resolvers with name in the list. default: undefined. ie: ['createOneUser']
+      includeResolversContain?: string[] // generate only resolvers with name included in the list. default: undefined. ie: ['User'].
+      excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
+      excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
+      resolversImports?: string // default: what to import inside resolver
+      dbCaller?: string // how to call prisma. default: context.db
       inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
       builderImporter?: string // default: import { builder } from "./builder"
       outputFolderPath?: string // path to generate files, from project root. default: ./generated
+      replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
+    },
+    global?: {
+      replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
     }
   }
   ```
