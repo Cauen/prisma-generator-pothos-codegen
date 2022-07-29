@@ -2,7 +2,7 @@ import { IdOnly } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneIdOnly = builder.mutationFields((t) => ({
+export const deleteOneIdOnly = builder.mutationFields((t) => ({
   deleteOneIdOnly: t.prismaField({
     type: IdOnly,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneIdOnly = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneIdOnly

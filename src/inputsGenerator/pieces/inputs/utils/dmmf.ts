@@ -36,17 +36,42 @@ export function getMainInput() {
     return undefined
   }
 
+  // If one list, priorize it
+  const priorizeWhereInput = (inputs: InputType[]) => {
+    const listInputs = inputs.find(el => el.type.toString().includes('WhereInput'))
+    if (listInputs) {
+      return listInputs
+    }
+    return undefined
+  }
+
+  // If one list, priorize it
+  const priorizeSetUpdateAlternative = (inputs: InputType[]) => {
+    const setType = inputs.find(el => el.type.toString().includes('FieldUpdateOperationsInput'))
+    if (setType) {
+      return setType
+    }
+    return undefined
+  }
+
   const run = (inputs: InputType[]): InputType => {
     if (inputs.length === 0) throw new Error('No input type found')
     const first = inputs[0]!
     const second = inputs[1]
     if (first && !second) return first
 
+    // ! ORDER MEANS 
     const isJsonPriority = priorizeJson(inputs)
     if (isJsonPriority) return isJsonPriority
 
     const isListPriority = priorizeList(inputs)
     if (isListPriority) return isListPriority
+
+    const whereInputPriority = priorizeWhereInput(inputs)
+    if (whereInputPriority) return whereInputPriority
+
+    const setUpdateAlternativePriority = priorizeSetUpdateAlternative(inputs)
+    if (setUpdateAlternativePriority) return setUpdateAlternativePriority
 
     const isNotScalarPriority = priorizeNotScalar(inputs)
     if (isNotScalarPriority) return isNotScalarPriority
@@ -59,5 +84,7 @@ export function getMainInput() {
     priorizeJson,
     priorizeNotScalar,
     priorizeList,
+    priorizeWhereInput,
+    priorizeSetUpdateAlternative,
   }
 }

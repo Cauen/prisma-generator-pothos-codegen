@@ -3,7 +3,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 #{imports}
 
-const findUnique#{model} = builder.queryFields((t) => ({
+export const findUnique#{model} = builder.queryFields((t) => ({
   findUnique#{model}: t.prismaField({
     type: #{model},
     nullable: true,
@@ -19,6 +19,4 @@ const findUnique#{model} = builder.queryFields((t) => ({
       return found
     }
   })
-}))
-
-export default findUnique#{model}`
+}))`

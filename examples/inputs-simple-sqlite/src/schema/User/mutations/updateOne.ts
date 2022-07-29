@@ -2,7 +2,7 @@ import { User } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const updateOneUser = builder.mutationFields((t) => ({
+export const updateOneUser = builder.mutationFields((t) => ({
   updateOneUser: t.prismaField({
     type: User,
     nullable: true,
@@ -21,5 +21,3 @@ const updateOneUser = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateOneUser

@@ -2,7 +2,7 @@ import { IdOnly } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const updateOneIdOnly = builder.mutationFields((t) => ({
+export const updateOneIdOnly = builder.mutationFields((t) => ({
   updateOneIdOnly: t.prismaField({
     type: IdOnly,
     nullable: true,
@@ -21,5 +21,3 @@ const updateOneIdOnly = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateOneIdOnly

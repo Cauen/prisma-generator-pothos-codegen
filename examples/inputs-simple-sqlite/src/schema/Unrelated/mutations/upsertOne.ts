@@ -2,7 +2,7 @@ import { Unrelated } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const upsertOneUnrelated = builder.mutationFields((t) => ({
+export const upsertOneUnrelated = builder.mutationFields((t) => ({
   upsertOneUnrelated: t.prismaField({
     type: Unrelated,
     nullable: false,
@@ -23,5 +23,3 @@ const upsertOneUnrelated = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default upsertOneUnrelated

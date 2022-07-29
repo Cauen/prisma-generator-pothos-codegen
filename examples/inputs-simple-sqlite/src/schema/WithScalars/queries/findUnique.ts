@@ -2,7 +2,7 @@ import { WithScalars } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueWithScalars = builder.queryFields((t) => ({
+export const findUniqueWithScalars = builder.queryFields((t) => ({
   findUniqueWithScalars: t.prismaField({
     type: WithScalars,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueWithScalars = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueWithScalars

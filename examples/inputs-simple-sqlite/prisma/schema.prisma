@@ -24,7 +24,10 @@ model User {
   firstName String
   /// lastname description
   lastName  String
-  /// relation desc
+  birthdate DateTime
+  login     String
+  password  String
+  /// relation desc 
   Posts     Post[]
   Comments  Comment[]
   /// createdAt description

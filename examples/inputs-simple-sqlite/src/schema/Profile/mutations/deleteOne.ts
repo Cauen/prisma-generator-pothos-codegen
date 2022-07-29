@@ -2,7 +2,7 @@ import { Profile } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneProfile = builder.mutationFields((t) => ({
+export const deleteOneProfile = builder.mutationFields((t) => ({
   deleteOneProfile: t.prismaField({
     type: Profile,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneProfile = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneProfile

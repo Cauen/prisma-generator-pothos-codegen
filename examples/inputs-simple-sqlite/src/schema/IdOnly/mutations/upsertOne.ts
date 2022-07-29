@@ -2,7 +2,7 @@ import { IdOnly } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const upsertOneIdOnly = builder.mutationFields((t) => ({
+export const upsertOneIdOnly = builder.mutationFields((t) => ({
   upsertOneIdOnly: t.prismaField({
     type: IdOnly,
     nullable: false,
@@ -23,5 +23,3 @@ const upsertOneIdOnly = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default upsertOneIdOnly

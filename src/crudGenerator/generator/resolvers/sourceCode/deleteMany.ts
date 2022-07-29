@@ -3,7 +3,7 @@ import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 #{imports}
 
-const deleteMany#{model} = builder.mutationFields((t) => ({
+export const deleteMany#{model} = builder.mutationFields((t) => ({
   deleteMany#{model}: t.field({
     type: BatchPayload,
     nullable: true,
@@ -18,6 +18,4 @@ const deleteMany#{model} = builder.mutationFields((t) => ({
       return deletedBatch
     }
   })
-}))
-
-export default deleteMany#{model}`
+}))`

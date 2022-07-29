@@ -2,7 +2,7 @@ import { WithScalars } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const upsertOneWithScalars = builder.mutationFields((t) => ({
+export const upsertOneWithScalars = builder.mutationFields((t) => ({
   upsertOneWithScalars: t.prismaField({
     type: WithScalars,
     nullable: false,
@@ -23,5 +23,3 @@ const upsertOneWithScalars = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default upsertOneWithScalars

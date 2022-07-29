@@ -2,7 +2,7 @@ import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findFirstComment = builder.queryFields((t) => ({
+export const findFirstComment = builder.queryFields((t) => ({
   findFirstComment: t.prismaField({
     type: Comment,
     nullable: true,
@@ -29,5 +29,3 @@ const findFirstComment = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findFirstComment

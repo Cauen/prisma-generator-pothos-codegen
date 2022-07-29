@@ -2,7 +2,7 @@ import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyComment = builder.queryFields((t) => ({
+export const findManyComment = builder.queryFields((t) => ({
   findManyComment: t.prismaField({
     type: [Comment],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyComment = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyComment

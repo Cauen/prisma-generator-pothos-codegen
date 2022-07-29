@@ -2,7 +2,7 @@ import { IdOnly } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyIdOnly = builder.queryFields((t) => ({
+export const findManyIdOnly = builder.queryFields((t) => ({
   findManyIdOnly: t.prismaField({
     type: [IdOnly],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyIdOnly = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyIdOnly

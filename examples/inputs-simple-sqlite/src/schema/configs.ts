@@ -8,6 +8,7 @@ export const configs: ConfigsOptions = {
     // replacer(generated, position) {
     //   return `// THIS CONTENT WAS INSERTED AT REPLACE. THE POSITION IS ${position}\n${generated}`
     // },
+    excludeResolversContain: ["User"],
   },
   inputs: {
     prismaImporter: "import { Prisma } from \".prisma/client\";",

@@ -2,7 +2,7 @@ import { Post } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniquePost = builder.queryFields((t) => ({
+export const findUniquePost = builder.queryFields((t) => ({
   findUniquePost: t.prismaField({
     type: Post,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniquePost = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniquePost

@@ -2,7 +2,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 
-const updateManyWithScalars = builder.mutationFields((t) => ({
+export const updateManyWithScalars = builder.mutationFields((t) => ({
   updateManyWithScalars: t.field({
     type: BatchPayload,
     nullable: false,
@@ -20,5 +20,3 @@ const updateManyWithScalars = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateManyWithScalars

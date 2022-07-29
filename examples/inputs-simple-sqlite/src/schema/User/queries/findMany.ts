@@ -2,7 +2,7 @@ import { User } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyUser = builder.queryFields((t) => ({
+export const findManyUser = builder.queryFields((t) => ({
   findManyUser: t.prismaField({
     type: [User],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyUser = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyUser

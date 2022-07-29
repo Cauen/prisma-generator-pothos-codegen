@@ -32,9 +32,11 @@ const getFieldValue = (field: DMMF.Field) => {
         orderBy: args.orderBy || undefined,
       })` : ''}
     })`
+  
   // DateTime, Json ... ENUMS
+  const typeFixed = type === "BigInt" ? "Bigint" : type
   return `t.field({
-      type: Inputs.${type},
+      type: Inputs.${typeFixed},
       ${description}
       ${nullable}
       resolve: (parent, args, ctx) => parent.${name}

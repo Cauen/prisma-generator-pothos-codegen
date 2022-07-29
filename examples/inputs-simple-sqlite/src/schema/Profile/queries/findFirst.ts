@@ -2,7 +2,7 @@ import { Profile } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findFirstProfile = builder.queryFields((t) => ({
+export const findFirstProfile = builder.queryFields((t) => ({
   findFirstProfile: t.prismaField({
     type: Profile,
     nullable: true,
@@ -29,5 +29,3 @@ const findFirstProfile = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findFirstProfile

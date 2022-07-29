@@ -2,21 +2,20 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const createOneWithoutID = builder.mutationFields((t) => ({
-  createOneWithoutID: t.field({
+export const createOneWithoutID = builder.mutationFields((t) => ({
+  createOneWithoutID: t.prismaField({
     type: WithoutID,
     nullable: false,
     args: {
       data: t.arg({ type: Inputs.WithoutIDCreateInput, required: true }),
     },
-    resolve: async (root, args, context, info) => {
-      const created = await context.db.comment.create({
+    resolve: async (query, root, args, context, info) => {
+      const created = await context.db.withoutID.create({
         data: args.data,
+        ...query,
       })
 
       return created
     }
   })
 }))
-
-export default createOneWithoutID

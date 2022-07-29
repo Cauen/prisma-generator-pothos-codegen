@@ -3,7 +3,7 @@ import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 #{imports}
 
-const updateMany#{model} = builder.mutationFields((t) => ({
+export const updateMany#{model} = builder.mutationFields((t) => ({
   updateMany#{model}: t.field({
     type: BatchPayload,
     nullable: false,
@@ -20,6 +20,4 @@ const updateMany#{model} = builder.mutationFields((t) => ({
       return updatedBatch
     }
   })
-}))
-
-export default updateMany#{model}`
+}))`
