@@ -19,7 +19,7 @@ export const WithScalars = builder.prismaObject('WithScalars', {
       resolve: (parent, args, ctx) => parent.decimal
     }),
     bigint: t.field({
-      type: Inputs.BigInt,
+      type: Inputs.Bigint,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.bigint
