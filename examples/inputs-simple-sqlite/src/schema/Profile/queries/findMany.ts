@@ -2,7 +2,7 @@ import { Profile } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyProfile = builder.queryFields((t) => ({
+export const findManyProfile = builder.queryFields((t) => ({
   findManyProfile: t.prismaField({
     type: [Profile],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyProfile = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyProfile

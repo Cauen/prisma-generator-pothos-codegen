@@ -13,25 +13,25 @@ export const WithScalars = builder.prismaObject('WithScalars', {
     int: t.exposeInt('int', { description: undefined, nullable: true, }),
     float: t.exposeFloat('float', { description: undefined, nullable: true, }),
     decimal: t.field({
-      type: "Decimal",
+      type: Inputs.Decimal,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.decimal
     }),
     bigint: t.field({
-      type: "BigInt",
+      type: Inputs.BigInt,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.bigint
     }),
     datetime: t.field({
-      type: "DateTime",
+      type: Inputs.DateTime,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.datetime
     }),
     bytes: t.field({
-      type: "Bytes",
+      type: Inputs.Bytes,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.bytes

@@ -2,7 +2,7 @@ import { Unrelated } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findFirstUnrelated = builder.queryFields((t) => ({
+export const findFirstUnrelated = builder.queryFields((t) => ({
   findFirstUnrelated: t.prismaField({
     type: Unrelated,
     nullable: true,
@@ -29,5 +29,3 @@ const findFirstUnrelated = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findFirstUnrelated

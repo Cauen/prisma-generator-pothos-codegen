@@ -2,7 +2,7 @@ import { User } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueUser = builder.queryFields((t) => ({
+export const findUniqueUser = builder.queryFields((t) => ({
   findUniqueUser: t.prismaField({
     type: User,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueUser = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueUser

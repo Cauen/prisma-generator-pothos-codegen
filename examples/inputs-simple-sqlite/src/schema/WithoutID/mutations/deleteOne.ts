@@ -2,7 +2,7 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneWithoutID = builder.mutationFields((t) => ({
+export const deleteOneWithoutID = builder.mutationFields((t) => ({
   deleteOneWithoutID: t.prismaField({
     type: WithoutID,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneWithoutID = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneWithoutID

@@ -2,7 +2,7 @@ import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneComment = builder.mutationFields((t) => ({
+export const deleteOneComment = builder.mutationFields((t) => ({
   deleteOneComment: t.prismaField({
     type: Comment,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneComment = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneComment

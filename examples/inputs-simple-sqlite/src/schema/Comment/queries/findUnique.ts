@@ -2,7 +2,7 @@ import { Comment } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueComment = builder.queryFields((t) => ({
+export const findUniqueComment = builder.queryFields((t) => ({
   findUniqueComment: t.prismaField({
     type: Comment,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueComment = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueComment

@@ -2,7 +2,7 @@ import { WithScalars } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyWithScalars = builder.queryFields((t) => ({
+export const findManyWithScalars = builder.queryFields((t) => ({
   findManyWithScalars: t.prismaField({
     type: [WithScalars],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyWithScalars = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyWithScalars

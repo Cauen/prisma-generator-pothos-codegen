@@ -2,7 +2,7 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueWithoutID = builder.queryFields((t) => ({
+export const findUniqueWithoutID = builder.queryFields((t) => ({
   findUniqueWithoutID: t.prismaField({
     type: WithoutID,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueWithoutID = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueWithoutID

@@ -2,7 +2,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 
-const deleteManyIdOnly = builder.mutationFields((t) => ({
+export const deleteManyIdOnly = builder.mutationFields((t) => ({
   deleteManyIdOnly: t.field({
     type: BatchPayload,
     nullable: true,
@@ -18,5 +18,3 @@ const deleteManyIdOnly = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteManyIdOnly

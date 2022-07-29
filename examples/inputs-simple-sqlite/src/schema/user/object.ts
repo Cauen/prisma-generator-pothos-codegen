@@ -10,6 +10,14 @@ export const User = builder.prismaObject('User', {
     id: t.exposeID('id', { description: undefined, nullable: false, }),
     firstName: t.exposeString('firstName', { description: undefined, nullable: false, }),
     lastName: t.exposeString('lastName', { description: 'lastname description', nullable: false, }),
+    birthdate: t.field({
+      type: Inputs.DateTime,
+      description: undefined,
+      nullable: false,
+      resolve: (parent, args, ctx) => parent.birthdate
+    }),
+    login: t.exposeString('login', { description: undefined, nullable: false, }),
+    password: t.exposeString('password', { description: undefined, nullable: false, }),
     Posts: t.relation('Posts', {
       description: 'relation desc',
       nullable: false,
@@ -51,13 +59,13 @@ export const User = builder.prismaObject('User', {
       })
     }),
     createdAt: t.field({
-      type: "DateTime",
+      type: Inputs.DateTime,
       description: 'createdAt description',
       nullable: false,
       resolve: (parent, args, ctx) => parent.createdAt
     }),
     updatedAt: t.field({
-      type: "DateTime",
+      type: Inputs.DateTime,
       description: undefined,
       nullable: true,
       resolve: (parent, args, ctx) => parent.updatedAt

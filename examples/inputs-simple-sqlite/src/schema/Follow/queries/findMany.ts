@@ -2,7 +2,7 @@ import { Follow } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyFollow = builder.queryFields((t) => ({
+export const findManyFollow = builder.queryFields((t) => ({
   findManyFollow: t.prismaField({
     type: [Follow],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyFollow = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyFollow

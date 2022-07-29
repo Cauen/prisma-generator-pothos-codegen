@@ -2,7 +2,7 @@ import { IdOnly } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findFirstIdOnly = builder.queryFields((t) => ({
+export const findFirstIdOnly = builder.queryFields((t) => ({
   findFirstIdOnly: t.prismaField({
     type: IdOnly,
     nullable: true,
@@ -29,5 +29,3 @@ const findFirstIdOnly = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findFirstIdOnly

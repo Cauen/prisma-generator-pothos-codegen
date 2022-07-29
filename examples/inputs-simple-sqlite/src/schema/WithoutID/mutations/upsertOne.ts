@@ -2,7 +2,7 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const upsertOneWithoutID = builder.mutationFields((t) => ({
+export const upsertOneWithoutID = builder.mutationFields((t) => ({
   upsertOneWithoutID: t.prismaField({
     type: WithoutID,
     nullable: false,
@@ -23,5 +23,3 @@ const upsertOneWithoutID = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default upsertOneWithoutID

@@ -2,7 +2,7 @@ import { WithScalars } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneWithScalars = builder.mutationFields((t) => ({
+export const deleteOneWithScalars = builder.mutationFields((t) => ({
   deleteOneWithScalars: t.prismaField({
     type: WithScalars,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneWithScalars = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneWithScalars

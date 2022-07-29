@@ -2,7 +2,7 @@ import { Follow } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const updateOneFollow = builder.mutationFields((t) => ({
+export const updateOneFollow = builder.mutationFields((t) => ({
   updateOneFollow: t.prismaField({
     type: Follow,
     nullable: true,
@@ -21,5 +21,3 @@ const updateOneFollow = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateOneFollow

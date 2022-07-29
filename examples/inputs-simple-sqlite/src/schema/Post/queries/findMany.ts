@@ -2,7 +2,7 @@ import { Post } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyPost = builder.queryFields((t) => ({
+export const findManyPost = builder.queryFields((t) => ({
   findManyPost: t.prismaField({
     type: [Post],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyPost = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyPost

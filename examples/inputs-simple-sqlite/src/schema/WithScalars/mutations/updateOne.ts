@@ -2,7 +2,7 @@ import { WithScalars } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const updateOneWithScalars = builder.mutationFields((t) => ({
+export const updateOneWithScalars = builder.mutationFields((t) => ({
   updateOneWithScalars: t.prismaField({
     type: WithScalars,
     nullable: true,
@@ -21,5 +21,3 @@ const updateOneWithScalars = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateOneWithScalars

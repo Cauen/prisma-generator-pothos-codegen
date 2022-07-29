@@ -2,7 +2,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 
-const updateManyIdOnly = builder.mutationFields((t) => ({
+export const updateManyIdOnly = builder.mutationFields((t) => ({
   updateManyIdOnly: t.field({
     type: BatchPayload,
     nullable: false,
@@ -20,5 +20,3 @@ const updateManyIdOnly = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateManyIdOnly

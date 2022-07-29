@@ -2,7 +2,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 
-const deleteManyFollow = builder.mutationFields((t) => ({
+export const deleteManyFollow = builder.mutationFields((t) => ({
   deleteManyFollow: t.field({
     type: BatchPayload,
     nullable: true,
@@ -18,5 +18,3 @@ const deleteManyFollow = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteManyFollow

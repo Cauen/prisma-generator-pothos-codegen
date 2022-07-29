@@ -1,7 +1,7 @@
 import { Prisma } from ".prisma/client";
 import { builder } from "./builder"
 
-const DateTime = builder.scalarType('DateTime', {
+export const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
     const isDateParsable = typeof value === 'string' || typeof value === 'number'
     if (!isDateParsable) throw new Error("DateTime input date")
@@ -14,11 +14,14 @@ const DateTime = builder.scalarType('DateTime', {
     return value ? new Date(value) : null;
   },
 });
-const Decimal = builder.scalarType('Decimal', {
+export const Decimal = builder.scalarType('Decimal', {
   serialize: (val) => (val),
-  parseValue: (val) => Number(val),
+  parseValue: (val) => {
+    if (typeof val !== 'number' && typeof val !== 'string') throw new Error("Invalid decimal")
+    return new Prisma.Decimal(val)
+  },
 });
-const Bytes = builder.scalarType('Bytes', {
+export const Bytes = builder.scalarType('Bytes', {
   serialize: (value) => {
     return value
   },
@@ -34,20 +37,20 @@ const Bytes = builder.scalarType('Bytes', {
     throw new Error("Bytes must be string or array")
   }
 });
-const Bigint = builder.scalarType('BigInt', {
+export const Bigint = builder.scalarType('BigInt', {
   serialize: (val) => (val).toString(),
   parseValue: (val) => {
     if (typeof val !== 'string' && typeof val !== 'number') throw new Error("This is not parsable to bigint")
     return BigInt(val)
   },
 });
-const NEVER = builder.scalarType('NEVER', {
+export const NEVER = builder.scalarType('NEVER', {
   serialize: (value) => value,
   description: "Never fill this, its created for inputs that dont have fields"
 });
 
 export const UserScalarFieldEnum = builder.enumType('UserScalarFieldEnum', {
-  values: ["id","firstName","lastName","createdAt","updatedAt"] as const,
+  values: ["id","firstName","lastName","birthdate","login","password","createdAt","updatedAt"] as const,
 });
 export const PostScalarFieldEnum = builder.enumType('PostScalarFieldEnum', {
   values: ["id","title","content","authorId"] as const,
@@ -85,6 +88,9 @@ export const UserWhereInput = builder.inputRef<Prisma.UserWhereInput>('UserWhere
     id: t.field({"required":false,"type":IntFilter}),
     firstName: t.field({"required":false,"type":StringFilter}),
     lastName: t.field({"required":false,"type":StringFilter}),
+    birthdate: t.field({"required":false,"type":DateTimeFilter}),
+    login: t.field({"required":false,"type":StringFilter}),
+    password: t.field({"required":false,"type":StringFilter}),
     Posts: t.field({"required":false,"type":PostListRelationFilter}),
     Comments: t.field({"required":false,"type":CommentListRelationFilter}),
     createdAt: t.field({"required":false,"type":DateTimeFilter}),
@@ -100,6 +106,9 @@ export const UserOrderByWithRelationInput = builder.inputRef<Prisma.UserOrderByW
     id: t.field({"required":false,"type":SortOrder}),
     firstName: t.field({"required":false,"type":SortOrder}),
     lastName: t.field({"required":false,"type":SortOrder}),
+    birthdate: t.field({"required":false,"type":SortOrder}),
+    login: t.field({"required":false,"type":SortOrder}),
+    password: t.field({"required":false,"type":SortOrder}),
     Posts: t.field({"required":false,"type":PostOrderByRelationAggregateInput}),
     Comments: t.field({"required":false,"type":CommentOrderByRelationAggregateInput}),
     createdAt: t.field({"required":false,"type":SortOrder}),
@@ -121,6 +130,9 @@ export const UserOrderByWithAggregationInput = builder.inputRef<Prisma.UserOrder
     id: t.field({"required":false,"type":SortOrder}),
     firstName: t.field({"required":false,"type":SortOrder}),
     lastName: t.field({"required":false,"type":SortOrder}),
+    birthdate: t.field({"required":false,"type":SortOrder}),
+    login: t.field({"required":false,"type":SortOrder}),
+    password: t.field({"required":false,"type":SortOrder}),
     createdAt: t.field({"required":false,"type":SortOrder}),
     updatedAt: t.field({"required":false,"type":SortOrder}),
     _count: t.field({"required":false,"type":UserCountOrderByAggregateInput}),
@@ -139,6 +151,9 @@ export const UserScalarWhereWithAggregatesInput = builder.inputRef<Prisma.UserSc
     id: t.field({"required":false,"type":IntWithAggregatesFilter}),
     firstName: t.field({"required":false,"type":StringWithAggregatesFilter}),
     lastName: t.field({"required":false,"type":StringWithAggregatesFilter}),
+    birthdate: t.field({"required":false,"type":DateTimeWithAggregatesFilter}),
+    login: t.field({"required":false,"type":StringWithAggregatesFilter}),
+    password: t.field({"required":false,"type":StringWithAggregatesFilter}),
     createdAt: t.field({"required":false,"type":DateTimeWithAggregatesFilter}),
     updatedAt: t.field({"required":false,"type":DateTimeNullableWithAggregatesFilter}),
   })
@@ -152,7 +167,7 @@ export const PostWhereInput = builder.inputRef<Prisma.PostWhereInput>('PostWhere
     id: t.field({"required":false,"type":IntFilter}),
     title: t.field({"required":false,"type":StringFilter}),
     content: t.field({"required":false,"type":StringFilter}),
-    Author: t.field({"required":false,"type":UserRelationFilter}),
+    Author: t.field({"required":false,"type":UserWhereInput}),
     Comments: t.field({"required":false,"type":CommentListRelationFilter}),
     authorId: t.field({"required":false,"type":IntFilter}),
   })
@@ -208,8 +223,8 @@ export const CommentWhereInput = builder.inputRef<Prisma.CommentWhereInput>('Com
     NOT: t.field({"required":false,"type":[CommentWhereInput]}),
     id: t.field({"required":false,"type":IntFilter}),
     comment: t.field({"required":false,"type":StringFilter}),
-    Author: t.field({"required":false,"type":UserRelationFilter}),
-    Post: t.field({"required":false,"type":PostRelationFilter}),
+    Author: t.field({"required":false,"type":UserWhereInput}),
+    Post: t.field({"required":false,"type":PostWhereInput}),
     authorId: t.field({"required":false,"type":IntFilter}),
     postId: t.field({"required":false,"type":IntFilter}),
   })
@@ -265,7 +280,7 @@ export const ProfileWhereInput = builder.inputRef<Prisma.ProfileWhereInput>('Pro
     NOT: t.field({"required":false,"type":[ProfileWhereInput]}),
     id: t.field({"required":false,"type":IntFilter}),
     bio: t.field({"required":false,"type":StringNullableFilter}),
-    User: t.field({"required":false,"type":UserRelationFilter}),
+    User: t.field({"required":false,"type":UserWhereInput}),
     userId: t.field({"required":false,"type":IntFilter}),
   })
 })
@@ -317,8 +332,8 @@ export const FollowWhereInput = builder.inputRef<Prisma.FollowWhereInput>('Follo
     NOT: t.field({"required":false,"type":[FollowWhereInput]}),
     fromId: t.field({"required":false,"type":IntFilter}),
     toId: t.field({"required":false,"type":IntFilter}),
-    From: t.field({"required":false,"type":UserRelationFilter}),
-    To: t.field({"required":false,"type":UserRelationFilter}),
+    From: t.field({"required":false,"type":UserWhereInput}),
+    To: t.field({"required":false,"type":UserWhereInput}),
   })
 })
 
@@ -561,6 +576,9 @@ export const UserCreateInput = builder.inputRef<Prisma.UserCreateInput>('UserCre
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Posts: t.field({"required":false,"type":PostCreateNestedManyWithoutAuthorInput}),
     Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
@@ -571,25 +589,13 @@ export const UserCreateInput = builder.inputRef<Prisma.UserCreateInput>('UserCre
   })
 })
 
-export const UserUncheckedCreateInput = builder.inputRef<Prisma.UserUncheckedCreateInput>('UserUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Posts: t.field({"required":false,"type":PostUncheckedCreateNestedManyWithoutAuthorInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedCreateNestedManyWithoutUserInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutToInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutFromInput}),
-  })
-})
-
 export const UserUpdateInput = builder.inputRef<Prisma.UserUpdateInput>('UserUpdateInput').implement({
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Posts: t.field({"required":false,"type":PostUpdateManyWithoutAuthorNestedInput}),
     Comments: t.field({"required":false,"type":CommentUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
@@ -600,35 +606,13 @@ export const UserUpdateInput = builder.inputRef<Prisma.UserUpdateInput>('UserUpd
   })
 })
 
-export const UserUncheckedUpdateInput = builder.inputRef<Prisma.UserUncheckedUpdateInput>('UserUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Posts: t.field({"required":false,"type":PostUncheckedUpdateManyWithoutAuthorNestedInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedUpdateManyWithoutUserNestedInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutToNestedInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutFromNestedInput}),
-  })
-})
-
 export const UserUpdateManyMutationInput = builder.inputRef<Prisma.UserUpdateManyMutationInput>('UserUpdateManyMutationInput').implement({
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-  })
-})
-
-export const UserUncheckedUpdateManyInput = builder.inputRef<Prisma.UserUncheckedUpdateManyInput>('UserUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
     updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
   })
@@ -643,16 +627,6 @@ export const PostCreateInput = builder.inputRef<Prisma.PostCreateInput>('PostCre
   })
 })
 
-export const PostUncheckedCreateInput = builder.inputRef<Prisma.PostUncheckedCreateInput>('PostUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    title: t.string({"required":true}),
-    content: t.string({"required":true}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutPostInput}),
-    authorId: t.int({"required":true}),
-  })
-})
-
 export const PostUpdateInput = builder.inputRef<Prisma.PostUpdateInput>('PostUpdateInput').implement({
   fields: (t) => ({
     title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
@@ -662,29 +636,10 @@ export const PostUpdateInput = builder.inputRef<Prisma.PostUpdateInput>('PostUpd
   })
 })
 
-export const PostUncheckedUpdateInput = builder.inputRef<Prisma.PostUncheckedUpdateInput>('PostUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutPostNestedInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const PostUpdateManyMutationInput = builder.inputRef<Prisma.PostUpdateManyMutationInput>('PostUpdateManyMutationInput').implement({
   fields: (t) => ({
     title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-  })
-})
-
-export const PostUncheckedUpdateManyInput = builder.inputRef<Prisma.PostUncheckedUpdateManyInput>('PostUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -696,15 +651,6 @@ export const CommentCreateInput = builder.inputRef<Prisma.CommentCreateInput>('C
   })
 })
 
-export const CommentUncheckedCreateInput = builder.inputRef<Prisma.CommentUncheckedCreateInput>('CommentUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    comment: t.string({"required":true}),
-    authorId: t.int({"required":true}),
-    postId: t.int({"required":true}),
-  })
-})
-
 export const CommentUpdateInput = builder.inputRef<Prisma.CommentUpdateInput>('CommentUpdateInput').implement({
   fields: (t) => ({
     comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
@@ -713,27 +659,9 @@ export const CommentUpdateInput = builder.inputRef<Prisma.CommentUpdateInput>('C
   })
 })
 
-export const CommentUncheckedUpdateInput = builder.inputRef<Prisma.CommentUncheckedUpdateInput>('CommentUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    postId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const CommentUpdateManyMutationInput = builder.inputRef<Prisma.CommentUpdateManyMutationInput>('CommentUpdateManyMutationInput').implement({
   fields: (t) => ({
     comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-  })
-})
-
-export const CommentUncheckedUpdateManyInput = builder.inputRef<Prisma.CommentUncheckedUpdateManyInput>('CommentUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    postId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -744,14 +672,6 @@ export const ProfileCreateInput = builder.inputRef<Prisma.ProfileCreateInput>('P
   })
 })
 
-export const ProfileUncheckedCreateInput = builder.inputRef<Prisma.ProfileUncheckedCreateInput>('ProfileUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    bio: t.string({"required":false}),
-    userId: t.int({"required":true}),
-  })
-})
-
 export const ProfileUpdateInput = builder.inputRef<Prisma.ProfileUpdateInput>('ProfileUpdateInput').implement({
   fields: (t) => ({
     bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
@@ -759,25 +679,9 @@ export const ProfileUpdateInput = builder.inputRef<Prisma.ProfileUpdateInput>('P
   })
 })
 
-export const ProfileUncheckedUpdateInput = builder.inputRef<Prisma.ProfileUncheckedUpdateInput>('ProfileUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-    userId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const ProfileUpdateManyMutationInput = builder.inputRef<Prisma.ProfileUpdateManyMutationInput>('ProfileUpdateManyMutationInput').implement({
   fields: (t) => ({
     bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-  })
-})
-
-export const ProfileUncheckedUpdateManyInput = builder.inputRef<Prisma.ProfileUncheckedUpdateManyInput>('ProfileUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-    userId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -788,24 +692,10 @@ export const FollowCreateInput = builder.inputRef<Prisma.FollowCreateInput>('Fol
   })
 })
 
-export const FollowUncheckedCreateInput = builder.inputRef<Prisma.FollowUncheckedCreateInput>('FollowUncheckedCreateInput').implement({
-  fields: (t) => ({
-    fromId: t.int({"required":true}),
-    toId: t.int({"required":true}),
-  })
-})
-
 export const FollowUpdateInput = builder.inputRef<Prisma.FollowUpdateInput>('FollowUpdateInput').implement({
   fields: (t) => ({
     From: t.field({"required":false,"type":UserUpdateOneRequiredWithoutFollowingNestedInput}),
     To: t.field({"required":false,"type":UserUpdateOneRequiredWithoutFollowersNestedInput}),
-  })
-})
-
-export const FollowUncheckedUpdateInput = builder.inputRef<Prisma.FollowUncheckedUpdateInput>('FollowUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    fromId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    toId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -815,22 +705,8 @@ export const FollowUpdateManyMutationInput = builder.inputRef<Prisma.FollowUpdat
   })
 })
 
-export const FollowUncheckedUpdateManyInput = builder.inputRef<Prisma.FollowUncheckedUpdateManyInput>('FollowUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    fromId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    toId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const UnrelatedCreateInput = builder.inputRef<Prisma.UnrelatedCreateInput>('UnrelatedCreateInput').implement({
   fields: (t) => ({
-    name: t.string({"required":false}),
-  })
-})
-
-export const UnrelatedUncheckedCreateInput = builder.inputRef<Prisma.UnrelatedUncheckedCreateInput>('UnrelatedUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
     name: t.string({"required":false}),
   })
 })
@@ -841,22 +717,8 @@ export const UnrelatedUpdateInput = builder.inputRef<Prisma.UnrelatedUpdateInput
   })
 })
 
-export const UnrelatedUncheckedUpdateInput = builder.inputRef<Prisma.UnrelatedUncheckedUpdateInput>('UnrelatedUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    name: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-  })
-})
-
 export const UnrelatedUpdateManyMutationInput = builder.inputRef<Prisma.UnrelatedUpdateManyMutationInput>('UnrelatedUpdateManyMutationInput').implement({
   fields: (t) => ({
-    name: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-  })
-})
-
-export const UnrelatedUncheckedUpdateManyInput = builder.inputRef<Prisma.UnrelatedUncheckedUpdateManyInput>('UnrelatedUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
     name: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
   })
 })
@@ -867,21 +729,9 @@ export const IdOnlyCreateInput = builder.inputRef<Prisma.IdOnlyCreateInput>('IdO
   })
 })
 
-export const IdOnlyUncheckedCreateInput = builder.inputRef<Prisma.IdOnlyUncheckedCreateInput>('IdOnlyUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-  })
-})
-
 export const IdOnlyUpdateInput = builder.inputRef<Prisma.IdOnlyUpdateInput>('IdOnlyUpdateInput').implement({
   fields: (t) => ({
     _: t.field({type: NEVER}),
-  })
-})
-
-export const IdOnlyUncheckedUpdateInput = builder.inputRef<Prisma.IdOnlyUncheckedUpdateInput>('IdOnlyUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -891,19 +741,7 @@ export const IdOnlyUpdateManyMutationInput = builder.inputRef<Prisma.IdOnlyUpdat
   })
 })
 
-export const IdOnlyUncheckedUpdateManyInput = builder.inputRef<Prisma.IdOnlyUncheckedUpdateManyInput>('IdOnlyUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const WithoutIDCreateInput = builder.inputRef<Prisma.WithoutIDCreateInput>('WithoutIDCreateInput').implement({
-  fields: (t) => ({
-    name: t.string({"required":true}),
-  })
-})
-
-export const WithoutIDUncheckedCreateInput = builder.inputRef<Prisma.WithoutIDUncheckedCreateInput>('WithoutIDUncheckedCreateInput').implement({
   fields: (t) => ({
     name: t.string({"required":true}),
   })
@@ -915,19 +753,7 @@ export const WithoutIDUpdateInput = builder.inputRef<Prisma.WithoutIDUpdateInput
   })
 })
 
-export const WithoutIDUncheckedUpdateInput = builder.inputRef<Prisma.WithoutIDUncheckedUpdateInput>('WithoutIDUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-  })
-})
-
 export const WithoutIDUpdateManyMutationInput = builder.inputRef<Prisma.WithoutIDUpdateManyMutationInput>('WithoutIDUpdateManyMutationInput').implement({
-  fields: (t) => ({
-    name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-  })
-})
-
-export const WithoutIDUncheckedUpdateManyInput = builder.inputRef<Prisma.WithoutIDUncheckedUpdateManyInput>('WithoutIDUncheckedUpdateManyInput').implement({
   fields: (t) => ({
     name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
   })
@@ -935,20 +761,6 @@ export const WithoutIDUncheckedUpdateManyInput = builder.inputRef<Prisma.Without
 
 export const WithScalarsCreateInput = builder.inputRef<Prisma.WithScalarsCreateInput>('WithScalarsCreateInput').implement({
   fields: (t) => ({
-    string: t.string({"required":false}),
-    boolean: t.boolean({"required":false}),
-    int: t.int({"required":false}),
-    float: t.float({"required":false}),
-    decimal: t.field({"required":false,"type":Decimal}),
-    bigint: t.field({"required":false,"type":Bigint}),
-    datetime: t.field({"required":false,"type":DateTime}),
-    bytes: t.field({"required":false,"type":Bytes}),
-  })
-})
-
-export const WithScalarsUncheckedCreateInput = builder.inputRef<Prisma.WithScalarsUncheckedCreateInput>('WithScalarsUncheckedCreateInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
     string: t.string({"required":false}),
     boolean: t.boolean({"required":false}),
     int: t.int({"required":false}),
@@ -973,36 +785,8 @@ export const WithScalarsUpdateInput = builder.inputRef<Prisma.WithScalarsUpdateI
   })
 })
 
-export const WithScalarsUncheckedUpdateInput = builder.inputRef<Prisma.WithScalarsUncheckedUpdateInput>('WithScalarsUncheckedUpdateInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    string: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-    boolean: t.field({"required":false,"type":NullableBoolFieldUpdateOperationsInput}),
-    int: t.field({"required":false,"type":NullableIntFieldUpdateOperationsInput}),
-    float: t.field({"required":false,"type":NullableFloatFieldUpdateOperationsInput}),
-    decimal: t.field({"required":false,"type":NullableDecimalFieldUpdateOperationsInput}),
-    bigint: t.field({"required":false,"type":NullableBigIntFieldUpdateOperationsInput}),
-    datetime: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    bytes: t.field({"required":false,"type":NullableBytesFieldUpdateOperationsInput}),
-  })
-})
-
 export const WithScalarsUpdateManyMutationInput = builder.inputRef<Prisma.WithScalarsUpdateManyMutationInput>('WithScalarsUpdateManyMutationInput').implement({
   fields: (t) => ({
-    string: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-    boolean: t.field({"required":false,"type":NullableBoolFieldUpdateOperationsInput}),
-    int: t.field({"required":false,"type":NullableIntFieldUpdateOperationsInput}),
-    float: t.field({"required":false,"type":NullableFloatFieldUpdateOperationsInput}),
-    decimal: t.field({"required":false,"type":NullableDecimalFieldUpdateOperationsInput}),
-    bigint: t.field({"required":false,"type":NullableBigIntFieldUpdateOperationsInput}),
-    datetime: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    bytes: t.field({"required":false,"type":NullableBytesFieldUpdateOperationsInput}),
-  })
-})
-
-export const WithScalarsUncheckedUpdateManyInput = builder.inputRef<Prisma.WithScalarsUncheckedUpdateManyInput>('WithScalarsUncheckedUpdateManyInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
     string: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
     boolean: t.field({"required":false,"type":NullableBoolFieldUpdateOperationsInput}),
     int: t.field({"required":false,"type":NullableIntFieldUpdateOperationsInput}),
@@ -1043,6 +827,19 @@ export const StringFilter = builder.inputRef<Prisma.StringFilter>('StringFilter'
   })
 })
 
+export const DateTimeFilter = builder.inputRef<Prisma.DateTimeFilter>('DateTimeFilter').implement({
+  fields: (t) => ({
+    equals: t.field({"required":false,"type":DateTime}),
+    in: t.field({"required":false,"type":[DateTime]}),
+    notIn: t.field({"required":false,"type":[DateTime]}),
+    lt: t.field({"required":false,"type":DateTime}),
+    lte: t.field({"required":false,"type":DateTime}),
+    gt: t.field({"required":false,"type":DateTime}),
+    gte: t.field({"required":false,"type":DateTime}),
+    not: t.field({"required":false,"type":NestedDateTimeFilter}),
+  })
+})
+
 export const PostListRelationFilter = builder.inputRef<Prisma.PostListRelationFilter>('PostListRelationFilter').implement({
   fields: (t) => ({
     every: t.field({"required":false,"type":PostWhereInput}),
@@ -1056,19 +853,6 @@ export const CommentListRelationFilter = builder.inputRef<Prisma.CommentListRela
     every: t.field({"required":false,"type":CommentWhereInput}),
     some: t.field({"required":false,"type":CommentWhereInput}),
     none: t.field({"required":false,"type":CommentWhereInput}),
-  })
-})
-
-export const DateTimeFilter = builder.inputRef<Prisma.DateTimeFilter>('DateTimeFilter').implement({
-  fields: (t) => ({
-    equals: t.field({"required":false,"type":DateTime}),
-    in: t.field({"required":false,"type":[DateTime]}),
-    notIn: t.field({"required":false,"type":[DateTime]}),
-    lt: t.field({"required":false,"type":DateTime}),
-    lte: t.field({"required":false,"type":DateTime}),
-    gt: t.field({"required":false,"type":DateTime}),
-    gte: t.field({"required":false,"type":DateTime}),
-    not: t.field({"required":false,"type":NestedDateTimeFilter}),
   })
 })
 
@@ -1130,6 +914,9 @@ export const UserCountOrderByAggregateInput = builder.inputRef<Prisma.UserCountO
     id: t.field({"required":false,"type":SortOrder}),
     firstName: t.field({"required":false,"type":SortOrder}),
     lastName: t.field({"required":false,"type":SortOrder}),
+    birthdate: t.field({"required":false,"type":SortOrder}),
+    login: t.field({"required":false,"type":SortOrder}),
+    password: t.field({"required":false,"type":SortOrder}),
     createdAt: t.field({"required":false,"type":SortOrder}),
     updatedAt: t.field({"required":false,"type":SortOrder}),
   })
@@ -1146,6 +933,9 @@ export const UserMaxOrderByAggregateInput = builder.inputRef<Prisma.UserMaxOrder
     id: t.field({"required":false,"type":SortOrder}),
     firstName: t.field({"required":false,"type":SortOrder}),
     lastName: t.field({"required":false,"type":SortOrder}),
+    birthdate: t.field({"required":false,"type":SortOrder}),
+    login: t.field({"required":false,"type":SortOrder}),
+    password: t.field({"required":false,"type":SortOrder}),
     createdAt: t.field({"required":false,"type":SortOrder}),
     updatedAt: t.field({"required":false,"type":SortOrder}),
   })
@@ -1156,6 +946,9 @@ export const UserMinOrderByAggregateInput = builder.inputRef<Prisma.UserMinOrder
     id: t.field({"required":false,"type":SortOrder}),
     firstName: t.field({"required":false,"type":SortOrder}),
     lastName: t.field({"required":false,"type":SortOrder}),
+    birthdate: t.field({"required":false,"type":SortOrder}),
+    login: t.field({"required":false,"type":SortOrder}),
+    password: t.field({"required":false,"type":SortOrder}),
     createdAt: t.field({"required":false,"type":SortOrder}),
     updatedAt: t.field({"required":false,"type":SortOrder}),
   })
@@ -1794,49 +1587,15 @@ export const FollowCreateNestedManyWithoutFromInput = builder.inputRef<Prisma.Fo
   })
 })
 
-export const PostUncheckedCreateNestedManyWithoutAuthorInput = builder.inputRef<Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput>('PostUncheckedCreateNestedManyWithoutAuthorInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":PostCreateWithoutAuthorInput}),
-    connectOrCreate: t.field({"required":false,"type":[PostCreateOrConnectWithoutAuthorInput]}),
-    connect: t.field({"required":false,"type":[PostWhereUniqueInput]}),
-  })
-})
-
-export const CommentUncheckedCreateNestedManyWithoutAuthorInput = builder.inputRef<Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput>('CommentUncheckedCreateNestedManyWithoutAuthorInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":CommentCreateWithoutAuthorInput}),
-    connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutAuthorInput]}),
-    connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-  })
-})
-
-export const ProfileUncheckedCreateNestedManyWithoutUserInput = builder.inputRef<Prisma.ProfileUncheckedCreateNestedManyWithoutUserInput>('ProfileUncheckedCreateNestedManyWithoutUserInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":ProfileCreateWithoutUserInput}),
-    connectOrCreate: t.field({"required":false,"type":[ProfileCreateOrConnectWithoutUserInput]}),
-    connect: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
-  })
-})
-
-export const FollowUncheckedCreateNestedManyWithoutToInput = builder.inputRef<Prisma.FollowUncheckedCreateNestedManyWithoutToInput>('FollowUncheckedCreateNestedManyWithoutToInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":FollowCreateWithoutToInput}),
-    connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutToInput]}),
-    connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-  })
-})
-
-export const FollowUncheckedCreateNestedManyWithoutFromInput = builder.inputRef<Prisma.FollowUncheckedCreateNestedManyWithoutFromInput>('FollowUncheckedCreateNestedManyWithoutFromInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":FollowCreateWithoutFromInput}),
-    connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutFromInput]}),
-    connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-  })
-})
-
 export const StringFieldUpdateOperationsInput = builder.inputRef<Prisma.StringFieldUpdateOperationsInput>('StringFieldUpdateOperationsInput').implement({
   fields: (t) => ({
     set: t.string({"required":false}),
+  })
+})
+
+export const DateTimeFieldUpdateOperationsInput = builder.inputRef<Prisma.DateTimeFieldUpdateOperationsInput>('DateTimeFieldUpdateOperationsInput').implement({
+  fields: (t) => ({
+    set: t.field({"required":false,"type":DateTime}),
   })
 })
 
@@ -1867,12 +1626,6 @@ export const CommentUpdateManyWithoutAuthorNestedInput = builder.inputRef<Prisma
     update: t.field({"required":false,"type":[CommentUpdateWithWhereUniqueWithoutAuthorInput]}),
     updateMany: t.field({"required":false,"type":[CommentUpdateManyWithWhereWithoutAuthorInput]}),
     deleteMany: t.field({"required":false,"type":[CommentScalarWhereInput]}),
-  })
-})
-
-export const DateTimeFieldUpdateOperationsInput = builder.inputRef<Prisma.DateTimeFieldUpdateOperationsInput>('DateTimeFieldUpdateOperationsInput').implement({
-  fields: (t) => ({
-    set: t.field({"required":false,"type":DateTime}),
   })
 })
 
@@ -1937,81 +1690,6 @@ export const IntFieldUpdateOperationsInput = builder.inputRef<Prisma.IntFieldUpd
   })
 })
 
-export const PostUncheckedUpdateManyWithoutAuthorNestedInput = builder.inputRef<Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput>('PostUncheckedUpdateManyWithoutAuthorNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":PostCreateWithoutAuthorInput}),
-    connectOrCreate: t.field({"required":false,"type":[PostCreateOrConnectWithoutAuthorInput]}),
-    upsert: t.field({"required":false,"type":[PostUpsertWithWhereUniqueWithoutAuthorInput]}),
-    set: t.field({"required":false,"type":[PostWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[PostWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[PostWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[PostWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[PostUpdateWithWhereUniqueWithoutAuthorInput]}),
-    updateMany: t.field({"required":false,"type":[PostUpdateManyWithWhereWithoutAuthorInput]}),
-    deleteMany: t.field({"required":false,"type":[PostScalarWhereInput]}),
-  })
-})
-
-export const CommentUncheckedUpdateManyWithoutAuthorNestedInput = builder.inputRef<Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput>('CommentUncheckedUpdateManyWithoutAuthorNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":CommentCreateWithoutAuthorInput}),
-    connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutAuthorInput]}),
-    upsert: t.field({"required":false,"type":[CommentUpsertWithWhereUniqueWithoutAuthorInput]}),
-    set: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[CommentUpdateWithWhereUniqueWithoutAuthorInput]}),
-    updateMany: t.field({"required":false,"type":[CommentUpdateManyWithWhereWithoutAuthorInput]}),
-    deleteMany: t.field({"required":false,"type":[CommentScalarWhereInput]}),
-  })
-})
-
-export const ProfileUncheckedUpdateManyWithoutUserNestedInput = builder.inputRef<Prisma.ProfileUncheckedUpdateManyWithoutUserNestedInput>('ProfileUncheckedUpdateManyWithoutUserNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":ProfileCreateWithoutUserInput}),
-    connectOrCreate: t.field({"required":false,"type":[ProfileCreateOrConnectWithoutUserInput]}),
-    upsert: t.field({"required":false,"type":[ProfileUpsertWithWhereUniqueWithoutUserInput]}),
-    set: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[ProfileUpdateWithWhereUniqueWithoutUserInput]}),
-    updateMany: t.field({"required":false,"type":[ProfileUpdateManyWithWhereWithoutUserInput]}),
-    deleteMany: t.field({"required":false,"type":[ProfileScalarWhereInput]}),
-  })
-})
-
-export const FollowUncheckedUpdateManyWithoutToNestedInput = builder.inputRef<Prisma.FollowUncheckedUpdateManyWithoutToNestedInput>('FollowUncheckedUpdateManyWithoutToNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":FollowCreateWithoutToInput}),
-    connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutToInput]}),
-    upsert: t.field({"required":false,"type":[FollowUpsertWithWhereUniqueWithoutToInput]}),
-    set: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[FollowUpdateWithWhereUniqueWithoutToInput]}),
-    updateMany: t.field({"required":false,"type":[FollowUpdateManyWithWhereWithoutToInput]}),
-    deleteMany: t.field({"required":false,"type":[FollowScalarWhereInput]}),
-  })
-})
-
-export const FollowUncheckedUpdateManyWithoutFromNestedInput = builder.inputRef<Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput>('FollowUncheckedUpdateManyWithoutFromNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":FollowCreateWithoutFromInput}),
-    connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutFromInput]}),
-    upsert: t.field({"required":false,"type":[FollowUpsertWithWhereUniqueWithoutFromInput]}),
-    set: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[FollowUpdateWithWhereUniqueWithoutFromInput]}),
-    updateMany: t.field({"required":false,"type":[FollowUpdateManyWithWhereWithoutFromInput]}),
-    deleteMany: t.field({"required":false,"type":[FollowScalarWhereInput]}),
-  })
-})
-
 export const UserCreateNestedOneWithoutPostsInput = builder.inputRef<Prisma.UserCreateNestedOneWithoutPostsInput>('UserCreateNestedOneWithoutPostsInput').implement({
   fields: (t) => ({
     create: t.field({"required":false,"type":UserCreateWithoutPostsInput}),
@@ -2021,14 +1699,6 @@ export const UserCreateNestedOneWithoutPostsInput = builder.inputRef<Prisma.User
 })
 
 export const CommentCreateNestedManyWithoutPostInput = builder.inputRef<Prisma.CommentCreateNestedManyWithoutPostInput>('CommentCreateNestedManyWithoutPostInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
-    connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
-    connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-  })
-})
-
-export const CommentUncheckedCreateNestedManyWithoutPostInput = builder.inputRef<Prisma.CommentUncheckedCreateNestedManyWithoutPostInput>('CommentUncheckedCreateNestedManyWithoutPostInput').implement({
   fields: (t) => ({
     create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
     connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
@@ -2047,21 +1717,6 @@ export const UserUpdateOneRequiredWithoutPostsNestedInput = builder.inputRef<Pri
 })
 
 export const CommentUpdateManyWithoutPostNestedInput = builder.inputRef<Prisma.CommentUpdateManyWithoutPostNestedInput>('CommentUpdateManyWithoutPostNestedInput').implement({
-  fields: (t) => ({
-    create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
-    connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
-    upsert: t.field({"required":false,"type":[CommentUpsertWithWhereUniqueWithoutPostInput]}),
-    set: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    disconnect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    delete: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
-    update: t.field({"required":false,"type":[CommentUpdateWithWhereUniqueWithoutPostInput]}),
-    updateMany: t.field({"required":false,"type":[CommentUpdateManyWithWhereWithoutPostInput]}),
-    deleteMany: t.field({"required":false,"type":[CommentScalarWhereInput]}),
-  })
-})
-
-export const CommentUncheckedUpdateManyWithoutPostNestedInput = builder.inputRef<Prisma.CommentUncheckedUpdateManyWithoutPostNestedInput>('CommentUncheckedUpdateManyWithoutPostNestedInput').implement({
   fields: (t) => ({
     create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
     connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
@@ -2566,15 +2221,6 @@ export const PostCreateWithoutAuthorInput = builder.inputRef<Prisma.PostCreateWi
   })
 })
 
-export const PostUncheckedCreateWithoutAuthorInput = builder.inputRef<Prisma.PostUncheckedCreateWithoutAuthorInput>('PostUncheckedCreateWithoutAuthorInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    title: t.string({"required":true}),
-    content: t.string({"required":true}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutPostInput}),
-  })
-})
-
 export const PostCreateOrConnectWithoutAuthorInput = builder.inputRef<Prisma.PostCreateOrConnectWithoutAuthorInput>('PostCreateOrConnectWithoutAuthorInput').implement({
   fields: (t) => ({
     where: t.field({"required":true,"type":PostWhereUniqueInput}),
@@ -2589,14 +2235,6 @@ export const CommentCreateWithoutAuthorInput = builder.inputRef<Prisma.CommentCr
   })
 })
 
-export const CommentUncheckedCreateWithoutAuthorInput = builder.inputRef<Prisma.CommentUncheckedCreateWithoutAuthorInput>('CommentUncheckedCreateWithoutAuthorInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    comment: t.string({"required":true}),
-    postId: t.int({"required":true}),
-  })
-})
-
 export const CommentCreateOrConnectWithoutAuthorInput = builder.inputRef<Prisma.CommentCreateOrConnectWithoutAuthorInput>('CommentCreateOrConnectWithoutAuthorInput').implement({
   fields: (t) => ({
     where: t.field({"required":true,"type":CommentWhereUniqueInput}),
@@ -2606,13 +2244,6 @@ export const CommentCreateOrConnectWithoutAuthorInput = builder.inputRef<Prisma.
 
 export const ProfileCreateWithoutUserInput = builder.inputRef<Prisma.ProfileCreateWithoutUserInput>('ProfileCreateWithoutUserInput').implement({
   fields: (t) => ({
-    bio: t.string({"required":false}),
-  })
-})
-
-export const ProfileUncheckedCreateWithoutUserInput = builder.inputRef<Prisma.ProfileUncheckedCreateWithoutUserInput>('ProfileUncheckedCreateWithoutUserInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
     bio: t.string({"required":false}),
   })
 })
@@ -2630,12 +2261,6 @@ export const FollowCreateWithoutToInput = builder.inputRef<Prisma.FollowCreateWi
   })
 })
 
-export const FollowUncheckedCreateWithoutToInput = builder.inputRef<Prisma.FollowUncheckedCreateWithoutToInput>('FollowUncheckedCreateWithoutToInput').implement({
-  fields: (t) => ({
-    fromId: t.int({"required":true}),
-  })
-})
-
 export const FollowCreateOrConnectWithoutToInput = builder.inputRef<Prisma.FollowCreateOrConnectWithoutToInput>('FollowCreateOrConnectWithoutToInput').implement({
   fields: (t) => ({
     where: t.field({"required":true,"type":FollowWhereUniqueInput}),
@@ -2646,12 +2271,6 @@ export const FollowCreateOrConnectWithoutToInput = builder.inputRef<Prisma.Follo
 export const FollowCreateWithoutFromInput = builder.inputRef<Prisma.FollowCreateWithoutFromInput>('FollowCreateWithoutFromInput').implement({
   fields: (t) => ({
     To: t.field({"required":true,"type":UserCreateNestedOneWithoutFollowersInput}),
-  })
-})
-
-export const FollowUncheckedCreateWithoutFromInput = builder.inputRef<Prisma.FollowUncheckedCreateWithoutFromInput>('FollowUncheckedCreateWithoutFromInput').implement({
-  fields: (t) => ({
-    toId: t.int({"required":true}),
   })
 })
 
@@ -2821,26 +2440,15 @@ export const UserCreateWithoutPostsInput = builder.inputRef<Prisma.UserCreateWit
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
     updatedAt: t.field({"required":false,"type":DateTime}),
     Profile: t.field({"required":false,"type":ProfileCreateNestedManyWithoutUserInput}),
     Followers: t.field({"required":false,"type":FollowCreateNestedManyWithoutToInput}),
     Following: t.field({"required":false,"type":FollowCreateNestedManyWithoutFromInput}),
-  })
-})
-
-export const UserUncheckedCreateWithoutPostsInput = builder.inputRef<Prisma.UserUncheckedCreateWithoutPostsInput>('UserUncheckedCreateWithoutPostsInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedCreateNestedManyWithoutUserInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutToInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutFromInput}),
   })
 })
 
@@ -2855,14 +2463,6 @@ export const CommentCreateWithoutPostInput = builder.inputRef<Prisma.CommentCrea
   fields: (t) => ({
     comment: t.string({"required":true}),
     Author: t.field({"required":true,"type":UserCreateNestedOneWithoutCommentsInput}),
-  })
-})
-
-export const CommentUncheckedCreateWithoutPostInput = builder.inputRef<Prisma.CommentUncheckedCreateWithoutPostInput>('CommentUncheckedCreateWithoutPostInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    comment: t.string({"required":true}),
-    authorId: t.int({"required":true}),
   })
 })
 
@@ -2884,26 +2484,15 @@ export const UserUpdateWithoutPostsInput = builder.inputRef<Prisma.UserUpdateWit
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Comments: t.field({"required":false,"type":CommentUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
     updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
     Profile: t.field({"required":false,"type":ProfileUpdateManyWithoutUserNestedInput}),
     Followers: t.field({"required":false,"type":FollowUpdateManyWithoutToNestedInput}),
     Following: t.field({"required":false,"type":FollowUpdateManyWithoutFromNestedInput}),
-  })
-})
-
-export const UserUncheckedUpdateWithoutPostsInput = builder.inputRef<Prisma.UserUncheckedUpdateWithoutPostsInput>('UserUncheckedUpdateWithoutPostsInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedUpdateManyWithoutUserNestedInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutToNestedInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutFromNestedInput}),
   })
 })
 
@@ -2933,26 +2522,15 @@ export const UserCreateWithoutCommentsInput = builder.inputRef<Prisma.UserCreate
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Posts: t.field({"required":false,"type":PostCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
     updatedAt: t.field({"required":false,"type":DateTime}),
     Profile: t.field({"required":false,"type":ProfileCreateNestedManyWithoutUserInput}),
     Followers: t.field({"required":false,"type":FollowCreateNestedManyWithoutToInput}),
     Following: t.field({"required":false,"type":FollowCreateNestedManyWithoutFromInput}),
-  })
-})
-
-export const UserUncheckedCreateWithoutCommentsInput = builder.inputRef<Prisma.UserUncheckedCreateWithoutCommentsInput>('UserUncheckedCreateWithoutCommentsInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Posts: t.field({"required":false,"type":PostUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedCreateNestedManyWithoutUserInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutToInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutFromInput}),
   })
 })
 
@@ -2968,15 +2546,6 @@ export const PostCreateWithoutCommentsInput = builder.inputRef<Prisma.PostCreate
     title: t.string({"required":true}),
     content: t.string({"required":true}),
     Author: t.field({"required":true,"type":UserCreateNestedOneWithoutPostsInput}),
-  })
-})
-
-export const PostUncheckedCreateWithoutCommentsInput = builder.inputRef<Prisma.PostUncheckedCreateWithoutCommentsInput>('PostUncheckedCreateWithoutCommentsInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    title: t.string({"required":true}),
-    content: t.string({"required":true}),
-    authorId: t.int({"required":true}),
   })
 })
 
@@ -2998,26 +2567,15 @@ export const UserUpdateWithoutCommentsInput = builder.inputRef<Prisma.UserUpdate
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Posts: t.field({"required":false,"type":PostUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
     updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
     Profile: t.field({"required":false,"type":ProfileUpdateManyWithoutUserNestedInput}),
     Followers: t.field({"required":false,"type":FollowUpdateManyWithoutToNestedInput}),
     Following: t.field({"required":false,"type":FollowUpdateManyWithoutFromNestedInput}),
-  })
-})
-
-export const UserUncheckedUpdateWithoutCommentsInput = builder.inputRef<Prisma.UserUncheckedUpdateWithoutCommentsInput>('UserUncheckedUpdateWithoutCommentsInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Posts: t.field({"required":false,"type":PostUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedUpdateManyWithoutUserNestedInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutToNestedInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutFromNestedInput}),
   })
 })
 
@@ -3036,39 +2594,19 @@ export const PostUpdateWithoutCommentsInput = builder.inputRef<Prisma.PostUpdate
   })
 })
 
-export const PostUncheckedUpdateWithoutCommentsInput = builder.inputRef<Prisma.PostUncheckedUpdateWithoutCommentsInput>('PostUncheckedUpdateWithoutCommentsInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const UserCreateWithoutProfileInput = builder.inputRef<Prisma.UserCreateWithoutProfileInput>('UserCreateWithoutProfileInput').implement({
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Posts: t.field({"required":false,"type":PostCreateNestedManyWithoutAuthorInput}),
     Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
     updatedAt: t.field({"required":false,"type":DateTime}),
     Followers: t.field({"required":false,"type":FollowCreateNestedManyWithoutToInput}),
     Following: t.field({"required":false,"type":FollowCreateNestedManyWithoutFromInput}),
-  })
-})
-
-export const UserUncheckedCreateWithoutProfileInput = builder.inputRef<Prisma.UserUncheckedCreateWithoutProfileInput>('UserUncheckedCreateWithoutProfileInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Posts: t.field({"required":false,"type":PostUncheckedCreateNestedManyWithoutAuthorInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Followers: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutToInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutFromInput}),
   })
 })
 
@@ -3090,6 +2628,9 @@ export const UserUpdateWithoutProfileInput = builder.inputRef<Prisma.UserUpdateW
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Posts: t.field({"required":false,"type":PostUpdateManyWithoutAuthorNestedInput}),
     Comments: t.field({"required":false,"type":CommentUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
@@ -3099,44 +2640,19 @@ export const UserUpdateWithoutProfileInput = builder.inputRef<Prisma.UserUpdateW
   })
 })
 
-export const UserUncheckedUpdateWithoutProfileInput = builder.inputRef<Prisma.UserUncheckedUpdateWithoutProfileInput>('UserUncheckedUpdateWithoutProfileInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Posts: t.field({"required":false,"type":PostUncheckedUpdateManyWithoutAuthorNestedInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutToNestedInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutFromNestedInput}),
-  })
-})
-
 export const UserCreateWithoutFollowingInput = builder.inputRef<Prisma.UserCreateWithoutFollowingInput>('UserCreateWithoutFollowingInput').implement({
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Posts: t.field({"required":false,"type":PostCreateNestedManyWithoutAuthorInput}),
     Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
     updatedAt: t.field({"required":false,"type":DateTime}),
     Profile: t.field({"required":false,"type":ProfileCreateNestedManyWithoutUserInput}),
     Followers: t.field({"required":false,"type":FollowCreateNestedManyWithoutToInput}),
-  })
-})
-
-export const UserUncheckedCreateWithoutFollowingInput = builder.inputRef<Prisma.UserUncheckedCreateWithoutFollowingInput>('UserUncheckedCreateWithoutFollowingInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Posts: t.field({"required":false,"type":PostUncheckedCreateNestedManyWithoutAuthorInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedCreateNestedManyWithoutUserInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutToInput}),
   })
 })
 
@@ -3151,26 +2667,15 @@ export const UserCreateWithoutFollowersInput = builder.inputRef<Prisma.UserCreat
   fields: (t) => ({
     firstName: t.string({"required":true}),
     lastName: t.string({"required":true}),
+    birthdate: t.field({"required":true,"type":DateTime}),
+    login: t.string({"required":true}),
+    password: t.string({"required":true}),
     Posts: t.field({"required":false,"type":PostCreateNestedManyWithoutAuthorInput}),
     Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutAuthorInput}),
     createdAt: t.field({"required":false,"type":DateTime}),
     updatedAt: t.field({"required":false,"type":DateTime}),
     Profile: t.field({"required":false,"type":ProfileCreateNestedManyWithoutUserInput}),
     Following: t.field({"required":false,"type":FollowCreateNestedManyWithoutFromInput}),
-  })
-})
-
-export const UserUncheckedCreateWithoutFollowersInput = builder.inputRef<Prisma.UserUncheckedCreateWithoutFollowersInput>('UserUncheckedCreateWithoutFollowersInput').implement({
-  fields: (t) => ({
-    id: t.int({"required":false}),
-    firstName: t.string({"required":true}),
-    lastName: t.string({"required":true}),
-    Posts: t.field({"required":false,"type":PostUncheckedCreateNestedManyWithoutAuthorInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedCreateNestedManyWithoutAuthorInput}),
-    createdAt: t.field({"required":false,"type":DateTime}),
-    updatedAt: t.field({"required":false,"type":DateTime}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedCreateNestedManyWithoutUserInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedCreateNestedManyWithoutFromInput}),
   })
 })
 
@@ -3192,26 +2697,15 @@ export const UserUpdateWithoutFollowingInput = builder.inputRef<Prisma.UserUpdat
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Posts: t.field({"required":false,"type":PostUpdateManyWithoutAuthorNestedInput}),
     Comments: t.field({"required":false,"type":CommentUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
     updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
     Profile: t.field({"required":false,"type":ProfileUpdateManyWithoutUserNestedInput}),
     Followers: t.field({"required":false,"type":FollowUpdateManyWithoutToNestedInput}),
-  })
-})
-
-export const UserUncheckedUpdateWithoutFollowingInput = builder.inputRef<Prisma.UserUncheckedUpdateWithoutFollowingInput>('UserUncheckedUpdateWithoutFollowingInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Posts: t.field({"required":false,"type":PostUncheckedUpdateManyWithoutAuthorNestedInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedUpdateManyWithoutUserNestedInput}),
-    Followers: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutToNestedInput}),
   })
 })
 
@@ -3226,26 +2720,15 @@ export const UserUpdateWithoutFollowersInput = builder.inputRef<Prisma.UserUpdat
   fields: (t) => ({
     firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    birthdate: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
+    login: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    password: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Posts: t.field({"required":false,"type":PostUpdateManyWithoutAuthorNestedInput}),
     Comments: t.field({"required":false,"type":CommentUpdateManyWithoutAuthorNestedInput}),
     createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
     updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
     Profile: t.field({"required":false,"type":ProfileUpdateManyWithoutUserNestedInput}),
     Following: t.field({"required":false,"type":FollowUpdateManyWithoutFromNestedInput}),
-  })
-})
-
-export const UserUncheckedUpdateWithoutFollowersInput = builder.inputRef<Prisma.UserUncheckedUpdateWithoutFollowersInput>('UserUncheckedUpdateWithoutFollowersInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    firstName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    lastName: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Posts: t.field({"required":false,"type":PostUncheckedUpdateManyWithoutAuthorNestedInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutAuthorNestedInput}),
-    createdAt: t.field({"required":false,"type":DateTimeFieldUpdateOperationsInput}),
-    updatedAt: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
-    Profile: t.field({"required":false,"type":ProfileUncheckedUpdateManyWithoutUserNestedInput}),
-    Following: t.field({"required":false,"type":FollowUncheckedUpdateManyWithoutFromNestedInput}),
   })
 })
 
@@ -3257,23 +2740,6 @@ export const PostUpdateWithoutAuthorInput = builder.inputRef<Prisma.PostUpdateWi
   })
 })
 
-export const PostUncheckedUpdateWithoutAuthorInput = builder.inputRef<Prisma.PostUncheckedUpdateWithoutAuthorInput>('PostUncheckedUpdateWithoutAuthorInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    Comments: t.field({"required":false,"type":CommentUncheckedUpdateManyWithoutPostNestedInput}),
-  })
-})
-
-export const PostUncheckedUpdateManyWithoutPostsInput = builder.inputRef<Prisma.PostUncheckedUpdateManyWithoutPostsInput>('PostUncheckedUpdateManyWithoutPostsInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-  })
-})
-
 export const CommentUpdateWithoutAuthorInput = builder.inputRef<Prisma.CommentUpdateWithoutAuthorInput>('CommentUpdateWithoutAuthorInput').implement({
   fields: (t) => ({
     comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
@@ -3281,38 +2747,8 @@ export const CommentUpdateWithoutAuthorInput = builder.inputRef<Prisma.CommentUp
   })
 })
 
-export const CommentUncheckedUpdateWithoutAuthorInput = builder.inputRef<Prisma.CommentUncheckedUpdateWithoutAuthorInput>('CommentUncheckedUpdateWithoutAuthorInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    postId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
-export const CommentUncheckedUpdateManyWithoutCommentsInput = builder.inputRef<Prisma.CommentUncheckedUpdateManyWithoutCommentsInput>('CommentUncheckedUpdateManyWithoutCommentsInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    postId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const ProfileUpdateWithoutUserInput = builder.inputRef<Prisma.ProfileUpdateWithoutUserInput>('ProfileUpdateWithoutUserInput').implement({
   fields: (t) => ({
-    bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-  })
-})
-
-export const ProfileUncheckedUpdateWithoutUserInput = builder.inputRef<Prisma.ProfileUncheckedUpdateWithoutUserInput>('ProfileUncheckedUpdateWithoutUserInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
-  })
-})
-
-export const ProfileUncheckedUpdateManyWithoutProfileInput = builder.inputRef<Prisma.ProfileUncheckedUpdateManyWithoutProfileInput>('ProfileUncheckedUpdateManyWithoutProfileInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
     bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
   })
 })
@@ -3323,33 +2759,9 @@ export const FollowUpdateWithoutToInput = builder.inputRef<Prisma.FollowUpdateWi
   })
 })
 
-export const FollowUncheckedUpdateWithoutToInput = builder.inputRef<Prisma.FollowUncheckedUpdateWithoutToInput>('FollowUncheckedUpdateWithoutToInput').implement({
-  fields: (t) => ({
-    fromId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
-export const FollowUncheckedUpdateManyWithoutFollowersInput = builder.inputRef<Prisma.FollowUncheckedUpdateManyWithoutFollowersInput>('FollowUncheckedUpdateManyWithoutFollowersInput').implement({
-  fields: (t) => ({
-    fromId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
 export const FollowUpdateWithoutFromInput = builder.inputRef<Prisma.FollowUpdateWithoutFromInput>('FollowUpdateWithoutFromInput').implement({
   fields: (t) => ({
     To: t.field({"required":false,"type":UserUpdateOneRequiredWithoutFollowersNestedInput}),
-  })
-})
-
-export const FollowUncheckedUpdateWithoutFromInput = builder.inputRef<Prisma.FollowUncheckedUpdateWithoutFromInput>('FollowUncheckedUpdateWithoutFromInput').implement({
-  fields: (t) => ({
-    toId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-  })
-})
-
-export const FollowUncheckedUpdateManyWithoutFollowingInput = builder.inputRef<Prisma.FollowUncheckedUpdateManyWithoutFollowingInput>('FollowUncheckedUpdateManyWithoutFollowingInput').implement({
-  fields: (t) => ({
-    toId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })
 
@@ -3357,13 +2769,5 @@ export const CommentUpdateWithoutPostInput = builder.inputRef<Prisma.CommentUpda
   fields: (t) => ({
     comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     Author: t.field({"required":false,"type":UserUpdateOneRequiredWithoutCommentsNestedInput}),
-  })
-})
-
-export const CommentUncheckedUpdateWithoutPostInput = builder.inputRef<Prisma.CommentUncheckedUpdateWithoutPostInput>('CommentUncheckedUpdateWithoutPostInput').implement({
-  fields: (t) => ({
-    id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
-    comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
-    authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   })
 })

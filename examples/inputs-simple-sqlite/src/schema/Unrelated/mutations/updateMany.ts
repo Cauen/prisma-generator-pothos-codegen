@@ -2,7 +2,7 @@ import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 import { BatchPayload } from "@/schema/objects"
 
-const updateManyUnrelated = builder.mutationFields((t) => ({
+export const updateManyUnrelated = builder.mutationFields((t) => ({
   updateManyUnrelated: t.field({
     type: BatchPayload,
     nullable: false,
@@ -20,5 +20,3 @@ const updateManyUnrelated = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default updateManyUnrelated

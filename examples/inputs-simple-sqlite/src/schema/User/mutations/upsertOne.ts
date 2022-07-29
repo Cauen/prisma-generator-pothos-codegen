@@ -2,7 +2,7 @@ import { User } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const upsertOneUser = builder.mutationFields((t) => ({
+export const upsertOneUser = builder.mutationFields((t) => ({
   upsertOneUser: t.prismaField({
     type: User,
     nullable: false,
@@ -23,5 +23,3 @@ const upsertOneUser = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default upsertOneUser

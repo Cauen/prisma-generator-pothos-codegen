@@ -2,7 +2,7 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findFirstWithoutID = builder.queryFields((t) => ({
+export const findFirstWithoutID = builder.queryFields((t) => ({
   findFirstWithoutID: t.prismaField({
     type: WithoutID,
     nullable: true,
@@ -29,5 +29,3 @@ const findFirstWithoutID = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findFirstWithoutID

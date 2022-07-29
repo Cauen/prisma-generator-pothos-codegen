@@ -2,7 +2,7 @@ import { Follow } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueFollow = builder.queryFields((t) => ({
+export const findUniqueFollow = builder.queryFields((t) => ({
   findUniqueFollow: t.prismaField({
     type: Follow,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueFollow = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueFollow

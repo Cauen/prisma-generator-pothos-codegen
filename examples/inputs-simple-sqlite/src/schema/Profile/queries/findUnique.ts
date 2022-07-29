@@ -2,7 +2,7 @@ import { Profile } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findUniqueProfile = builder.queryFields((t) => ({
+export const findUniqueProfile = builder.queryFields((t) => ({
   findUniqueProfile: t.prismaField({
     type: Profile,
     nullable: true,
@@ -19,5 +19,3 @@ const findUniqueProfile = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findUniqueProfile

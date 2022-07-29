@@ -2,7 +2,7 @@ import { Follow } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const deleteOneFollow = builder.mutationFields((t) => ({
+export const deleteOneFollow = builder.mutationFields((t) => ({
   deleteOneFollow: t.prismaField({
     type: Follow,
     nullable: true,
@@ -19,5 +19,3 @@ const deleteOneFollow = builder.mutationFields((t) => ({
     }
   })
 }))
-
-export default deleteOneFollow

@@ -2,7 +2,7 @@ import { WithoutID } from "../object"
 import * as Inputs from '@/schema/inputs'
 import { builder } from "@/schema/builder"
 
-const findManyWithoutID = builder.queryFields((t) => ({
+export const findManyWithoutID = builder.queryFields((t) => ({
   findManyWithoutID: t.prismaField({
     type: [WithoutID],
     nullable: false,
@@ -29,5 +29,3 @@ const findManyWithoutID = builder.queryFields((t) => ({
     }
   })
 }))
-
-export default findManyWithoutID
