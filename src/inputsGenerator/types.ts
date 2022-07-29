@@ -21,8 +21,11 @@ export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  
     Output: JsonOutput;
   };
   Bytes: {
-    Input: any;
-    Output: Buffer;
+    Input: Buffer;
+    Output: {
+      type: "Buffer",
+      data: number[]
+    };
   };
   NEVER: {
     Input: void;
