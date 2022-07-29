@@ -7,7 +7,7 @@ import { writeResolvers } from './resolvers';
 const writeObject = (src: string, options: ModelGenerateOptions) => {
   // ./src/schema -> ./src/schema/User/object.ts
   const dirname = options.configs.crud?.outputFolderPath || "./generated"
-  replaceAndWriteFileSafely(options.configs, 'crud.model.object')(src, `${dirname}/${options.model}/object.ts`, false)
+  replaceAndWriteFileSafely(options.configs, 'crud.model.object')(src, `${dirname}/${options.model}/object.ts`, true)
 }
 
 const writeIndex = (options: ModelGenerateOptions, { hasMutation, hasQuery }: { hasQuery: boolean, hasMutation: boolean }) => {
