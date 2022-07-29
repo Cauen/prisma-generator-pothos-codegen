@@ -19,7 +19,7 @@ const writeIndex = (options: ModelGenerateOptions, { hasMutation, hasQuery }: { 
     ...(hasQuery ? [`export * from './queries'`] : []),
   ].join("\n")
 
-  replaceAndWriteFileSafely(options.configs, 'crud.model.index')(rootSrc, `${dirname}/${options.model}/index.ts`, true)
+  replaceAndWriteFileSafely(options.configs, 'crud.model.index')(rootSrc, `${dirname}/${options.model}/index.ts`, false)
 }
 
 export type ModelGenerateOptions = { dmmf: DMMF.Document, configs: Configs, model: string }
