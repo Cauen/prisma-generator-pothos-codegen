@@ -9,6 +9,8 @@ Just set: `configs.crud.disabled` to `true`
 
 - [x] Generator code for all input fields.
 - [x] Generator for all `Objects`, `Queries` and `Mutations`. Something like `prisma-tools` do with Prisma and Nexus.
+- [] Anottations to improve generation
+  - [] Exclude fields from input/object generation [#4](https://github.com/Cauen/prisma-generator-pothos-codegen/issues/4)
 
 ## Getting Started
 
