@@ -2,7 +2,7 @@ import { envs } from "../envs";
 import fs from "fs";
 import path from "path";
 import fsExtra from "fs-extra";
-import { Configs } from "./config";
+import { Config } from "./config";
 
 export const debugLog = (value: any, timestamp?: boolean) => {
   if (!envs.isTesting) return;
@@ -25,19 +25,20 @@ export type ReplacerPosition =
   | "crud.model.resolverIndex"
   | "crud.objects"
   | "inputs"
+  
 /**
  * Replace content before writing to file
  * The relacers is setten at the configs
  */
 export const replaceAndWriteFileSafely = (
-  configs: Configs,
+  config: Config,
   position: ReplacerPosition
 ) => {
   const replacer = (str: string) => {
     const defaultReplacer = (str: string) => str;
-    const globalReplacer = configs.global?.replacer || defaultReplacer;
-    const crudReplacer = configs.crud?.replacer || defaultReplacer;
-    const inputsReplacer = configs.inputs?.replacer || defaultReplacer;
+    const globalReplacer = config.global?.replacer || defaultReplacer;
+    const crudReplacer = config.crud?.replacer || defaultReplacer;
+    const inputsReplacer = config.inputs?.replacer || defaultReplacer;
     const replacers = [
       globalReplacer,
       ...(position?.includes("crud") ? [crudReplacer] : []),

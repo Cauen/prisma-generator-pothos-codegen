@@ -1,8 +1,4 @@
-/**
- * Every version of prisma, the types are different.
- * We receive as generics
- */
-
+/** Types may vary between Prisma versions */
 export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  {
   DateTime: {
     Input: Date;

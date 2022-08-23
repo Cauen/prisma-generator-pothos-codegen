@@ -28,7 +28,7 @@ const resolvers: ResolverProps[] = [
 ]
 
 const isExcludedResolver = (options: ModelGenerateOptions, name: string) => {
-  const { excludeResolversContain, excludeResolversExact, includeResolversContain, includeResolversExact } = options.configs.crud || {}
+  const { excludeResolversContain, excludeResolversExact, includeResolversContain, includeResolversExact } = options.config.crud || {}
   if (includeResolversExact) {
     return !includeResolversExact.includes(name)
   }
@@ -53,8 +53,8 @@ const parseSrc = (template: string, options: ModelGenerateOptions) => {
     .replace(/#{model}/g, options.model)
     .replace(/#{modelLowercase}/g, firstLetterLowercase(options.model))
     .replace(/#{modelUppercase}/g, firstLetterUppercase(options.model))
-    .replace(/#{db}/g, options.configs.crud?.dbCaller || "context.db")
-    .replace(/#{imports}\n/g, options.configs.crud?.resolversImports || '')
+    .replace(/#{db}/g, options.config.crud?.dbCaller || "context.db")
+    .replace(/#{imports}\n/g, options.config.crud?.resolversImports || '')
 }
 
 export const getResolversSrcs = (options: ModelGenerateOptions) => {

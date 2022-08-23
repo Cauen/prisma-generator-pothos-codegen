@@ -1,22 +1,16 @@
-import { Configs } from "../generator";
+import { Config } from "../utils/config";
 import { DMMF } from '@prisma/generator-helper';
 import modelGenerate from './generator'
 import { replaceAndWriteFileSafely } from "../utils/filesystem";
-import path from 'path'
 
 /**
  * - Export all the models
  * - Export Prisma Objects (BatchPayload)
  */
-const writeObjects = (dmmf: DMMF.Document, configs: Configs) => {
-  const dirname = configs.crud?.outputFolderPath || "./generated"
-  const exportedModels = (() => {
-    return dmmf.datamodel.models.map((model) => {
-      return `export * from './${model.name}'`
-    }).join("\n")
-  })()
-
-
+const writeObjects = (dmmf: DMMF.Document, config: Config) => {
+  const dirname = config.crud?.outputDir || "./generated"
+  const exportedModels = dmmf.datamodel.models.map((model) => `export * from './${model.name}'`).join("\n")
+  // TODO import builder should come from the config
   const batchPayload = `import { builder } from "@/schema/builder";
 import { Prisma } from '.prisma/client'
 
@@ -29,7 +23,7 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
   `
 
   const objectsSrc = `${exportedModels}\n\n${batchPayload}`
-  replaceAndWriteFileSafely(configs, 'crud.objects')(objectsSrc, `${dirname}/objects.ts`)
+  replaceAndWriteFileSafely(config, 'crud.objects')(objectsSrc, `${dirname}/objects.ts`)
 }
 
 /**
@@ -37,16 +31,16 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
  * - All content inside ./src/schema/User/...
  * - ./src/schema/objects.ts
  */
-export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
-  if (configs.crud?.disabled) return
+export async function generateCrud(dmmf: DMMF.Document, config: Config) {
+  if (config.crud?.disabled) return
 
   // Gerating User, Comment, ...
   const gen = dmmf.datamodel.models.map((model) => {
-    return modelGenerate({ configs, dmmf, model: model.name })
+    return modelGenerate({ config, dmmf, model: model.name })
   })
 
   // Generating objects.ts
-  writeObjects(dmmf, configs)
+  writeObjects(dmmf, config)
 
   return gen
 }

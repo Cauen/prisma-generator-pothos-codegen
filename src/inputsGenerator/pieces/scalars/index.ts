@@ -1,6 +1,6 @@
 import { getUsedScalars, ScalarExportConfigs } from "./utils/dmmf"
 import { DMMF } from '@prisma/generator-helper';
-import { Configs } from "../../../generator";
+import { Config } from "../../../utils/config";
 
 const dateTimeScalar = `export const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
@@ -78,9 +78,9 @@ const getScalarsFromConfigs = (usedScalars: ScalarExportConfigs, excludeScalars?
   return scalars.join('\n')
 }
 
-export const getScalars = ({ configs, dmmf }: { dmmf: DMMF.Document, configs: Configs }) => {
+export const getScalars = ({ config, dmmf }: { dmmf: DMMF.Document, config: Config }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma
   const used = getUsedScalars(inputs)
-  const excludeScalars = configs.inputs?.excludeScalars
+  const excludeScalars = config.inputs?.excludeScalars
   return getScalarsFromConfigs(used, excludeScalars)
 }

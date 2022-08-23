@@ -2,47 +2,67 @@ import { ExtendedGeneratorOptions } from "../generator";
 import path from 'path'
 import { ReplacerPosition } from "./filesystem";
 
-export type ImportedConfigsOptions = {
+export type Config = {
+  /** Input type generation config */
   inputs?: {
-    prismaImporter?: string // default: import { Prisma } from ".prisma/client"
-    builderImporter?: string // default: import { builder } from "./builder"
-    excludeInputs?: string[] // default: undefined
-    excludeScalars?: string[] // default: undefined
-    outputFilePath?: string // path to generate file, from project root
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
+    /** Where to import the prisma client from. Default: `'import { Prisma } from ".prisma/client"'` */ 
+    prismaImporter?: string 
+    /** Where to import the Pothos builder from. Default: `'import { builder } from "./builder"'` */
+    builderImporter?: string
+    // TODO what is the default
+    /** Path to the generated file from project root. Default: '.' */
+    outputFilePath?: string
+    /** Exclude scalars from generated output */
+    excludeScalars?: string[]
+    /** A function to replace generated source */
+    replacer?: (generated: string, position: ReplacerPosition) => string 
+    // TODO this might not be necessary anymore
+    // excludeInputs?: string[]
   },
+  /** CRUD generation config */
   crud?: {
-    disabled?: boolean // disable generaton of crud. default: false
+    /** Disable generaton of crud. Default: `false` */
+    disabled?: boolean
+    /** Where to import the Pothos builder from. Default: `'import { builder } from "./builder"'` */
+    builderImporter?: string
+    // TODO isn't this just always equal to inputs.outputFilePath?
+    // /** Where to import the inputs from. Default: `* as Inputs from ` */
+    // inputsImporter?: string
+
+
+    /** Directory to generate crud code in from project root. Default: `'./generated'` */
+    outputDir?: string
+    /** A function to replace generated source */
+    replacer?: (generated: string, position: ReplacerPosition) => string 
+
+
+
+
+    // TODO
     includeResolversExact?: string[] // generate only resolvers with name in the list. default: undefined. ie: ['createOneUser']
     includeResolversContain?: string[] // generate only resolvers with name included in the list. default: undefined. ie: ['User'].
     excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
     excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
     resolversImports?: string // default: what to import inside resolver
     dbCaller?: string // how to call prisma. default: context.db
-    inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
-    builderImporter?: string // default: import { builder } from "./builder"
-    outputFolderPath?: string // path to generate files, from project root. default: ./generated
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
   },
+  /** Global config */
   global?: {
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
+    /** A function to replace generated source */
+    replacer?: (generated: string, position: ReplacerPosition) => string 
   }
 }
-export type ConfigsOptions = ImportedConfigsOptions
-
-export type Configs = ImportedConfigsOptions
 
 /**
  * Receives the config path from generator options
  * Load the configs from file, and return it
  */
-export const getConfig = async (extendedGeneratorOptions: ExtendedGeneratorOptions): Promise<Configs> => {
+export const getConfig = async (extendedGeneratorOptions: ExtendedGeneratorOptions): Promise<Config> => {
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath)
   const optionsPath = path.join(schemaDirName, extendedGeneratorOptions.generatorConfigPath || 'crud-generator-configs.ts')
 
   const optionsRequired = await import(optionsPath)
-  const loadedConfigs: ImportedConfigsOptions = optionsRequired.configs || {
-  }
+  const loadedConfigs: Config = optionsRequired.configs || {}
 
   return loadedConfigs
 }

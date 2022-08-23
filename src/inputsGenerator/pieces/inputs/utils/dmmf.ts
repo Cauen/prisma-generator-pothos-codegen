@@ -60,7 +60,7 @@ export function getMainInput() {
     const second = inputs[1]
     if (first && !second) return first
 
-    // ! ORDER MEANS 
+    // ! ORDER MATTERS 
     const isJsonPriority = priorizeJson(inputs)
     if (isJsonPriority) return isJsonPriority
 

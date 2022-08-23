@@ -1,11 +1,14 @@
 import { getMainInput } from "./utils/dmmf"
 import { fLLower } from "./utils/string"
 import { DMMF } from '@prisma/generator-helper';
-import { Configs } from "../../../generator";
+import { Config } from "../../../utils/config";
 
-export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Configs }) => {
+export const getInputs = ({ dmmf, config }: { dmmf: DMMF.Document, config: Config }) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma
-  const excludeInputs = configs.inputs?.excludeInputs
+
+  // TODO read this from parsed description instead
+  // @ts-expect-error
+  const excludeInputs = config.inputs?.excludeInputs
 
   // Unchecked is inputs that can create with ID number
   // Its dont used
@@ -38,7 +41,7 @@ export const getInputs = ({ dmmf, configs }: { dmmf: DMMF.Document, configs: Con
             })()
             const fieldType = isList ? `[${renamedType}]` : renamedType.toString()
             const relationProps = { ...props, type: fieldType }
-            // "type":"CommentUncheckedCreateNestedManyWithoutAuthorInput"} -> "type":CommentUncheckedCreateNestedManyWithoutAuthorInput}
+            // "type":"CommentUncheckedCreateNestedManyWithoutAuthorInput"} -> "type":CommentUncheckedCreateNestedManyWithoutAuthorInput
             return `t.field(${removeQuotationMarksFromType(JSON.stringify(relationProps))})`
           }
         })()

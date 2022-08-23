@@ -1,4 +1,4 @@
-import generateInputs from '.';
+import { generateInputs } from '.';
 import { getSampleDMMF } from '../tests/getPrismaSchema';
 
 describe('inputsGenerator', () => {

@@ -5,12 +5,12 @@ import { envs } from "../../../envs"
 
 type ResolverSrc = ReturnType<typeof getResolversSrcs>[number]
 const writeResolver = (options: ModelGenerateOptions, resolver: ResolverSrc) => {
-  const { configs, model } = options
-  const dirname = configs.crud?.outputFolderPath || "./generated"
+  const { config, model } = options
+  const dirname = config.crud?.outputDir || "./generated"
 
   const folder = resolver.type === "Mutation" ? "mutations" : "queries"
   // ./generated/User/mutations/createOne.ts
-  replaceAndWriteFileSafely(options.configs, 'crud.model.resolver')(resolver.src, `${dirname}/${model}/${folder}/${resolver.name}.ts`, true)
+  replaceAndWriteFileSafely(options.config, 'crud.model.resolver')(resolver.src, `${dirname}/${model}/${folder}/${resolver.name}.ts`, true)
 
   return resolver.src
 }
@@ -19,14 +19,14 @@ const writeQueriesAndMutationsIndex = (options: ModelGenerateOptions, { queries,
   const mutationExports = mutations.map(src => `export * from './${src.name}'`).join("\n")
   const queryExports = queries.map(src => `export * from './${src.name}'`).join("\n")
 
-  const { configs, model } = options
-  const dirname = configs.crud?.outputFolderPath || "./generated"
+  const { config, model } = options
+  const dirname = config.crud?.outputDir || "./generated"
 
   if (mutationExports.length) {
-    replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(mutationExports, `${dirname}/${model}/mutations/index.ts`, true)
+    replaceAndWriteFileSafely(options.config, 'crud.model.resolverIndex')(mutationExports, `${dirname}/${model}/mutations/index.ts`, true)
   }
   if (queryExports.length) {
-    replaceAndWriteFileSafely(options.configs, 'crud.model.resolverIndex')(queryExports, `${dirname}/${model}/queries/index.ts`, true)
+    replaceAndWriteFileSafely(options.config, 'crud.model.resolverIndex')(queryExports, `${dirname}/${model}/queries/index.ts`, true)
   }
 
   return {

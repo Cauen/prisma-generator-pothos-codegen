@@ -6,9 +6,9 @@ describe('getInputs', () => {
     const dmmf = await getSampleDMMF('complex')
     const builtString = `export const UserCreateInput = builder.inputRef<Prisma.UserCreateInput>('UserCreateInput').implement({`
 
-    const includedInputs = getInputs({ dmmf, configs: {} })
+    const includedInputs = getInputs({ dmmf, config: {} })
     expect(includedInputs.includes(builtString)).toBe(true)
-    const scalars = getInputs({ dmmf, configs: { inputs: { excludeInputs: ['UserCreateInput'] } } })
+    const scalars = getInputs({ dmmf, config: { inputs: { excludeInputs: ['UserCreateInput'] } } })
     expect(scalars.includes(builtString)).toBe(false)
   })
 })
