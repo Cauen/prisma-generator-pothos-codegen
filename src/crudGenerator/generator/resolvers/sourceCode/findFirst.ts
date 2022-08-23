@@ -29,4 +29,4 @@ export const findFirst#{model} = builder.queryFields((t) => ({
       return found
     }
   })
-}))`
+}))`;

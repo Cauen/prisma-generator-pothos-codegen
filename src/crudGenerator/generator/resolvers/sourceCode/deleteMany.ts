@@ -18,4 +18,4 @@ export const deleteMany#{model} = builder.mutationFields((t) => ({
       return deletedBatch
     }
   })
-}))`
+}))`;

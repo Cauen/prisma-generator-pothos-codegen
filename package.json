@@ -30,7 +30,8 @@
     "prebuild": "yarn clean",
     "postbuild": "yarn copyfiles ./readme.md ./dist",
     "clean": "rimraf dist",
-    "pub": "cd dist && npm publish"
+    "pub": "cd dist && npm publish",
+    "format": "eslint --fix ./src"
   },
   "bin": {
     "prisma-generator-pothos-codegen": "./src/bin.js"
@@ -46,9 +47,16 @@
     "@types/fs-extra": "9.0.13",
     "@types/jest": "28.1.7",
     "@types/node": "18.7.10",
+    "@typescript-eslint/eslint-plugin": "5.34.0",
+    "@typescript-eslint/parser": "5.34.0",
     "copyfiles": "2.4.1",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
     "graphql": "16.6.0",
     "jest": "28.1.3",
+    "prettier": "2.7.1",
     "prisma": "4.2.1",
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",

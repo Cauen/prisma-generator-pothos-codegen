@@ -6,23 +6,34 @@ import { writeResolvers } from './resolvers';
 
 const writeObject = (src: string, options: ModelGenerateOptions) => {
   // ./src/schema -> ./src/schema/User/object.ts
-  const dirname = options.config.crud?.outputDir || "./generated"
-  replaceAndWriteFileSafely(options.config, 'crud.model.object')(src, `${dirname}/${options.model}/object.ts`, true)
-}
+  const dirname = options.config.crud?.outputDir || './generated';
+  replaceAndWriteFileSafely(options.config, 'crud.model.object')(
+    src,
+    `${dirname}/${options.model}/object.ts`,
+    true,
+  );
+};
 
-const writeIndex = (options: ModelGenerateOptions, { hasMutation, hasQuery }: { hasQuery: boolean, hasMutation: boolean }) => {
-  const dirname = options.config.crud?.outputDir || "./generated"
+const writeIndex = (
+  options: ModelGenerateOptions,
+  { hasMutation, hasQuery }: { hasQuery: boolean; hasMutation: boolean },
+) => {
+  const dirname = options.config.crud?.outputDir || './generated';
 
   const rootSrc = [
     `export * from './object'`,
     ...(hasMutation ? [`export * from './mutations'`] : []),
     ...(hasQuery ? [`export * from './queries'`] : []),
-  ].join("\n")
+  ].join('\n');
 
-  replaceAndWriteFileSafely(options.config, 'crud.model.index')(rootSrc, `${dirname}/${options.model}/index.ts`, false)
-}
+  replaceAndWriteFileSafely(options.config, 'crud.model.index')(
+    rootSrc,
+    `${dirname}/${options.model}/index.ts`,
+    false,
+  );
+};
 
-export type ModelGenerateOptions = { dmmf: DMMF.Document, config: Config, model: string }
+export type ModelGenerateOptions = { dmmf: DMMF.Document; config: Config; model: string };
 /**
  * This generates:
  * - ./src/schema/User/object.ts (writeObject)
@@ -31,14 +42,16 @@ export type ModelGenerateOptions = { dmmf: DMMF.Document, config: Config, model:
  * - ./src/schema/User/index.ts (writeIndex)
  */
 export default function modelGenerate(options: ModelGenerateOptions) {
-  const object = getObjectSrc(options)
+  const object = getObjectSrc(options);
 
-  writeObject(object, options)
-  
-  const { hasMutation, hasQuery } = writeResolvers(options)
-  writeIndex(options, { hasMutation, hasQuery })
+  writeObject(object, options);
+
+  const { hasMutation, hasQuery } = writeResolvers(options);
+  writeIndex(options, { hasMutation, hasQuery });
 
   return {
-    object, hasMutation, hasQuery,
-  }
+    object,
+    hasMutation,
+    hasQuery,
+  };
 }

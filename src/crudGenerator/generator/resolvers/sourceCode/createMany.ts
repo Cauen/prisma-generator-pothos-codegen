@@ -20,4 +20,4 @@ export const createMany#{model} = builder.mutationFields((t) => ({
       return list
     }
   })
-}))`
+}))`;

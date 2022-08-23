@@ -19,4 +19,4 @@ export const deleteOne#{model} = builder.mutationFields((t) => ({
       return deleted
     }
   })
-}))`
+}))`;

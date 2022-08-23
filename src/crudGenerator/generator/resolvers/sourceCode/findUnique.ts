@@ -19,4 +19,4 @@ export const findUnique#{model} = builder.queryFields((t) => ({
       return found
     }
   })
-}))`
+}))`;

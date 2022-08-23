@@ -1,5 +1,5 @@
 /** Types may vary between Prisma versions */
-export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  {
+export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> = {
   DateTime: {
     Input: Date;
     Output: Date;
@@ -19,12 +19,12 @@ export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> =  
   Bytes: {
     Input: Buffer;
     Output: {
-      type: "Buffer",
-      data: number[]
+      type: 'Buffer';
+      data: number[];
     };
   };
   NEVER: {
     Input: void;
     Output: void;
   };
-}
+};

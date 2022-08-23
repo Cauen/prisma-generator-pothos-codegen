@@ -1,39 +1,33 @@
-import { envs } from "../envs";
-import fs from "fs";
-import path from "path";
-import fsExtra from "fs-extra";
-import { Config } from "./config";
+import fs from 'fs';
+import path from 'path';
+import fsExtra from 'fs-extra';
+import { envs } from '../envs';
+import { Config } from './config';
 
 export const debugLog = (value: any, timestamp?: boolean) => {
   if (!envs.isTesting) return;
   fs.appendFile(
-    "log.txt",
-    `${timestamp ? `${new Date().toISOString()}: ` : ""}${JSON.stringify(
-      value
-    )},\n`,
+    'log.txt',
+    `${timestamp ? `${new Date().toISOString()}: ` : ''}${JSON.stringify(value)},\n`,
     (err) => {
       if (err) throw err;
-    }
+    },
   );
 };
 
-
 export type ReplacerPosition =
-  "crud.model.object"
-  | "crud.model.index"
-  | "crud.model.resolver"
-  | "crud.model.resolverIndex"
-  | "crud.objects"
-  | "inputs"
-  
+  | 'crud.model.object'
+  | 'crud.model.index'
+  | 'crud.model.resolver'
+  | 'crud.model.resolverIndex'
+  | 'crud.objects'
+  | 'inputs';
+
 /**
  * Replace content before writing to file
  * The relacers is setten at the configs
  */
-export const replaceAndWriteFileSafely = (
-  config: Config,
-  position: ReplacerPosition
-) => {
+export const replaceAndWriteFileSafely = (config: Config, position: ReplacerPosition) => {
   const replacer = (str: string) => {
     const defaultReplacer = (str: string) => str;
     const globalReplacer = config.global?.replacer || defaultReplacer;
@@ -41,8 +35,8 @@ export const replaceAndWriteFileSafely = (
     const inputsReplacer = config.inputs?.replacer || defaultReplacer;
     const replacers = [
       globalReplacer,
-      ...(position?.includes("crud") ? [crudReplacer] : []),
-      ...(position === "inputs" ? [inputsReplacer] : []),
+      ...(position?.includes('crud') ? [crudReplacer] : []),
+      ...(position === 'inputs' ? [inputsReplacer] : []),
     ];
     return replacers.reduce((acc, replacer) => replacer(acc, position), str);
   };
@@ -52,18 +46,14 @@ export const replaceAndWriteFileSafely = (
   };
 };
 
-export const writeFileSafely = async (
-  content: string,
-  writeLocation: string,
-  rewrite = true
-) => {
+export const writeFileSafely = async (content: string, writeLocation: string, rewrite = true) => {
   debugLog(`Writing to ${writeLocation}`);
 
   try {
     await fsExtra.ensureDir(path.dirname(writeLocation));
     const ensured = fs.existsSync(writeLocation);
     if (ensured && !rewrite) return content;
-    fs.createWriteStream(writeLocation, { flags: "w" }).write(content)
+    fs.createWriteStream(writeLocation, { flags: 'w' }).write(content);
     return content;
   } catch (err) {
     debugLog(JSON.stringify(err));
