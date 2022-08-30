@@ -28,7 +28,7 @@
     "build": "tsc",
     "tscheck": "tsc -noEmit",
     "prebuild": "yarn clean",
-    "postbuild": "yarn copyfiles ./readme.md ./dist",
+    "postbuild": "copyfiles ./readme.md ./dist",
     "clean": "rimraf dist",
     "pub": "cd dist && npm publish",
     "format": "eslint --fix ./src"
@@ -44,6 +44,7 @@
     "@pothos/core": "3.17.0",
     "@pothos/plugin-prisma": "3.27.1",
     "@prisma/client": "4.2.1",
+    "@prisma/internals": "4.2.1",
     "@types/fs-extra": "9.0.13",
     "@types/jest": "28.1.7",
     "@types/node": "18.7.10",

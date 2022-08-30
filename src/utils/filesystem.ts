@@ -1,11 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
-import { envs } from '../envs';
-import { Config } from './config';
+import { env } from '../env';
+import { ConfigInternal } from './config';
+import { ReplacerPosition } from './replacer';
 
-export const debugLog = (value: any, timestamp?: boolean) => {
-  if (!envs.isTesting) return;
+export const debugLog = (value: string, timestamp?: boolean) => {
+  if (!env.isTesting) return;
   fs.appendFile(
     'log.txt',
     `${timestamp ? `${new Date().toISOString()}: ` : ''}${JSON.stringify(value)},\n`,
@@ -15,35 +16,17 @@ export const debugLog = (value: any, timestamp?: boolean) => {
   );
 };
 
-export type ReplacerPosition =
-  | 'crud.model.object'
-  | 'crud.model.index'
-  | 'crud.model.resolver'
-  | 'crud.model.resolverIndex'
-  | 'crud.objects'
-  | 'inputs';
+/** Replace content before writing to file using the replacers set in the config file */
+export const replaceAndWriteFileSafely = (config: ConfigInternal, position: ReplacerPosition) => {
+  const replace = (str: string): string =>
+    [
+      config.global.replacer,
+      ...(position === 'inputs' ? [config.inputs.replacer] : []),
+      ...(position?.includes('crud') ? [config.crud.replacer] : []),
+    ].reduce((el, replacer) => replacer(el, position), str);
 
-/**
- * Replace content before writing to file
- * The relacers is setten at the configs
- */
-export const replaceAndWriteFileSafely = (config: Config, position: ReplacerPosition) => {
-  const replacer = (str: string) => {
-    const defaultReplacer = (str: string) => str;
-    const globalReplacer = config.global?.replacer || defaultReplacer;
-    const crudReplacer = config.crud?.replacer || defaultReplacer;
-    const inputsReplacer = config.inputs?.replacer || defaultReplacer;
-    const replacers = [
-      globalReplacer,
-      ...(position?.includes('crud') ? [crudReplacer] : []),
-      ...(position === 'inputs' ? [inputsReplacer] : []),
-    ];
-    return replacers.reduce((acc, replacer) => replacer(acc, position), str);
-  };
-  return async (content: string, writeLocation: string, rewrite = true) => {
-    const replaced = replacer(content);
-    return writeFileSafely(replaced, writeLocation, rewrite);
-  };
+  return async (content: string, writeLocation: string, rewrite = true) =>
+    writeFileSafely(replace(content), writeLocation, rewrite);
 };
 
 export const writeFileSafely = async (content: string, writeLocation: string, rewrite = true) => {

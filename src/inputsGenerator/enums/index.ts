@@ -3,7 +3,7 @@ import { DMMF } from '@prisma/generator-helper';
 export const getEnums = (dmmf: DMMF.Document) => {
   const enums = [
     ...dmmf.schema.enumTypes.prisma,
-    ...dmmf.datamodel.enums.map((el) => ({ ...el, values: el.values.map((el) => el.name) })),
+    ...dmmf.datamodel.enums.map((el) => ({ ...el, values: el.values.map(({ name }) => name) })),
   ];
   const enumStrings = enums.map(
     (el) => `export const ${el.name} = builder.enumType('${el.name}', {

@@ -12,7 +12,7 @@ export type ExtendedGeneratorOptions = SchemaGeneratorExtensionOptions & Generat
 generatorHandler({
   onManifest: () => ({
     prettyName: 'Pothos Codegen for Prisma Input Types and Crud',
-    requiresGenerators: ['prisma-client-js'],
+    requiresGenerators: ['prisma-client-js', 'prisma-pothos-types'],
     defaultOutput: './generated/inputs.ts',
   }),
   onGenerate: async (options) => {

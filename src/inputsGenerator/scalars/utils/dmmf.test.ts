@@ -1,4 +1,4 @@
-import { getSampleDMMF } from '../../../../tests/getPrismaSchema';
+import { getSampleDMMF } from '../../../tests/getPrismaSchema';
 import { getUsedScalars } from './dmmf';
 
 describe('getUsedScalars', () => {

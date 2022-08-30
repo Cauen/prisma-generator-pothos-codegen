@@ -12,8 +12,8 @@ import { updateMany } from './updateMany';
 import { updateOne } from './updateOne';
 import { upsertOne } from './upsertOne';
 
-type ResolverProps = { type: string; name: string; srcTemplate: string };
-const resolvers: ResolverProps[] = [
+type Resolver = { type: 'Query' | 'Mutation'; name: string; srcTemplate: string };
+const resolvers: Resolver[] = [
   { type: 'Query', name: 'count', srcTemplate: count },
   { type: 'Mutation', name: 'createMany', srcTemplate: createMany }, // CHECK
   { type: 'Mutation', name: 'createOne', srcTemplate: createOne }, // CHECK
@@ -28,25 +28,26 @@ const resolvers: ResolverProps[] = [
 ];
 
 const isExcludedResolver = (options: ModelGenerateOptions, name: string) => {
-  const {
-    excludeResolversContain,
-    excludeResolversExact,
-    includeResolversContain,
-    includeResolversExact,
-  } = options.config.crud || {};
-  if (includeResolversExact) {
-    return !includeResolversExact.includes(name);
-  }
-  if (includeResolversContain) {
-    return !includeResolversContain.some((include) => name.includes(include));
-  }
+  // TODO can probably be deleted
+  // const {
+  //   excludeResolversContain,
+  //   excludeResolversExact,
+  //   includeResolversContain,
+  //   includeResolversExact,
+  // } = options.config.crud || {};
+  // if (includeResolversExact) {
+  //   return !includeResolversExact.includes(name);
+  // }
+  // if (includeResolversContain) {
+  //   return !includeResolversContain.some((include) => name.includes(include));
+  // }
 
-  if (excludeResolversExact && excludeResolversExact.includes(name)) {
-    return true;
-  }
-  if (excludeResolversContain && excludeResolversContain.some((r) => name.includes(r))) {
-    return true;
-  }
+  // if (excludeResolversExact && excludeResolversExact.includes(name)) {
+  //   return true;
+  // }
+  // if (excludeResolversContain && excludeResolversContain.some((r) => name.includes(r))) {
+  //   return true;
+  // }
   return false;
 };
 

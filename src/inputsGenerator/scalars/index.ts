@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/generator-helper';
-import { Config } from '../../../utils/config';
-import { getUsedScalars, ScalarExportConfigs } from './utils/dmmf';
+import { ConfigInternal } from '../../utils/config';
+import { getUsedScalars, UsedScalars } from './utils/dmmf';
 
 const dateTimeScalar = `export const DateTime = builder.scalarType('DateTime', {
   parseValue(value) {
@@ -60,10 +60,7 @@ const neverScalar = `export const NEVER = builder.scalarType('NEVER', {
   description: "Never fill this, its created for inputs that dont have fields"
 });`;
 
-const getScalarsFromConfigs = (
-  usedScalars: ScalarExportConfigs,
-  excludeScalars?: string[],
-): string => {
+const getScalarsFromConfigs = (usedScalars: UsedScalars, excludeScalars?: string[]): string => {
   const isDatetimeExcluded = excludeScalars?.includes('DateTime');
   const isDecimalExcluded = excludeScalars?.includes('Decimal');
   const isBytesExcluded = excludeScalars?.includes('Bytes');
@@ -81,7 +78,7 @@ const getScalarsFromConfigs = (
   return scalars.join('\n');
 };
 
-export const getScalars = ({ config, dmmf }: { dmmf: DMMF.Document; config: Config }) => {
+export const getScalars = (config: ConfigInternal, dmmf: DMMF.Document) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma;
   const used = getUsedScalars(inputs);
   const excludeScalars = config.inputs?.excludeScalars;

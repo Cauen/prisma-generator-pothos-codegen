@@ -1,5 +1,5 @@
 import path from 'path';
-import { getDMMF, getSchemaSync } from '@prisma/sdk';
+import { getDMMF, getSchemaSync } from '@prisma/internals';
 
 const simplePrismaSchema = getSchemaSync(path.join(__dirname, './simpleSchema.prisma'));
 const complexPrismaSchema = getSchemaSync(path.join(__dirname, './complexSchema.prisma'));

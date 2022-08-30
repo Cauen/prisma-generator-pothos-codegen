@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
-import { Config } from '../../utils/config';
+import { ConfigInternal } from '../../utils/config';
 import { replaceAndWriteFileSafely } from '../../utils/filesystem';
 import { getObjectSrc } from './object';
 import { writeResolvers } from './resolvers';
@@ -33,7 +33,7 @@ const writeIndex = (
   );
 };
 
-export type ModelGenerateOptions = { dmmf: DMMF.Document; config: Config; model: string };
+export type ModelGenerateOptions = { dmmf: DMMF.Document; config: ConfigInternal; model: string };
 /**
  * This generates:
  * - ./src/schema/User/object.ts (writeObject)

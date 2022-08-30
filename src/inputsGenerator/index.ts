@@ -1,22 +1,21 @@
 import { DMMF } from '@prisma/generator-helper';
-import { envs } from '../envs';
-import { Config } from '../utils/config';
+import { env } from '../env';
+import { ConfigInternal } from '../utils/config';
 import { replaceAndWriteFileSafely, writeFileSafely } from '../utils/filesystem';
 import { getEnums } from './enums';
 import { getImports } from './imports';
 import { getInputs } from './inputs';
 import { getScalars } from './scalars';
 
-export async function generateInputs(dmmf: DMMF.Document, config: Config): Promise<string> {
-  // Debug logging
-  if (envs.isTesting) writeFileSafely(JSON.stringify(dmmf, null, 2), 'dmmf.json');
+export async function generateInputs(dmmf: DMMF.Document, config: ConfigInternal): Promise<string> {
+  if (env.isTesting) writeFileSafely(JSON.stringify(dmmf, null, 2), 'dmmf.json');
 
   const imports = getImports(config);
-  const scalars = getScalars({ dmmf, config });
+  const scalars = getScalars(config, dmmf);
   const enums = getEnums(dmmf);
-  const inputs = getInputs({ dmmf, config });
+  const inputs = getInputs(config, dmmf);
 
-  const text = [imports, '', scalars, '', enums, inputs].join('\n');
+  const text = [imports, scalars, enums, inputs].join('\n\n');
 
   const written = replaceAndWriteFileSafely(config, 'inputs')(
     text,
