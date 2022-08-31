@@ -7,6 +7,12 @@ A prisma generator plugin that auto-generates Pothos GraphQL input types and cru
 - [Getting Started](#getting-started)
   - [Install](#install)
   - [Basic Usage](#basic-usage)
+  - [Tested environments](#tested-environments)
+  - [Examples](#examples)
+- [Disclosures]
+  - [Models with only relations](#models-with-only-relations)
+  - [BigInt rename](#bigint-rename)
+- [Publishing](#publishing)
 
 ## Getting Started
 
@@ -128,13 +134,13 @@ See example: [click here](/examples/inputs-simple-sqlite/src/schema/configs.ts)
 
 <br />
 
-### The tested environments:
+### Tested environments
 
 | **Prisma Version** | **Database**      | **State** |
 | ------------------ | ----------------- | --------- |
 | 3.12 - 4.00        | Postgres - Sqlite | ✅        |
 
-### Example
+### Examples
 
 Check for the [example](/examples/inputs-simple-sqlite) for a running sample
 ![image](https://user-images.githubusercontent.com/8796757/178087266-0a852f43-a7b5-48a0-bc13-a3ece9788457.png)

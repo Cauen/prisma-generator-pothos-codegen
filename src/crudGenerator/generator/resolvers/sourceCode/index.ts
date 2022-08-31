@@ -1,5 +1,5 @@
 import { ModelGenerateOptions } from '../..';
-import { firstLetterUppercase } from '../../../utils/string';
+import { firstLetterLowerCase, firstLetterUpperCase } from '../../../../utils/string';
 import { count } from './count';
 import { createMany } from './createMany';
 import { createOne } from './createOne';
@@ -28,12 +28,10 @@ const resolvers: Resolver[] = [
 ];
 
 const parseSrc = (template: string, options: ModelGenerateOptions) => {
-  const firstLetterLowercase = (s: string) => s[0]?.toLowerCase() + s.slice(1);
-
   return template
     .replace(/#{model}/g, options.model)
-    .replace(/#{modelLowercase}/g, firstLetterLowercase(options.model))
-    .replace(/#{modelUppercase}/g, firstLetterUppercase(options.model))
+    .replace(/#{modelLowercase}/g, firstLetterLowerCase(options.model))
+    .replace(/#{modelUppercase}/g, firstLetterUpperCase(options.model))
     .replace(/#{db}/g, options.config.crud?.dbCaller || 'context.db')
     .replace(/#{imports}\n/g, options.config.crud?.resolversImports || '');
 };

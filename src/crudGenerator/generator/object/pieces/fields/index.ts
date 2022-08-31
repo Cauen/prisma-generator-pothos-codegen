@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
-import { firstLetterUppercase } from '../../../../utils/string';
+import { firstLetterUpperCase } from '../../../../../utils/string';
 
 const getFieldValue = (field: DMMF.Field) => {
   const { isId, type, name, relationName, isRequired, documentation, isList } = field;
@@ -24,7 +24,7 @@ const getFieldValue = (field: DMMF.Field) => {
         cursor: t.arg({ type: Inputs.${type}WhereUniqueInput, required: false }),
         take: t.arg({ type: 'Int', required: false }),
         skip: t.arg({ type: 'Int', required: false }),
-        distinct: t.arg({ type: [Inputs.${firstLetterUppercase(
+        distinct: t.arg({ type: [Inputs.${firstLetterUpperCase(
           type,
         )}ScalarFieldEnum], required: false }),
       },

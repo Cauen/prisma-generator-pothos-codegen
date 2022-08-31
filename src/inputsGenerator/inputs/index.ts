@@ -1,5 +1,6 @@
 import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
+import { firstLetterLowerCase, firstLetterUpperCase } from '../../utils/string';
 import { getMainInput } from './utils/dmmf';
 import { parseComment } from './utils/parser';
 
@@ -17,7 +18,7 @@ const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
       omitTypes === 'all' ||
       omitTypes.includes('input') ||
       omitTypes.some((omitType) =>
-        input.name.startsWith(model?.name + omitType[0].toUpperCase() + omitType.slice(1)),
+        input.name.startsWith(model?.name + firstLetterUpperCase(omitType)),
       )
     ) {
       omittedFieldNames.push(field.name);
@@ -37,9 +38,7 @@ const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
     const getScalar = () => {
       const parsedType = type; // TODO parse date to string ??
       const fieldType = isList ? `${parsedType}List` : parsedType.toString();
-      // Format string from PascalCase to camelCase (e.g. IntList -> intList)
-      const fLLower = (s: string) => s.replace(/./, (c) => c.toLowerCase());
-      return `t.${fLLower(fieldType)}(${JSON.stringify(props)})`;
+      return `t.${firstLetterLowerCase(fieldType)}(${JSON.stringify(props)})`;
     };
     const getField = () => {
       // BigInt is reserved

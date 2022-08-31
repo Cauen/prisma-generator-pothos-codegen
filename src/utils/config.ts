@@ -30,7 +30,7 @@ export interface Config {
     /** A function to replace generated source. Combined with global replacer config */
     replacer?: Replacer;
 
-    // TODO What do these do?
+    // TODO
     resolversImports?: string; // default: what to import inside resolver
     dbCaller?: string; // how to call prisma. default: context.db
   };
@@ -84,8 +84,9 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     outputDir: './generated',
     replacer: defaultReplacer,
 
-    // TODO ???
+    // TODO what purpose does this serve?
     resolversImports: '',
+    // TODO make this a function instead of a string
     dbCaller: 'context.db',
   },
   global: {
