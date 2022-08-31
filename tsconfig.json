@@ -21,7 +21,8 @@
     "composite": true,
     "resolveJsonModule": true,
     "declaration": true,
-    "baseUrl": "."
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
   },
   "include": ["src", "./package.json"],
   "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts", "src/**/tests/**/*.ts"],

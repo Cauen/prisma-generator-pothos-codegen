@@ -8,7 +8,7 @@ export const getEnums = (dmmf: DMMF.Document) => {
   const enumStrings = enums.map(
     (el) => `export const ${el.name} = builder.enumType('${el.name}', {
   values: ${JSON.stringify(el.values)} as const,
-);`,
+});`,
   );
   return enumStrings.join('\n');
 };

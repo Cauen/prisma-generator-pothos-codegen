@@ -107,7 +107,7 @@ export const getConfig = async (
   );
 
   const optionsRequired = await import(optionsPath);
-  const { inputs, crud, global }: Config = optionsRequired.configs || {};
+  const { inputs, crud, global }: Config = optionsRequired || {};
 
   const defaultConfig = getDefaultConfig(global);
   const internalConfig: ConfigInternal = {

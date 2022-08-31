@@ -1,65 +1,63 @@
 import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { getMainInput } from './utils/dmmf';
-
-/** Format string from PascalCase to camelCase (e.g. IntList -> intList) */
-const fLLower = (s: string) => s.replace(/./, (c) => c.toLowerCase());
-
-type OmitType = 'all' | ('input' | 'output' | 'create' | 'update')[];
-const omitTypes: OmitType = ['input', 'output', 'create', 'update'];
-
-/** Parses comment for omit commands in the following syntax:
- * /// @Pothos.omit() # Omits field from all inputs and output
- * /// @Pothos.omit(output, create) # Omits field from the output and the create input
- * /// @Pothos.omit(input) # Omits field from all inputs
- */
-const parseComment = (s: string): OmitType => {
-  const start = '/// @Pothos.omit(';
-
-  if (s[s.indexOf(start) + start.length] === ')') return 'all';
-  while (true) {
-    break;
-  }
-};
+import { parseComment } from './utils/parser';
 
 /** Convert array of fields to string of fields */
-const getFieldsString = (inputFields: DMMF.SchemaArg[], modelFields: DMMF.Field[]): string => {
-  if (inputFields.length === 0) return `_: t.field({ type: NEVER }),`;
-  return (
-    inputFields
-      // Description is parsed for @Pothos.omit() comments
-      .filter((field) => {
-        const modelField = modelFields.find((f) => f.name === field.name);
-      })
-      .map((field) => {})
-      .join('\n    ')
+const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
+  // Description is parsed for @Pothos.omit() comments
+  const omittedFieldNames: string[] = [];
+  const filtered = input.fields.filter((field) => {
+    const modelField = model?.fields.find((f) => f.name === field.name);
+    if (!modelField || !modelField.documentation) return true;
+
+    const omitTypes = parseComment(modelField.documentation);
+    if (!omitTypes) return true;
+    if (
+      omitTypes === 'all' ||
+      omitTypes.includes('input') ||
+      omitTypes.some((omitType) =>
+        input.name.startsWith(model?.name + omitType[0].toUpperCase() + omitType.slice(1)),
+      )
+    ) {
+      omittedFieldNames.push(field.name);
+      return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) return `_: t.field({ type: NEVER }),`;
+
+  const fields = filtered.map((field) => {
+    const { isList, type, location } = getMainInput().run(field.inputTypes);
+    const props = { required: field.isRequired, description: undefined };
+    const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
+    const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
+
+    const getScalar = () => {
+      const parsedType = type; // TODO parse date to string ??
+      const fieldType = isList ? `${parsedType}List` : parsedType.toString();
+      // Format string from PascalCase to camelCase (e.g. IntList -> intList)
+      const fLLower = (s: string) => s.replace(/./, (c) => c.toLowerCase());
+      return `t.${fLLower(fieldType)}(${JSON.stringify(props)})`;
+    };
+    const getField = () => {
+      // BigInt is reserved
+      const renamedType = type === 'BigInt' ? 'Bigint' : type;
+      const fieldType = isList ? `[${renamedType}]` : renamedType.toString();
+      const relationProps = { ...props, type: fieldType };
+      // "type":"CommentUncheckedCreateNestedManyWithoutAuthorInput"} -> "type":CommentUncheckedCreateNestedManyWithoutAuthorInput
+      return `t.field(${JSON.stringify(relationProps).replace(/(type.+:)"(.+)"/, '$1$2')})`;
+    };
+
+    return `${field.name}: ${isScalar ? getScalar() : getField()},`;
+  });
+  const omittedFields = omittedFieldNames.map(
+    (name) => `// Field '${name}' was omitted because of the @Pothos.omit command found in comment`,
   );
+  const sep = '\n    ';
 
-  // const props = { required: field.isRequired, description: undefined };
-  // const input = getMainInput().run(field.inputTypes);
-  // const { isList, type, location } = input!;
-  // const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
-  // const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
-
-  // const key = field.name;
-  // const value = (() => {
-  //   if (isScalar) {
-  //     const parsedType = type; // parse date to string ??
-  //     const fieldType = isList ? `${parsedType}List` : parsedType.toString();
-  //     return `t.${fLLower(fieldType)}(${JSON.stringify(props)})`;
-  //   } else {
-  //     const removeQuotationMarksFromType = (str: string) => str.replace(/(type.+:)"(.+)"/, '$1$2');
-  //     const renamedType = (() => {
-  //       if (type === 'BigInt') return 'Bigint'; // BigInt is reserved
-  //       return type;
-  //     })();
-  //     const fieldType = isList ? `[${renamedType}]` : renamedType.toString();
-  //     const relationProps = { ...props, type: fieldType };
-  //     // "type":"CommentUncheckedCreateNestedManyWithoutAuthorInput"} -> "type":CommentUncheckedCreateNestedManyWithoutAuthorInput
-  //     return `t.field(${removeQuotationMarksFromType(JSON.stringify(relationProps))})`;
-  //   }
-  // })();
-  // return `${key}: ${value},`;
+  return `${fields.join(sep)}${omittedFields.length > 0 ? sep : ''}${omittedFields.join(sep)}`;
 };
 
 export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
@@ -68,15 +66,37 @@ export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
     // "Unchecked" inputs (that can be created using just an ID) are filtered out
     .filter(({ name }) => !name.includes('Unchecked'))
     .map((input) => {
-      const model = dmmf.datamodel.models.find((el) => input.name.includes(el.name));
-      if (!model) return `// ${input.name} was excluded because no corresponding model was found`;
-      return `
-  export const ${input.name} = builder.inputRef<Prisma.${input.name}>('${input.name}').implement({
-    fields: (t) => ({
-      ${getFieldsString(input.fields, model.fields)}
-    })
-  })`;
+      // Find the model related to the input type
+      const model = dmmf.datamodel.models.find(({ name }) =>
+        // TODO idk if all of these are necessary
+        [
+          'Where',
+          'OrderBy',
+          'ScalarWhere',
+          'Update',
+          'Create',
+          'Upsert',
+          'AvgOrderBy',
+          'MaxOrderBy',
+          'MinOrderBy',
+          'SumOrderBy',
+          'CountOrderBy',
+          'Filter',
+          'RelationFilter',
+          'ListRelationFilter',
+        ]
+          .map((keyword) => name + keyword)
+          .some((modelName) => input.name.startsWith(modelName)),
+      );
+      // if (!model) return `// ${input.name} was excluded because no corresponding model was found`;
+      return `export const ${input.name} = builder.inputRef<Prisma.${input.name}>('${
+        input.name
+      }').implement({
+  fields: (t) => ({
+    ${getFieldsString(input, model)}
+  })
+})`;
     });
 
-  return inputStrings.join('\n');
+  return inputStrings.join('\n\n');
 };
