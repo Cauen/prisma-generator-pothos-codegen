@@ -56,7 +56,7 @@ export function getMainInput() {
 
   const run = (inputs: InputType[]): InputType => {
     if (inputs.length === 0) throw new Error('No input type found');
-    const first = inputs[0]!;
+    const first = inputs[0];
     const second = inputs[1];
     if (first && !second) return first;
 

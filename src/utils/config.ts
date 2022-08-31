@@ -10,8 +10,7 @@ export interface Config {
     prismaImporter?: string;
     /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
     builderImporter?: string;
-    // TODO what is the default
-    /** Path to generate the inputs file to from project root. Default: '.' */
+    /** Path to generate the inputs file to from project root. Default: './generated/inputs.ts' */
     outputFilePath?: string;
     /** List of excluded scalars from generated output */
     excludeScalars?: string[];
@@ -24,8 +23,7 @@ export interface Config {
     disabled?: boolean;
     /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
     builderImporter?: string;
-    // TODO is this necessary + what is the default?
-    /** How to import the inputs. Default `'import * as Inputs from ./inputs'` */
+    /** How to import the inputs. Default `'import * as Inputs from "../inputs"'` */
     inputsImporter?: string;
     /** Directory to generate crud code into from project root. Default: `'./generated'` */
     outputDir?: string;
@@ -75,19 +73,19 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   inputs: {
     prismaImporter: 'import { Prisma } from ".prisma/client"',
     builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
-    // TODO what is the default?
-    outputFilePath: '.',
+    outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
     replacer: defaultReplacer,
   },
   crud: {
     disabled: false,
     builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
-    inputsImporter: 'import * as Inputs from ./inputs',
+    inputsImporter: 'import * as Inputs from "../inputs"',
     outputDir: './generated',
     replacer: defaultReplacer,
-    // TODO
-    resolversImports: '???',
+
+    // TODO ???
+    resolversImports: '',
     dbCaller: 'context.db',
   },
   global: {
@@ -103,7 +101,8 @@ export const getConfig = async (
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
   const optionsPath = path.join(
     schemaDirName,
-    extendedGeneratorOptions.generatorConfigPath || 'crud-generator-configs.ts',
+    // TODO define and document default config file path
+    extendedGeneratorOptions.generatorConfigPath || 'crud-generator-config.ts',
   );
 
   const optionsRequired = await import(optionsPath);

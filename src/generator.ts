@@ -6,7 +6,7 @@ import { getConfig } from './utils/config';
 // Types from the generator, in `schema.prisma`
 type SchemaGeneratorExtensionOptions = { generatorConfigPath?: string };
 
-// default configs from generator, with the path option
+// default config from generator, with the path option
 export type ExtendedGeneratorOptions = SchemaGeneratorExtensionOptions & GeneratorOptions;
 
 generatorHandler({

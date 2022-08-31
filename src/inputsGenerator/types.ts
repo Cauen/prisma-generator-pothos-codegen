@@ -1,4 +1,5 @@
 /** Types may vary between Prisma versions */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> = {
   DateTime: {
     Input: Date;

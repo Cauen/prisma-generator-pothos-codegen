@@ -88,8 +88,7 @@ module.exports = {
       prismaImporter?: string;
       /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
       builderImporter?: string;
-      // TODO what is the default
-      /** Path to generate the inputs file to from project root. Default: '.' */
+      /** Path to generate the inputs file to from project root. Default: './generated/inputs.ts' */
       outputFilePath?: string;
       /** List of excluded scalars from generated output */
       excludeScalars?: string[];
@@ -102,15 +101,12 @@ module.exports = {
       disabled?: boolean;
       /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
       builderImporter?: string;
-      // TODO is this necessary + what is the default?
-      /** How to import the inputs. Default `'import * as Inputs from ./inputs'` */
+      /** How to import the inputs. Default `'import * as Inputs from "../inputs"'` */
       inputsImporter?: string;
       /** Directory to generate crud code into from project root. Default: `'./generated'` */
       outputDir?: string;
       /** A function to replace generated source. Combined with global replacer config */
       replacer?: Replacer;
-
-      // TODO What do these do?
       resolversImports?: string; // default: what to import inside resolver
       dbCaller?: string; // how to call prisma. default: context.db
     };
@@ -121,12 +117,11 @@ module.exports = {
       /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
       builderImporter?: string;
     };
-
-}
-
+  }
 ```
 
 <!-- TODO update examples -->
+
 See example: [click here](/examples/inputs-simple-sqlite/src/schema/configs.ts)
 
 </details>
@@ -158,4 +153,7 @@ Check for the [example](/examples/inputs-simple-sqlite) for a running sample
 
 - Run `npm run build`
 - Run `npm run pub`
+
+```
+
 ```

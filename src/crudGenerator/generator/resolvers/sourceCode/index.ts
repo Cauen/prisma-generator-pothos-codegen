@@ -27,30 +27,6 @@ const resolvers: Resolver[] = [
   { type: 'Mutation', name: 'upsertOne', srcTemplate: upsertOne },
 ];
 
-const isExcludedResolver = (options: ModelGenerateOptions, name: string) => {
-  // TODO can probably be deleted
-  // const {
-  //   excludeResolversContain,
-  //   excludeResolversExact,
-  //   includeResolversContain,
-  //   includeResolversExact,
-  // } = options.config.crud || {};
-  // if (includeResolversExact) {
-  //   return !includeResolversExact.includes(name);
-  // }
-  // if (includeResolversContain) {
-  //   return !includeResolversContain.some((include) => name.includes(include));
-  // }
-
-  // if (excludeResolversExact && excludeResolversExact.includes(name)) {
-  //   return true;
-  // }
-  // if (excludeResolversContain && excludeResolversContain.some((r) => name.includes(r))) {
-  //   return true;
-  // }
-  return false;
-};
-
 const parseSrc = (template: string, options: ModelGenerateOptions) => {
   const firstLetterLowercase = (s: string) => s[0]?.toLowerCase() + s.slice(1);
 
@@ -63,15 +39,9 @@ const parseSrc = (template: string, options: ModelGenerateOptions) => {
 };
 
 export const getResolversSrcs = (options: ModelGenerateOptions) => {
-  return resolvers
-    .filter((r) => {
-      const nameWithModel = `${r.name}${options.model}`; // findFirstUser
-      const excluded = isExcludedResolver(options, nameWithModel);
-      return !excluded;
-    })
-    .map(({ type, name, srcTemplate }) => ({
-      type, // Query or Mutation
-      name, // findFirst
-      src: parseSrc(srcTemplate, options), // source code
-    }));
+  return resolvers.map(({ type, name, srcTemplate }) => ({
+    type, // Query or Mutation
+    name, // findFirst
+    src: parseSrc(srcTemplate, options), // source code
+  }));
 };

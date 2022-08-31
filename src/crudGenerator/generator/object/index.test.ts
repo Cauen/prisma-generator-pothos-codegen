@@ -1,11 +1,13 @@
 import { getSampleDMMF } from '../../../tests/getPrismaSchema';
+import { getDefaultConfig } from '../../../utils/config';
 import { getObjectSrc } from '.';
 
 describe('getObjectSrc', () => {
   it('should replace all variables', async () => {
     const dmmf = await getSampleDMMF('simple');
+    const defaultConfig = getDefaultConfig();
     const src = getObjectSrc({
-      configs: {},
+      config: defaultConfig,
       dmmf,
       model: 'User',
     });

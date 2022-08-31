@@ -68,7 +68,7 @@ export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
     .map((input) => {
       // Find the model related to the input type
       const model = dmmf.datamodel.models.find(({ name }) =>
-        // TODO idk if all of these are necessary
+        // TODO I don't know if all of these are necessary
         [
           'Where',
           'OrderBy',

@@ -1,5 +1,4 @@
 import { ModelGenerateOptions } from '..';
-import { env } from '../../../env';
 import { replaceAndWriteFileSafely } from '../../../utils/filesystem';
 import { getResolversSrcs } from './sourceCode';
 

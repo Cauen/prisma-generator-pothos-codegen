@@ -60,7 +60,7 @@ const neverScalar = `export const NEVER = builder.scalarType('NEVER', {
   description: "Never fill this, its created for inputs that dont have fields"
 });`;
 
-const getScalarsFromConfigs = (usedScalars: UsedScalars, excludeScalars?: string[]): string => {
+const getScalarsFromConfig = (usedScalars: UsedScalars, excludeScalars?: string[]): string => {
   const isDatetimeExcluded = excludeScalars?.includes('DateTime');
   const isDecimalExcluded = excludeScalars?.includes('Decimal');
   const isBytesExcluded = excludeScalars?.includes('Bytes');
@@ -82,5 +82,5 @@ export const getScalars = (config: ConfigInternal, dmmf: DMMF.Document) => {
   const inputs = dmmf.schema.inputObjectTypes.prisma;
   const used = getUsedScalars(inputs);
   const excludeScalars = config.inputs?.excludeScalars;
-  return getScalarsFromConfigs(used, excludeScalars);
+  return getScalarsFromConfig(used, excludeScalars);
 };

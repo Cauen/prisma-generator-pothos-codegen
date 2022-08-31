@@ -11,8 +11,8 @@ const writeObjects = (dmmf: DMMF.Document, config: ConfigInternal) => {
   const exportedModels = dmmf.datamodel.models
     .map((model) => `export * from './${model.name}'`)
     .join('\n');
-  // TODO import builder should come from the config
-  const batchPayload = `import { builder } from "@/schema/builder";
+  // TODO import builder should come from the config (doesn't work for relative imports yet)
+  const batchPayload = `${config.crud.builderImporter}
 import { Prisma } from '.prisma/client'
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
