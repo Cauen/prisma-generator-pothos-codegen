@@ -1,23 +1,18 @@
-import { Configs } from "../generator";
 import { DMMF } from '@prisma/generator-helper';
-import modelGenerate from './generator'
-import { replaceAndWriteFileSafely } from "../utils/filesystem";
-import path from 'path'
+import { ConfigInternal } from '../utils/config';
+import { replaceAndWriteFileSafely } from '../utils/filesystem';
+import modelGenerate from './generator';
 
 /**
  * - Export all the models
  * - Export Prisma Objects (BatchPayload)
  */
-const writeObjects = (dmmf: DMMF.Document, configs: Configs) => {
-  const dirname = configs.crud?.outputFolderPath || "./generated"
-  const exportedModels = (() => {
-    return dmmf.datamodel.models.map((model) => {
-      return `export * from './${model.name}'`
-    }).join("\n")
-  })()
-
-
-  const batchPayload = `import { builder } from "@/schema/builder";
+const writeObjects = (dmmf: DMMF.Document, config: ConfigInternal) => {
+  const exportedModels = dmmf.datamodel.models
+    .map((model) => `export * from './${model.name}'`)
+    .join('\n');
+  // TODO import builder should come from the config (doesn't work for relative imports yet)
+  const batchPayload = `${config.crud.builderImporter}
 import { Prisma } from '.prisma/client'
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
@@ -26,27 +21,30 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
     count: t.exposeInt('count', { description: 'Prisma Batch Payload', nullable: false }),
   }),
 });
-  `
+  `;
 
-  const objectsSrc = `${exportedModels}\n\n${batchPayload}`
-  replaceAndWriteFileSafely(configs, 'crud.objects')(objectsSrc, `${dirname}/objects.ts`)
-}
+  const objectsSrc = `${exportedModels}\n\n${batchPayload}`;
+  replaceAndWriteFileSafely(config, 'crud.objects')(
+    objectsSrc,
+    `${config.crud.outputDir}/objects.ts`,
+  );
+};
 
 /**
  * This generates:
  * - All content inside ./src/schema/User/...
  * - ./src/schema/objects.ts
  */
-export default function generateCrud(dmmf: DMMF.Document, configs: Configs) {
-  if (configs.crud?.disabled) return
+export async function generateCrud(dmmf: DMMF.Document, config: ConfigInternal) {
+  if (config.crud.disabled) return;
 
   // Gerating User, Comment, ...
   const gen = dmmf.datamodel.models.map((model) => {
-    return modelGenerate({ configs, dmmf, model: model.name })
-  })
+    return modelGenerate({ config, dmmf, model: model.name });
+  });
 
   // Generating objects.ts
-  writeObjects(dmmf, configs)
+  writeObjects(dmmf, config);
 
-  return gen
+  return gen;
 }

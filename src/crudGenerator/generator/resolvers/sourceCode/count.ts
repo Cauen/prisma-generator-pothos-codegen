@@ -27,4 +27,4 @@ export const count#{model} = builder.queryFields((t) => ({
       return count
     }
   })
-}))`
+}))`;

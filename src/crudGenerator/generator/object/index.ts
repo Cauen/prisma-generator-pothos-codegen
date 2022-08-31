@@ -1,8 +1,8 @@
-import { parseTemplateGlobal } from "../../utils/parseTemplateGlobal"
-import { ModelGenerateOptions } from ".."
-import { getDescriptionSrc } from "./pieces/description"
-import { getFieldsSrc } from "./pieces/fields"
-import { getFindUniqueSrc } from "./pieces/findUnique"
+import { ModelGenerateOptions } from '..';
+import { parseTemplateGlobal } from '../../utils/parseTemplateGlobal';
+import { getDescriptionSrc } from './pieces/description';
+import { getFieldsSrc } from './pieces/fields';
+import { getFindUniqueSrc } from './pieces/findUnique';
 
 const template = `
 // importing builder + inputs
@@ -15,24 +15,24 @@ export const #{model} = builder.prismaObject('#{model}', {
     #{fields}
   }),
 });
-`
+`;
 
 export const getObjectSrc = (options: ModelGenerateOptions): string => {
-  const { dmmf, model } = options
-  const dmmfModel = dmmf.datamodel.models.find(m => m.name === model)
-  if (!dmmfModel) return template
+  const { dmmf, model } = options;
+  const dmmfModel = dmmf.datamodel.models.find((m) => m.name === model);
+  if (!dmmfModel) return template;
 
-  const globalParsed = parseTemplateGlobal(template, options)
+  const globalParsed = parseTemplateGlobal(template, options);
 
-  const uniqueSrc = getFindUniqueSrc(dmmfModel)
-  const fieldsSrc = getFieldsSrc(dmmfModel)
-  const descriptionSrc = getDescriptionSrc(dmmfModel)
+  const uniqueSrc = getFindUniqueSrc(dmmfModel);
+  const fieldsSrc = getFieldsSrc(dmmfModel);
+  const descriptionSrc = getDescriptionSrc(dmmfModel);
 
   const parsed = globalParsed
     .replace(/#{model}/g, model)
     .replace(/#{findUnique}/g, uniqueSrc)
     .replace(/#{fields}/g, fieldsSrc)
-    .replace(/#{description}/g, descriptionSrc)
+    .replace(/#{description}/g, descriptionSrc);
 
-  return parsed
-}
+  return parsed;
+};

@@ -29,4 +29,4 @@ export const findMany#{model} = builder.queryFields((t) => ({
       return list
     }
   })
-}))`
+}))`;

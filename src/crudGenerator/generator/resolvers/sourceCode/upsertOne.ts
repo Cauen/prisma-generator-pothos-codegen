@@ -23,4 +23,4 @@ export const upsertOne#{model} = builder.mutationFields((t) => ({
       return upserted
     }
   })
-}))`
+}))`;

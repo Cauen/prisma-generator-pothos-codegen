@@ -20,4 +20,4 @@ export const updateMany#{model} = builder.mutationFields((t) => ({
       return updatedBatch
     }
   })
-}))`
+}))`;

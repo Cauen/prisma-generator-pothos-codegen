@@ -1,48 +1,120 @@
-import { ExtendedGeneratorOptions } from "../generator";
-import path from 'path'
-import { ReplacerPosition } from "./filesystem";
+import path from 'path';
+import { ExtendedGeneratorOptions } from '../generator';
+import { defaultReplacer, Replacer } from './replacer';
 
-export type ImportedConfigsOptions = {
+/** Interface used to configure generator behavior */
+export interface Config {
+  /** Input type generation config */
   inputs?: {
-    prismaImporter?: string // default: import { Prisma } from ".prisma/client"
-    builderImporter?: string // default: import { builder } from "./builder"
-    excludeInputs?: string[] // default: undefined
-    excludeScalars?: string[] // default: undefined
-    outputFilePath?: string // path to generate file, from project root
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
-  },
+    /** How to import the Prisma namespace. Default: `'import { Prisma } from ".prisma/client"'` */
+    prismaImporter?: string;
+    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
+    builderImporter?: string;
+    /** Path to generate the inputs file to from project root. Default: './generated/inputs.ts' */
+    outputFilePath?: string;
+    /** List of excluded scalars from generated output */
+    excludeScalars?: string[];
+    /** A function to replace generated source. Combined with global replacer config */
+    replacer?: Replacer;
+  };
+  /** CRUD generation config */
   crud?: {
-    disabled?: boolean // disable generaton of crud. default: false
-    includeResolversExact?: string[] // generate only resolvers with name in the list. default: undefined. ie: ['createOneUser']
-    includeResolversContain?: string[] // generate only resolvers with name included in the list. default: undefined. ie: ['User'].
-    excludeResolversExact?: string[] // default: undefined. ie: ['createOneComment']
-    excludeResolversContain?: string[] // default: undefined. ie: ['createOne']
-    resolversImports?: string // default: what to import inside resolver
-    dbCaller?: string // how to call prisma. default: context.db
-    inputsImporter?: string // default: import * as Inputs from "@/generated/inputs";
-    builderImporter?: string // default: import { builder } from "./builder"
-    outputFolderPath?: string // path to generate files, from project root. default: ./generated
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
-  },
+    /** Disable generaton of crud. Default: `false` */
+    disabled?: boolean;
+    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
+    builderImporter?: string;
+    /** How to import the inputs. Default `'import * as Inputs from "../inputs"'` */
+    inputsImporter?: string;
+    /** Directory to generate crud code into from project root. Default: `'./generated'` */
+    outputDir?: string;
+    /** A function to replace generated source. Combined with global replacer config */
+    replacer?: Replacer;
+
+    // TODO
+    resolversImports?: string; // default: what to import inside resolver
+    dbCaller?: string; // how to call prisma. default: context.db
+  };
+  /** Global config */
   global?: {
-    replacer?: (generated: string, position: ReplacerPosition) => string // a function to replace generated source
-  }
+    /** A function to replace generated source */
+    replacer?: Replacer;
+    /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
+    builderImporter?: string;
+  };
 }
-export type ConfigsOptions = ImportedConfigsOptions
 
-export type Configs = ImportedConfigsOptions
+/** Interface representing a configuration filled with default values where the original config was missing them, for internal purposes */
+export interface ConfigInternal {
+  inputs: {
+    prismaImporter: string;
+    builderImporter: string;
+    outputFilePath: string;
+    excludeScalars: string[];
+    replacer: Replacer;
+  };
+  crud: {
+    disabled: boolean;
+    builderImporter: string;
+    inputsImporter: string;
+    outputDir: string;
+    replacer: Replacer;
 
-/**
- * Receives the config path from generator options
- * Load the configs from file, and return it
- */
-export const getConfig = async (extendedGeneratorOptions: ExtendedGeneratorOptions): Promise<Configs> => {
-  const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath)
-  const optionsPath = path.join(schemaDirName, extendedGeneratorOptions.generatorConfigPath || 'crud-generator-configs.ts')
-
-  const optionsRequired = await import(optionsPath)
-  const loadedConfigs: ImportedConfigsOptions = optionsRequired.configs || {
-  }
-
-  return loadedConfigs
+    // TODO
+    resolversImports: string;
+    dbCaller: string;
+  };
+  global: {
+    replacer: Replacer;
+    builderImporter: string;
+  };
 }
+
+export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
+  inputs: {
+    prismaImporter: 'import { Prisma } from ".prisma/client"',
+    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
+    outputFilePath: './generated/inputs.ts',
+    excludeScalars: [],
+    replacer: defaultReplacer,
+  },
+  crud: {
+    disabled: false,
+    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
+    inputsImporter: 'import * as Inputs from "../inputs"',
+    outputDir: './generated',
+    replacer: defaultReplacer,
+
+    // TODO what purpose does this serve?
+    resolversImports: '',
+    // TODO make this a function instead of a string
+    dbCaller: 'context.db',
+  },
+  global: {
+    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
+    replacer: defaultReplacer,
+  },
+});
+
+/** Receives the config path from generator options, loads the config from file, fills out the default values, and returns it */
+export const getConfig = async (
+  extendedGeneratorOptions: ExtendedGeneratorOptions,
+): Promise<ConfigInternal> => {
+  const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
+  const optionsPath = path.join(
+    schemaDirName,
+    // TODO define and document default config file path
+    extendedGeneratorOptions.generatorConfigPath || 'crud-generator-config.ts',
+  );
+
+  const optionsRequired = await import(optionsPath);
+  const { inputs, crud, global }: Config = optionsRequired || {};
+
+  const defaultConfig = getDefaultConfig(global);
+  const internalConfig: ConfigInternal = {
+    inputs: { ...defaultConfig.inputs, ...inputs },
+    crud: { ...defaultConfig.crud, ...crud },
+    global: { ...defaultConfig.global, ...global },
+  };
+
+  return internalConfig;
+};

@@ -19,4 +19,4 @@ export const createOne#{model} = builder.mutationFields((t) => ({
       return created
     }
   })
-}))`
+}))`;

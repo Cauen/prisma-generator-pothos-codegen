@@ -21,4 +21,4 @@ export const updateOne#{model} = builder.mutationFields((t) => ({
       return found
     }
   })
-}))`
+}))`;
