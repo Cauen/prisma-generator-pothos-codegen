@@ -1,14 +1,43 @@
 import { DMMF } from '@prisma/generator-helper';
 
-export type InputType = DMMF.SchemaArgInputType;
-/**
- * Sometimes, input types is a list
- * But inputtypes from Graphql cannot be an Union
- * This function will find the main input type
- */
+export type UsedScalars = {
+  hasDateTime: boolean;
+  hasDecimal: boolean;
+  hasBytes: boolean;
+  hasJson: boolean;
+  hasBigInt: boolean;
+  hasNEVER: boolean;
+};
+
+/** Reads the input types and returns what scalars are used */
+export function getUsedScalars(inputs: DMMF.InputType[]): UsedScalars {
+  let hasDateTime = false;
+  let hasDecimal = false;
+  let hasBytes = false;
+  let hasJson = false;
+  let hasBigInt = false;
+  let hasNEVER = false;
+
+  for (const { fields } of inputs) {
+    if (fields.length === 0) hasNEVER = true;
+    for (const { inputTypes } of fields) {
+      for (const { type, location } of inputTypes) {
+        if (type === 'Json' && location === 'scalar') hasJson = true;
+        if (type === 'DateTime' && location === 'scalar') hasDateTime = true;
+        if (type === 'Decimal' && location === 'scalar') hasDecimal = true;
+        if (type === 'Bytes' && location === 'scalar') hasBytes = true;
+        if (type === 'BigInt' && location === 'scalar') hasBigInt = true;
+      }
+    }
+  }
+
+  return { hasDateTime, hasDecimal, hasBytes, hasJson, hasBigInt, hasNEVER };
+}
+
+/** Find main input type (list or not, since GraphQL input types don't allow unions) */
 export function getMainInput() {
   // If one list, priorize it
-  const priorizeJson = (inputs: InputType[]) => {
+  const priorizeJson = (inputs: DMMF.SchemaArgInputType[]) => {
     const listInputs = inputs.find((el) => el.type === 'Json');
     if (listInputs) {
       return listInputs;
@@ -17,7 +46,7 @@ export function getMainInput() {
   };
 
   // If one list, priorize it
-  const priorizeList = (inputs: InputType[]) => {
+  const priorizeList = (inputs: DMMF.SchemaArgInputType[]) => {
     const listInputs = inputs.filter((el) => el.isList);
     const exactlyOneIsList = listInputs.length === 1;
     if (exactlyOneIsList) {
@@ -27,7 +56,7 @@ export function getMainInput() {
   };
 
   // If not list, priorize not scalar
-  const priorizeNotScalar = (inputs: InputType[]) => {
+  const priorizeNotScalar = (inputs: DMMF.SchemaArgInputType[]) => {
     const listInputs = inputs.filter((el) => el.isList);
     const exactlyOneIsList = listInputs.length === 0;
     if (exactlyOneIsList) {
@@ -37,7 +66,7 @@ export function getMainInput() {
   };
 
   // If one list, priorize it
-  const priorizeWhereInput = (inputs: InputType[]) => {
+  const priorizeWhereInput = (inputs: DMMF.SchemaArgInputType[]) => {
     const listInputs = inputs.find((el) => el.type.toString().includes('WhereInput'));
     if (listInputs) {
       return listInputs;
@@ -46,7 +75,7 @@ export function getMainInput() {
   };
 
   // If one list, priorize it
-  const priorizeSetUpdateAlternative = (inputs: InputType[]) => {
+  const priorizeSetUpdateAlternative = (inputs: DMMF.SchemaArgInputType[]) => {
     const setType = inputs.find((el) => el.type.toString().includes('FieldUpdateOperationsInput'));
     if (setType) {
       return setType;
@@ -54,7 +83,7 @@ export function getMainInput() {
     return undefined;
   };
 
-  const run = (inputs: InputType[]): InputType => {
+  const run = (inputs: DMMF.SchemaArgInputType[]): DMMF.SchemaArgInputType => {
     if (inputs.length === 0) throw new Error('No input type found');
     const first = inputs[0];
     const second = inputs[1];

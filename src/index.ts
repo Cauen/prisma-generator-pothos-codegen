@@ -1,2 +1,2 @@
-export { Scalars } from './inputsGenerator/types';
+export { Scalars } from './inputsGenerator/';
 export { Config } from './utils/config';
