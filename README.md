@@ -153,7 +153,3 @@ Check for the [example](/examples/inputs-simple-sqlite) for a running sample
 
 - Run `npm run build`
 - Run `npm run pub`
-
-```
-
-```
