@@ -87,7 +87,6 @@ export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
           .map((keyword) => name + keyword)
           .some((modelName) => input.name.startsWith(modelName)),
       );
-      // if (!model) return `// ${input.name} was excluded because no corresponding model was found`;
       return `export const ${input.name} = builder.inputRef<Prisma.${input.name}>('${
         input.name
       }').implement({

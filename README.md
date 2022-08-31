@@ -9,7 +9,7 @@ A prisma generator plugin that auto-generates Pothos GraphQL input types and cru
   - [Basic Usage](#basic-usage)
   - [Tested environments](#tested-environments)
   - [Examples](#examples)
-- [Disclosures]
+- [Disclosures](#disclosures)
   - [Models with only relations](#models-with-only-relations)
   - [BigInt rename](#bigint-rename)
 - [Publishing](#publishing)
