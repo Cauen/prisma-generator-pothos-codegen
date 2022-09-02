@@ -19,7 +19,7 @@ generatorHandler({
     const generatorConfig: ExtendedGeneratorOptions = { ...options, ...options.generator.config };
     const config = await getConfig(generatorConfig);
 
-    await generateInputs(options.dmmf, config);
-    await generateCrud(options.dmmf, config);
+    await generateInputs(config, options.dmmf);
+    await generateCrud(config, options.dmmf);
   },
 });

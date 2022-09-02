@@ -1,50 +1,34 @@
+import path from 'node:path';
 import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../utils/config';
-import { replaceAndWriteFileSafely } from '../utils/filesystem';
-import modelGenerate from './generator';
+import { writeFile } from '../utils/filesystem';
+import { useTemplate } from '../utils/template';
+import { importsTemplate, objectsTemplate } from './templates/root';
+import { generateModel } from './utils/generator';
 
-/**
- * - Export all the models
- * - Export Prisma Objects (BatchPayload)
- */
-const writeObjects = (dmmf: DMMF.Document, config: ConfigInternal) => {
-  const exportedModels = dmmf.datamodel.models
-    .map((model) => `export * from './${model.name}'`)
-    .join('\n');
-  // TODO import builder should come from the config (doesn't work for relative imports yet)
-  const batchPayload = `${config.crud.builderImporter}
-import { Prisma } from '.prisma/client'
-
-export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
-  description: 'Batch payloads from prisma.',
-  fields: (t) => ({
-    count: t.exposeInt('count', { description: 'Prisma Batch Payload', nullable: false }),
-  }),
-});
-  `;
-
-  const objectsSrc = `${exportedModels}\n\n${batchPayload}`;
-  replaceAndWriteFileSafely(config, 'crud.objects')(
-    objectsSrc,
-    `${config.crud.outputDir}/objects.ts`,
-  );
-};
-
-/**
- * This generates:
- * - All content inside ./src/schema/User/...
- * - ./src/schema/objects.ts
- */
-export async function generateCrud(dmmf: DMMF.Document, config: ConfigInternal) {
+export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
   if (config.crud.disabled) return;
 
-  // Gerating User, Comment, ...
-  const gen = dmmf.datamodel.models.map((model) => {
-    return modelGenerate({ config, dmmf, model: model.name });
-  });
+  // Generate CRUD directories (e.g. User, Comment, ...)
+  dmmf.datamodel.models.forEach((model) => generateModel(config, dmmf, model.name));
 
-  // Generating objects.ts
-  writeObjects(dmmf, config);
+  // Generate root objects.ts file (export all models + prisma objects)
+  const exports = dmmf.datamodel.models
+    .map((model) => `export * from './${model.name}';`)
+    .join('\n');
 
-  return gen;
+  writeFile(
+    config,
+    'crud.objects',
+    useTemplate(objectsTemplate, { exports, ...config.crud }),
+    path.join(config.crud.outputDir, 'objects.ts'),
+  );
+
+  // Generate root imports.ts file
+  writeFile(
+    config,
+    'crud.imports',
+    useTemplate(importsTemplate, config.crud),
+    path.join(config.crud.outputDir, 'imports.ts'),
+  );
 }

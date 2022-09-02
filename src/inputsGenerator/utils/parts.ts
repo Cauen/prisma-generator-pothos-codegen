@@ -10,7 +10,9 @@ export const getEnums = (dmmf: DMMF.Document) => {
     ...dmmf.schema.enumTypes.prisma,
     ...dmmf.datamodel.enums.map((el) => ({ ...el, values: el.values.map(({ name }) => name) })),
   ]
-    .map((el) => useTemplate(T.enumTemplate, { name: el.name, value: JSON.stringify(el.values) }))
+    .map((el) =>
+      useTemplate(T.enumTemplate, { enumName: el.name, values: JSON.stringify(el.values) }),
+    )
     .join('\n\n');
 };
 
@@ -37,7 +39,7 @@ export const getInputs = (dmmf: DMMF.Document) => {
       .filter(({ name }) => !name.includes('Unchecked'))
       .map((input) => {
         const model = dmmf.datamodel.models.find(({ name }) =>
-          // TODO I don't know if all of these are necessary
+          // TODO check if all of these are necessary + if this is exhaustive
           [
             'Where',
             'OrderBy',
@@ -58,8 +60,8 @@ export const getInputs = (dmmf: DMMF.Document) => {
             .some((modelName) => input.name.startsWith(modelName)),
         );
         return useTemplate(T.inputTemplate, {
-          name: input.name,
-          value: getFieldsString(input, model),
+          inputName: input.name,
+          fields: getFieldsString(input, model),
         });
       })
       .join('\n\n')

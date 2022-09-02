@@ -1,10 +1,10 @@
-export const enumTemplate = `export const #{Name} = builder.enumType('#{Name}', {
-  values: #{value} as const,
+export const enumTemplate = `export const #{enumName} = builder.enumType('#{enumName}', {
+  values: #{values} as const,
 });`;
 
-export const inputTemplate = `export const #{Name} = builder.inputRef<Prisma.#{Name}>('#{Name}').implement({
+export const inputTemplate = `export const #{inputName} = builder.inputRef<Prisma.#{inputName}>('#{inputName}').implement({
   fields: (t) => ({
-    #{value}
+    #{fields}
   }),
 });`;
 

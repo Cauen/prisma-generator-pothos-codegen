@@ -6,7 +6,6 @@ describe('crudGenerator', () => {
   it('should generate all files', async () => {
     const dmmf = await getSampleDMMF('complex');
     const defaultConfig = getDefaultConfig();
-    const inputs = await generateCrud(dmmf, defaultConfig);
-    expect(inputs).toBeTruthy();
+    await generateCrud(defaultConfig, dmmf);
   });
 });
