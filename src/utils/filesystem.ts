@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { env } from '../env';
 import { ConfigInternal } from './config';
-import { ReplacerSection } from './replacer';
+import { Replacer, ReplacerSection } from './replacer';
 
 export const debugLog = (value: string, timestamp?: boolean) => {
   if (!env.isTesting) return;
@@ -26,8 +26,8 @@ export const writeFile = async (
   const replace = (str: string): string =>
     [
       config.global.replacer,
-      ...(section === 'inputs' ? [config.inputs.replacer] : []),
-      ...(section?.includes('crud') ? [config.crud.replacer] : []),
+      ...(section === 'inputs' ? [config.inputs.replacer as unknown as Replacer] : []),
+      ...(section?.includes('crud') ? [config.crud.replacer as unknown as Replacer] : []),
     ].reduce((el, replacer) => replacer(el, section), str);
 
   try {

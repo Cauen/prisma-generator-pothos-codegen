@@ -1,6 +1,6 @@
 import Tokenizr from 'tokenizr';
 
-type Omit = 'output' | 'input' | 'create' | 'update' | 'where' | 'orderBy';
+type Omit = 'create' | 'update' | 'where' | 'orderBy';
 type OmitType = 'all' | Omit[];
 enum TokenType {
   DECORATOR = 'DECORATOR',
@@ -15,16 +15,16 @@ const tokenizr = new Tokenizr();
 tokenizr.rule(/@Pothos\.omit/, (ctx) => ctx.accept(TokenType.DECORATOR));
 tokenizr.rule(/\(/, (ctx) => ctx.accept(TokenType.OPEN_PAREN));
 tokenizr.rule(/\)/, (ctx) => ctx.accept(TokenType.CLOSE_PAREN));
-tokenizr.rule(/output|input|create|update|where|orderBy/, (ctx, match) =>
+tokenizr.rule(/create|update|where|orderBy/, (ctx, match) =>
   ctx.accept(TokenType.OMIT_TYPE, match),
 );
 tokenizr.rule(/,\s*/, (ctx) => ctx.accept(TokenType.SEPARATOR));
 tokenizr.rule(/./, (ctx) => ctx.accept(TokenType.CHAR));
 
 /** Parses comment for omit commands in the following syntax:
- * /// @Pothos.omit() # Omits field from all inputs and output
- * /// @Pothos.omit(output, create) # Omits field from the output and the create input
- * /// @Pothos.omit(input) # Omits field from all inputs
+ * /// @Pothos.omit() # Omits field from all inputs
+ * /// @Pothos.omit(create) # Omits field from the create input
+ * /// @Pothos.omit(orderBy, where, update) # Omits field from the orderBy, where, and update inputs, but not the create input
  */
 export const parseComment = (s: string): OmitType | null => {
   tokenizr.input(s);

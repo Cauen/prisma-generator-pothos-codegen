@@ -1,7 +1,7 @@
 import { DMMF } from '@prisma/generator-helper';
-import { parseComment } from '../../utils/parser';
 import { firstLetterLowerCase, firstLetterUpperCase } from '../../utils/string';
 import { getMainInput } from './dmmf';
+import { parseComment } from './parser';
 
 /** Convert array of fields to a string code representation */
 export const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
@@ -16,7 +16,6 @@ export const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): stri
     if (!omitTypes) return true;
     if (
       omitTypes === 'all' ||
-      omitTypes.includes('input') ||
       omitTypes.some((omitType) =>
         input.name.startsWith(model?.name + firstLetterUpperCase(omitType)),
       )
