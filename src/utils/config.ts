@@ -100,8 +100,7 @@ export const getConfig = async (
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
   const optionsPath = path.join(
     schemaDirName,
-    // TODO define and document default config file path
-    extendedGeneratorOptions.generatorConfigPath || 'crud-generator-config.ts',
+    extendedGeneratorOptions.generatorConfigPath || 'pothos.config.js',
   );
 
   const optionsRequired = await import(optionsPath);

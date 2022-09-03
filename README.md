@@ -71,7 +71,7 @@ export const builder = new SchemaBuilder<{
 ```js
 // ./pothos.config.js
 
-/** @type {import('../prisma-generator-pothos-codegen/src').Config} */
+/** @type {import('prisma-generator-pothos-codegen').Config} */
 module.exports = {
   inputs: {
     outputFilePath: './src/graphql/__generated__/inputs.ts',
