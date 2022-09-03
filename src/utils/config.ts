@@ -27,7 +27,7 @@ export interface Config {
     inputsExporter?: string;
     /** How to export the Prisma namespace. Default `"export { Prisma } from '.prisma/client';"` */
     prismaExporter?: string;
-    /** How to call the prisma client. Default `'context.prisma'` */
+    /** How to call the prisma client. Default `'_context.prisma'` */
     prismaCaller?: string;
     /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
     resolversImports?: string;
@@ -82,7 +82,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     inputsExporter: `export * as Inputs from '../inputs'`,
     prismaExporter: `export { Prisma } from '.prisma/client';`,
-    prismaCaller: 'context.prisma',
+    prismaCaller: '_context.prisma',
     resolversImports: '',
     outputDir: './generated',
     replacer: (str) => str,
