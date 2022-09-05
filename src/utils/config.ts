@@ -26,7 +26,7 @@ export interface Config {
     /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
     inputsImporter?: string;
     /** How to import the Prisma namespace. Default `"import { Prisma } from '.prisma/client';"` */
-    prismaimporter?: string;
+    prismaImporter?: string;
     /** How to call the prisma client. Default `'_context.prisma'` */
     prismaCaller?: string;
     /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */

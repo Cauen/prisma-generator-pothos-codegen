@@ -78,9 +78,9 @@ module.exports = {
   },
   crud: {
     outputDir: './src/graphql/__generated__/',
-    inputsExporter: `export * as Inputs from '@graphql/__generated__/inputs';`,
-    prismaCaller: 'prisma',
+    inputsImporter: `export * as Inputs from '@graphql/__generated__/inputs';`,
     resolversImports: `import prisma from '@lib/prisma';`,
+    prismaCaller: 'prisma',
   },
   global: {
     builderImporter: `import { builder } from '@graphql/builder';`,
@@ -112,14 +112,14 @@ module.exports = {
       disabled?: boolean;
       /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
       builderImporter?: string;
-      /** How to export the inputs. Default `"export * as Inputs from '../inputs';"` */
-      inputsExporter?: string;
-      /** How to export the Prisma namespace. Default `"export { Prisma } from '.prisma/client';"` */
-      prismaExporter?: string;
+      /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
+      inputsImporter?: string;
+      /** How to import the Prisma namespace. Default `"import { Prisma } from '.prisma/client';"` */
+      prismaImporter?: string;
       /** How to call the prisma client. Default `'_context.prisma'` */
       prismaCaller?: string;
       /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
-      resolversImports?: string;
+      resolverImports?: string;
       /** Directory to generate crud code into from project root. Default: `'./generated'` */
       outputDir?: string;
       /** A function to replace generated source. Combined with global replacer config */
@@ -195,11 +195,11 @@ builder.prismaObject('User', {
   ...UserObject,
   fields: (t) => {
     // Type-safely omit and rename fields
-    const { password: _password, email, ...fields } = UserObject.fields(t);
+    const { password: _password, email: emailAddress, ...fields } = UserObject.fields(t);
 
     return {
       ...fields,
-      emailAddress: email,
+      emailAddress,
       // Add custom fields
       customField: t.field({ type: 'String', resolve: () => 'Hello world!' }),
     };
