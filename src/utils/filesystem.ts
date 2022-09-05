@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 import { env } from '../env';
 import { ConfigInternal } from './config';
 import { Replacer, ReplacerSection } from './replacer';
@@ -31,7 +32,11 @@ export const writeFile = async (
     ].reduce((el, replacer) => replacer(el, section), str);
 
   try {
-    fs.createWriteStream(location, { flags: 'w' }).write(replace(content));
+    const steps = location.split(path.sep);
+    const dir = steps.slice(0, steps.length - 1).join(path.sep);
+    fs.mkdir(dir, { recursive: true }, () => {
+      fs.createWriteStream(location, { flags: 'w' }).write(replace(content));
+    });
   } catch (err) {
     debugLog(JSON.stringify(err));
   }

@@ -4,7 +4,7 @@ export type ReplacerSection =
   | 'crud.model.resolver'
   | 'crud.model.resolverIndex'
   | 'crud.objects'
-  | 'crud.imports'
+  | 'crud.utils'
   | 'inputs'
   | 'debug.log'
   | 'debug.dmmf';

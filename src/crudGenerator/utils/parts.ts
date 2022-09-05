@@ -37,6 +37,7 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
       description: model.documentation ? `'${model.documentation}'` : 'undefined',
       findUnique,
       fields: fields.join('\n    '),
+      inputsImporter: config.crud.inputsImporter,
     }),
     path.join(config.crud.outputDir, model.name, 'object.base.ts'),
   );
@@ -66,7 +67,8 @@ export function writeResolvers(
         modelName: model.name,
         modelNameLower: firstLetterLowerCase(model.name),
         prisma: config.crud.prismaCaller,
-        resolversImports: config.crud.resolversImports,
+        resolverImports: config.crud.resolverImports,
+        inputsImporter: config.crud.inputsImporter,
       }),
       path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
     ),

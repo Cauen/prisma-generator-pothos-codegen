@@ -23,14 +23,14 @@ export interface Config {
     disabled?: boolean;
     /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
     builderImporter?: string;
-    /** How to export the inputs. Default `"export * as Inputs from '../inputs';"` */
-    inputsExporter?: string;
-    /** How to export the Prisma namespace. Default `"export { Prisma } from '.prisma/client';"` */
-    prismaExporter?: string;
+    /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
+    inputsImporter?: string;
+    /** How to import the Prisma namespace. Default `"import { Prisma } from '.prisma/client';"` */
+    prismaimporter?: string;
     /** How to call the prisma client. Default `'_context.prisma'` */
     prismaCaller?: string;
     /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
-    resolversImports?: string;
+    resolverImports?: string;
     /** Directory to generate crud code into from project root. Default: `'./generated'` */
     outputDir?: string;
     /** A function to replace generated source. Combined with global replacer config */
@@ -57,10 +57,10 @@ export interface ConfigInternal {
   crud: {
     disabled: boolean;
     builderImporter: string;
-    inputsExporter: string;
-    prismaExporter: string;
+    inputsImporter: string;
+    prismaImporter: string;
     prismaCaller: string;
-    resolversImports: string;
+    resolverImports: string;
     outputDir: string;
     replacer: Replacer<'crud'>;
   };
@@ -72,7 +72,7 @@ export interface ConfigInternal {
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
   inputs: {
     prismaImporter: `import { Prisma } from '.prisma/client';`,
-    builderImporter: `import { builder } from './builder';`,
+    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
     replacer: (str) => str,
@@ -80,15 +80,14 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   crud: {
     disabled: false,
     builderImporter: global?.builderImporter || `import { builder } from './builder';`,
-    inputsExporter: `export * as Inputs from '../inputs'`,
-    prismaExporter: `export { Prisma } from '.prisma/client';`,
+    inputsImporter: `import * as Inputs from '../inputs'`,
+    prismaImporter: `import { Prisma } from '.prisma/client';`,
     prismaCaller: '_context.prisma',
-    resolversImports: '',
+    resolverImports: '',
     outputDir: './generated',
     replacer: (str) => str,
   },
   global: {
-    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     replacer: (str) => str,
   },
 });

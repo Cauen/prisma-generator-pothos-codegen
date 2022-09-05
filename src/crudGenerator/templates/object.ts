@@ -1,4 +1,5 @@
-export const objectTemplate = `import { Inputs, definePrismaObject } from '../imports';
+export const objectTemplate = `import { definePrismaObject } from '../utils';
+#{inputsImporter}
 
 export const #{modelName}Object = definePrismaObject('#{modelName}', {
   description: #{description},

@@ -1,21 +1,87 @@
-export const importsTemplate = `import {
+export const utilsTemplate = `import {
+  FieldOptionsFromKind,
+  InputFieldMap,
   InterfaceParam,
   MutationFieldBuilder,
   MutationFieldsShape,
+  ObjectRef,
   QueryFieldBuilder,
   QueryFieldsShape,
+  TypeParam,
 } from '@pothos/core';
 import SchemaBuilder from '@pothos/core/dts/builder';
-import { PrismaObjectTypeOptions } from '@pothos/plugin-prisma';
+import { PrismaFieldOptions, PrismaObjectTypeOptions } from '@pothos/plugin-prisma';
 #{builderImporter}
-#{inputsExporter}
-#{prismaExporter}
 
 type Types = typeof builder extends SchemaBuilder<infer T> ? T : unknown;
 
-export const definePrismaObject: <
+export const defineQuery = <Q extends QueryFieldsShape<Types>>(q: Q) => q;
+
+export const defineQueryFunction = <O>(def: (t: QueryFieldBuilder<Types, Types['Root']>) => O) => def;
+
+export const defineQueryObject = <
+  Type extends TypeParam<Types>,
+  Nullable extends boolean,
+  Args extends InputFieldMap,
+>(
+  def: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Query', Types, unknown>,
+) => def;
+
+export const defineQueryPrismaObject = <
+  Type extends keyof Types['PrismaTypes'] | [keyof Types['PrismaTypes']],
+  Model extends Types['PrismaTypes'][Type extends [unknown] ? Type[0] : Type],
+  Args extends InputFieldMap,
+  Nullable extends boolean,
+>(
+  def: PrismaFieldOptions<
+    Types,
+    Types['Root'],
+    Type,
+    Model,
+    Type extends [unknown] ? [ObjectRef<Model['Shape']>] : ObjectRef<Model['Shape']>,
+    Args,
+    Nullable,
+    unknown,
+    'Query'
+  >,
+) => def as { type: Type; nullable: Nullable; args: Args; resolve: typeof def['resolve'] };
+
+export const defineMutation = <M extends MutationFieldsShape<Types>>(m: M) => m;
+
+export const defineMutationFunction = <O>(
+  def: (t: MutationFieldBuilder<Types, Types['Root']>) => O,
+) => def;
+
+export const defineMutationObject = <
+  Type extends TypeParam<Types>,
+  Nullable extends boolean,
+  Args extends InputFieldMap,
+>(
+  def: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Mutation', Types, unknown>,
+) => def;
+
+export const defineMutationPrismaObject = <
+  Type extends keyof Types['PrismaTypes'] | [keyof Types['PrismaTypes']],
+  Model extends Types['PrismaTypes'][Type extends [unknown] ? Type[0] : Type],
+  Args extends InputFieldMap,
+  Nullable extends boolean,
+>(
+  def: PrismaFieldOptions<
+    Types,
+    Types['Root'],
+    Type,
+    Model,
+    Type extends [unknown] ? [ObjectRef<Model['Shape']>] : ObjectRef<Model['Shape']>,
+    Args,
+    Nullable,
+    unknown,
+    'Mutation'
+  >,
+) => def as { type: Type; nullable: Nullable; args: Args; resolve: typeof def['resolve'] };
+
+export const definePrismaObject = <
   Name extends keyof Types['PrismaTypes'],
-  O extends PrismaObjectTypeOptions<
+  Obj extends PrismaObjectTypeOptions<
     Types,
     Types['PrismaTypes'][Name],
     InterfaceParam<Types>[],
@@ -23,48 +89,17 @@ export const definePrismaObject: <
     unknown,
     unknown,
     Types['PrismaTypes'][Name]['Shape']
-  >,
+  >
 >(
-  name: Name,
-  obj: O,
-) => O = (_, obj) => obj;
-
-export const defineQuery: <Q extends QueryFieldsShape<Types>>(q: Q) => Q = (q) => q;
-export const defineMutation: <M extends MutationFieldsShape<Types>>(m: M) => M = (m) => m;
-
-export const defineQueryObject: <
-  T extends QueryFieldBuilder<Types, Types['Root']>,
-  O extends Parameters<T['field']>[0],
->(
-  def: (t: T) => O,
-) => (t: T) => O = (def) => def;
-
-export const definePrismaQueryObject: <
-  T extends QueryFieldBuilder<Types, Types['Root']>,
-  O extends Parameters<T['prismaField']>[0],
->(
-  def: (t: T) => O,
-) => (t: T) => O = (def) => def;
-
-export const defineMutationObject: <
-  T extends MutationFieldBuilder<Types, Types['Root']>,
-  O extends Parameters<T['field']>[0],
->(
-  def: (t: T) => O,
-) => (t: T) => O = (def) => def;
-
-export const definePrismaMutationObject: <
-  T extends MutationFieldBuilder<Types, Types['Root']>,
-  O extends Parameters<T['prismaField']>[0],
->(
-  def: (t: T) => O,
-) => (t: T) => O = (def) => def;
+  _: Name,
+  obj: Obj,
+) => obj;
 `;
 
 export const objectsTemplate = `#{exports}
 
 #{builderImporter}
-import { Prisma } from './imports';
+#{prismaImporter}
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
   description: 'Batch payloads from prisma.',

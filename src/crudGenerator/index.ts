@@ -3,7 +3,7 @@ import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../utils/config';
 import { writeFile } from '../utils/filesystem';
 import { useTemplate } from '../utils/template';
-import { importsTemplate, objectsTemplate } from './templates/root';
+import { utilsTemplate, objectsTemplate } from './templates/root';
 import { generateModel } from './utils/generator';
 
 export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
@@ -24,11 +24,11 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     path.join(config.crud.outputDir, 'objects.ts'),
   );
 
-  // Generate root imports.ts file
+  // Generate root utils.ts file
   writeFile(
     config,
-    'crud.imports',
-    useTemplate(importsTemplate, config.crud),
-    path.join(config.crud.outputDir, 'imports.ts'),
+    'crud.utils',
+    useTemplate(utilsTemplate, config.crud),
+    path.join(config.crud.outputDir, 'utils.ts'),
   );
 }
