@@ -69,7 +69,6 @@
   "dependencies": {
     "@prisma/generator-helper": "4.3.0",
     "@prisma/internals": "4.3.0",
-    "fs-extra": "10.1.0",
     "tokenizr": "1.6.7"
   }
 }

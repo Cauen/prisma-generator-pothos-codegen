@@ -1,7 +1,7 @@
 import { DMMF } from '@prisma/generator-helper';
 import { env } from '../env';
 import { ConfigInternal } from '../utils/config';
-import { replaceAndWriteFileSafely, writeFileSafely } from '../utils/filesystem';
+import { writeFile } from '../utils/filesystem';
 import { getEnums, getImports, getScalars, getInputs } from './utils/parts';
 
 /** Types may vary between Prisma versions */
@@ -36,16 +36,14 @@ export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> = {
   };
 };
 
-export async function generateInputs(dmmf: DMMF.Document, config: ConfigInternal): Promise<string> {
-  if (env.isTesting) writeFileSafely(JSON.stringify(dmmf, null, 2), 'dmmf.json');
+export async function generateInputs(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
+  if (env.isTesting) writeFile(config, 'debug.dmmf', JSON.stringify(dmmf, null, 2), 'dmmf.json');
 
   const imports = getImports(config);
   const scalars = getScalars(config, dmmf);
   const enums = getEnums(dmmf);
   const inputs = getInputs(dmmf);
+  const content = [imports, scalars, enums, inputs].join('\n\n');
 
-  return replaceAndWriteFileSafely(config, 'inputs')(
-    [imports, scalars, enums, inputs].join('\n\n'),
-    config.inputs?.outputFilePath || './generated/inputs.ts',
-  );
+  await writeFile(config, 'inputs', content, config.inputs.outputFilePath);
 }

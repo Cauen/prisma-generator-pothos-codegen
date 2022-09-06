@@ -2,7 +2,7 @@ import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { useTemplate } from '../../utils/template';
 import { getUsedScalars } from './dmmf';
-import { getFieldsString } from './inputFields';
+import { getInputFieldsString } from './inputFields';
 import * as T from './templates';
 
 export const getEnums = (dmmf: DMMF.Document) => {
@@ -10,12 +10,15 @@ export const getEnums = (dmmf: DMMF.Document) => {
     ...dmmf.schema.enumTypes.prisma,
     ...dmmf.datamodel.enums.map((el) => ({ ...el, values: el.values.map(({ name }) => name) })),
   ]
-    .map((el) => useTemplate(T.enumTemplate, { name: el.name, value: JSON.stringify(el.values) }))
+    .map((el) =>
+      useTemplate(T.enumTemplate, { enumName: el.name, values: JSON.stringify(el.values) }),
+    )
     .join('\n\n');
 };
 
 export const getImports = (config: ConfigInternal) =>
-  [config.inputs.prismaImporter, config.inputs.builderImporter].join('\n');
+  // Add ts-nocheck command to get rid of "Excessive stack depth comparing types" error.
+  ['// @ts-nocheck', config.inputs.prismaImporter, config.inputs.builderImporter].join('\n');
 
 export const getScalars = ({ inputs: { excludeScalars } }: ConfigInternal, dmmf: DMMF.Document) => {
   const usedScalars = getUsedScalars(dmmf.schema.inputObjectTypes.prisma);
@@ -37,7 +40,7 @@ export const getInputs = (dmmf: DMMF.Document) => {
       .filter(({ name }) => !name.includes('Unchecked'))
       .map((input) => {
         const model = dmmf.datamodel.models.find(({ name }) =>
-          // TODO I don't know if all of these are necessary
+          // TODO check if all of these are necessary + if this is exhaustive
           [
             'Where',
             'OrderBy',
@@ -58,8 +61,8 @@ export const getInputs = (dmmf: DMMF.Document) => {
             .some((modelName) => input.name.startsWith(modelName)),
         );
         return useTemplate(T.inputTemplate, {
-          name: input.name,
-          value: getFieldsString(input, model),
+          inputName: input.name,
+          fields: getInputFieldsString(input, model),
         });
       })
       .join('\n\n')

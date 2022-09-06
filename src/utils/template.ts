@@ -1,12 +1,16 @@
-import { firstLetterLowerCase, firstLetterUpperCase } from './string';
+type Variables<T extends string> = T extends `${infer _}#{${infer VarName}}${infer Tail}`
+  ? VarName | Variables<Tail>
+  : never;
 
-export interface TemplateVariables {
-  name: string;
-  value: string;
-}
-
-export const useTemplate = (template: string, variables: TemplateVariables) =>
-  template
-    .replace(/#{Name}/g, firstLetterUpperCase(variables.name))
-    .replace(/#{name}/g, firstLetterLowerCase(variables.name))
-    .replace(/#{value}/g, variables.value);
+export const useTemplate = <T extends string, S extends Variables<T> | null = null>(
+  template: T,
+  variables: Omit<{ [V in Variables<T>]: string }, S extends null ? '' : S>,
+  skip?: S[],
+): string => {
+  let newTemplate: string = template;
+  Object.entries(variables).forEach(([name, value]) => {
+    if (!skip?.includes(name as S))
+      newTemplate = newTemplate.replace(new RegExp(`#{${name}}`, 'g'), value as string);
+  });
+  return newTemplate;
+};

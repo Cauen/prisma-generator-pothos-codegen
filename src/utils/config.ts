@@ -1,38 +1,40 @@
 import path from 'path';
 import { ExtendedGeneratorOptions } from '../generator';
-import { defaultReplacer, Replacer } from './replacer';
+import { Replacer } from './replacer';
 
 /** Interface used to configure generator behavior */
 export interface Config {
   /** Input type generation config */
   inputs?: {
-    /** How to import the Prisma namespace. Default: `'import { Prisma } from ".prisma/client"'` */
+    /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
     prismaImporter?: string;
-    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
+    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
     builderImporter?: string;
-    /** Path to generate the inputs file to from project root. Default: './generated/inputs.ts' */
+    /** Path to generate the inputs file to from project root. Default: `'./generated/inputs.ts'` */
     outputFilePath?: string;
     /** List of excluded scalars from generated output */
     excludeScalars?: string[];
     /** A function to replace generated source. Combined with global replacer config */
-    replacer?: Replacer;
+    replacer?: Replacer<'inputs'>;
   };
   /** CRUD generation config */
   crud?: {
     /** Disable generaton of crud. Default: `false` */
     disabled?: boolean;
-    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `'import { builder } from "./builder"'` */
+    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
     builderImporter?: string;
-    /** How to import the inputs. Default `'import * as Inputs from "../inputs"'` */
+    /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
     inputsImporter?: string;
+    /** How to import the Prisma namespace. Default `"import { Prisma } from '.prisma/client';"` */
+    prismaImporter?: string;
+    /** How to call the prisma client. Default `'_context.prisma'` */
+    prismaCaller?: string;
+    /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
+    resolverImports?: string;
     /** Directory to generate crud code into from project root. Default: `'./generated'` */
     outputDir?: string;
     /** A function to replace generated source. Combined with global replacer config */
-    replacer?: Replacer;
-
-    // TODO
-    resolversImports?: string; // default: what to import inside resolver
-    dbCaller?: string; // how to call prisma. default: context.db
+    replacer?: Replacer<'crud'>;
   };
   /** Global config */
   global?: {
@@ -50,48 +52,43 @@ export interface ConfigInternal {
     builderImporter: string;
     outputFilePath: string;
     excludeScalars: string[];
-    replacer: Replacer;
+    replacer: Replacer<'inputs'>;
   };
   crud: {
     disabled: boolean;
     builderImporter: string;
     inputsImporter: string;
+    prismaImporter: string;
+    prismaCaller: string;
+    resolverImports: string;
     outputDir: string;
-    replacer: Replacer;
-
-    // TODO
-    resolversImports: string;
-    dbCaller: string;
+    replacer: Replacer<'crud'>;
   };
   global: {
     replacer: Replacer;
-    builderImporter: string;
   };
 }
 
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
   inputs: {
-    prismaImporter: 'import { Prisma } from ".prisma/client"',
-    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
+    prismaImporter: `import { Prisma } from '.prisma/client';`,
+    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
-    replacer: defaultReplacer,
+    replacer: (str) => str,
   },
   crud: {
     disabled: false,
-    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
-    inputsImporter: 'import * as Inputs from "../inputs"',
+    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
+    inputsImporter: `import * as Inputs from '../inputs'`,
+    prismaImporter: `import { Prisma } from '.prisma/client';`,
+    prismaCaller: '_context.prisma',
+    resolverImports: '',
     outputDir: './generated',
-    replacer: defaultReplacer,
-
-    // TODO what purpose does this serve?
-    resolversImports: '',
-    // TODO make this a function instead of a string
-    dbCaller: 'context.db',
+    replacer: (str) => str,
   },
   global: {
-    builderImporter: global?.builderImporter || 'import { builder } from "./builder"',
-    replacer: defaultReplacer,
+    replacer: (str) => str,
   },
 });
 
@@ -102,8 +99,7 @@ export const getConfig = async (
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
   const optionsPath = path.join(
     schemaDirName,
-    // TODO define and document default config file path
-    extendedGeneratorOptions.generatorConfigPath || 'crud-generator-config.ts',
+    extendedGeneratorOptions.generatorConfigPath || 'pothos.config.js',
   );
 
   const optionsRequired = await import(optionsPath);
