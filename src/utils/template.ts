@@ -2,9 +2,9 @@ type Variables<T extends string> = T extends `${infer _}#{${infer VarName}}${inf
   ? VarName | Variables<Tail>
   : never;
 
-export const useTemplate = <T extends string, S extends Variables<T>>(
+export const useTemplate = <T extends string, S extends Variables<T> | null = null>(
   template: T,
-  variables: Omit<{ [V in Variables<T>]: string }, S>,
+  variables: Omit<{ [V in Variables<T>]: string }, S extends null ? '' : S>,
   skip?: S[],
 ): string => {
   let newTemplate: string = template;

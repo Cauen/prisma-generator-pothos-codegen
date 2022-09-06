@@ -1,3 +1,16 @@
+export const objectsTemplate = `#{exports}
+
+#{builderImporter}
+#{prismaImporter}
+
+export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
+  description: 'Batch payloads from prisma.',
+  fields: (t) => ({
+    count: t.exposeInt('count', { description: 'Prisma Batch Payload', nullable: false }),
+  }),
+});
+`;
+
 export const utilsTemplate = `import {
   FieldOptionsFromKind,
   InputFieldMap,
@@ -10,22 +23,29 @@ export const utilsTemplate = `import {
   TypeParam,
 } from '@pothos/core';
 import SchemaBuilder from '@pothos/core/dts/builder';
-import { PrismaFieldOptions, PrismaObjectTypeOptions } from '@pothos/plugin-prisma';
+import {
+  PrismaFieldOptions,
+  PrismaObjectTypeOptions,
+  RelatedFieldOptions,
+} from '@pothos/plugin-prisma';
+import { PrismaObjectFieldBuilder } from '@pothos/plugin-prisma/dts/field-builder';
 #{builderImporter}
 
 type Types = typeof builder extends SchemaBuilder<infer T> ? T : unknown;
 
 export const defineQuery = <Q extends QueryFieldsShape<Types>>(q: Q) => q;
 
-export const defineQueryFunction = <O>(def: (t: QueryFieldBuilder<Types, Types['Root']>) => O) => def;
+export const defineQueryFunction = <Obj>(
+  func: (t: QueryFieldBuilder<Types, Types['Root']>) => Obj,
+) => func;
 
 export const defineQueryObject = <
   Type extends TypeParam<Types>,
   Nullable extends boolean,
   Args extends InputFieldMap,
 >(
-  def: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Query', Types, unknown>,
-) => def;
+  obj: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Query', Types, unknown>,
+) => obj as { type: Type; nullable: Nullable; args: Args; resolve: typeof obj['resolve'] };
 
 export const defineQueryPrismaObject = <
   Type extends keyof Types['PrismaTypes'] | [keyof Types['PrismaTypes']],
@@ -48,17 +68,17 @@ export const defineQueryPrismaObject = <
 
 export const defineMutation = <M extends MutationFieldsShape<Types>>(m: M) => m;
 
-export const defineMutationFunction = <O>(
-  def: (t: MutationFieldBuilder<Types, Types['Root']>) => O,
-) => def;
+export const defineMutationFunction = <Obj>(
+  func: (t: MutationFieldBuilder<Types, Types['Root']>) => Obj,
+) => func;
 
 export const defineMutationObject = <
   Type extends TypeParam<Types>,
   Nullable extends boolean,
   Args extends InputFieldMap,
 >(
-  def: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Mutation', Types, unknown>,
-) => def;
+  obj: FieldOptionsFromKind<Types, Types['Root'], Type, Nullable, Args, 'Mutation', Types, unknown>,
+) => obj as { type: Type; nullable: Nullable; args: Args; resolve: typeof obj['resolve'] };
 
 export const defineMutationPrismaObject = <
   Type extends keyof Types['PrismaTypes'] | [keyof Types['PrismaTypes']],
@@ -66,7 +86,7 @@ export const defineMutationPrismaObject = <
   Args extends InputFieldMap,
   Nullable extends boolean,
 >(
-  def: PrismaFieldOptions<
+  obj: PrismaFieldOptions<
     Types,
     Types['Root'],
     Type,
@@ -77,7 +97,70 @@ export const defineMutationPrismaObject = <
     unknown,
     'Mutation'
   >,
-) => def as { type: Type; nullable: Nullable; args: Args; resolve: typeof def['resolve'] };
+) => obj as { type: Type; nullable: Nullable; args: Args; resolve: typeof obj['resolve'] };
+
+export const defineFieldObject = <
+  Name extends keyof Types['PrismaTypes'],
+  Type extends TypeParam<Types>,
+  Nullable extends boolean,
+  Args extends InputFieldMap,
+>(
+  _: Name,
+  obj: FieldOptionsFromKind<
+    Types,
+    Types['PrismaTypes'][Name]['Shape'],
+    Type,
+    Nullable,
+    Args,
+    'Object',
+    unknown,
+    unknown
+  >,
+) =>
+  obj as { type: Type; nullable: Nullable; description?: string; resolve: typeof obj['resolve'] };
+
+export const defineExposeObject = <Type extends TypeParam<Types>, Nullable extends boolean>(
+  _: Type,
+  obj: { description: string | undefined; nullable: Nullable },
+) => obj;
+
+export const defineRelationObject = <
+  ModelName extends keyof Types['PrismaTypes'],
+  RelationName extends keyof Types['PrismaTypes'][ModelName]['Relations'],
+  Nullable extends boolean,
+  Args extends InputFieldMap,
+>(
+  _: ModelName,
+  __: RelationName,
+  obj: RelatedFieldOptions<
+    Types,
+    Types['PrismaTypes'][ModelName],
+    RelationName,
+    Nullable,
+    Args,
+    unknown,
+    false,
+    Types['PrismaTypes'][ModelName]['Shape']
+  >,
+) =>
+  obj as {
+    description: string | undefined;
+    nullable: Nullable;
+    args: Args;
+    query: typeof obj['query'];
+  };
+
+export const defineRelationFunction = <ModelName extends keyof Types['PrismaTypes'], O>(
+  _: ModelName,
+  func: (
+    t: PrismaObjectFieldBuilder<
+      Types,
+      Types['PrismaTypes'][ModelName],
+      false,
+      Types['PrismaTypes'][ModelName]['Shape']
+    >,
+  ) => O,
+) => func;
 
 export const definePrismaObject = <
   Name extends keyof Types['PrismaTypes'],
@@ -89,22 +172,9 @@ export const definePrismaObject = <
     unknown,
     unknown,
     Types['PrismaTypes'][Name]['Shape']
-  >
+  >,
 >(
   _: Name,
   obj: Obj,
 ) => obj;
-`;
-
-export const objectsTemplate = `#{exports}
-
-#{builderImporter}
-#{prismaImporter}
-
-export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
-  description: 'Batch payloads from prisma.',
-  fields: (t) => ({
-    count: t.exposeInt('count', { description: 'Prisma Batch Payload', nullable: false }),
-  }),
-});
 `;

@@ -5,7 +5,7 @@ import { writeFile } from '../../utils/filesystem';
 import { firstLetterLowerCase, getCompositeName } from '../../utils/string';
 import { useTemplate } from '../../utils/template';
 import { objectTemplate } from '../templates/object';
-import { getObjectFieldValue } from './objectFields';
+import { getObjectFieldsString } from './objectFields';
 
 /** Write index.ts */
 export function writeIndex(config: ConfigInternal, model: DMMF.Model): void {
@@ -26,7 +26,7 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
     }: fields })`;
 
   // Fields
-  const fields = model.fields.map((field) => `${field.name}: ${getObjectFieldValue(field)},`);
+  const { fields, exportFields } = getObjectFieldsString(model.name, model.fields);
 
   // Write output
   writeFile(
@@ -36,8 +36,9 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
       modelName: model.name,
       description: model.documentation ? `'${model.documentation}'` : 'undefined',
       findUnique,
-      fields: fields.join('\n    '),
       inputsImporter: config.crud.inputsImporter,
+      fields: fields.join('\n    '),
+      exportFields: exportFields.join('\n\n'),
     }),
     path.join(config.crud.outputDir, model.name, 'object.base.ts'),
   );

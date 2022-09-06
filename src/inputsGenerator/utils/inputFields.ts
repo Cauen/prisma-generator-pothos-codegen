@@ -4,7 +4,7 @@ import { getMainInput } from './dmmf';
 import { parseComment } from './parser';
 
 /** Convert array of fields to a string code representation */
-export const getFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
+export const getInputFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
   const omittedNames: string[] = [];
 
   // Description is parsed for @Pothos.omit() comments and input fields are filtered
