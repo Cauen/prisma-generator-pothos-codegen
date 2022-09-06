@@ -230,7 +230,7 @@ builder.queryFields(findManyUserQuery);
 builder.queryFields((t) => {
   const field = findManyUserQueryObject(t);
   return {
-    findUniqueUser: t.prismaField({
+    findManyUser: t.prismaField({
       // Inherit all the generated properties
       ...field,
 
