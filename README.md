@@ -196,10 +196,18 @@ builder.prismaObject('User', {
   fields: (t) => {
     // Type-safely omit and rename fields
     const { password: _password, email: emailAddress, ...fields } = UserObject.fields(t);
+    const sessionsField = UserSessionsFieldObject(t);
 
     return {
       ...fields,
+      // Renamed field
       emailAddress,
+      // Edit and extend field
+      sessions: t.relation('sessions', {
+        ...sessionsField,
+        args: { ...sessionsField.args, customArg: t.arg({ type: 'String', required: false }) },
+        authScopes: { admin: true },
+      }),
       // Add custom fields
       customField: t.field({ type: 'String', resolve: () => 'Hello world!' }),
     };
