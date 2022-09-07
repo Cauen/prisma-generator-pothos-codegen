@@ -83,14 +83,18 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
 export const getConfig = async (
   extendedGeneratorOptions: ExtendedGeneratorOptions,
 ): Promise<ConfigInternal> => {
-  const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
-  const optionsPath = path.join(
-    schemaDirName,
-    extendedGeneratorOptions.generatorConfigPath || 'pothos.config.js',
-  );
+  // Getting configs from file (if file not set, get default. If set and dont exist, throw error.)
+  const { global, inputs, crud } = await (async (): Promise<Config> => {
+    const { generatorConfigPath } = extendedGeneratorOptions;
+    const defaultOptions = { inputs: undefined, crud: undefined, global: undefined };
+    if (!generatorConfigPath) return defaultOptions;
 
-  const optionsRequired = await import(optionsPath);
-  const { inputs, crud, global }: Config = optionsRequired || {};
+    const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
+    const optionsPath = path.join(schemaDirName, generatorConfigPath);
+    const importedFile = await import(optionsPath); // throw error if dont exist
+    const { inputs, crud, global }: Config = importedFile || {};
+    return { inputs, crud, global };
+  })();
 
   const defaultConfig = getDefaultConfig(global);
   const internalConfig: ConfigInternal = {
