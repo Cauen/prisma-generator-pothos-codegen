@@ -29,12 +29,14 @@ export interface Config {
     prismaImporter?: string;
     /** How to call the prisma client. Default `'_context.prisma'` */
     prismaCaller?: string;
-    /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
+    /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default: `''` */
     resolverImports?: string;
     /** Directory to generate crud code into from project root. Default: `'./generated'` */
     outputDir?: string;
     /** A function to replace generated source. Combined with global replacer config */
     replacer?: Replacer<'crud'>;
+    /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
+    generateAutocrud: boolean;
   };
   /** Global config */
   global?: {
@@ -63,6 +65,7 @@ export interface ConfigInternal {
     resolverImports: string;
     outputDir: string;
     replacer: Replacer<'crud'>;
+    generateAutocrud: boolean;
   };
   global: {
     replacer: Replacer;
@@ -85,6 +88,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     prismaCaller: '_context.prisma',
     resolverImports: '',
     outputDir: './generated',
+    generateAutocrud: true,
     replacer: (str) => str,
   },
   global: {

@@ -17,3 +17,17 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
     count: t.exposeInt('count', { description: 'Prisma Batch Payload', nullable: false }),
   }),
 });
+
+export const modelNames = [
+  'User',
+  'Post',
+  'Comment',
+  'Profile',
+  'Follow',
+  'Unrelated',
+  'IdOnly',
+  'WithoutID',
+  'WithScalars',
+] as const;
+
+export type Model = typeof modelNames[number];

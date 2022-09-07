@@ -4,7 +4,7 @@ import { env } from '../env';
 import { ConfigInternal } from './config';
 import { Replacer, ReplacerSection } from './replacer';
 
-export const debugLog = (value: string, timestamp?: boolean) => {
+export const debugLog = (value: string, timestamp = true) => {
   if (!env.isTesting) return;
   fs.appendFile(
     'log.txt',
