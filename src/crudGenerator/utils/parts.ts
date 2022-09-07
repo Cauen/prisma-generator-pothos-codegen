@@ -34,7 +34,7 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
     'crud.model.object',
     useTemplate(objectTemplate, {
       modelName: model.name,
-      description: model.documentation ? `'${model.documentation}'` : 'undefined',
+      description: model.documentation ? `'${model.documentation}'` : 'undefined', // Object description defined in schema.prisma
       findUnique,
       inputsImporter: config.crud.inputsImporter,
       fields: fields.join('\n    '),

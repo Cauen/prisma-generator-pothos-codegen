@@ -49,9 +49,9 @@ export interface Config {
 
 /** Type representing a configuration filled with default values where the original config was missing them, for internal purposes */
 export type ConfigInternal = {
-  inputs: Required<Config['inputs']>;
-  crud: Required<Config['crud']>;
-  global: Required<Config['global']>;
+  inputs: NonNullable<Required<Config['inputs']>>;
+  crud: NonNullable<Required<Config['crud']>>;
+  global: NonNullable<Required<Config['global']>>;
 };
 
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({

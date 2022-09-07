@@ -55,7 +55,7 @@ export const UserLoginFieldObject = defineExposeObject('String', {
 });
 
 export const UserPasswordFieldObject = defineExposeObject('String', {
-  description: '@Pothos.omit()',
+  description: undefined,
   nullable: false,
 });
 
@@ -107,14 +107,14 @@ export const UserCommentsFieldObject = defineRelationFunction('User', (t) =>
 
 export const UserCreatedAtFieldObject = defineFieldObject('User', {
   type: Inputs.DateTime,
-  description: '@Pothos.omit(create, update) createdAt description',
+  description: 'createdAt description',
   nullable: false,
   resolve: (parent) => parent.createdAt,
 });
 
 export const UserUpdatedAtFieldObject = defineFieldObject('User', {
   type: Inputs.DateTime,
-  description: '@Pothos.omit(create, update)',
+  description: undefined,
   nullable: true,
   resolve: (parent) => parent.updatedAt,
 });

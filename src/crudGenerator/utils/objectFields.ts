@@ -8,6 +8,8 @@ import {
   fieldObjectTemplate,
 } from '../templates/object';
 
+const cleanifyDocumentation = (str?: string) => str?.replace(/\s*@Pothos\.omit\(.*\)\s*/, '');
+
 export const getObjectFieldsString = (
   modelName: string,
   fields: DMMF.Field[],
@@ -18,7 +20,8 @@ export const getObjectFieldsString = (
       { isId, type: fieldType, name, relationName, isRequired, documentation, isList },
     ) => {
       const nameUpper = firstLetterUpperCase(name);
-      const description = documentation ? `'${documentation}'` : 'undefined';
+      const cleanDocumentation = cleanifyDocumentation(documentation);
+      const description = cleanDocumentation ? `'${cleanDocumentation}'` : 'undefined'; // field description defined in schema.prisma
       const nullable = isRequired ? 'false' : 'true';
       const type = fieldType === 'BigInt' ? 'Bigint' : fieldType;
       const obj = `${modelName}${nameUpper}FieldObject`;
