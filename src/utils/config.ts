@@ -36,7 +36,7 @@ export interface Config {
     /** A function to replace generated source. Combined with global replacer config */
     replacer?: Replacer<'crud'>;
     /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
-    generateAutocrud: boolean;
+    generateAutocrud?: boolean;
   };
   /** Global config */
   global?: {
@@ -47,30 +47,12 @@ export interface Config {
   };
 }
 
-/** Interface representing a configuration filled with default values where the original config was missing them, for internal purposes */
-export interface ConfigInternal {
-  inputs: {
-    prismaImporter: string;
-    builderImporter: string;
-    outputFilePath: string;
-    excludeScalars: string[];
-    replacer: Replacer<'inputs'>;
-  };
-  crud: {
-    disabled: boolean;
-    builderImporter: string;
-    inputsImporter: string;
-    prismaImporter: string;
-    prismaCaller: string;
-    resolverImports: string;
-    outputDir: string;
-    replacer: Replacer<'crud'>;
-    generateAutocrud: boolean;
-  };
-  global: {
-    replacer: Replacer;
-  };
-}
+/** Type representing a configuration filled with default values where the original config was missing them, for internal purposes */
+export type ConfigInternal = {
+  inputs: Required<Config['inputs']>;
+  crud: Required<Config['crud']>;
+  global: Required<Config['global']>;
+};
 
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
   inputs: {
@@ -78,7 +60,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
-    replacer: (str) => str,
+    replacer: (str: string) => str,
   },
   crud: {
     disabled: false,
@@ -88,18 +70,19 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     prismaCaller: '_context.prisma',
     resolverImports: '',
     outputDir: './generated',
+    replacer: (str: string) => str,
     generateAutocrud: true,
-    replacer: (str) => str,
   },
   global: {
-    replacer: (str) => str,
+    replacer: (str: string) => str,
+    builderImporter: '',
   },
 });
 
 /** Receives the config path from generator options, loads the config from file, fills out the default values, and returns it */
 export const getConfig = async (
   extendedGeneratorOptions: ExtendedGeneratorOptions,
-): Promise<ConfigInternal> => {
+): Promise<Config> => {
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
   const optionsPath = path.join(
     schemaDirName,
@@ -110,7 +93,7 @@ export const getConfig = async (
   const { inputs, crud, global }: Config = optionsRequired || {};
 
   const defaultConfig = getDefaultConfig(global);
-  const internalConfig: ConfigInternal = {
+  const internalConfig: Config = {
     inputs: { ...defaultConfig.inputs, ...inputs },
     crud: { ...defaultConfig.crud, ...crud },
     global: { ...defaultConfig.global, ...global },
