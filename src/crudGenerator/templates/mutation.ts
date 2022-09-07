@@ -10,7 +10,7 @@ const makeMutation = (
 ) =>
   makeResolver(
     'Mutation',
-    isPrisma ? '' : "import { BatchPayload } from '../../objects';\n",
+    isPrisma ? '' : "\nimport { BatchPayload } from '../../objects';",
     operation,
     type,
     nullable,
@@ -118,7 +118,7 @@ const upsertOneResolver = `async (query, _root, args, _context, _info) =>
         where: args.where,
         create: args.create,
         update: args.update,
-        ...query
+        ...query,
       })`;
 
 export const upsertOne = makeMutation(

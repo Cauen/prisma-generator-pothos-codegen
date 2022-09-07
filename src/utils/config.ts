@@ -80,7 +80,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   crud: {
     disabled: false,
     builderImporter: global?.builderImporter || `import { builder } from './builder';`,
-    inputsImporter: `import * as Inputs from '../inputs'`,
+    inputsImporter: `import * as Inputs from '../inputs';`,
     prismaImporter: `import { Prisma } from '.prisma/client';`,
     prismaCaller: '_context.prisma',
     resolverImports: '',

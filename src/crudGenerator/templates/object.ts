@@ -1,12 +1,12 @@
 // TODO only import what is necessary
-export const objectTemplate = `import {
+export const objectTemplate = `#{inputsImporter}
+import {
   defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
   defineRelationObject,
 } from '../utils';
-#{inputsImporter}
 
 export const #{modelName}Object = definePrismaObject('#{modelName}', {
   description: #{description},

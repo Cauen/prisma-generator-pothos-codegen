@@ -22,16 +22,14 @@ export const utilsTemplate = `import {
   QueryFieldsShape,
   TypeParam,
 } from '@pothos/core';
-import SchemaBuilder from '@pothos/core/dts/builder';
 import {
   PrismaFieldOptions,
   PrismaObjectTypeOptions,
   RelatedFieldOptions,
 } from '@pothos/plugin-prisma';
-import { PrismaObjectFieldBuilder } from '@pothos/plugin-prisma/dts/field-builder';
 #{builderImporter}
 
-type Types = typeof builder extends SchemaBuilder<infer T> ? T : unknown;
+type Types = typeof builder extends PothosSchemaTypes.SchemaBuilder<infer T> ? T : unknown;
 
 export const defineQuery = <Q extends QueryFieldsShape<Types>>(q: Q) => q;
 
@@ -153,7 +151,7 @@ export const defineRelationObject = <
 export const defineRelationFunction = <ModelName extends keyof Types['PrismaTypes'], O>(
   _: ModelName,
   func: (
-    t: PrismaObjectFieldBuilder<
+    t: PothosSchemaTypes.PrismaObjectFieldBuilder<
       Types,
       Types['PrismaTypes'][ModelName],
       false,

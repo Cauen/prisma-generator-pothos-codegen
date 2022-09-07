@@ -26,11 +26,10 @@ export const makeResolver = (
     ['modelName', 'inputsImporter', 'resolverImports'],
   );
 
-export const resolverTemplate = `import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils';
-#{inputsImporter}
-#{imports}#{resolverImports}
+export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}
+import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils';
 
-export const #{operation}#{modelName}#{root}Object = define#{root}Function((t) => 
+export const #{operation}#{modelName}#{root}Object = define#{root}Function((t) =>
   define#{root}#{object}({
     type: #{type},
     nullable: #{nullable},

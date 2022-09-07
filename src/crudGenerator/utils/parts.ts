@@ -18,7 +18,7 @@ export function writeIndex(config: ConfigInternal, model: DMMF.Model): void {
 export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
   // findUnique
   const idField = model.fields.find((f) => f.isId);
-  let findUnique = `(fields) => ({ ...fields  })`;
+  let findUnique = `(fields) => ({ ...fields })`;
   if (idField) findUnique = `({ ${idField.name} }) => ({ ${idField.name} })`;
   if (model.primaryKey?.fields)
     findUnique = `(fields) => ({ ${
@@ -51,6 +51,11 @@ export function writeResolvers(
   type: 'queries' | 'mutations',
   templates: Record<string, string>,
 ): void {
+  const { inputsImporter } = config.crud;
+  const resolverInputsImporter = inputsImporter.includes('../')
+    ? inputsImporter.replace('../', '../../') // go a level inside to import
+    : inputsImporter;
+
   writeFile(
     config,
     'crud.model.resolverIndex',
@@ -69,7 +74,7 @@ export function writeResolvers(
         modelNameLower: firstLetterLowerCase(model.name),
         prisma: config.crud.prismaCaller,
         resolverImports: config.crud.resolverImports,
-        inputsImporter: config.crud.inputsImporter,
+        inputsImporter: resolverInputsImporter,
       }),
       path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
     ),
