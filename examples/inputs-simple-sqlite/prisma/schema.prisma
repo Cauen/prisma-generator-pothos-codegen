@@ -52,6 +52,16 @@ model Post {
   authorId Int
 }
 
+model ExtraModal {
+  id        Int       @id @default(autoincrement())
+  /// The title of extramodal
+  title    String
+  /// @Pothos.omit(create, update) createdAt description
+  createdAt DateTime  @default(now())
+  /// @Pothos.omit(create, update)
+  updatedAt DateTime? @updatedAt
+}
+
 model Comment {
   id       Int    @id @default(autoincrement())
   comment  String

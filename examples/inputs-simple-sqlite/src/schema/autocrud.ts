@@ -4,11 +4,11 @@ import * as Objects from './objects';
 type Model = Objects.Model;
 const modelNames = Objects.modelNames;
 
-type CrudOptions = { include: Model[] } | { exclude: Model[] };
+type CrudOptions = { include: Model[], exclude?: never } | { exclude: Model[], include?: never };
 const includeModel = (model: Model, opts?: CrudOptions): boolean => {
   if (!opts) return true;
-  if ('include' in opts && opts.include.includes(model)) return true;
-  if ('exclude' in opts && opts.exclude.includes(model)) return false;
+  if (opts.include) return opts.include.includes(model);
+  if (opts.exclude) return !opts.exclude.includes(model);
   return false;
 };
 

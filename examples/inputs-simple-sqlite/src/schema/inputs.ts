@@ -52,6 +52,10 @@ export const PostScalarFieldEnum = builder.enumType('PostScalarFieldEnum', {
   values: ["id","title","content","authorId"] as const,
 });
 
+export const ExtraModalScalarFieldEnum = builder.enumType('ExtraModalScalarFieldEnum', {
+  values: ["id","title","createdAt","updatedAt"] as const,
+});
+
 export const CommentScalarFieldEnum = builder.enumType('CommentScalarFieldEnum', {
   values: ["id","comment","authorId","postId"] as const,
 });
@@ -217,6 +221,59 @@ export const PostScalarWhereWithAggregatesInput = builder.inputRef<Prisma.PostSc
     title: t.field({"required":false,"type":StringWithAggregatesFilter}),
     content: t.field({"required":false,"type":StringWithAggregatesFilter}),
     authorId: t.field({"required":false,"type":IntWithAggregatesFilter}),
+  }),
+});
+
+export const ExtraModalWhereInput = builder.inputRef<Prisma.ExtraModalWhereInput>('ExtraModalWhereInput').implement({
+  fields: (t) => ({
+    AND: t.field({"required":false,"type":[ExtraModalWhereInput]}),
+    OR: t.field({"required":false,"type":[ExtraModalWhereInput]}),
+    NOT: t.field({"required":false,"type":[ExtraModalWhereInput]}),
+    id: t.field({"required":false,"type":IntFilter}),
+    title: t.field({"required":false,"type":StringFilter}),
+    createdAt: t.field({"required":false,"type":DateTimeFilter}),
+    updatedAt: t.field({"required":false,"type":DateTimeNullableFilter}),
+  }),
+});
+
+export const ExtraModalOrderByWithRelationInput = builder.inputRef<Prisma.ExtraModalOrderByWithRelationInput>('ExtraModalOrderByWithRelationInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+    title: t.field({"required":false,"type":SortOrder}),
+    createdAt: t.field({"required":false,"type":SortOrder}),
+    updatedAt: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalWhereUniqueInput = builder.inputRef<Prisma.ExtraModalWhereUniqueInput>('ExtraModalWhereUniqueInput').implement({
+  fields: (t) => ({
+    id: t.int({"required":false}),
+  }),
+});
+
+export const ExtraModalOrderByWithAggregationInput = builder.inputRef<Prisma.ExtraModalOrderByWithAggregationInput>('ExtraModalOrderByWithAggregationInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+    title: t.field({"required":false,"type":SortOrder}),
+    createdAt: t.field({"required":false,"type":SortOrder}),
+    updatedAt: t.field({"required":false,"type":SortOrder}),
+    _count: t.field({"required":false,"type":ExtraModalCountOrderByAggregateInput}),
+    _avg: t.field({"required":false,"type":ExtraModalAvgOrderByAggregateInput}),
+    _max: t.field({"required":false,"type":ExtraModalMaxOrderByAggregateInput}),
+    _min: t.field({"required":false,"type":ExtraModalMinOrderByAggregateInput}),
+    _sum: t.field({"required":false,"type":ExtraModalSumOrderByAggregateInput}),
+  }),
+});
+
+export const ExtraModalScalarWhereWithAggregatesInput = builder.inputRef<Prisma.ExtraModalScalarWhereWithAggregatesInput>('ExtraModalScalarWhereWithAggregatesInput').implement({
+  fields: (t) => ({
+    AND: t.field({"required":false,"type":[ExtraModalScalarWhereWithAggregatesInput]}),
+    OR: t.field({"required":false,"type":[ExtraModalScalarWhereWithAggregatesInput]}),
+    NOT: t.field({"required":false,"type":[ExtraModalScalarWhereWithAggregatesInput]}),
+    id: t.field({"required":false,"type":IntWithAggregatesFilter}),
+    title: t.field({"required":false,"type":StringWithAggregatesFilter}),
+    createdAt: t.field({"required":false,"type":DateTimeWithAggregatesFilter}),
+    updatedAt: t.field({"required":false,"type":DateTimeNullableWithAggregatesFilter}),
   }),
 });
 
@@ -644,6 +701,30 @@ export const PostUpdateManyMutationInput = builder.inputRef<Prisma.PostUpdateMan
   fields: (t) => ({
     title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
     content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+  }),
+});
+
+export const ExtraModalCreateInput = builder.inputRef<Prisma.ExtraModalCreateInput>('ExtraModalCreateInput').implement({
+  fields: (t) => ({
+    title: t.string({"required":true}),
+    // 'createdAt' was omitted by @Pothos.omit found in schema comment
+    // 'updatedAt' was omitted by @Pothos.omit found in schema comment
+  }),
+});
+
+export const ExtraModalUpdateInput = builder.inputRef<Prisma.ExtraModalUpdateInput>('ExtraModalUpdateInput').implement({
+  fields: (t) => ({
+    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    // 'createdAt' was omitted by @Pothos.omit found in schema comment
+    // 'updatedAt' was omitted by @Pothos.omit found in schema comment
+  }),
+});
+
+export const ExtraModalUpdateManyMutationInput = builder.inputRef<Prisma.ExtraModalUpdateManyMutationInput>('ExtraModalUpdateManyMutationInput').implement({
+  fields: (t) => ({
+    title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+    // 'createdAt' was omitted by @Pothos.omit found in schema comment
+    // 'updatedAt' was omitted by @Pothos.omit found in schema comment
   }),
 });
 
@@ -1078,6 +1159,45 @@ export const PostSumOrderByAggregateInput = builder.inputRef<Prisma.PostSumOrder
   fields: (t) => ({
     id: t.field({"required":false,"type":SortOrder}),
     authorId: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalCountOrderByAggregateInput = builder.inputRef<Prisma.ExtraModalCountOrderByAggregateInput>('ExtraModalCountOrderByAggregateInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+    title: t.field({"required":false,"type":SortOrder}),
+    createdAt: t.field({"required":false,"type":SortOrder}),
+    updatedAt: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalAvgOrderByAggregateInput = builder.inputRef<Prisma.ExtraModalAvgOrderByAggregateInput>('ExtraModalAvgOrderByAggregateInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalMaxOrderByAggregateInput = builder.inputRef<Prisma.ExtraModalMaxOrderByAggregateInput>('ExtraModalMaxOrderByAggregateInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+    title: t.field({"required":false,"type":SortOrder}),
+    createdAt: t.field({"required":false,"type":SortOrder}),
+    updatedAt: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalMinOrderByAggregateInput = builder.inputRef<Prisma.ExtraModalMinOrderByAggregateInput>('ExtraModalMinOrderByAggregateInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
+    title: t.field({"required":false,"type":SortOrder}),
+    createdAt: t.field({"required":false,"type":SortOrder}),
+    updatedAt: t.field({"required":false,"type":SortOrder}),
+  }),
+});
+
+export const ExtraModalSumOrderByAggregateInput = builder.inputRef<Prisma.ExtraModalSumOrderByAggregateInput>('ExtraModalSumOrderByAggregateInput').implement({
+  fields: (t) => ({
+    id: t.field({"required":false,"type":SortOrder}),
   }),
 });
 

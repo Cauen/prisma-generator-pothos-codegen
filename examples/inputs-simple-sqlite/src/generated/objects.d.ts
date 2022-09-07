@@ -1,4 +1,4 @@
-import type { Prisma, User, Post, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
+import type { Prisma, User, Post, ExtraModal, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
 export default interface PrismaTypes {
     User: {
         Name: "User";
@@ -51,6 +51,17 @@ export default interface PrismaTypes {
                 Types: PrismaTypes["Comment"];
             };
         };
+    };
+    ExtraModal: {
+        Name: "ExtraModal";
+        Shape: ExtraModal;
+        Include: never;
+        Select: Prisma.ExtraModalSelect;
+        Where: Prisma.ExtraModalWhereUniqueInput;
+        Fields: never;
+        RelationName: never;
+        ListRelations: never;
+        Relations: {};
     };
     Comment: {
         Name: "Comment";

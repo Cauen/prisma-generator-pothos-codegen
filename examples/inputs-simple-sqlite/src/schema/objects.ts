@@ -1,5 +1,6 @@
 export * from './User';
 export * from './Post';
+export * from './ExtraModal';
 export * from './Comment';
 export * from './Profile';
 export * from './Follow';
@@ -21,6 +22,7 @@ export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPay
 export const modelNames = [
   'User',
   'Post',
+  'ExtraModal',
   'Comment',
   'Profile',
   'Follow',

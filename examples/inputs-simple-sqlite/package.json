@@ -11,7 +11,8 @@
     "start": "node -r @swc-node/register src/server.ts",
     "generator": "node -r @swc-node/register src/pothos-plugin/src/inputsGenerator/index.ts",
     "type": "tsc --noEmit",
-    "format": "eslint --fix ./src"
+    "format": "eslint --fix ./src",
+    "genstart": "yarn generate && yarn start"
   },
   "prisma": {
     "seed": "node -r @swc-node/register prisma/seed.ts"
