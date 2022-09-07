@@ -1,6 +1,13 @@
 # Prisma Generator Pothos Codegen
 
-A prisma generator plugin that auto-generates Pothos GraphQL input types and crud operations.
+A [prisma](https://www.prisma.io/) [generator](https://www.prisma.io/docs/concepts/components/prisma-schema/generators) plugin that auto-generates [Pothos](https://pothos-graphql.dev/) GraphQL input types and crud operations (all queries and mutations).
+
+Easily convert a prisma schema into a full graphql CRUD API.
+
+On `prisma generate` we create:
+* All [input types](https://pothos-graphql.dev/docs/guide/inputs) for `Create`, `Find`, `Update`, `Sort` and `Delete` operations (to be used as args in [fields](https://pothos-graphql.dev/docs/guide/fields#arguments)).
+* (Optional): Create all `Objects`, `Queries` and `Mutations` base files (to create customizable resolvers).
+* (Optional): Execute all these base files without customization to create a default CRUD.
 
 ## Table of Contents
 
@@ -124,6 +131,8 @@ module.exports = {
       outputDir?: string;
       /** A function to replace generated source. Combined with global replacer config */
       replacer?: Replacer<'crud'>;
+      /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
+      generateAutocrud?: boolean;
     };
     /** Global config */
     global?: {
@@ -185,7 +194,7 @@ model User {
 // ./src/graphql/User/object.ts
 
 import { UserObject } from '@graphql/__generated__/User';
-import { builder } from '@graphql/builder';
+import { builder } from '@graphql/builder'; // pothos schema builder
 
 // Use the Object exports to accept all default generated query code
 builder.prismaObject('User', UserObject);
@@ -221,7 +230,7 @@ builder.prismaObject('User', {
 // ./src/graphql/User/query.ts
 
 import { findManyUserQuery, findManyUserQueryObject } from '@graphql/__generated__/User';
-import { builder } from '@graphql/builder';
+import { builder } from '@graphql/builder'; // pothos schema builder
 
 // Use the Query exports to accept all default generated query code
 builder.queryFields(findManyUserQuery);
@@ -248,6 +257,56 @@ builder.queryFields((t) => {
   };
 });
 ```
+
+### Auto define all `objects`, `queries` and `mutations` (crud operations)
+
+First, make sure that `options.crud.generateAutocrud` isn't set to `false`
+
+```ts
+// ./src/schema/index.ts (import autocrud.ts)
+import {
+  generateAllCrud, 
+  generateAllObjects, 
+  generateAllQueries, 
+  generateAllMutations
+} from '@graphql/__generated__/autocrud.ts',
+import { builder } from '@graphql/builder'; // pothos schema builder
+
+// (option 1) generate all objects, queries and mutations
+generateAllCrud()
+
+// (option 2) or create them separately
+generateAllObjects()
+generateAllQueries()
+generateAllMutations()
+
+// (option 3) or limit crud generation
+generateAllObjects({ include: ["User", "Profile", 'Comment'] })
+generateAllQueries({ exclude: ["Comment"] })
+generateAllMutations({ exclude: ["User"] })
+
+// defining schema
+builder.queryType({});
+builder.mutationType({});
+
+export const schema = builder.toSchema({});
+```
+
+Generated queries:
+- count
+- findFirst
+- findMany
+- findUnique
+
+Generated mutations:
+
+- createMany
+- createOne
+- deleteMany
+- deleteOne
+- updateMany
+- updateOne
+- upsertOne
 
 ## Disclosures
 
