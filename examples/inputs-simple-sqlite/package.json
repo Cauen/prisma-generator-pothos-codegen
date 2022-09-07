@@ -10,7 +10,8 @@
     "seed": "prisma migrate reset -f",
     "start": "node -r @swc-node/register src/server.ts",
     "generator": "node -r @swc-node/register src/pothos-plugin/src/inputsGenerator/index.ts",
-    "type": "tsc --noEmit"
+    "type": "tsc --noEmit",
+    "format": "eslint --fix ./src"
   },
   "prisma": {
     "seed": "node -r @swc-node/register prisma/seed.ts"

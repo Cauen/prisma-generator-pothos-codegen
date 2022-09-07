@@ -1,3 +1,3 @@
-export * from './object'
-export * from './mutations'
-export * from './queries'
+export * from './object.base';
+export * from './mutations';
+export * from './queries';

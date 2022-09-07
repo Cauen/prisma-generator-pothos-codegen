@@ -16,22 +16,26 @@ generator pothos {
 
 generator pothosCrud {
   provider            = "ts-node --transpile-only ../../src/generator.ts"
-  generatorConfigPath = "../src/schema/configs.ts"
+  generatorConfigPath = "../src/schema/configs.js"
 }
 
+/// User of prisma
 model User {
   id        Int       @id @default(autoincrement())
+  /// firstname description
   firstName String
   /// lastname description
   lastName  String
   birthdate DateTime
   login     String
+  /// @Pothos.omit()
   password  String
   /// relation desc 
   Posts     Post[]
   Comments  Comment[]
-  /// createdAt description
+  /// @Pothos.omit(create, update) createdAt description
   createdAt DateTime  @default(now())
+  /// @Pothos.omit(create, update)
   updatedAt DateTime? @updatedAt
   Profile   Profile[]
   Followers Follow[]  @relation("followers")
