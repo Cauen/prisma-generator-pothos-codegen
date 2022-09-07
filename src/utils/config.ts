@@ -82,7 +82,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
 /** Receives the config path from generator options, loads the config from file, fills out the default values, and returns it */
 export const getConfig = async (
   extendedGeneratorOptions: ExtendedGeneratorOptions,
-): Promise<Config> => {
+): Promise<ConfigInternal> => {
   const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
   const optionsPath = path.join(
     schemaDirName,
@@ -93,7 +93,7 @@ export const getConfig = async (
   const { inputs, crud, global }: Config = optionsRequired || {};
 
   const defaultConfig = getDefaultConfig(global);
-  const internalConfig: Config = {
+  const internalConfig: ConfigInternal = {
     inputs: { ...defaultConfig.inputs, ...inputs },
     crud: { ...defaultConfig.crud, ...crud },
     global: { ...defaultConfig.global, ...global },
