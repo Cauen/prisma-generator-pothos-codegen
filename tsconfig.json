@@ -23,6 +23,7 @@
     "declaration": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
+    "newLine": "lf"
   },
   "include": ["src", "./package.json"],
   "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts", "src/**/tests/**/*.ts"],

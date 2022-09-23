@@ -8,4 +8,3 @@ yarn*.log
 dist
 tsconfig.tsbuildinfo
 TEST-*
-.vscode
