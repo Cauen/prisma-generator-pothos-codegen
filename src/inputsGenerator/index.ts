@@ -37,7 +37,8 @@ export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> = {
 };
 
 export async function generateInputs(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
-  if (env.isTesting) writeFile(config, 'debug.dmmf', JSON.stringify(dmmf, null, 2), 'dmmf.json');
+  if (env.isTesting)
+    await writeFile(config, 'debug.dmmf', JSON.stringify(dmmf, null, 2), 'dmmf.json');
 
   const imports = getImports(config);
   const scalars = getScalars(config, dmmf);

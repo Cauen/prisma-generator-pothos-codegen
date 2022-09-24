@@ -12,7 +12,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   const modelNames = dmmf.datamodel.models.map((model) => model.name);
 
   // Generate CRUD directories (e.g. User, Comment, ...)
-  modelNames.forEach((model) => generateModel(config, dmmf, model));
+  await Promise.all(modelNames.map((model) => generateModel(config, dmmf, model)));
 
   // Generate root objects.ts file (export all models + prisma objects)
   const exports = dmmf.datamodel.models
@@ -20,7 +20,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     .join('\n');
   const modelNamesEachLine = modelNames.map((model) => `'${model}',`).join('\n  ');
 
-  writeFile(
+  await writeFile(
     config,
     'crud.objects',
     useTemplate(objectsTemplate, { exports, ...config.crud, modelNames: modelNamesEachLine }),
@@ -28,7 +28,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   );
 
   // Generate root utils.ts file
-  writeFile(
+  await writeFile(
     config,
     'crud.utils',
     useTemplate(utilsTemplate, config.crud),
@@ -37,7 +37,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
 
   // Generate root autocrud.ts file
   if (config.crud.generateAutocrud) {
-    writeFile(
+    await writeFile(
       config,
       'crud.autocrud',
       useTemplate(autoCrudTemplate, config.crud),
