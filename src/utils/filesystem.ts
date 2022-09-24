@@ -29,8 +29,7 @@ export const writeFile = async (
     ].reduce((el, replacer) => replacer(el, section), str);
 
   try {
-    const steps = location.split(path.sep);
-    const dir = steps.slice(0, steps.length - 1).join(path.sep);
+    const dir = path.dirname(location)
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(location, replace(content), { flag: 'w' });
   } catch (err) {
