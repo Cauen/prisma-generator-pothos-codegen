@@ -8,14 +8,14 @@ import { objectTemplate } from '../templates/object';
 import { getObjectFieldsString } from './objectFields';
 
 /** Write index.ts */
-export function writeIndex(config: ConfigInternal, model: DMMF.Model): void {
+export async function writeIndex(config: ConfigInternal, model: DMMF.Model): Promise<void> {
   const exports = ['./object.base', './mutations', './queries'].map((e) => `export * from '${e}';`);
   const outputPath = path.join(config.crud.outputDir, model.name, 'index.ts');
-  writeFile(config, 'crud.model.index', exports.join('\n') + '\n', outputPath);
+  await writeFile(config, 'crud.model.index', exports.join('\n') + '\n', outputPath);
 }
 
 /** Write object.base.ts */
-export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
+export async function writeObject(config: ConfigInternal, model: DMMF.Model): Promise<void> {
   // findUnique
   const idField = model.fields.find((f) => f.isId);
   let findUnique = `(fields) => ({ ...fields })`;
@@ -29,7 +29,7 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
   const { fields, exportFields } = getObjectFieldsString(model.name, model.fields);
 
   // Write output
-  writeFile(
+  await writeFile(
     config,
     'crud.model.object',
     useTemplate(objectTemplate, {
@@ -45,18 +45,18 @@ export function writeObject(config: ConfigInternal, model: DMMF.Model): void {
 }
 
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
-export function writeResolvers(
+export async function writeResolvers(
   config: ConfigInternal,
   model: DMMF.Model,
   type: 'queries' | 'mutations',
   templates: Record<string, string>,
-): void {
+): Promise<void> {
   const { inputsImporter } = config.crud;
   const resolverInputsImporter = inputsImporter.includes('../')
     ? inputsImporter.replace('../', '../../') // go a level inside to import
     : inputsImporter;
 
-  writeFile(
+  await writeFile(
     config,
     'crud.model.resolverIndex',
     Object.keys(templates)
@@ -65,18 +65,20 @@ export function writeResolvers(
     path.join(config.crud.outputDir, model.name, type, 'index.ts'),
   );
 
-  Object.entries(templates).forEach(([name, template]) =>
-    writeFile(
-      config,
-      'crud.model.resolver',
-      useTemplate(template, {
-        modelName: model.name,
-        modelNameLower: firstLetterLowerCase(model.name),
-        prisma: config.crud.prismaCaller,
-        resolverImports: config.crud.resolverImports,
-        inputsImporter: resolverInputsImporter,
-      }),
-      path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
+  await Promise.all(
+    Object.entries(templates).map(([name, template]) =>
+      writeFile(
+        config,
+        'crud.model.resolver',
+        useTemplate(template, {
+          modelName: model.name,
+          modelNameLower: firstLetterLowerCase(model.name),
+          prisma: config.crud.prismaCaller,
+          resolverImports: config.crud.resolverImports,
+          inputsImporter: resolverInputsImporter,
+        }),
+        path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
+      ),
     ),
   );
 }

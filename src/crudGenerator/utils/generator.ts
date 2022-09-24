@@ -4,16 +4,16 @@ import * as MutationTemplates from '../templates/mutation';
 import * as QueryTemplates from '../templates/query';
 import { writeIndex, writeObject, writeResolvers } from './parts';
 
-export function generateModel(
+export async function generateModel(
   config: ConfigInternal,
   dmmf: DMMF.Document,
   modelName: string,
-): void {
+): Promise<void> {
   const model = dmmf.datamodel.models.find((m) => m.name === modelName);
   if (!model) return;
 
-  writeIndex(config, model);
-  writeObject(config, model);
-  writeResolvers(config, model, 'queries', QueryTemplates);
-  writeResolvers(config, model, 'mutations', MutationTemplates);
+  await writeIndex(config, model);
+  await writeObject(config, model);
+  await writeResolvers(config, model, 'queries', QueryTemplates);
+  await writeResolvers(config, model, 'mutations', MutationTemplates);
 }

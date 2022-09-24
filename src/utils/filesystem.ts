@@ -1,17 +1,14 @@
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { env } from '../env';
 import { ConfigInternal } from './config';
 import { Replacer, ReplacerSection } from './replacer';
 
-export const debugLog = (value: string, timestamp = true) => {
+export const debugLog = async (value: string, timestamp = true) => {
   if (!env.isTesting) return;
-  fs.appendFile(
+  await fs.appendFile(
     'log.txt',
     `${timestamp ? `${new Date().toISOString()}: ` : ''}${JSON.stringify(value)},\n`,
-    (err) => {
-      if (err) throw err;
-    },
   );
 };
 
@@ -22,7 +19,7 @@ export const writeFile = async (
   content: string,
   location: string,
 ): Promise<void> => {
-  debugLog(`Writing to ${location}`);
+  await debugLog(`Writing to ${location}`);
 
   const replace = (str: string): string =>
     [
@@ -34,10 +31,9 @@ export const writeFile = async (
   try {
     const steps = location.split(path.sep);
     const dir = steps.slice(0, steps.length - 1).join(path.sep);
-    fs.mkdir(dir, { recursive: true }, () => {
-      fs.createWriteStream(location, { flags: 'w' }).write(replace(content));
-    });
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(location, replace(content), { flag: 'w' });
   } catch (err) {
-    debugLog(JSON.stringify(err));
+    await debugLog(JSON.stringify(err));
   }
 };
