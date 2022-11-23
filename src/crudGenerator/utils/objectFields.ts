@@ -48,7 +48,11 @@ export const getObjectFieldsString = (
 
       // Scalar (DateTime, Json, Enums, etc.)
       fields.push(`${name}: t.field(${obj}),`);
-      exportFields.push(useTemplate(fieldObjectTemplate, templateOpts));
+      exportFields.push(useTemplate(fieldObjectTemplate, { 
+        ...templateOpts,
+        bracketOptionalOpening: isList ? "[" : "", 
+        bracketOptionalClosing: isList ? "]" : "", 
+      }));
       return { fields, exportFields };
     },
     { fields: [] as string[], exportFields: [] as string[] },

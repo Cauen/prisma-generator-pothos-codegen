@@ -25,7 +25,7 @@ export const exposeObjectTemplate = `export const #{modelName}#{nameUpper}FieldO
 });`;
 
 export const fieldObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineFieldObject('#{modelName}', {
-  type: Inputs.#{type},
+  type: #{bracketOptionalOpening}Inputs.#{type}#{bracketOptionalClosing},
   description: #{description},
   nullable: #{nullable},
   resolve: (parent) => parent.#{name},
