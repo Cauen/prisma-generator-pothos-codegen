@@ -15,7 +15,7 @@ const makeQuery = (
     operation,
     type,
     nullable,
-    args ?? useTemplate(queryListArgsTemplate, {}, ['modelName']),
+    args ?? useTemplate(queryListArgsTemplate, {}, ['modelName', "modelNameUpper"]),
     resolve ??
       useTemplate(
         queryListResolveTemplate,
@@ -35,7 +35,7 @@ const queryListArgsTemplate = `{
       cursor: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: false }),
       take: t.arg({ type: 'Int', required: false }),
       skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.#{modelName}ScalarFieldEnum], required: false }),
+      distinct: t.arg({ type: [Inputs.#{modelNameUpper}ScalarFieldEnum], required: false }),
     }`;
 
 const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _info) =>

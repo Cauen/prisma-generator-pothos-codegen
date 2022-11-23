@@ -41,7 +41,7 @@ export const listRelationObjectTemplate = `export const #{modelName}#{nameUpper}
       cursor: t.arg({ type: Inputs.#{type}WhereUniqueInput, required: false }),
       take: t.arg({ type: 'Int', required: false }),
       skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.#{type}ScalarFieldEnum], required: false }),
+      distinct: t.arg({ type: [Inputs.#{typeUpper}ScalarFieldEnum], required: false }),
     },
     query: (args) => ({
       where: args.where || undefined,

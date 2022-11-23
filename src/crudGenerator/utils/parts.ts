@@ -2,7 +2,7 @@ import path from 'node:path';
 import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { writeFile } from '../../utils/filesystem';
-import { firstLetterLowerCase, getCompositeName } from '../../utils/string';
+import { firstLetterLowerCase, firstLetterUpperCase, getCompositeName } from '../../utils/string';
 import { useTemplate } from '../../utils/template';
 import { objectTemplate } from '../templates/object';
 import { getObjectFieldsString } from './objectFields';
@@ -73,6 +73,7 @@ export async function writeResolvers(
         useTemplate(template, {
           modelName: model.name,
           modelNameLower: firstLetterLowerCase(model.name),
+          modelNameUpper: firstLetterUpperCase(model.name),
           prisma: config.crud.prismaCaller,
           resolverImports: config.crud.resolverImports,
           inputsImporter: resolverInputsImporter,

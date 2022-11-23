@@ -41,7 +41,7 @@ export const getObjectFieldsString = (
       // Relation
       if (relationName) {
         fields.push(`${name}: t.relation('${name}', ${obj}${isList ? '(t)' : ''}),`);
-        if (isList) exportFields.push(useTemplate(listRelationObjectTemplate, templateOpts));
+        if (isList) exportFields.push(useTemplate(listRelationObjectTemplate, { ...templateOpts, typeUpper: firstLetterUpperCase(templateOpts.type) }));
         else exportFields.push(useTemplate(relationObjectTemplate, templateOpts));
         return { fields, exportFields };
       }
