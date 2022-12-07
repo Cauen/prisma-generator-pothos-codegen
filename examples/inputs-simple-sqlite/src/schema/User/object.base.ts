@@ -61,7 +61,7 @@ export const UserPasswordFieldObject = defineExposeObject('String', {
 
 export const UserPostsFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Posts', {
-    description: 'relation desc',
+    description: 'relation desc ',
     nullable: false,
     args: {
       where: t.arg({ type: Inputs.PostWhereInput, required: false }),

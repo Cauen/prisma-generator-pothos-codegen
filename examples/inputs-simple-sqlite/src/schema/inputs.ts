@@ -44,48 +44,52 @@ export const NEVER = builder.scalarType('NEVER', {
   description: 'Never fill this, its created for inputs that dont have fields',
 });
 
-export const UserScalarFieldEnum = builder.enumType('UserScalarFieldEnum', {
-  values: ["id","firstName","lastName","birthdate","login","password","createdAt","updatedAt"] as const,
-});
-
-export const PostScalarFieldEnum = builder.enumType('PostScalarFieldEnum', {
-  values: ["id","title","content","authorId"] as const,
+export const CommentScalarFieldEnum = builder.enumType('CommentScalarFieldEnum', {
+  values: ["id","comment","authorId","postId"] as const,
 });
 
 export const ExtraModalScalarFieldEnum = builder.enumType('ExtraModalScalarFieldEnum', {
   values: ["id","title","createdAt","updatedAt"] as const,
 });
 
-export const CommentScalarFieldEnum = builder.enumType('CommentScalarFieldEnum', {
-  values: ["id","comment","authorId","postId"] as const,
-});
-
-export const ProfileScalarFieldEnum = builder.enumType('ProfileScalarFieldEnum', {
-  values: ["id","bio","userId"] as const,
-});
-
 export const FollowScalarFieldEnum = builder.enumType('FollowScalarFieldEnum', {
   values: ["fromId","toId"] as const,
-});
-
-export const UnrelatedScalarFieldEnum = builder.enumType('UnrelatedScalarFieldEnum', {
-  values: ["id","name"] as const,
 });
 
 export const IdOnlyScalarFieldEnum = builder.enumType('IdOnlyScalarFieldEnum', {
   values: ["id"] as const,
 });
 
-export const WithoutIDScalarFieldEnum = builder.enumType('WithoutIDScalarFieldEnum', {
-  values: ["name"] as const,
+export const PostScalarFieldEnum = builder.enumType('PostScalarFieldEnum', {
+  values: ["id","title","content","authorId"] as const,
+});
+
+export const ProfileScalarFieldEnum = builder.enumType('ProfileScalarFieldEnum', {
+  values: ["id","bio","userId"] as const,
+});
+
+export const SortOrder = builder.enumType('SortOrder', {
+  values: ["asc","desc"] as const,
+});
+
+export const TransactionIsolationLevel = builder.enumType('TransactionIsolationLevel', {
+  values: ["Serializable"] as const,
+});
+
+export const UnrelatedScalarFieldEnum = builder.enumType('UnrelatedScalarFieldEnum', {
+  values: ["id","name"] as const,
+});
+
+export const UserScalarFieldEnum = builder.enumType('UserScalarFieldEnum', {
+  values: ["id","firstName","lastName","birthdate","login","password","createdAt","updatedAt"] as const,
 });
 
 export const WithScalarsScalarFieldEnum = builder.enumType('WithScalarsScalarFieldEnum', {
   values: ["id","string","boolean","int","float","decimal","bigint","datetime","bytes"] as const,
 });
 
-export const SortOrder = builder.enumType('SortOrder', {
-  values: ["asc","desc"] as const,
+export const WithoutIDScalarFieldEnum = builder.enumType('WithoutIDScalarFieldEnum', {
+  values: ["name"] as const,
 });
 
 export const UserWhereInput = builder.inputRef<Prisma.UserWhereInput>('UserWhereInput').implement({
