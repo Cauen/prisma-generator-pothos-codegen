@@ -66,6 +66,7 @@ export const defineQueryPrismaObject = <
     Args,
     Nullable,
     unknown,
+    unknown,
     'Query'
   >,
 ) => def as { type: Type; nullable: Nullable; args: Args; resolve: typeof def['resolve'] };
@@ -98,6 +99,7 @@ export const defineMutationPrismaObject = <
     Type extends [unknown] ? [ObjectRef<Model['Shape']>] : ObjectRef<Model['Shape']>,
     Args,
     Nullable,
+    unknown,
     unknown,
     'Mutation'
   >,

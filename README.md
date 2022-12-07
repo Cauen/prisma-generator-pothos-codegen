@@ -5,9 +5,10 @@ A [prisma](https://www.prisma.io/) [generator](https://www.prisma.io/docs/concep
 Easily convert a prisma schema into a full graphql CRUD API.
 
 On `prisma generate` we create:
-* All [input types](https://pothos-graphql.dev/docs/guide/inputs) for `Create`, `Find`, `Update`, `Sort` and `Delete` operations (to be used as args in [fields](https://pothos-graphql.dev/docs/guide/fields#arguments)).
-* (Optional): Create all `Objects`, `Queries` and `Mutations` base files (to create customizable resolvers).
-* (Optional): Execute all these base files without customization to create a default CRUD.
+
+- All [input types](https://pothos-graphql.dev/docs/guide/inputs) for `Create`, `Find`, `Update`, `Sort` and `Delete` operations (to be used as args in [fields](https://pothos-graphql.dev/docs/guide/fields#arguments)).
+- (Optional): Create all `Objects`, `Queries` and `Mutations` base files (to create customizable resolvers).
+- (Optional): Execute all these base files without customization to create a default CRUD.
 
 ## Table of Contents
 
@@ -34,6 +35,22 @@ or using npm
 ```sh
 npm install prisma-generator-pothos-codegen
 ```
+
+### Peer dependencies
+
+The package was developed and tested using the following peer dependencies:
+
+<!-- TODO Maybe we could have some sort of automated pipeline that tests different versions of these peer deps? -->
+
+```
+"@pothos/core": "^3.23.0",
+"@pothos/plugin-prisma": "^3.37.0",
+"@prisma/client": "^4.7.0",
+"graphql": "^16.6.0",
+"prisma": "^4.7.0"
+```
+
+Using different versions of these dependencies may result in undefined behavior or unintended TypeScript errors.
 
 ### Set Up
 
@@ -160,8 +177,6 @@ npx prisma generate
 
 ### Examples
 
-<!-- TODO update examples -->
-
 Check for the [example](/examples/inputs-simple-sqlite) for a running sample
 
 ![image](https://user-images.githubusercontent.com/8796757/178087266-0a852f43-a7b5-48a0-bc13-a3ece9788457.png)
@@ -265,9 +280,9 @@ First, make sure that `options.crud.generateAutocrud` isn't set to `false`
 ```ts
 // ./src/schema/index.ts (import autocrud.ts)
 import {
-  generateAllCrud, 
-  generateAllObjects, 
-  generateAllQueries, 
+  generateAllCrud,
+  generateAllObjects,
+  generateAllQueries,
   generateAllMutations
 } from '@graphql/__generated__/autocrud.ts',
 import { builder } from '@graphql/builder'; // pothos schema builder
@@ -293,6 +308,7 @@ export const schema = builder.toSchema({});
 ```
 
 Generated queries:
+
 - count
 - findFirst
 - findMany
@@ -309,12 +325,6 @@ Generated mutations:
 - upsertOne
 
 ## Disclosures
-
-### Tested environments
-
-| **Prisma Version** | **Database**      | **State** |
-| ------------------ | ----------------- | --------- |
-| 3.12 - 4.00        | Postgres - Sqlite | ✅        |
 
 ### Models with only relations
 

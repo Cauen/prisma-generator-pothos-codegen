@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Prisma, User, Post, ExtraModal, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
 export default interface PrismaTypes {
     User: {
@@ -5,8 +6,9 @@ export default interface PrismaTypes {
         Shape: User;
         Include: Prisma.UserInclude;
         Select: Prisma.UserSelect;
-        Where: Prisma.UserWhereUniqueInput;
-        Fields: "Posts" | "Comments" | "Profile" | "Followers" | "Following";
+        OrderBy: Prisma.UserOrderByWithRelationInput;
+        WhereUnique: Prisma.UserWhereUniqueInput;
+        Where: Prisma.UserWhereInput;
         RelationName: "Posts" | "Comments" | "Profile" | "Followers" | "Following";
         ListRelations: "Posts" | "Comments" | "Profile" | "Followers" | "Following";
         Relations: {
@@ -37,8 +39,9 @@ export default interface PrismaTypes {
         Shape: Post;
         Include: Prisma.PostInclude;
         Select: Prisma.PostSelect;
-        Where: Prisma.PostWhereUniqueInput;
-        Fields: "Author" | "Comments";
+        OrderBy: Prisma.PostOrderByWithRelationInput;
+        WhereUnique: Prisma.PostWhereUniqueInput;
+        Where: Prisma.PostWhereInput;
         RelationName: "Author" | "Comments";
         ListRelations: "Comments";
         Relations: {
@@ -57,8 +60,9 @@ export default interface PrismaTypes {
         Shape: ExtraModal;
         Include: never;
         Select: Prisma.ExtraModalSelect;
-        Where: Prisma.ExtraModalWhereUniqueInput;
-        Fields: never;
+        OrderBy: Prisma.ExtraModalOrderByWithRelationInput;
+        WhereUnique: Prisma.ExtraModalWhereUniqueInput;
+        Where: Prisma.ExtraModalWhereInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -68,8 +72,9 @@ export default interface PrismaTypes {
         Shape: Comment;
         Include: Prisma.CommentInclude;
         Select: Prisma.CommentSelect;
-        Where: Prisma.CommentWhereUniqueInput;
-        Fields: "Author" | "Post";
+        OrderBy: Prisma.CommentOrderByWithRelationInput;
+        WhereUnique: Prisma.CommentWhereUniqueInput;
+        Where: Prisma.CommentWhereInput;
         RelationName: "Author" | "Post";
         ListRelations: never;
         Relations: {
@@ -88,8 +93,9 @@ export default interface PrismaTypes {
         Shape: Profile;
         Include: Prisma.ProfileInclude;
         Select: Prisma.ProfileSelect;
-        Where: Prisma.ProfileWhereUniqueInput;
-        Fields: "User";
+        OrderBy: Prisma.ProfileOrderByWithRelationInput;
+        WhereUnique: Prisma.ProfileWhereUniqueInput;
+        Where: Prisma.ProfileWhereInput;
         RelationName: "User";
         ListRelations: never;
         Relations: {
@@ -104,8 +110,9 @@ export default interface PrismaTypes {
         Shape: Follow;
         Include: Prisma.FollowInclude;
         Select: Prisma.FollowSelect;
-        Where: Prisma.FollowWhereUniqueInput;
-        Fields: "From" | "To";
+        OrderBy: Prisma.FollowOrderByWithRelationInput;
+        WhereUnique: Prisma.FollowWhereUniqueInput;
+        Where: Prisma.FollowWhereInput;
         RelationName: "From" | "To";
         ListRelations: never;
         Relations: {
@@ -124,8 +131,9 @@ export default interface PrismaTypes {
         Shape: Unrelated;
         Include: never;
         Select: Prisma.UnrelatedSelect;
-        Where: Prisma.UnrelatedWhereUniqueInput;
-        Fields: never;
+        OrderBy: Prisma.UnrelatedOrderByWithRelationInput;
+        WhereUnique: Prisma.UnrelatedWhereUniqueInput;
+        Where: Prisma.UnrelatedWhereInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -135,8 +143,9 @@ export default interface PrismaTypes {
         Shape: IdOnly;
         Include: never;
         Select: Prisma.IdOnlySelect;
-        Where: Prisma.IdOnlyWhereUniqueInput;
-        Fields: never;
+        OrderBy: Prisma.IdOnlyOrderByWithRelationInput;
+        WhereUnique: Prisma.IdOnlyWhereUniqueInput;
+        Where: Prisma.IdOnlyWhereInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -146,8 +155,9 @@ export default interface PrismaTypes {
         Shape: WithoutID;
         Include: never;
         Select: Prisma.WithoutIDSelect;
-        Where: Prisma.WithoutIDWhereUniqueInput;
-        Fields: never;
+        OrderBy: Prisma.WithoutIDOrderByWithRelationInput;
+        WhereUnique: Prisma.WithoutIDWhereUniqueInput;
+        Where: Prisma.WithoutIDWhereInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -157,8 +167,9 @@ export default interface PrismaTypes {
         Shape: WithScalars;
         Include: never;
         Select: Prisma.WithScalarsSelect;
-        Where: Prisma.WithScalarsWhereUniqueInput;
-        Fields: never;
+        OrderBy: Prisma.WithScalarsOrderByWithRelationInput;
+        WhereUnique: Prisma.WithScalarsWhereUniqueInput;
+        Where: Prisma.WithScalarsWhereInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
