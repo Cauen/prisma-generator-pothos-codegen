@@ -1,4 +1,4 @@
-import { generateAllCrud, generateAllObjects, generateAllQueries, generateAllMutations } from './autocrud';
+import { generateAllCrud, generateAllObjects, generateAllQueries, generateAllMutations } from './__generated__/autocrud';
 import { builder } from './builder';
 
 generateAllCrud()

@@ -3,18 +3,20 @@
 /** @type {import('../../../../src').Config} */
 module.exports = {
   crud: {
-    outputDir: './src/schema/',
+    outputDir: './src/schema/__generated__/',
     // replacer(generated, position) {
     //   return `// THIS CONTENT WAS INSERTED AT REPLACE. THE POSITION IS ${position}\n${generated}`
     // },
-    excludeResolversContain: ['User'],
+    excludeResolversContain: [],
     prismaCaller: '_context.db',
     disabled: false,
+    builderImporter: "import { builder } from '../builder';"
     // inputsImporter: "import * as Inputs from '@/schema/inputs'",
   },
   inputs: {
+    builderImporter: "import { builder } from '../builder';",
     prismaImporter: `import { Prisma } from '.prisma/client';`,
-    outputFilePath: './src/schema/inputs.ts',
+    outputFilePath: './src/schema/__generated__/inputs.ts',
   },
   // global: {
   //   replacer: (str, section) => {
