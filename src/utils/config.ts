@@ -37,6 +37,14 @@ export interface Config {
     replacer?: Replacer<'crud'>;
     /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
     generateAutocrud?: boolean;
+    /** An array of parts of resolver names to be excluded from generation. Ie: ["User"] Default: [] */
+    excludeResolversContain?: string[];
+    /** An array of resolver names to be excluded from generation. Ie: ["upsertOneComment"] Default: [] */
+    excludeResolversExact?: string[];
+    /** An array of parts of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+    includeResolversContain?: string[];
+    /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+    includeResolversExact?: string[];
   };
   /** Global config */
   global?: {
@@ -72,6 +80,10 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     outputDir: './generated',
     replacer: (str: string) => str,
     generateAutocrud: true,
+    excludeResolversContain: [],
+    excludeResolversExact: [],
+    includeResolversContain: [],
+    includeResolversExact: [],
   },
   global: {
     replacer: (str: string) => str,

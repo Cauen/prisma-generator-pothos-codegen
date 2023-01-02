@@ -44,6 +44,29 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
   );
 }
 
+const isExcludedResolver = (options: ConfigInternal, name: string) => {
+  const {
+    excludeResolversContain,
+    excludeResolversExact,
+    includeResolversContain,
+    includeResolversExact,
+  } = options.crud || {};
+  if (includeResolversExact.length) {
+    return !includeResolversExact.includes(name);
+  }
+  if (includeResolversContain.length) {
+    return !includeResolversContain.some((include) => name.includes(include));
+  }
+
+  if (excludeResolversExact.length && excludeResolversExact.includes(name)) {
+    return true;
+  }
+  if (excludeResolversContain.length && excludeResolversContain.some((r) => name.includes(r))) {
+    return true;
+  }
+  return false;
+};
+
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
 export async function writeResolvers(
   config: ConfigInternal,
@@ -66,20 +89,22 @@ export async function writeResolvers(
   );
 
   await Promise.all(
-    Object.entries(templates).map(([name, template]) =>
-      writeFile(
-        config,
-        'crud.model.resolver',
-        useTemplate(template, {
-          modelName: model.name,
-          modelNameLower: firstLetterLowerCase(model.name),
-          modelNameUpper: firstLetterUpperCase(model.name),
-          prisma: config.crud.prismaCaller,
-          resolverImports: config.crud.resolverImports,
-          inputsImporter: resolverInputsImporter,
-        }),
-        path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
-      ),
-    ),
+    Object.entries(templates)
+      .filter(([name]) => !isExcludedResolver(config, `${name}${model.name}`))
+      .map(([name, template]) => {
+        return writeFile(
+          config,
+          'crud.model.resolver',
+          useTemplate(template, {
+            modelName: model.name,
+            modelNameLower: firstLetterLowerCase(model.name),
+            modelNameUpper: firstLetterUpperCase(model.name),
+            prisma: config.crud.prismaCaller,
+            resolverImports: config.crud.resolverImports,
+            inputsImporter: resolverInputsImporter,
+          }),
+          path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
+        );
+      }),
   );
 }
