@@ -7,17 +7,45 @@ import { useTemplate } from '../../utils/template';
 import { objectTemplate } from '../templates/object';
 import { getObjectFieldsString } from './objectFields';
 
+const getResolverTypeName = (type: ResolverType) => {
+  return type === 'mutations' ? 'Mutation' : 'Query';
+};
+
 /** Write index.ts */
 export async function writeIndex(
   config: ConfigInternal,
   model: DMMF.Model,
-  { writeMutations, writeQueries }: { writeMutations: boolean; writeQueries: boolean },
+  { queries, mutations }: { queries: GeneratedResolver[]; mutations: GeneratedResolver[] },
 ): Promise<void> {
-  const exports = [
-    './object.base',
-    ...(writeMutations ? ['./mutations'] : []),
-    ...(writeQueries ? ['./queries'] : []),
-  ].map((e) => `export * from '${e}';`);
+  const queriesExports = queries.map(
+    (el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`,
+  );
+  const mutationsExports = mutations.map(
+    (el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`,
+  );
+
+  const exportsWithName = [
+    {
+      name: './object.base',
+      exports: [
+        `${model.name}Object`,
+        ...model.fields.map((el) => `${model.name}${firstLetterUpperCase(el.name)}FieldObject`),
+      ],
+    },
+    {
+      name: './mutations',
+      exports: [...mutationsExports, ...mutationsExports.map((el) => `${el}Object`)],
+    },
+    {
+      name: './queries',
+      exports: [...queriesExports, ...queriesExports.map((el) => `${el}Object`)],
+    },
+  ];
+
+  // TODO Refactor this logic + tests
+  const exports = exportsWithName
+    .filter((el) => el.exports.length)
+    .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from '${el.name}';`)
   const outputPath = path.join(config.crud.outputDir, model.name, 'index.ts');
   await writeFile(config, 'crud.model.index', exports.join('\n') + '\n', outputPath);
 }
@@ -76,7 +104,7 @@ const isExcludedResolver = (options: ConfigInternal, name: string) => {
 };
 
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
-type ResolverType = 'queries' | 'mutations'
+type ResolverType = 'queries' | 'mutations';
 export type GeneratedResolver = {
   resolverName: string;
   modelName: string;
@@ -120,7 +148,17 @@ export async function writeResolvers(
     await writeFile(
       config,
       'crud.model.resolverIndex',
-      resolvers.map(([name]) => `export * from './${name}.base';`).join('\n') + '\n',
+      // TODO Refactor this logic + tests
+      resolvers
+        .map(
+          ([name]) =>
+            `export ${(() => {
+              return `{ ${name}${model.name}${
+                type === 'mutations' ? 'Mutation' : 'Query'
+              }, ${name}${model.name}${getResolverTypeName(type)}Object }`;
+            })()} from './${name}.base';`,
+        )
+        .join('\n') + '\n',
       path.join(config.crud.outputDir, model.name, type, 'index.ts'),
     );
 

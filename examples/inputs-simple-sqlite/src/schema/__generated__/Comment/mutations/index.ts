@@ -1,7 +1,7 @@
-export * from './createMany.base';
-export * from './createOne.base';
-export * from './deleteMany.base';
-export * from './deleteOne.base';
-export * from './updateMany.base';
-export * from './updateOne.base';
-export * from './upsertOne.base';
+export { createManyCommentMutation, createManyCommentMutationObject } from './createMany.base';
+export { createOneCommentMutation, createOneCommentMutationObject } from './createOne.base';
+export { deleteManyCommentMutation, deleteManyCommentMutationObject } from './deleteMany.base';
+export { deleteOneCommentMutation, deleteOneCommentMutationObject } from './deleteOne.base';
+export { updateManyCommentMutation, updateManyCommentMutationObject } from './updateMany.base';
+export { updateOneCommentMutation, updateOneCommentMutationObject } from './updateOne.base';
+export { upsertOneCommentMutation, upsertOneCommentMutationObject } from './upsertOne.base';

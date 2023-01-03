@@ -18,10 +18,7 @@ export async function generateModel(
   await writeObject(config, model);
   const queries = await writeResolvers(config, model, 'queries', QueryTemplates);
   const mutations = await writeResolvers(config, model, 'mutations', MutationTemplates);
-  await writeIndex(config, model, {
-    writeQueries: Boolean(queries.length),
-    writeMutations: Boolean(mutations.length),
-  });
+  await writeIndex(config, model, { queries, mutations });
 
   return [...queries, ...mutations];
 }

@@ -1,4 +1,4 @@
-export * from './findFirst.base';
-export * from './findMany.base';
-export * from './count.base';
-export * from './findUnique.base';
+export { findFirstCommentQuery, findFirstCommentQueryObject } from './findFirst.base';
+export { findManyCommentQuery, findManyCommentQueryObject } from './findMany.base';
+export { countCommentQuery, countCommentQueryObject } from './count.base';
+export { findUniqueCommentQuery, findUniqueCommentQueryObject } from './findUnique.base';

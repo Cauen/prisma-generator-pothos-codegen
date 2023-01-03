@@ -1,4 +1,4 @@
-export * from './findFirst.base';
-export * from './findMany.base';
-export * from './count.base';
-export * from './findUnique.base';
+export { findFirstWithoutIDQuery, findFirstWithoutIDQueryObject } from './findFirst.base';
+export { findManyWithoutIDQuery, findManyWithoutIDQueryObject } from './findMany.base';
+export { countWithoutIDQuery, countWithoutIDQueryObject } from './count.base';
+export { findUniqueWithoutIDQuery, findUniqueWithoutIDQueryObject } from './findUnique.base';
