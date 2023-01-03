@@ -1,7 +1,18 @@
 import { makeResolver } from './resolver';
 
+const mutationNames = [
+  'createMany',
+  'createOne',
+  'deleteMany',
+  'deleteOne',
+  'updateMany',
+  'updateOne',
+  'upsertOne',
+];
+type OperationOptions = typeof mutationNames[number];
+
 const makeMutation = (
-  operation: string,
+  operation: OperationOptions,
   type: string,
   nullable: 'true' | 'false',
   args: string,
@@ -25,7 +36,7 @@ const createManyArgs =
 const createManyResolver = `async (_query, _root, args, _context, _info) =>
       await #{prisma}.$transaction(args.data.map((data) => #{prisma}.#{modelNameLower}.create({ data })))`;
 
-export const createMany = makeMutation(
+const createMany = makeMutation(
   'createMany',
   "['#{modelName}']",
   'false',
@@ -38,7 +49,7 @@ const createOneArgs = '{ data: t.arg({ type: Inputs.#{modelName}CreateInput, req
 const createOneResolver = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.create({ data: args.data, ...query })`;
 
-export const createOne = makeMutation(
+const createOne = makeMutation(
   'createOne',
   "'#{modelName}'",
   'false',
@@ -51,7 +62,7 @@ const deleteManyArgs = '{ where: t.arg({ type: Inputs.#{modelName}WhereInput, re
 const deleteManyResolver = `async (_root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.deleteMany({ where: args.where })`;
 
-export const deleteMany = makeMutation(
+const deleteMany = makeMutation(
   'deleteMany',
   'BatchPayload',
   'true',
@@ -66,7 +77,7 @@ const delteOneArgs =
 const deleteOneResolver = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.delete({ where: args.where, ...query })`;
 
-export const deleteOne = makeMutation(
+const deleteOne = makeMutation(
   'deleteOne',
   "'#{modelName}'",
   'true',
@@ -82,7 +93,7 @@ const updateManyArgs = `{
 const updateManyResolver = `async (_root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.updateMany({ where: args.where || undefined, data: args.data })`;
 
-export const updateMany = makeMutation(
+const updateMany = makeMutation(
   'updateMany',
   'BatchPayload',
   'false',
@@ -99,7 +110,7 @@ const updateOneArgs = `{
 const updateOneResolver = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.update({ where: args.where, data: args.data, ...query })`;
 
-export const updateOne = makeMutation(
+const updateOne = makeMutation(
   'updateOne',
   "'#{modelName}'",
   'true',
@@ -121,10 +132,20 @@ const upsertOneResolver = `async (query, _root, args, _context, _info) =>
         ...query,
       })`;
 
-export const upsertOne = makeMutation(
+const upsertOne = makeMutation(
   'upsertOne',
   "'#{modelName}'",
   'false',
   upsertOneArgs,
   upsertOneResolver,
 );
+
+export const mutations = {
+  createMany,
+  createOne,
+  deleteMany,
+  deleteOne,
+  updateMany,
+  updateOne,
+  upsertOne,
+};
