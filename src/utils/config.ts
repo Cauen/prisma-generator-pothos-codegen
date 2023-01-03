@@ -46,6 +46,8 @@ export interface Config {
     includeResolversContain?: string[];
     /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
     includeResolversExact?: string[];
+    /** Caution: This delete the whole folder (Only use if the folder only has auto generated contents). A boolean to delete output dir before generate. Default: False */
+    deleteOutputDirBeforeGenerate?: boolean
   };
   /** Global config */
   global?: {
@@ -89,6 +91,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     excludeResolversExact: [],
     includeResolversContain: [],
     includeResolversExact: [],
+    deleteOutputDirBeforeGenerate: false,
   },
   global: {
     replacer: (str: string) => str,

@@ -1,13 +1,16 @@
 import path from 'node:path';
 import { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../utils/config';
-import { writeFile } from '../utils/filesystem';
+import { deleteFolder, writeFile } from '../utils/filesystem';
 import { useTemplate } from '../utils/template';
 import { utilsTemplate, objectsTemplate, autoCrudTemplate } from './templates/root';
 import { generateModel } from './utils/generator';
 
 export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
   if (config.crud.disabled) return;
+
+  if (config.crud.deleteOutputDirBeforeGenerate)
+    await deleteFolder(path.join(config.crud.outputDir))
 
   const modelNames = dmmf.datamodel.models.map((model) => model.name);
 

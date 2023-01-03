@@ -10,8 +10,9 @@ module.exports = {
     excludeResolversContain: ["User"],
     prismaCaller: '_context.db',
     disabled: false,
-    builderImporter: "import { builder } from '../builder';"
+    builderImporter: "import { builder } from '../builder';",
     // inputsImporter: "import * as Inputs from '@/schema/inputs'",
+    deleteOutputDirBeforeGenerate: true,
   },
   inputs: {
     builderImporter: "import { builder } from '../builder';",
@@ -28,8 +29,9 @@ module.exports = {
     //   }
     //   return str;
     // },
-    beforeGenerate: (dmmf) => {
-      console.log(dmmf)
-    }
+    // afterGenerate: (dmmf) => {
+    //   console.log(dmmf)
+    //   throw new Error("Owpa")
+    // }
   },
 };
