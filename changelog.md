@@ -1,26 +1,31 @@
 # Changelog
 
-# 0.4.6
+# 0.5.0
 
-Changed: (Crud) possibility to exclude some files from generation
-Changed: (Autocrud) now can only run generated files (before can run not generated files)
-Changed: (Autocrud) now works by running only generated files (i.e. files excluded from generation don't need to be excluded from autocrud)
-Changed: (objects.ts) Objects no longer exports everything from within models. This will avoid growing the object file too much when changing to export variables named in model indexes.
+- [x] Added: Delete Output Dir Before Generate option to crud
+- [x] Added: Before/After option to global. Handle DMMF before and after generation.
+- [x] Changed: (Crud) possibility to exclude some files from generation #14
+- [x] Changed: (Autocrud) now can only run generated files (before can run not generated files)
+- [x] Changed: (Autocrud) now works by running only generated files (i.e. files excluded from generation don't need to be excluded from autocrud)
+- [x] Changed: (Crud) Named exports in all indexes (Support for Nextjs) #15
+- [x] Changed: (Crud) objects.ts no longer exports everything from within models. This will avoid growing the object file too much when changing to export variables named in model indexes.
+- [x] Changed: Support newer version of @pothos/plugin-prisma and add disclaimer. Thanks to [saphewilliam](https://github.com/Cauen/prisma-generator-pothos-codegen/pull/13)
+
 
 # 0.4.5
 
-Changed: Object field scalar array as pothos array #12
-Changed: Distinct at queries is always uppercase #11
+- [x] Changed: Object field scalar array as pothos array #12
+- [x] Changed: Distinct at queries is always uppercase #11
 
 
 # Changelog
 
 # 0.4.4
 
-Changed: Now writing files is asynchronous
+- [x] Changed: Now writing files is asynchronous
 
 # Changelog
 
 # 0.4.3
 
-Changed: Now TS compiler uses `"newLine": "lf"`
+- [x] Changed: Now TS compiler uses `"newLine": "lf"`
