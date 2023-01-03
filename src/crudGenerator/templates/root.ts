@@ -1,5 +1,4 @@
-export const objectsTemplate = `#{exports}
-
+export const objectsTemplate = `
 #{builderImporter}
 #{prismaImporter}
 
@@ -186,11 +185,64 @@ export const definePrismaObject = <
 `;
 
 // TODO: Refactor getParams to link model with object base, and remove any
+/**
+  User: {
+    Object: User.UserObject,
+    queries: {},
+    mutations: {},
+  },
+  Post: {
+    Object: Post.PostObject,
+    queries: {
+      findFirst: Post.findFirstPostQuery,
+      count: Post.countPostQuery,
+    },
+    mutations: {
+      createOne: Post.createOnePostMutation,
+    },
+  },
+ */
 export const autoCrudTemplate = `#{builderImporter}
+#{imports}
 import * as Objects from './objects';
 
+const Cruds = {
+#{modelsGenerated}
+};
+
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];
+const getEntries = <T extends object>(obj: T) => Object.entries(obj) as Entries<T>;
+const crudEntries = getEntries(Cruds);
+
+export function generateAllObjects(opts?: CrudOptions) {
+  return crudEntries
+    .filter(([md]) => includeModel(md, opts))
+    .map(([modelName, { Object }]) => {
+      return builder.prismaObject(modelName as Model, Object as any); // Objects is all imports
+    });
+}
+
+export function generateAllQueries(opts?: CrudOptions) {
+  return crudEntries
+    .filter(([name, object]) => includeModel(name, opts))
+    .map(([name, { queries }]) => {
+      const queriEntries = getEntries(queries);
+      return queriEntries.map((entry) => builder.queryFields(entry[1]));
+    });
+}
+
+export function generateAllMutations(opts?: CrudOptions) {
+  return crudEntries
+    .filter(([name, object]) => includeModel(name, opts))
+    .map(([name, { mutations }]) => {
+      const queriEntries = getEntries(mutations);
+      return queriEntries.map((entry) => builder.mutationFields(entry[1]));
+    });
+}
+
 type Model = Objects.Model;
-const modelNames = Objects.modelNames;
 
 type CrudOptions = { include: Model[], exclude?: never } | { exclude: Model[], include?: never };
 const includeModel = (model: Model, opts?: CrudOptions): boolean => {
@@ -198,41 +250,6 @@ const includeModel = (model: Model, opts?: CrudOptions): boolean => {
   if (opts.include) return opts.include.includes(model);
   if (opts.exclude) return !opts.exclude.includes(model);
   return false;
-};
-
-export function generateAllObjects(opts?: CrudOptions) {
-  const getParams = <T extends Model>(model: T): [T, any] => [model, Objects[\`\${model}Object\`]];
-  return modelNames
-    .filter(md => includeModel(md, opts))
-    .map(object => {
-      const params = getParams(object)
-      builder.prismaObject(...params); // Objects is all imports
-    });
-};
-
-export function generateAllQueries(opts?: CrudOptions) {
-  return modelNames
-    .filter(md => includeModel(md, opts))
-    .map(object => {
-      builder.queryFields(Objects[\`count\${object}Query\`]);
-      builder.queryFields(Objects[\`findFirst\${object}Query\`]);
-      builder.queryFields(Objects[\`findMany\${object}Query\`]);
-      builder.queryFields(Objects[\`findUnique\${object}Query\`]);
-    });
-};
-
-export function generateAllMutations(opts?: CrudOptions) {
-  return modelNames
-    .filter(md => includeModel(md, opts))
-    .map(object => {
-      builder.mutationFields(Objects[\`createMany\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`createOne\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`deleteMany\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`deleteOne\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`updateMany\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`updateOne\${object}Mutation\`]);
-      builder.mutationFields(Objects[\`upsertOne\${object}Mutation\`]);
-    });
 };
 
 export function generateAllCrud(opts?: CrudOptions) {

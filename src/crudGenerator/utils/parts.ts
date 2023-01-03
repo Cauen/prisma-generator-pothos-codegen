@@ -76,17 +76,18 @@ const isExcludedResolver = (options: ConfigInternal, name: string) => {
 };
 
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
+type ResolverType = 'queries' | 'mutations'
+export type GeneratedResolver = {
+  resolverName: string;
+  modelName: string;
+  type: ResolverType;
+};
 export async function writeResolvers(
   config: ConfigInternal,
   model: DMMF.Model,
-  type: 'queries' | 'mutations',
+  type: ResolverType,
   templates: Record<string, string>,
-): Promise<
-  {
-    resolverName: string;
-    modelName: string;
-  }[]
-> {
+): Promise<GeneratedResolver[]> {
   const { inputsImporter } = config.crud;
   const resolverInputsImporter = inputsImporter.includes('../')
     ? inputsImporter.replace('../', '../../') // go a level inside to import
@@ -123,5 +124,5 @@ export async function writeResolvers(
       path.join(config.crud.outputDir, model.name, type, 'index.ts'),
     );
 
-  return resolvers.map(([resolverName]) => ({ resolverName, modelName: model.name }));
+  return resolvers.map(([resolverName]) => ({ resolverName, modelName: model.name, type }));
 }

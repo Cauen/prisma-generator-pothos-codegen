@@ -7,7 +7,7 @@ module.exports = {
     // replacer(generated, position) {
     //   return `// THIS CONTENT WAS INSERTED AT REPLACE. THE POSITION IS ${position}\n${generated}`
     // },
-    excludeResolversContain: [],
+    excludeResolversContain: ["User"],
     prismaCaller: '_context.db',
     disabled: false,
     builderImporter: "import { builder } from '../builder';"
