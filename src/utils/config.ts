@@ -1,3 +1,4 @@
+import { DMMF } from '@prisma/generator-helper';
 import path from 'path';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
@@ -52,6 +53,10 @@ export interface Config {
     replacer?: Replacer;
     /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
     builderImporter?: string;
+    /** Run function before generate */
+    beforeGenerate?: (dmmf: DMMF.Document) => void;
+    /** Run function after generate */
+    afterGenerate?: (dmmf: DMMF.Document) => void;
   };
 }
 
@@ -88,6 +93,8 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   global: {
     replacer: (str: string) => str,
     builderImporter: '',
+    beforeGenerate: () => {},
+    afterGenerate: () => {},
   },
 });
 

@@ -19,8 +19,6 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     }),
   );
 
-  console.log(JSON.stringify({ models }));
-
   // Generate root objects.ts file (export all models + prisma objects)
   const modelNamesEachLine = modelNames.map((model) => `'${model}',`).join('\n  ');
 

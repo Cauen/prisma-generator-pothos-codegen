@@ -150,6 +150,14 @@ module.exports = {
       replacer?: Replacer<'crud'>;
       /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
       generateAutocrud?: boolean;
+      /** An array of parts of resolver names to be excluded from generation. Ie: ["User"] Default: [] */
+      excludeResolversContain?: string[];
+      /** An array of resolver names to be excluded from generation. Ie: ["upsertOneComment"] Default: [] */
+      excludeResolversExact?: string[];
+      /** An array of parts of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+      includeResolversContain?: string[];
+      /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+      includeResolversExact?: string[];
     };
     /** Global config */
     global?: {
@@ -157,6 +165,10 @@ module.exports = {
       replacer?: Replacer;
       /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
       builderImporter?: string;
+      /** Run function before generate */
+      beforeGenerate?: (dmmf: DMMF.Document) => void;
+      /** Run function after generate */
+      afterGenerate?: (dmmf: DMMF.Document) => void;
     };
   }
   ```

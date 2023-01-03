@@ -18,15 +18,18 @@ module.exports = {
     prismaImporter: `import { Prisma } from '.prisma/client';`,
     outputFilePath: './src/schema/__generated__/inputs.ts',
   },
-  // global: {
-  //   replacer: (str, section) => {
-  //     if (section === 'crud.model.resolver') {
-  //       return str.replace(
-  //         "import * as Inputs from '../inputs'",
-  //         "import * as Inputs from '../../inputs';",
-  //       );
-  //     }
-  //     return str;
-  //   },
-  // },
+  global: {
+    // replacer: (str, section) => {
+    //   if (section === 'crud.model.resolver') {
+    //     return str.replace(
+    //       "import * as Inputs from '../inputs'",
+    //       "import * as Inputs from '../../inputs';",
+    //     );
+    //   }
+    //   return str;
+    // },
+    beforeGenerate: (dmmf) => {
+      console.log(dmmf)
+    }
+  },
 };
