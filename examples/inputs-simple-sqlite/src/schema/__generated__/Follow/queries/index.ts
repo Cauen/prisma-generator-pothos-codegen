@@ -1,4 +1,4 @@
-export * from './findFirst.base';
-export * from './findMany.base';
-export * from './count.base';
-export * from './findUnique.base';
+export { findFirstFollowQuery, findFirstFollowQueryObject } from './findFirst.base';
+export { findManyFollowQuery, findManyFollowQueryObject } from './findMany.base';
+export { countFollowQuery, countFollowQueryObject } from './count.base';
+export { findUniqueFollowQuery, findUniqueFollowQueryObject } from './findUnique.base';

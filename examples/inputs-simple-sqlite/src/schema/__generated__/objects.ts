@@ -1,13 +1,3 @@
-export * from './User';
-export * from './Post';
-export * from './ExtraModal';
-export * from './Comment';
-export * from './Profile';
-export * from './Follow';
-export * from './Unrelated';
-export * from './IdOnly';
-export * from './WithoutID';
-export * from './WithScalars';
 
 import { builder } from '../builder';
 import { Prisma } from '.prisma/client';

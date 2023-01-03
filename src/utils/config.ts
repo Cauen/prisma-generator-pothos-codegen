@@ -1,3 +1,4 @@
+import { DMMF } from '@prisma/generator-helper';
 import path from 'path';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
@@ -37,6 +38,16 @@ export interface Config {
     replacer?: Replacer<'crud'>;
     /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
     generateAutocrud?: boolean;
+    /** An array of parts of resolver names to be excluded from generation. Ie: ["User"] Default: [] */
+    excludeResolversContain?: string[];
+    /** An array of resolver names to be excluded from generation. Ie: ["upsertOneComment"] Default: [] */
+    excludeResolversExact?: string[];
+    /** An array of parts of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+    includeResolversContain?: string[];
+    /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
+    includeResolversExact?: string[];
+    /** Caution: This delete the whole folder (Only use if the folder only has auto generated contents). A boolean to delete output dir before generate. Default: False */
+    deleteOutputDirBeforeGenerate?: boolean
   };
   /** Global config */
   global?: {
@@ -44,6 +55,10 @@ export interface Config {
     replacer?: Replacer;
     /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
     builderImporter?: string;
+    /** Run function before generate */
+    beforeGenerate?: (dmmf: DMMF.Document) => void;
+    /** Run function after generate */
+    afterGenerate?: (dmmf: DMMF.Document) => void;
   };
 }
 
@@ -72,10 +87,17 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     outputDir: './generated',
     replacer: (str: string) => str,
     generateAutocrud: true,
+    excludeResolversContain: [],
+    excludeResolversExact: [],
+    includeResolversContain: [],
+    includeResolversExact: [],
+    deleteOutputDirBeforeGenerate: false,
   },
   global: {
     replacer: (str: string) => str,
     builderImporter: '',
+    beforeGenerate: () => {},
+    afterGenerate: () => {},
   },
 });
 

@@ -1,7 +1,14 @@
-import { generateAllCrud, generateAllObjects, generateAllQueries, generateAllMutations } from './__generated__/autocrud';
+import {
+  generateAllCrud,
+  generateAllObjects,
+  generateAllQueries,
+  generateAllMutations,
+} from './__generated__/autocrud';
 import { builder } from './builder';
 
-generateAllCrud()
+generateAllObjects();
+generateAllQueries({ exclude: ['Post'] });
+generateAllMutations({ exclude: ['Post'] });
 
 builder.queryType({});
 builder.mutationType({});

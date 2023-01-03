@@ -1,3 +1,4 @@
+import { PathLike } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { env } from '../env';
@@ -10,6 +11,10 @@ export const debugLog = async (value: string, timestamp = true) => {
     'log.txt',
     `${timestamp ? `${new Date().toISOString()}: ` : ''}${JSON.stringify(value)},\n`,
   );
+};
+
+export const deleteFolder = (path: PathLike) => {
+  return fs.rm(path, { recursive: true, force: true });
 };
 
 /** Replace content before writing to file using the replacers set in the config file */
@@ -29,7 +34,7 @@ export const writeFile = async (
     ].reduce((el, replacer) => replacer(el, section), str);
 
   try {
-    const dir = path.dirname(location)
+    const dir = path.dirname(location);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(location, replace(content), { flag: 'w' });
   } catch (err) {
