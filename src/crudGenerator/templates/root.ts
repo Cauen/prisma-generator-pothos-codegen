@@ -206,55 +206,110 @@ export const autoCrudTemplate = `#{builderImporter}
 #{imports}
 import * as Objects from './objects';
 
-const Cruds = {
+type Model = Objects.Model;
+
+export const Cruds: Record<
+  Objects.Model,
+  {
+    Object: any;
+    queries: Record<string, Function>;
+    mutations: Record<string, Function>;
+  }
+> = {
 #{modelsGenerated}
 };
 
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-const getEntries = <T extends object>(obj: T) => Object.entries(obj) as Entries<T>;
-const crudEntries = getEntries(Cruds);
+const crudEntries = Object.entries(Cruds);
+
+type ResolverType = "Query" | "Mutations";
+function generateResolversByType(type: ResolverType, opts?: CrudOptions) {
+  return crudEntries
+    .filter(([modelName]) => includeModel(modelName, opts))
+    .map(([modelName, config]) => {
+      const resolverEntries = Object.entries(config[type === "Query" ? "queries" : "mutations"]);
+
+      return resolverEntries.map(([operationName, resolverObjectDefiner]) => {
+        const resolverName = operationName + modelName;
+        const isntPrismaFieldList = ["count", "deleteOne", "deleteMany"];
+        const isPrismaField = !isntPrismaFieldList.includes(operationName);
+
+        const getFields = (t: any) => {
+          const field = resolverObjectDefiner(t);
+          const handledField = opts?.handleResolver
+            ? opts.handleResolver({
+                field,
+                modelName: modelName as Model,
+                operationName,
+                resolverName,
+                t,
+                isPrismaField,
+                type,
+              })
+            : field;
+
+          return {
+            [resolverName]: isPrismaField
+              ? t.prismaField(handledField)
+              : t.field(handledField),
+          }
+        }
+
+        return type === "Query"
+          ? builder.queryFields((t) => getFields(t))
+          : builder.mutationFields((t) => getFields(t));
+      });
+    });
+}
 
 export function generateAllObjects(opts?: CrudOptions) {
   return crudEntries
     .filter(([md]) => includeModel(md, opts))
     .map(([modelName, { Object }]) => {
-      return builder.prismaObject(modelName as Model, Object as any); // Objects is all imports
+      return builder.prismaObject(modelName as Model, Object); // Objects is all imports
     });
 }
 
 export function generateAllQueries(opts?: CrudOptions) {
-  return crudEntries
-    .filter(([name, object]) => includeModel(name, opts))
-    .map(([name, { queries }]) => {
-      const queriEntries = getEntries(queries);
-      return queriEntries.map((entry) => builder.queryFields(entry[1]));
-    });
+  generateResolversByType("Query", opts);
 }
 
 export function generateAllMutations(opts?: CrudOptions) {
-  return crudEntries
-    .filter(([name, object]) => includeModel(name, opts))
-    .map(([name, { mutations }]) => {
-      const queriEntries = getEntries(mutations);
-      return queriEntries.map((entry) => builder.mutationFields(entry[1]));
-    });
+  generateResolversByType("Mutations", opts);
 }
 
-type Model = Objects.Model;
+export function generateAllResolvers(opts?: CrudOptions) {
+  generateResolversByType("Mutations", opts);
+  generateResolversByType("Query", opts);
+}
 
-type CrudOptions = { include: Model[], exclude?: never } | { exclude: Model[], include?: never };
-const includeModel = (model: Model, opts?: CrudOptions): boolean => {
+type CrudOptions = {
+  include?: Model[];
+  exclude?: Model[];
+  /**
+   * Caution: This is not type safe
+   * Wrap all queries/mutations to override args, run extra code in resolve function (ie: throw errors, logs), apply plugins, etc.
+   */
+  handleResolver?: (props: {
+    modelName: Model;
+    field: any;
+    operationName: string;
+    resolverName: string;
+    t: any;
+    isPrismaField: boolean;
+    type: ResolverType;
+  }) => any;
+};
+
+const includeModel = (model: string, opts?: CrudOptions): boolean => {
   if (!opts) return true;
-  if (opts.include) return opts.include.includes(model);
-  if (opts.exclude) return !opts.exclude.includes(model);
-  return false;
+  if (opts.include) return opts.include.includes(model as Model);
+  if (opts.exclude) return !opts.exclude.includes(model as Model);
+  return true;
 };
 
 export function generateAllCrud(opts?: CrudOptions) {
   generateAllObjects(opts);
   generateAllQueries(opts);
   generateAllMutations(opts);
-};
+}
 `;
