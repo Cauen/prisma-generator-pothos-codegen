@@ -11,7 +11,16 @@ import * as WithoutID from './WithoutID';
 import * as WithScalars from './WithScalars';
 import * as Objects from './objects';
 
-const Cruds = {
+type Model = Objects.Model;
+
+export const Cruds: Record<
+  Objects.Model,
+  {
+    Object: any;
+    queries: Record<string, Function>;
+    mutations: Record<string, Function>;
+  }
+> = {
   User: {
     Object: User.UserObject,
     queries: {
@@ -24,211 +33,257 @@ const Cruds = {
   Post: {
     Object: Post.PostObject,
     queries: {
-      findFirst: Post.findFirstPostQuery,
-      findMany: Post.findManyPostQuery,
-      count: Post.countPostQuery,
-      findUnique: Post.findUniquePostQuery,
+      findFirst: Post.findFirstPostQueryObject,
+      findMany: Post.findManyPostQueryObject,
+      count: Post.countPostQueryObject,
+      findUnique: Post.findUniquePostQueryObject,
     },
     mutations: {
-      createMany: Post.createManyPostMutation,
-      createOne: Post.createOnePostMutation,
-      deleteMany: Post.deleteManyPostMutation,
-      deleteOne: Post.deleteOnePostMutation,
-      updateMany: Post.updateManyPostMutation,
-      updateOne: Post.updateOnePostMutation,
-      upsertOne: Post.upsertOnePostMutation,
+      createMany: Post.createManyPostMutationObject,
+      createOne: Post.createOnePostMutationObject,
+      deleteMany: Post.deleteManyPostMutationObject,
+      deleteOne: Post.deleteOnePostMutationObject,
+      updateMany: Post.updateManyPostMutationObject,
+      updateOne: Post.updateOnePostMutationObject,
+      upsertOne: Post.upsertOnePostMutationObject,
     },
   },
   ExtraModal: {
     Object: ExtraModal.ExtraModalObject,
     queries: {
-      findFirst: ExtraModal.findFirstExtraModalQuery,
-      findMany: ExtraModal.findManyExtraModalQuery,
-      count: ExtraModal.countExtraModalQuery,
-      findUnique: ExtraModal.findUniqueExtraModalQuery,
+      findFirst: ExtraModal.findFirstExtraModalQueryObject,
+      findMany: ExtraModal.findManyExtraModalQueryObject,
+      count: ExtraModal.countExtraModalQueryObject,
+      findUnique: ExtraModal.findUniqueExtraModalQueryObject,
     },
     mutations: {
-      createMany: ExtraModal.createManyExtraModalMutation,
-      createOne: ExtraModal.createOneExtraModalMutation,
-      deleteMany: ExtraModal.deleteManyExtraModalMutation,
-      deleteOne: ExtraModal.deleteOneExtraModalMutation,
-      updateMany: ExtraModal.updateManyExtraModalMutation,
-      updateOne: ExtraModal.updateOneExtraModalMutation,
-      upsertOne: ExtraModal.upsertOneExtraModalMutation,
+      createMany: ExtraModal.createManyExtraModalMutationObject,
+      createOne: ExtraModal.createOneExtraModalMutationObject,
+      deleteMany: ExtraModal.deleteManyExtraModalMutationObject,
+      deleteOne: ExtraModal.deleteOneExtraModalMutationObject,
+      updateMany: ExtraModal.updateManyExtraModalMutationObject,
+      updateOne: ExtraModal.updateOneExtraModalMutationObject,
+      upsertOne: ExtraModal.upsertOneExtraModalMutationObject,
     },
   },
   Comment: {
     Object: Comment.CommentObject,
     queries: {
-      findFirst: Comment.findFirstCommentQuery,
-      findMany: Comment.findManyCommentQuery,
-      count: Comment.countCommentQuery,
-      findUnique: Comment.findUniqueCommentQuery,
+      findFirst: Comment.findFirstCommentQueryObject,
+      findMany: Comment.findManyCommentQueryObject,
+      count: Comment.countCommentQueryObject,
+      findUnique: Comment.findUniqueCommentQueryObject,
     },
     mutations: {
-      createMany: Comment.createManyCommentMutation,
-      createOne: Comment.createOneCommentMutation,
-      deleteMany: Comment.deleteManyCommentMutation,
-      deleteOne: Comment.deleteOneCommentMutation,
-      updateMany: Comment.updateManyCommentMutation,
-      updateOne: Comment.updateOneCommentMutation,
-      upsertOne: Comment.upsertOneCommentMutation,
+      createMany: Comment.createManyCommentMutationObject,
+      createOne: Comment.createOneCommentMutationObject,
+      deleteMany: Comment.deleteManyCommentMutationObject,
+      deleteOne: Comment.deleteOneCommentMutationObject,
+      updateMany: Comment.updateManyCommentMutationObject,
+      updateOne: Comment.updateOneCommentMutationObject,
+      upsertOne: Comment.upsertOneCommentMutationObject,
     },
   },
   Profile: {
     Object: Profile.ProfileObject,
     queries: {
-      findFirst: Profile.findFirstProfileQuery,
-      findMany: Profile.findManyProfileQuery,
-      count: Profile.countProfileQuery,
-      findUnique: Profile.findUniqueProfileQuery,
+      findFirst: Profile.findFirstProfileQueryObject,
+      findMany: Profile.findManyProfileQueryObject,
+      count: Profile.countProfileQueryObject,
+      findUnique: Profile.findUniqueProfileQueryObject,
     },
     mutations: {
-      createMany: Profile.createManyProfileMutation,
-      createOne: Profile.createOneProfileMutation,
-      deleteMany: Profile.deleteManyProfileMutation,
-      deleteOne: Profile.deleteOneProfileMutation,
-      updateMany: Profile.updateManyProfileMutation,
-      updateOne: Profile.updateOneProfileMutation,
-      upsertOne: Profile.upsertOneProfileMutation,
+      createMany: Profile.createManyProfileMutationObject,
+      createOne: Profile.createOneProfileMutationObject,
+      deleteMany: Profile.deleteManyProfileMutationObject,
+      deleteOne: Profile.deleteOneProfileMutationObject,
+      updateMany: Profile.updateManyProfileMutationObject,
+      updateOne: Profile.updateOneProfileMutationObject,
+      upsertOne: Profile.upsertOneProfileMutationObject,
     },
   },
   Follow: {
     Object: Follow.FollowObject,
     queries: {
-      findFirst: Follow.findFirstFollowQuery,
-      findMany: Follow.findManyFollowQuery,
-      count: Follow.countFollowQuery,
-      findUnique: Follow.findUniqueFollowQuery,
+      findFirst: Follow.findFirstFollowQueryObject,
+      findMany: Follow.findManyFollowQueryObject,
+      count: Follow.countFollowQueryObject,
+      findUnique: Follow.findUniqueFollowQueryObject,
     },
     mutations: {
-      createMany: Follow.createManyFollowMutation,
-      createOne: Follow.createOneFollowMutation,
-      deleteMany: Follow.deleteManyFollowMutation,
-      deleteOne: Follow.deleteOneFollowMutation,
-      updateMany: Follow.updateManyFollowMutation,
-      updateOne: Follow.updateOneFollowMutation,
-      upsertOne: Follow.upsertOneFollowMutation,
+      createMany: Follow.createManyFollowMutationObject,
+      createOne: Follow.createOneFollowMutationObject,
+      deleteMany: Follow.deleteManyFollowMutationObject,
+      deleteOne: Follow.deleteOneFollowMutationObject,
+      updateMany: Follow.updateManyFollowMutationObject,
+      updateOne: Follow.updateOneFollowMutationObject,
+      upsertOne: Follow.upsertOneFollowMutationObject,
     },
   },
   Unrelated: {
     Object: Unrelated.UnrelatedObject,
     queries: {
-      findFirst: Unrelated.findFirstUnrelatedQuery,
-      findMany: Unrelated.findManyUnrelatedQuery,
-      count: Unrelated.countUnrelatedQuery,
-      findUnique: Unrelated.findUniqueUnrelatedQuery,
+      findFirst: Unrelated.findFirstUnrelatedQueryObject,
+      findMany: Unrelated.findManyUnrelatedQueryObject,
+      count: Unrelated.countUnrelatedQueryObject,
+      findUnique: Unrelated.findUniqueUnrelatedQueryObject,
     },
     mutations: {
-      createMany: Unrelated.createManyUnrelatedMutation,
-      createOne: Unrelated.createOneUnrelatedMutation,
-      deleteMany: Unrelated.deleteManyUnrelatedMutation,
-      deleteOne: Unrelated.deleteOneUnrelatedMutation,
-      updateMany: Unrelated.updateManyUnrelatedMutation,
-      updateOne: Unrelated.updateOneUnrelatedMutation,
-      upsertOne: Unrelated.upsertOneUnrelatedMutation,
+      createMany: Unrelated.createManyUnrelatedMutationObject,
+      createOne: Unrelated.createOneUnrelatedMutationObject,
+      deleteMany: Unrelated.deleteManyUnrelatedMutationObject,
+      deleteOne: Unrelated.deleteOneUnrelatedMutationObject,
+      updateMany: Unrelated.updateManyUnrelatedMutationObject,
+      updateOne: Unrelated.updateOneUnrelatedMutationObject,
+      upsertOne: Unrelated.upsertOneUnrelatedMutationObject,
     },
   },
   IdOnly: {
     Object: IdOnly.IdOnlyObject,
     queries: {
-      findFirst: IdOnly.findFirstIdOnlyQuery,
-      findMany: IdOnly.findManyIdOnlyQuery,
-      count: IdOnly.countIdOnlyQuery,
-      findUnique: IdOnly.findUniqueIdOnlyQuery,
+      findFirst: IdOnly.findFirstIdOnlyQueryObject,
+      findMany: IdOnly.findManyIdOnlyQueryObject,
+      count: IdOnly.countIdOnlyQueryObject,
+      findUnique: IdOnly.findUniqueIdOnlyQueryObject,
     },
     mutations: {
-      createMany: IdOnly.createManyIdOnlyMutation,
-      createOne: IdOnly.createOneIdOnlyMutation,
-      deleteMany: IdOnly.deleteManyIdOnlyMutation,
-      deleteOne: IdOnly.deleteOneIdOnlyMutation,
-      updateMany: IdOnly.updateManyIdOnlyMutation,
-      updateOne: IdOnly.updateOneIdOnlyMutation,
-      upsertOne: IdOnly.upsertOneIdOnlyMutation,
+      createMany: IdOnly.createManyIdOnlyMutationObject,
+      createOne: IdOnly.createOneIdOnlyMutationObject,
+      deleteMany: IdOnly.deleteManyIdOnlyMutationObject,
+      deleteOne: IdOnly.deleteOneIdOnlyMutationObject,
+      updateMany: IdOnly.updateManyIdOnlyMutationObject,
+      updateOne: IdOnly.updateOneIdOnlyMutationObject,
+      upsertOne: IdOnly.upsertOneIdOnlyMutationObject,
     },
   },
   WithoutID: {
     Object: WithoutID.WithoutIDObject,
     queries: {
-      findFirst: WithoutID.findFirstWithoutIDQuery,
-      findMany: WithoutID.findManyWithoutIDQuery,
-      count: WithoutID.countWithoutIDQuery,
-      findUnique: WithoutID.findUniqueWithoutIDQuery,
+      findFirst: WithoutID.findFirstWithoutIDQueryObject,
+      findMany: WithoutID.findManyWithoutIDQueryObject,
+      count: WithoutID.countWithoutIDQueryObject,
+      findUnique: WithoutID.findUniqueWithoutIDQueryObject,
     },
     mutations: {
-      createMany: WithoutID.createManyWithoutIDMutation,
-      createOne: WithoutID.createOneWithoutIDMutation,
-      deleteMany: WithoutID.deleteManyWithoutIDMutation,
-      deleteOne: WithoutID.deleteOneWithoutIDMutation,
-      updateMany: WithoutID.updateManyWithoutIDMutation,
-      updateOne: WithoutID.updateOneWithoutIDMutation,
-      upsertOne: WithoutID.upsertOneWithoutIDMutation,
+      createMany: WithoutID.createManyWithoutIDMutationObject,
+      createOne: WithoutID.createOneWithoutIDMutationObject,
+      deleteMany: WithoutID.deleteManyWithoutIDMutationObject,
+      deleteOne: WithoutID.deleteOneWithoutIDMutationObject,
+      updateMany: WithoutID.updateManyWithoutIDMutationObject,
+      updateOne: WithoutID.updateOneWithoutIDMutationObject,
+      upsertOne: WithoutID.upsertOneWithoutIDMutationObject,
     },
   },
   WithScalars: {
     Object: WithScalars.WithScalarsObject,
     queries: {
-      findFirst: WithScalars.findFirstWithScalarsQuery,
-      findMany: WithScalars.findManyWithScalarsQuery,
-      count: WithScalars.countWithScalarsQuery,
-      findUnique: WithScalars.findUniqueWithScalarsQuery,
+      findFirst: WithScalars.findFirstWithScalarsQueryObject,
+      findMany: WithScalars.findManyWithScalarsQueryObject,
+      count: WithScalars.countWithScalarsQueryObject,
+      findUnique: WithScalars.findUniqueWithScalarsQueryObject,
     },
     mutations: {
-      createMany: WithScalars.createManyWithScalarsMutation,
-      createOne: WithScalars.createOneWithScalarsMutation,
-      deleteMany: WithScalars.deleteManyWithScalarsMutation,
-      deleteOne: WithScalars.deleteOneWithScalarsMutation,
-      updateMany: WithScalars.updateManyWithScalarsMutation,
-      updateOne: WithScalars.updateOneWithScalarsMutation,
-      upsertOne: WithScalars.upsertOneWithScalarsMutation,
+      createMany: WithScalars.createManyWithScalarsMutationObject,
+      createOne: WithScalars.createOneWithScalarsMutationObject,
+      deleteMany: WithScalars.deleteManyWithScalarsMutationObject,
+      deleteOne: WithScalars.deleteOneWithScalarsMutationObject,
+      updateMany: WithScalars.updateManyWithScalarsMutationObject,
+      updateOne: WithScalars.updateOneWithScalarsMutationObject,
+      upsertOne: WithScalars.upsertOneWithScalarsMutationObject,
     },
   },
 };
 
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-const getEntries = <T extends object>(obj: T) => Object.entries(obj) as Entries<T>;
-const crudEntries = getEntries(Cruds);
+const crudEntries = Object.entries(Cruds);
+
+type ResolverType = "Query" | "Mutations";
+function generateResolversByType(type: ResolverType, opts?: CrudOptions) {
+  return crudEntries
+    .filter(([modelName]) => includeModel(modelName, opts))
+    .map(([modelName, config]) => {
+      const resolverEntries = Object.entries(config[type === "Query" ? "queries" : "mutations"]);
+
+      return resolverEntries.map(([operationName, resolverObjectDefiner]) => {
+        const resolverName = operationName + modelName;
+        const isntPrismaFieldList = ["count", "deleteOne", "deleteMany"];
+        const isPrismaField = !isntPrismaFieldList.includes(operationName);
+
+        const getFields = (t: any) => {
+          const field = resolverObjectDefiner(t);
+          const handledField = opts?.handleResolver
+            ? opts.handleResolver({
+                field,
+                modelName: modelName as Model,
+                operationName,
+                resolverName,
+                t,
+                isPrismaField,
+                type,
+              })
+            : field;
+
+          return {
+            [resolverName]: isPrismaField
+              ? t.prismaField(handledField)
+              : t.field(handledField),
+          }
+        }
+
+        return type === "Query"
+          ? builder.queryFields((t) => getFields(t))
+          : builder.mutationFields((t) => getFields(t));
+      });
+    });
+}
 
 export function generateAllObjects(opts?: CrudOptions) {
   return crudEntries
     .filter(([md]) => includeModel(md, opts))
     .map(([modelName, { Object }]) => {
-      return builder.prismaObject(modelName as Model, Object as any); // Objects is all imports
+      return builder.prismaObject(modelName as Model, Object); // Objects is all imports
     });
 }
 
 export function generateAllQueries(opts?: CrudOptions) {
-  return crudEntries
-    .filter(([name, object]) => includeModel(name, opts))
-    .map(([name, { queries }]) => {
-      const queriEntries = getEntries(queries);
-      return queriEntries.map((entry) => builder.queryFields(entry[1]));
-    });
+  generateResolversByType("Query", opts);
 }
 
 export function generateAllMutations(opts?: CrudOptions) {
-  return crudEntries
-    .filter(([name, object]) => includeModel(name, opts))
-    .map(([name, { mutations }]) => {
-      const queriEntries = getEntries(mutations);
-      return queriEntries.map((entry) => builder.mutationFields(entry[1]));
-    });
+  generateResolversByType("Mutations", opts);
 }
 
-type Model = Objects.Model;
+export function generateAllResolvers(opts?: CrudOptions) {
+  generateResolversByType("Mutations", opts);
+  generateResolversByType("Query", opts);
+}
 
-type CrudOptions = { include: Model[], exclude?: never } | { exclude: Model[], include?: never };
-const includeModel = (model: Model, opts?: CrudOptions): boolean => {
+type CrudOptions = {
+  include?: Model[];
+  exclude?: Model[];
+  /**
+   * Caution: This is not type safe
+   * Wrap all queries/mutations to override args, run extra code in resolve function (ie: throw errors, logs), apply plugins, etc.
+   */
+  handleResolver?: (props: {
+    modelName: Model;
+    field: any;
+    operationName: string;
+    resolverName: string;
+    t: any;
+    isPrismaField: boolean;
+    type: ResolverType;
+  }) => any;
+};
+
+const includeModel = (model: string, opts?: CrudOptions): boolean => {
   if (!opts) return true;
-  if (opts.include) return opts.include.includes(model);
-  if (opts.exclude) return !opts.exclude.includes(model);
-  return false;
+  if (opts.include) return opts.include.includes(model as Model);
+  if (opts.exclude) return !opts.exclude.includes(model as Model);
+  return true;
 };
 
 export function generateAllCrud(opts?: CrudOptions) {
   generateAllObjects(opts);
   generateAllQueries(opts);
   generateAllMutations(opts);
-};
+}

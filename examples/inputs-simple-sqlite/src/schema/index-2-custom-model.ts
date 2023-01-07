@@ -3,9 +3,9 @@ import {
   generateAllObjects,
   generateAllQueries,
   generateAllMutations,
-} from './autocrud';
-import { ExtraModalObject } from './ExtraModal/object.base';
+} from './__generated__/autocrud';
 import { builder } from './builder';
+import { ExtraModalObject } from './__generated__/ExtraModal';
 
 type Options = Parameters<typeof generateAllCrud>[0];
 const options: Options = { exclude: ['ExtraModal'] };
