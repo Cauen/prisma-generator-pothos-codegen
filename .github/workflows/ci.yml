@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        prisma-version: [4.7.0, 4.8.0, latest]
+        prisma-version: [4.7.0, 4.8.0]
         node-version: [16, 18]
 
     name: Node ${{ matrix.node_version }} with Prisma ${{ matrix.prisma-version }}
@@ -35,8 +35,9 @@ jobs:
           cache: "yarn"
 
       - name: 🏗 Swap Prisma version to ~${{ matrix.prisma-version }}
+        shell: cmd
         run: |
-          sed -i -E 's|"prisma": ".*"|"prisma": "~"${{ matrix.prisma-version }}"|g' package.json
+          sed -i -E 's|"prisma": ".*"|"prisma": "~${{ matrix.prisma-version }}"|g' package.json
           sed -i -E 's|"\@prisma/client": ".*"|"\@prisma/client": "~${{ matrix.prisma-version }}"|g' package.json
           sed -i -E 's|"\@prisma/generator-helper": ".*"|"\@prisma/generator-helper": "~${{ matrix.prisma-version }}"|g' package.json
           sed -i -E 's|"\@prisma/internals": ".*"|"\@prisma/internals": "~${{ matrix.prisma-version }}"|g' package.json
