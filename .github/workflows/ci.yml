@@ -35,7 +35,6 @@ jobs:
           cache: "yarn"
 
       - name: 🏗 Swap Prisma version to ~${{ matrix.prisma-version }}
-        shell: cmd
         run: |
           sed -i -E 's|"prisma": ".*"|"prisma": "~${{ matrix.prisma-version }}"|g' package.json
           sed -i -E 's|"\@prisma/client": ".*"|"\@prisma/client": "~${{ matrix.prisma-version }}"|g' package.json
