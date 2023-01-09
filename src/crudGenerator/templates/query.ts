@@ -2,7 +2,7 @@ import { useTemplate } from '../../utils/template';
 import { makeResolver } from './resolver';
 
 const queryNames = ['findFirst', 'findMany', 'count', 'findUnique'] as const;
-type OperationOptions = typeof queryNames[number];
+type OperationOptions = (typeof queryNames)[number];
 
 const makeQuery = (
   operation: OperationOptions,
