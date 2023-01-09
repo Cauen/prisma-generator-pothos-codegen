@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { DMMF } from '@prisma/generator-helper';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
@@ -69,6 +69,33 @@ export type ConfigInternal = {
   global: NonNullable<Required<Config['global']>>;
 };
 
+/** Parses the configuration file path */
+export const getConfigPath = ({
+  generatorConfigPath,
+  schemaPath,
+}: {
+  generatorConfigPath?: string;
+  schemaPath: string;
+}): string | undefined => {
+  const envConfigPath = process.env.POTHOS_CRUD_CONFIG_PATH;
+  const configPath = envConfigPath || generatorConfigPath; // use env var if set
+
+  if (!configPath) return undefined;
+
+  const schemaDirName = path.dirname(schemaPath);
+  const optionsPath = path.join(schemaDirName, configPath);
+
+  return optionsPath;
+};
+
+/** Parses the configuration file based on the provided schema and config paths */
+export const parseConfig = async (configPath: string): Promise<Config> => {
+  const importedFile = await import(configPath); // throw error if dont exist
+  const { crud, global, inputs }: Config = importedFile || {};
+
+  return { crud, global, inputs };
+};
+
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
   inputs: {
     prismaImporter: `import { Prisma } from '.prisma/client';`,
@@ -109,25 +136,17 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
 export const getConfig = async (
   extendedGeneratorOptions: ExtendedGeneratorOptions,
 ): Promise<ConfigInternal> => {
-  // Getting configs from file (if file not set, get default. If set and dont exist, throw error.)
-  const { global, inputs, crud } = await (async (): Promise<Config> => {
-    const { generatorConfigPath } = extendedGeneratorOptions;
-    const defaultOptions = { inputs: undefined, crud: undefined, global: undefined };
-    if (!generatorConfigPath) return defaultOptions;
+  const { generatorConfigPath, schemaPath } = extendedGeneratorOptions;
+  const configPath = getConfigPath({ generatorConfigPath, schemaPath });
 
-    const schemaDirName = path.dirname(extendedGeneratorOptions.schemaPath);
-    const optionsPath = path.join(schemaDirName, generatorConfigPath);
-    const importedFile = await import(optionsPath); // throw error if dont exist
-    const { inputs, crud, global }: Config = importedFile || {};
-    return { inputs, crud, global };
-  })();
+  if (!configPath) return getDefaultConfig();
 
+  const { inputs, crud, global } = await parseConfig(configPath);
   const defaultConfig = getDefaultConfig(global);
-  const internalConfig: ConfigInternal = {
+
+  return {
     inputs: { ...defaultConfig.inputs, ...inputs },
     crud: { ...defaultConfig.crud, ...crud },
     global: { ...defaultConfig.global, ...global },
-  };
-
-  return internalConfig;
+  } satisfies ConfigInternal;
 };
