@@ -10,7 +10,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   if (config.crud.disabled) return;
 
   if (config.crud.deleteOutputDirBeforeGenerate)
-    await deleteFolder(path.join(config.crud.outputDir))
+    await deleteFolder(path.join(config.crud.outputDir));
 
   const modelNames = dmmf.datamodel.models.map((model) => model.name);
 
@@ -56,13 +56,23 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
       const queries =
         models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'queries') ||
         [];
-      return `{\n${queries.map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}QueryObject,`).join("\n")}\n    }`
+      return `{\n${queries
+        .map(
+          (el) =>
+            `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}QueryObject,`,
+        )
+        .join('\n')}\n    }`;
     })()},
     mutations: ${(() => {
       const mutations =
         models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'mutations') ||
         [];
-      return `{\n${mutations.map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}MutationObject,`).join("\n")}\n    }`
+      return `{\n${mutations
+        .map(
+          (el) =>
+            `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}MutationObject,`,
+        )
+        .join('\n')}\n    }`;
     })()},
   },`;
       })

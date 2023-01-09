@@ -1,5 +1,5 @@
-import { DMMF } from '@prisma/generator-helper';
 import path from 'path';
+import { DMMF } from '@prisma/generator-helper';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
 
@@ -47,7 +47,7 @@ export interface Config {
     /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
     includeResolversExact?: string[];
     /** Caution: This delete the whole folder (Only use if the folder only has auto generated contents). A boolean to delete output dir before generate. Default: False */
-    deleteOutputDirBeforeGenerate?: boolean
+    deleteOutputDirBeforeGenerate?: boolean;
   };
   /** Global config */
   global?: {
@@ -96,8 +96,12 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   global: {
     replacer: (str: string) => str,
     builderImporter: '',
-    beforeGenerate: () => {},
-    afterGenerate: () => {},
+    beforeGenerate: () => {
+      // noop
+    },
+    afterGenerate: () => {
+      // noop
+    },
   },
 });
 
