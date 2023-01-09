@@ -19,7 +19,7 @@ jobs:
         prisma-version: [4.7.0, 4.8.0]
         node-version: [16, 18]
 
-    name: Node ${{ matrix.node_version }} with Prisma ${{ matrix.prisma-version }}
+    name: Node ${{ matrix.node-version }} with Prisma ${{ matrix.prisma-version }}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -31,7 +31,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          prisma-version: ${{ matrix.prisma-version }}
           cache: "yarn"
 
       - name: 🏗 Swap Prisma version to ~${{ matrix.prisma-version }}
