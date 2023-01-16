@@ -221,7 +221,7 @@ export const Cruds: Record<
 
 const crudEntries = Object.entries(Cruds);
 
-type ResolverType = "Query" | "Mutations";
+type ResolverType = "Query" | "Mutation";
 function generateResolversByType(type: ResolverType, opts?: CrudOptions) {
   return crudEntries
     .filter(([modelName]) => includeModel(modelName, opts))
@@ -230,7 +230,7 @@ function generateResolversByType(type: ResolverType, opts?: CrudOptions) {
 
       return resolverEntries.map(([operationName, resolverObjectDefiner]) => {
         const resolverName = operationName + modelName;
-        const isntPrismaFieldList = ["count", "deleteOne", "deleteMany"];
+        const isntPrismaFieldList = ["count", "deleteMany"];
         const isPrismaField = !isntPrismaFieldList.includes(operationName);
 
         const getFields = (t: any) => {
@@ -274,11 +274,11 @@ export function generateAllQueries(opts?: CrudOptions) {
 }
 
 export function generateAllMutations(opts?: CrudOptions) {
-  generateResolversByType("Mutations", opts);
+  generateResolversByType("Mutation", opts);
 }
 
 export function generateAllResolvers(opts?: CrudOptions) {
-  generateResolversByType("Mutations", opts);
+  generateResolversByType("Mutation", opts);
   generateResolversByType("Query", opts);
 }
 
