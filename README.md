@@ -68,6 +68,8 @@ generator pothos {
 generator pothosCrud {
   provider = "prisma-generator-pothos-codegen"
   generatorConfigPath = "./pothos.config.js"
+  // You may also set the `generatorConfigPath` via the `POTHOS_CRUD_CONFIG_PATH` environment variable.
+  // The environment variable will override the path hardcoded here.
 }
 
 /// This is a user!

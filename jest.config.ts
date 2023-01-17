@@ -17,16 +17,16 @@ export default {
     "**/__tests__/**/*.[jt]s?(x)",
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
-  "moduleNameMapper": {
+  moduleNameMapper: {
     "@/(.*)": "<rootDir>/src/$1"
   },
   preset: 'ts-jest',
-  "globals": {
+  globals: {
     "ts-jest": {
       diagnostics: { pathRegex: /\.(spec|test)\.js$/ },
       isolatedModules: true,
       tsconfig: 'tsconfig.json',
     }
   },
-  "testEnvironment": "node",
+  testEnvironment: "node",
 };
