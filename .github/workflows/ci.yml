@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    types: [opened, synchronize]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        prisma-version: [4.7.0, 4.8.0]
+        node-version: [16, 18]
+
+    name: Node ${{ matrix.node-version }} with Prisma ${{ matrix.prisma-version }}
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: 🏗 Swap Prisma version to ~${{ matrix.prisma-version }}
+        run: |
+          sed -i -E 's|"prisma": ".*"|"prisma": "~${{ matrix.prisma-version }}"|g' package.json
+          sed -i -E 's|"\@prisma/client": ".*"|"\@prisma/client": "~${{ matrix.prisma-version }}"|g' package.json
+          sed -i -E 's|"\@prisma/generator-helper": ".*"|"\@prisma/generator-helper": "~${{ matrix.prisma-version }}"|g' package.json
+          sed -i -E 's|"\@prisma/internals": ".*"|"\@prisma/internals": "~${{ matrix.prisma-version }}"|g' package.json
+
+      - name: 📥 Install dependencies
+        run: yarn install
+
+      - name: 🧪 Run tests
+        run: yarn test
+
