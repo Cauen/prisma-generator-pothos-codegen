@@ -41,18 +41,26 @@ export const getObjectFieldsString = (
       // Relation
       if (relationName) {
         fields.push(`${name}: t.relation('${name}', ${obj}${isList ? '(t)' : ''}),`);
-        if (isList) exportFields.push(useTemplate(listRelationObjectTemplate, { ...templateOpts, typeUpper: firstLetterUpperCase(templateOpts.type) }));
+        if (isList)
+          exportFields.push(
+            useTemplate(listRelationObjectTemplate, {
+              ...templateOpts,
+              typeUpper: firstLetterUpperCase(templateOpts.type),
+            }),
+          );
         else exportFields.push(useTemplate(relationObjectTemplate, templateOpts));
         return { fields, exportFields };
       }
 
       // Scalar (DateTime, Json, Enums, etc.)
       fields.push(`${name}: t.field(${obj}),`);
-      exportFields.push(useTemplate(fieldObjectTemplate, { 
-        ...templateOpts,
-        bracketOptionalOpening: isList ? "[" : "", 
-        bracketOptionalClosing: isList ? "]" : "", 
-      }));
+      exportFields.push(
+        useTemplate(fieldObjectTemplate, {
+          ...templateOpts,
+          bracketOptionalOpening: isList ? '[' : '',
+          bracketOptionalClosing: isList ? ']' : '',
+        }),
+      );
       return { fields, exportFields };
     },
     { fields: [] as string[], exportFields: [] as string[] },

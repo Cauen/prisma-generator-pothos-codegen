@@ -45,7 +45,7 @@ export async function writeIndex(
   // TODO Refactor this logic + tests
   const exports = exportsWithName
     .filter((el) => el.exports.length)
-    .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from '${el.name}';`)
+    .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from '${el.name}';`);
   const outputPath = path.join(config.crud.outputDir, model.name, 'index.ts');
   await writeFile(config, 'crud.model.index', exports.join('\n') + '\n', outputPath);
 }
