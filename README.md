@@ -217,6 +217,22 @@ model User {
 }
 ```
 
+You can also augment/derive new inputs from the generated `inputs.ts` file.
+
+```ts
+import { Prisma } from '.prisma/client';
+import { UserUpdateInputFields } from '@graphql/__generated__/inputs'; // import function that define input fields.
+
+// Note: you can't use `builder.inputType` function to generate this new input, once we export the function without types.
+// Your input will be typesafe because types are linked to the input itself
+export const UserUpdateInputCustom = builder.inputRef<Prisma.UserUpdateInput & { customArg: string }>('UserUpdateInputCustom').implement({
+  fields: (t) => ({
+    ...UserUpdateInputFields(t),
+    customArg: t.field({ "required": true, "type": "String" }), // custom
+  }),
+});
+```
+
 ### Objects
 
 ```ts

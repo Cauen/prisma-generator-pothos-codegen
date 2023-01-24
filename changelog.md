@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.3
+
+- [x] Changed: Augment/derive generated input types
+
 # 0.5.2
 
 - [x] Changed: Fixed autocrud generating buggy deleteOne mutations #24

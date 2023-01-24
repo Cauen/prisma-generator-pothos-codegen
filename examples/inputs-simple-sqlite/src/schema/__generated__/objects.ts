@@ -1,6 +1,6 @@
 
 import { builder } from '../builder';
-import { Prisma } from '.prisma/client';
+import { Prisma } from '@prisma/client';
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
   description: 'Batch payloads from prisma.',
