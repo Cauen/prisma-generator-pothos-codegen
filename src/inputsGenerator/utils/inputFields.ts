@@ -54,7 +54,7 @@ export const getInputFieldsString = (input: DMMF.InputType, model?: DMMF.Model):
           return `${field.name}: t.${isScalar ? getScalar() : getField()},`;
         });
 
-  const sep = '\n    ';
+  const sep = '\n  ';
   return `${fields.join(sep)}${omittedNames.length > 0 ? sep : ''}${omittedNames
     .map((name) => `// '${name}' was omitted by @Pothos.omit found in schema comment`)
     .join(sep)}`;
