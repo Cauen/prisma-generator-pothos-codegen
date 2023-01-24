@@ -16,7 +16,7 @@ module.exports = {
   },
   inputs: {
     builderImporter: "import { builder } from '../builder';",
-    prismaImporter: `import { Prisma } from '.prisma/client';`,
+    prismaImporter: `import { Prisma } from '@prisma/client';`,
     outputFilePath: './src/schema/__generated__/inputs.ts',
   },
   global: {
