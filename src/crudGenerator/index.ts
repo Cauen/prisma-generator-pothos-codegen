@@ -23,12 +23,15 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   );
 
   // Generate root objects.ts file (export all models + prisma objects)
+  const exports = dmmf.datamodel.models
+    .map((model) => `export * from './${model.name}';`)
+    .join('\n');
   const modelNamesEachLine = modelNames.map((model) => `'${model}',`).join('\n  ');
 
   await writeFile(
     config,
     'crud.objects',
-    useTemplate(objectsTemplate, { ...config.crud, modelNames: modelNamesEachLine }),
+    useTemplate(objectsTemplate, { exports, ...config.crud, modelNames: modelNamesEachLine }),
     path.join(config.crud.outputDir, 'objects.ts'),
   );
 

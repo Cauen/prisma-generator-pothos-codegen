@@ -7,6 +7,8 @@ import { Replacer } from './replacer';
 export interface Config {
   /** Input type generation config */
   inputs?: {
+    /** Create simpler inputs for easier customization and ~65% less generated code. Default: `false` */
+    simple?: boolean;
     /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
     prismaImporter?: string;
     /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
@@ -98,6 +100,7 @@ export const parseConfig = async (configPath: string): Promise<Config> => {
 
 export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
   inputs: {
+    simple: false,
     prismaImporter: `import { Prisma } from '.prisma/client';`,
     builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     outputFilePath: './generated/inputs.ts',

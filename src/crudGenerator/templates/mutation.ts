@@ -9,7 +9,7 @@ const mutationNames = [
   'updateOne',
   'upsertOne',
 ];
-type OperationOptions = (typeof mutationNames)[number];
+type OperationOptions = typeof mutationNames[number];
 
 const makeMutation = (
   operation: OperationOptions,

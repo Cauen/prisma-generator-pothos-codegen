@@ -43,7 +43,7 @@ export async function generateInputs(config: ConfigInternal, dmmf: DMMF.Document
   const imports = getImports(config);
   const scalars = getScalars(config, dmmf);
   const enums = getEnums(dmmf);
-  const inputs = getInputs(dmmf);
+  const inputs = getInputs(config, dmmf);
   const content = [imports, scalars, enums, inputs].join('\n\n');
 
   await writeFile(config, 'inputs', content, config.inputs.outputFilePath);

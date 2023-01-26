@@ -1,4 +1,5 @@
-export const objectsTemplate = `
+export const objectsTemplate = `#{exports}
+
 #{builderImporter}
 #{prismaImporter}
 
