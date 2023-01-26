@@ -48,6 +48,8 @@ export interface Config {
     includeResolversExact?: string[];
     /** Caution: This delete the whole folder (Only use if the folder only has auto generated contents). A boolean to delete output dir before generate. Default: False */
     deleteOutputDirBeforeGenerate?: boolean;
+    /** Export all crud queries/mutations/objects in objects.ts at root dir. Default: true */
+    exportEverythingInObjectsDotTs?: boolean;
   };
   /** Global config */
   global?: {
@@ -119,6 +121,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     includeResolversContain: [],
     includeResolversExact: [],
     deleteOutputDirBeforeGenerate: false,
+    exportEverythingInObjectsDotTs: true,
   },
   global: {
     replacer: (str: string) => str,

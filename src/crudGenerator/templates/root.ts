@@ -1,6 +1,6 @@
 export const objectsTemplate = `
 #{builderImporter}
-#{prismaImporter}
+#{prismaImporter}#{crudExportRoot}
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
   description: 'Batch payloads from prisma.',
