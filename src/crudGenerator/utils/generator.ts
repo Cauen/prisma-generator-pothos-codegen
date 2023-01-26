@@ -11,14 +11,14 @@ export async function generateModel(
   config: ConfigInternal,
   dmmf: DMMF.Document,
   modelName: string,
-): Promise<GeneratedResolver[]> {
+): Promise<{ resolvers: GeneratedResolver[]; index: Awaited<ReturnType<typeof writeIndex>> }> {
   const model = dmmf.datamodel.models.find((m) => m.name === modelName);
-  if (!model) return [];
+  if (!model) return { index: [], resolvers: [] };
 
   await writeObject(config, model);
   const queries = await writeResolvers(config, model, 'queries', QueryTemplates);
   const mutations = await writeResolvers(config, model, 'mutations', MutationTemplates);
-  await writeIndex(config, model, { queries, mutations });
+  const index = await writeIndex(config, model, { queries, mutations });
 
-  return [...queries, ...mutations];
+  return { resolvers: [...queries, ...mutations], index };
 }

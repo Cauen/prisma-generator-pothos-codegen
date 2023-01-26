@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.4
+
+- [x] Changed: Objects now exports everything from CRUD, optionally disable on crud options.
+
 # 0.5.3
 
 - [x] Changed: Augment/derive generated input types

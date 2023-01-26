@@ -16,7 +16,7 @@ export async function writeIndex(
   config: ConfigInternal,
   model: DMMF.Model,
   { queries, mutations }: { queries: GeneratedResolver[]; mutations: GeneratedResolver[] },
-): Promise<void> {
+) {
   const queriesExports = queries.map(
     (el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`,
   );
@@ -47,7 +47,9 @@ export async function writeIndex(
     .filter((el) => el.exports.length)
     .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from '${el.name}';`);
   const outputPath = path.join(config.crud.outputDir, model.name, 'index.ts');
-  await writeFile(config, 'crud.model.index', exports.join('\n') + '\n', outputPath);
+  const content = exports.join('\n') + '\n';
+  await writeFile(config, 'crud.model.index', content, outputPath);
+  return exportsWithName;
 }
 
 /** Write object.base.ts */

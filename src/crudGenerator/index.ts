@@ -15,20 +15,35 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   const modelNames = dmmf.datamodel.models.map((model) => model.name);
 
   // Generate CRUD directories (e.g. User, Comment, ...)
-  const models = await Promise.all(
+  const generatedModels = await Promise.all(
     modelNames.map(async (model) => {
       const generated = await generateModel(config, dmmf, model);
       return { model, generated };
     }),
   );
+  const exportAllInObjects = generatedModels
+    .map((el) => {
+      return {
+        model: el.model,
+        exports: el.generated.index.map((el) => el.exports).flat(),
+      };
+    })
+    .filter((el) => Boolean(el.exports.length));
 
   // Generate root objects.ts file (export all models + prisma objects)
   const modelNamesEachLine = modelNames.map((model) => `'${model}',`).join('\n  ');
-
   await writeFile(
     config,
     'crud.objects',
-    useTemplate(objectsTemplate, { ...config.crud, modelNames: modelNamesEachLine }),
+    useTemplate(objectsTemplate, {
+      crudExportRoot: config.crud.exportEverythingInObjectsDotTs
+        ? `\n${exportAllInObjects
+            .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from './${el.model}';`)
+            .join('\n')}`
+        : '',
+      ...config.crud,
+      modelNames: modelNamesEachLine,
+    }),
     path.join(config.crud.outputDir, 'objects.ts'),
   );
 
@@ -46,6 +61,10 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     const imports = dmmf.datamodel.models
       .map((model) => `import * as ${model.name} from './${model.name}';`)
       .join('\n');
+    const models = generatedModels.map((el) => ({
+      model: el.model,
+      generated: el.generated.resolvers,
+    }));
 
     const modelsGenerated = dmmf.datamodel.models
       .map((model) => {

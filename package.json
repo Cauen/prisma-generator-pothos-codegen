@@ -69,6 +69,7 @@
   "dependencies": {
     "@prisma/generator-helper": "4.3.0",
     "@prisma/internals": "4.3.0",
+    "rimraf": "^4.1.2",
     "tokenizr": "1.6.7"
   }
 }
