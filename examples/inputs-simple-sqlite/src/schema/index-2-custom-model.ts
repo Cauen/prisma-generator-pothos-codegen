@@ -6,6 +6,8 @@ import {
 } from './__generated__/autocrud';
 import { builder } from './builder';
 import { ExtraModalObject } from './__generated__/ExtraModal';
+import { Prisma } from '@prisma/client';
+import { UserUpdateInputFields } from './__generated__/inputs';
 
 type Options = Parameters<typeof generateAllCrud>[0];
 const options: Options = { exclude: ['ExtraModal'] };

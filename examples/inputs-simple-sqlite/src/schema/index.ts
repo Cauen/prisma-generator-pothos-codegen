@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import {
   generateAllCrud,
   generateAllObjects,
@@ -5,6 +6,14 @@ import {
   generateAllMutations,
 } from './__generated__/autocrud';
 import { builder } from './builder';
+import { UserUpdateInputFields } from './__generated__/inputs';
+
+export const UserUpdateInputCustom = builder.inputRef<Prisma.UserUpdateInput & { customArg: string }>('UserUpdateInputCustom').implement({
+  fields: (t) => ({
+    ...UserUpdateInputFields(t),
+    customArg: t.field({ "required": true, "type": "String" }), // custom
+  }),
+});
 
 generateAllObjects();
 generateAllQueries({ exclude: ['Post'] });

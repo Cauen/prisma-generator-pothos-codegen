@@ -13,6 +13,8 @@ module.exports = {
     builderImporter: "import { builder } from '../builder';",
     // inputsImporter: "import * as Inputs from '@/schema/inputs'",
     deleteOutputDirBeforeGenerate: true,
+    exportEverythingInObjectsDotTs: true,
+    prismaImporter: `import { Prisma } from '@prisma/client';`,
   },
   inputs: {
     builderImporter: "import { builder } from '../builder';",
