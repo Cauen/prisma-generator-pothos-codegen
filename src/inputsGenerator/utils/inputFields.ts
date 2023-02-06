@@ -36,11 +36,14 @@ export const getInputFieldsString = (
     if (!modelField || !modelField.documentation) return true;
 
     const omitTypes = parseComment(modelField.documentation);
+
     if (!omitTypes) return true;
     if (
       omitTypes === 'all' ||
-      omitTypes.some((omitType) =>
-        input.name.startsWith(model?.name + firstLetterUpperCase(omitType)),
+      omitTypes.some(
+        (omitType) =>
+          input.name.startsWith(`${model?.name}${firstLetterUpperCase(omitType)}`) ||
+          input.name.startsWith(`${model?.name}Unchecked${firstLetterUpperCase(omitType)}`),
       )
     ) {
       omitted.push({ name: field.name, reason: '@Pothos.omit found in schema comment' });
