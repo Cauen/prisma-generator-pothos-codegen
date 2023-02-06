@@ -18,7 +18,6 @@ On `prisma generate` we create:
   - [Examples](#examples)
 - [Usage](#usage)
 - [Disclosures](#disclosures)
-  - [Tested environments](#tested-environments)
   - [Models with only relations](#models-with-only-relations)
   - [BigInt rename](#bigint-rename)
 
@@ -116,7 +115,7 @@ module.exports = {
 
 <details>
   <summary>Click to see all configuration options</summary>
-  
+
   ```ts
   {
     /** Input type generation config */
