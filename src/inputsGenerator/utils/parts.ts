@@ -32,6 +32,18 @@ export const getScalars = ({ inputs: { excludeScalars } }: ConfigInternal, dmmf:
   ].join('\n\n');
 };
 
+export const getUtil = () => `type PrismaUpdateOperationsInputFilter<T extends object> = {
+  [K in keyof T]: Prisma.StringFieldUpdateOperationsInput extends T[K]
+    ? Prisma.StringFieldUpdateOperationsInput
+    : Prisma.DateTimeFieldUpdateOperationsInput extends T[K]
+    ? Prisma.DateTimeFieldUpdateOperationsInput
+    : Prisma.IntFieldUpdateOperationsInput extends T[K]
+    ? Prisma.IntFieldUpdateOperationsInput
+    : Prisma.BoolFieldUpdateOperationsInput extends T[K]
+    ? Prisma.BoolFieldUpdateOperationsInput
+    : T[K];
+};`;
+
 const makeInputs = (
   config: ConfigInternal,
   dmmf: DMMF.Document,
