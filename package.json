@@ -29,8 +29,8 @@
     "build": "tsc",
     "tscheck": "tsc -noEmit",
     "prebuild": "yarn clean",
-    "postbuild": "copyfiles ./README.md ./dist",
-    "clean": "rimraf dist",
+    "postbuild": "shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
+    "clean": "shx rm -rf dist",
     "pub": "cd dist && npm publish",
     "format": "eslint --fix ./src"
   },
@@ -53,7 +53,6 @@
     "@types/node": "18.7.14",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
-    "copyfiles": "2.4.1",
     "eslint": "8.31.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-import": "2.26.0",
@@ -62,6 +61,7 @@
     "jest": "<29.0.0",
     "prettier": "2.8.2",
     "prisma": "4.7.0",
+    "shx": "0.3.4",
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
     "typescript": "4.9.4"
@@ -69,7 +69,6 @@
   "dependencies": {
     "@prisma/generator-helper": "4.3.0",
     "@prisma/internals": "4.3.0",
-    "rimraf": "^4.1.2",
     "tokenizr": "1.6.7"
   }
 }
