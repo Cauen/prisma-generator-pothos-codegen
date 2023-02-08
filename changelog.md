@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.5.5
+
+- [x] Added: Add simple mode to input generator #30
+- [x] Changed: Add modify permission step after build #34
+
 # 0.5.4
 
 - [x] Changed: Objects now exports everything from CRUD, optionally disable on crud options.
