@@ -2,7 +2,7 @@ import { DMMF } from '@prisma/generator-helper';
 import { env } from '../env';
 import { ConfigInternal } from '../utils/config';
 import { writeFile } from '../utils/filesystem';
-import { getEnums, getImports, getScalars, getInputs } from './utils/parts';
+import { getEnums, getImports, getScalars, getInputs, getUtil } from './utils/parts';
 
 /** Types may vary between Prisma versions */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,10 +41,11 @@ export async function generateInputs(config: ConfigInternal, dmmf: DMMF.Document
     await writeFile(config, 'debug.dmmf', JSON.stringify(dmmf, null, 2), 'dmmf.json');
 
   const imports = getImports(config);
+  const util = getUtil();
   const scalars = getScalars(config, dmmf);
   const enums = getEnums(dmmf);
-  const inputs = getInputs(dmmf);
-  const content = [imports, scalars, enums, inputs].join('\n\n');
+  const inputs = getInputs(config, dmmf);
+  const content = [imports, util, scalars, enums, inputs].join('\n\n');
 
   await writeFile(config, 'inputs', content, config.inputs.outputFilePath);
 }

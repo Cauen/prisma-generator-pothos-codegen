@@ -4,25 +4,52 @@ import { getMainInput } from './dmmf';
 import { parseComment } from './parser';
 
 /** Convert array of fields to a string code representation */
-export const getInputFieldsString = (input: DMMF.InputType, model?: DMMF.Model): string => {
-  const omittedNames: string[] = [];
+export const getInputFieldsString = (
+  input: DMMF.InputType,
+  model?: DMMF.Model,
+  simple?: boolean,
+): string => {
+  const omitted: { name: string; reason: string }[] = [];
 
-  // Description is parsed for @Pothos.omit() comments and input fields are filtered
   const filtered = input.fields.filter((field) => {
+    // Fields are filtered for simple mode if this is enabled
+    if (
+      simple &&
+      [
+        'create',
+        'connectOrCreate',
+        'createMany',
+        'upsert',
+        'update',
+        'updateMany',
+        'delete',
+        'deleteMany',
+      ].includes(field.name)
+    ) {
+      omitted.push({ name: field.name, reason: '`simple mode: true` found in global config' });
+      return false;
+    }
+
+    // Description is parsed for @Pothos.omit() comments and input fields are filtered
     const modelField = model?.fields.find((f) => f.name === field.name);
+
     if (!modelField || !modelField.documentation) return true;
 
     const omitTypes = parseComment(modelField.documentation);
+
     if (!omitTypes) return true;
     if (
       omitTypes === 'all' ||
-      omitTypes.some((omitType) =>
-        input.name.startsWith(model?.name + firstLetterUpperCase(omitType)),
+      omitTypes.some(
+        (omitType) =>
+          input.name.startsWith(`${model?.name}${firstLetterUpperCase(omitType)}`) ||
+          input.name.startsWith(`${model?.name}Unchecked${firstLetterUpperCase(omitType)}`),
       )
     ) {
-      omittedNames.push(field.name);
+      omitted.push({ name: field.name, reason: '@Pothos.omit found in schema comment' });
       return false;
     }
+
     return true;
   });
 
@@ -51,11 +78,12 @@ export const getInputFieldsString = (input: DMMF.InputType, model?: DMMF.Model):
 
           const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
           const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
+
           return `${field.name}: t.${isScalar ? getScalar() : getField()},`;
         });
 
   const sep = '\n  ';
-  return `${fields.join(sep)}${omittedNames.length > 0 ? sep : ''}${omittedNames
-    .map((name) => `// '${name}' was omitted by @Pothos.omit found in schema comment`)
+  return `${fields.join(sep)}${omitted.length > 0 ? sep : ''}${omitted
+    .map((o) => `// '${o.name}' was omitted due to ${o.reason}`)
     .join(sep)}`;
 };

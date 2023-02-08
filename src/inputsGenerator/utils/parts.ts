@@ -32,39 +32,114 @@ export const getScalars = ({ inputs: { excludeScalars } }: ConfigInternal, dmmf:
   ].join('\n\n');
 };
 
-export const getInputs = (dmmf: DMMF.Document) => {
-  return (
-    dmmf.schema.inputObjectTypes.prisma
-      // TODO make the generation of unchecked inputs configurable?
-      // "Unchecked" inputs (that can be created using just an ID) are filtered out
-      .filter(({ name }) => !name.includes('Unchecked'))
-      .map((input) => {
-        const model = dmmf.datamodel.models.find(({ name }) =>
-          // TODO check if all of these are necessary + if this is exhaustive
-          [
+export const getUtil = () => `type Filters = {
+  string: Prisma.StringFieldUpdateOperationsInput;
+  nullableString: Prisma.NullableStringFieldUpdateOperationsInput;
+  dateTime: Prisma.DateTimeFieldUpdateOperationsInput;
+  nullableDateTime: Prisma.NullableDateTimeFieldUpdateOperationsInput;
+  int: Prisma.IntFieldUpdateOperationsInput;
+  nullableInt: Prisma.NullableIntFieldUpdateOperationsInput;
+  bool: Prisma.BoolFieldUpdateOperationsInput;
+  nullableBool: Prisma.NullableBoolFieldUpdateOperationsInput;
+  bigInt: Prisma.BigIntFieldUpdateOperationsInput;
+  nullableBigInt: Prisma.NullableBigIntFieldUpdateOperationsInput;
+  bytes: Prisma.BytesFieldUpdateOperationsInput;
+  nullableBytes: Prisma.NullableBytesFieldUpdateOperationsInput;
+  float: Prisma.FloatFieldUpdateOperationsInput;
+  nullableFloat: Prisma.NullableFloatFieldUpdateOperationsInput;
+  decimal: Prisma.DecimalFieldUpdateOperationsInput;
+  nullableDecimal: Prisma.NullableDecimalFieldUpdateOperationsInput;
+};
+
+type ApplyFilters<InputField> = {
+  [F in keyof Filters]: 0 extends 1 & Filters[F]
+    ? never
+    : Filters[F] extends InputField
+    ? Filters[F]
+    : never;
+}[keyof Filters];
+
+type PrismaUpdateOperationsInputFilter<T extends object> = {
+  [K in keyof T]: [ApplyFilters<T[K]>] extends [never] ? T[K] : ApplyFilters<T[K]>
+};`;
+
+const makeInputs = (
+  config: ConfigInternal,
+  dmmf: DMMF.Document,
+  inputNames: Record<string, DMMF.Model>,
+) =>
+  dmmf.schema.inputObjectTypes.prisma
+    // Filter out irrelevant input types
+    .filter(
+      (input) =>
+        ['Filter', 'Compound', 'UpdateOperations'].some((allowedKeyword) =>
+          input.name.includes(allowedKeyword),
+        ) || Object.keys(inputNames).some((inputName) => input.name.startsWith(inputName)),
+    )
+    .map((input) => {
+      const model = Object.entries(inputNames).find(([inputName]) =>
+        input.name.startsWith(inputName),
+      );
+
+      return useTemplate(T.inputTemplate, {
+        inputName: input.name.replace('Unchecked', ''),
+        prismaInputName: input.name,
+        fields: getInputFieldsString(input, model?.[1], config.inputs.simple).replaceAll(
+          'Unchecked',
+          '',
+        ),
+      });
+    })
+    .join('\n\n');
+
+export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
+  if (config.inputs.simple)
+    return makeInputs(
+      config,
+      dmmf,
+      // Map from possible input names to their related model
+      dmmf.datamodel.models.reduce((prev, curr) => {
+        return {
+          ...prev,
+          [`${curr.name}UncheckedCreateInput`]: curr,
+          [`${curr.name}CreateNestedManyWithout`]: curr,
+          [`${curr.name}UncheckedUpdateInput`]: curr,
+          [`${curr.name}UpdateManyMutationInput`]: curr,
+          [`${curr.name}UpdateManyWithout`]: curr,
+          [`${curr.name}OrderByWithRelationInput`]: curr,
+          [`${curr.name}OrderByRelationAggregateInput`]: curr,
+          [`${curr.name}Where`]: curr,
+        };
+      }, {} as Record<string, DMMF.Model>),
+    );
+  else
+    return makeInputs(
+      config,
+      dmmf,
+      // Map from possible input names to their related model
+      dmmf.datamodel.models.reduce((prev, curr) => {
+        return {
+          ...prev,
+          ...[
             'Where',
-            'OrderBy',
             'ScalarWhere',
-            'Update',
             'Create',
+            'Update',
             'Upsert',
-            'AvgOrderBy',
+            'OrderBy',
+            'CountOrderBy',
             'MaxOrderBy',
             'MinOrderBy',
+            'AvgOrderBy',
             'SumOrderBy',
-            'CountOrderBy',
-            'Filter',
-            'RelationFilter',
-            'ListRelationFilter',
-          ]
-            .map((keyword) => name + keyword)
-            .some((modelName) => input.name.startsWith(modelName)),
-        );
-        return useTemplate(T.inputTemplate, {
-          inputName: input.name,
-          fields: getInputFieldsString(input, model),
-        });
-      })
-      .join('\n\n')
-  );
+          ].reduce(
+            (prev, keyword) => ({
+              ...prev,
+              [`${curr.name}${keyword}`]: curr,
+            }),
+            {},
+          ),
+        };
+      }, {} as Record<string, DMMF.Model>),
+    );
 };

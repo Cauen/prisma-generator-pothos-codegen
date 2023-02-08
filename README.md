@@ -25,14 +25,16 @@ On `prisma generate` we create:
 
 ### Install
 
+Using yarn
+
 ```sh
-yarn add prisma-generator-pothos-codegen
+yarn add -D prisma-generator-pothos-codegen
 ```
 
 or using npm
 
 ```sh
-npm install prisma-generator-pothos-codegen
+npm install --save-dev prisma-generator-pothos-codegen
 ```
 
 ### Peer dependencies
@@ -120,6 +122,8 @@ module.exports = {
   {
     /** Input type generation config */
     inputs?: {
+      /** Create simpler inputs for easier customization and ~65% less generated code. Default: `false` */
+      simple?: boolean;
       /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
       prismaImporter?: string;
       /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
@@ -143,7 +147,7 @@ module.exports = {
       prismaImporter?: string;
       /** How to call the prisma client. Default `'_context.prisma'` */
       prismaCaller?: string;
-      /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default `''` */
+      /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default: `''` */
       resolverImports?: string;
       /** Directory to generate crud code into from project root. Default: `'./generated'` */
       outputDir?: string;
@@ -223,17 +227,21 @@ model User {
 You can also augment/derive new inputs from the generated `inputs.ts` file.
 
 ```ts
-import { Prisma } from '.prisma/client';
-import { UserUpdateInputFields } from '@graphql/__generated__/inputs'; // import function that define input fields.
+// ./src/graphql/User/inputs.ts
 
-// Note: you can't use `builder.inputType` function to generate this new input, once we export the function without types.
-// Your input will be typesafe because types are linked to the input itself
-export const UserUpdateInputCustom = builder.inputRef<Prisma.UserUpdateInput & { customArg: string }>('UserUpdateInputCustom').implement({
-  fields: (t) => ({
-    ...UserUpdateInputFields(t),
-    customArg: t.field({ "required": true, "type": "String" }), // custom
-  }),
-});
+import { Prisma } from '@prisma/client';
+// Import generated input fields definition
+import { UserUpdateInputFields } from '@/graphql/__generated__/inputs';
+
+// Note: you can't use `builder.inputType` to generate this new input
+export const UserUpdateInputCustom = builder
+  .inputRef<Prisma.UserUpdateInput & { customArg: string }>('UserUpdateInputCustom')
+  .implement({
+    fields: (t) => ({
+      ...UserUpdateInputFields(t),
+      customArg: t.field({ required: true, type: 'String' }),
+    }),
+  });
 ```
 
 ### Objects
@@ -241,10 +249,10 @@ export const UserUpdateInputCustom = builder.inputRef<Prisma.UserUpdateInput & {
 ```ts
 // ./src/graphql/User/object.ts
 
-import { UserObject } from '@graphql/__generated__/User';
-import { builder } from '@graphql/builder'; // pothos schema builder
+import { UserObject } from '@/graphql/__generated__/User';
+import { builder } from '@/graphql/builder'; // Pothos schema builder
 
-// Use the Object exports to accept all default generated query code
+// Use the Object export to accept all default generated query code
 builder.prismaObject('User', UserObject);
 
 // Or modify it as you wish
@@ -277,8 +285,8 @@ builder.prismaObject('User', {
 ```ts
 // ./src/graphql/User/query.ts
 
-import { findManyUserQuery, findManyUserQueryObject } from '@graphql/__generated__/User';
-import { builder } from '@graphql/builder'; // pothos schema builder
+import { findManyUserQuery, findManyUserQueryObject } from '@/graphql/__generated__/User';
+import { builder } from '@/graphql/builder'; // Pothos schema builder
 
 // Use the Query exports to accept all default generated query code
 builder.queryFields(findManyUserQuery);
@@ -317,8 +325,8 @@ import {
   generateAllObjects,
   generateAllQueries,
   generateAllMutations
-} from '@graphql/__generated__/autocrud.ts',
-import { builder } from '@graphql/builder'; // pothos schema builder
+} from '@/graphql/__generated__/autocrud.ts',
+import { builder } from '@/graphql/builder'; // Pothos schema builder
 
 // (option 1) generate all objects, queries and mutations
 generateAllCrud()
@@ -333,7 +341,7 @@ generateAllObjects({ include: ["User", "Profile", 'Comment'] })
 generateAllQueries({ exclude: ["Comment"] })
 generateAllMutations({ exclude: ["User"] })
 
-// defining schema
+// Defining schema roots
 builder.queryType({});
 builder.mutationType({});
 
