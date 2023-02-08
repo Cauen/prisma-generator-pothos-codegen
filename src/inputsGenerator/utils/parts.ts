@@ -32,16 +32,35 @@ export const getScalars = ({ inputs: { excludeScalars } }: ConfigInternal, dmmf:
   ].join('\n\n');
 };
 
-export const getUtil = () => `type PrismaUpdateOperationsInputFilter<T extends object> = {
-  [K in keyof T]: Prisma.StringFieldUpdateOperationsInput extends T[K]
-    ? Prisma.StringFieldUpdateOperationsInput
-    : Prisma.DateTimeFieldUpdateOperationsInput extends T[K]
-    ? Prisma.DateTimeFieldUpdateOperationsInput
-    : Prisma.IntFieldUpdateOperationsInput extends T[K]
-    ? Prisma.IntFieldUpdateOperationsInput
-    : Prisma.BoolFieldUpdateOperationsInput extends T[K]
-    ? Prisma.BoolFieldUpdateOperationsInput
-    : T[K];
+export const getUtil = () => `type Filters = {
+  string: Prisma.StringFieldUpdateOperationsInput;
+  nullableString: Prisma.NullableStringFieldUpdateOperationsInput;
+  dateTime: Prisma.DateTimeFieldUpdateOperationsInput;
+  nullableDateTime: Prisma.NullableDateTimeFieldUpdateOperationsInput;
+  int: Prisma.IntFieldUpdateOperationsInput;
+  nullableInt: Prisma.NullableIntFieldUpdateOperationsInput;
+  bool: Prisma.BoolFieldUpdateOperationsInput;
+  nullableBool: Prisma.NullableBoolFieldUpdateOperationsInput;
+  bigInt: Prisma.BigIntFieldUpdateOperationsInput;
+  nullableBigInt: Prisma.NullableBigIntFieldUpdateOperationsInput;
+  bytes: Prisma.BytesFieldUpdateOperationsInput;
+  nullableBytes: Prisma.NullableBytesFieldUpdateOperationsInput;
+  float: Prisma.FloatFieldUpdateOperationsInput;
+  nullableFloat: Prisma.NullableFloatFieldUpdateOperationsInput;
+  decimal: Prisma.DecimalFieldUpdateOperationsInput;
+  nullableDecimal: Prisma.NullableDecimalFieldUpdateOperationsInput;
+};
+
+type ApplyFilters<InputField> = {
+  [F in keyof Filters]: 0 extends 1 & Filters[F]
+    ? never
+    : Filters[F] extends InputField
+    ? Filters[F]
+    : never;
+}[keyof Filters];
+
+type PrismaUpdateOperationsInputFilter<T extends object> = {
+  [K in keyof T]: [ApplyFilters<T[K]>] extends [never] ? T[K] : ApplyFilters<T[K]>
 };`;
 
 const makeInputs = (
