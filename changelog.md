@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.6
+
+- [x] Fix: autocrud generating buggy updateMany mutations #37
+
 # 0.5.5
 
 - [x] Added: Add simple mode to input generator #30
