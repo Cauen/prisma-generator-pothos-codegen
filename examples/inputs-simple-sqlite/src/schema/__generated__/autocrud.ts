@@ -205,7 +205,7 @@ function generateResolversByType(type: ResolverType, opts?: CrudOptions) {
 
       return resolverEntries.map(([operationName, resolverObjectDefiner]) => {
         const resolverName = operationName + modelName;
-        const isntPrismaFieldList = ["count", "deleteMany"];
+        const isntPrismaFieldList = ["count", "deleteMany", "updateMany"];
         const isPrismaField = !isntPrismaFieldList.includes(operationName);
 
         const getFields = (t: any) => {
