@@ -209,15 +209,9 @@ or
 npx prisma generate
 ```
 
-### Examples
-
-Check for the [example](/examples/inputs-simple-sqlite) for a running sample
-
-![image](https://user-images.githubusercontent.com/8796757/178087266-0a852f43-a7b5-48a0-bc13-a3ece9788457.png)
-
 ## Usage
 
-### Inputs
+###  Inputs
 
 You can use `@Pothos.omit()` function calls in your prisma schema field descriptions to control which fields are used in the generated input types.
 
@@ -377,6 +371,12 @@ Generated mutations:
 - updateMany
 - updateOne
 - upsertOne
+
+### Examples
+
+Check for the [example](/examples/inputs-simple-sqlite) for a running sample
+
+![image](https://user-images.githubusercontent.com/8796757/222917186-9a88f5e9-27c6-44b5-8653-fa9efb0aa255.png)
 
 ## Disclosures
 
