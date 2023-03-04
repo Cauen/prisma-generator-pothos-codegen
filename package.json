@@ -29,7 +29,7 @@
     "build": "tsc",
     "tscheck": "tsc -noEmit",
     "prebuild": "yarn clean",
-    "postbuild": "shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
+    "postbuild": "markdown-toc --no-firsth1 -i ./README.md && shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
     "clean": "shx rm -rf dist",
     "pub": "cd dist && npm publish",
     "format": "eslint --fix ./src"
@@ -59,6 +59,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "graphql": "16.6.0",
     "jest": "<29.0.0",
+    "markdown-toc": "^1.2.0",
     "prettier": "2.8.2",
     "prisma": "4.7.0",
     "shx": "0.3.4",
