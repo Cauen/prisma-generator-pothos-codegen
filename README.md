@@ -12,14 +12,26 @@ On `prisma generate` we create:
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Install](#install)
-  - [Set Up](#set-up)
-  - [Examples](#examples)
-- [Usage](#usage)
-- [Disclosures](#disclosures)
-  - [Models with only relations](#models-with-only-relations)
-  - [BigInt rename](#bigint-rename)
+<!-- toc -->
+
+- [Install](#install)
+- [Peer dependencies](#peer-dependencies)
+- [Set Up](#set-up)
+  * [Add the generator to your schema.prisma](#add-the-generator-to-your-schemaprisma)
+  * [Add scalar types to the builder](#add-scalar-types-to-the-builder)
+  * [Create a configuration file (optional)](#create-a-configuration-file-optional)
+  * [Run the generator](#run-the-generator)
+- [Examples](#examples)
+undefined [Usage](#usage)
+- [Inputs](#inputs)
+- [Objects](#objects)
+- [Queries and Mutations](#queries-and-mutations)
+- [Auto define all `objects`, `queries` and `mutations` (crud operations)](#auto-define-all-objects-queries-and-mutations-crud-operations)
+undefined [Disclosures](#disclosures)
+- [Models with only relations](#models-with-only-relations)
+- [BigInt rename](#bigint-rename)
+
+<!-- tocstop -->
 
 ## Getting Started
 
