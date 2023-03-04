@@ -29,7 +29,7 @@
     "build": "tsc",
     "tscheck": "tsc -noEmit",
     "prebuild": "yarn clean",
-    "postbuild": "shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
+    "postbuild": "markdown-toc --no-firsth1 -i ./README.md && shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
     "clean": "shx rm -rf dist",
     "pub": "cd dist && npm publish",
     "format": "eslint --fix ./src"
