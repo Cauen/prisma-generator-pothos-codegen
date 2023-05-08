@@ -376,11 +376,7 @@ Generated mutations:
 
 Check for the [example](/examples/inputs-simple-sqlite) for a running sample
 
-<<<<<<< HEAD
-![image](https://user-images.githubusercontent.com/8796757/178087266-0a852f43-a7b5-48a0-bc13-a3ece9788457.png)
-=======
 ![image](https://user-images.githubusercontent.com/8796757/222917186-9a88f5e9-27c6-44b5-8653-fa9efb0aa255.png)
->>>>>>> ab53fb6e505836fc49e9ab239479406085d9c90d
 
 ## Disclosures
 
