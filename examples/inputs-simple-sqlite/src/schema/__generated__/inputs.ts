@@ -46,7 +46,7 @@ export const DateTime = builder.scalarType('DateTime', {
 });
 
 export const Decimal = builder.scalarType('Decimal', {
-  serialize: (value) => value,
+  serialize: (value) => parseFloat(value),
   parseValue: (value) => {
     if (typeof value !== 'number' && typeof value !== 'string') throw new Error('Invalid Decimal');
     return new Prisma.Decimal(value);
@@ -1868,7 +1868,7 @@ export const BytesNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOp
 });
 
 export const PostCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":PostCreateWithoutAuthorInput}),
+  create: t.field({"required":false,"type":[PostCreateWithoutAuthorInput]}),
   connectOrCreate: t.field({"required":false,"type":[PostCreateOrConnectWithoutAuthorInput]}),
   connect: t.field({"required":false,"type":[PostWhereUniqueInput]}),
 });
@@ -1877,7 +1877,7 @@ export const PostCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpd
 });
 
 export const CommentCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":CommentCreateWithoutAuthorInput}),
+  create: t.field({"required":false,"type":[CommentCreateWithoutAuthorInput]}),
   connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutAuthorInput]}),
   connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
 });
@@ -1886,7 +1886,7 @@ export const CommentCreateNestedManyWithoutAuthorInput = builder.inputRef<Prisma
 });
 
 export const ProfileCreateNestedManyWithoutUserInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":ProfileCreateWithoutUserInput}),
+  create: t.field({"required":false,"type":[ProfileCreateWithoutUserInput]}),
   connectOrCreate: t.field({"required":false,"type":[ProfileCreateOrConnectWithoutUserInput]}),
   connect: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
 });
@@ -1895,7 +1895,7 @@ export const ProfileCreateNestedManyWithoutUserInput = builder.inputRef<PrismaUp
 });
 
 export const FollowCreateNestedManyWithoutToInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":FollowCreateWithoutToInput}),
+  create: t.field({"required":false,"type":[FollowCreateWithoutToInput]}),
   connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutToInput]}),
   connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
 });
@@ -1904,7 +1904,7 @@ export const FollowCreateNestedManyWithoutToInput = builder.inputRef<PrismaUpdat
 });
 
 export const FollowCreateNestedManyWithoutFromInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":FollowCreateWithoutFromInput}),
+  create: t.field({"required":false,"type":[FollowCreateWithoutFromInput]}),
   connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutFromInput]}),
   connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
 });
@@ -1927,7 +1927,7 @@ export const DateTimeFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateO
 });
 
 export const PostUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":PostCreateWithoutAuthorInput}),
+  create: t.field({"required":false,"type":[PostCreateWithoutAuthorInput]}),
   connectOrCreate: t.field({"required":false,"type":[PostCreateOrConnectWithoutAuthorInput]}),
   upsert: t.field({"required":false,"type":[PostUpsertWithWhereUniqueWithoutAuthorInput]}),
   set: t.field({"required":false,"type":[PostWhereUniqueInput]}),
@@ -1943,7 +1943,7 @@ export const PostUpdateManyWithoutAuthorNestedInput = builder.inputRef<PrismaUpd
 });
 
 export const CommentUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":CommentCreateWithoutAuthorInput}),
+  create: t.field({"required":false,"type":[CommentCreateWithoutAuthorInput]}),
   connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutAuthorInput]}),
   upsert: t.field({"required":false,"type":[CommentUpsertWithWhereUniqueWithoutAuthorInput]}),
   set: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
@@ -1966,7 +1966,7 @@ export const NullableDateTimeFieldUpdateOperationsInput = builder.inputRef<Prism
 });
 
 export const ProfileUpdateManyWithoutUserNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":ProfileCreateWithoutUserInput}),
+  create: t.field({"required":false,"type":[ProfileCreateWithoutUserInput]}),
   connectOrCreate: t.field({"required":false,"type":[ProfileCreateOrConnectWithoutUserInput]}),
   upsert: t.field({"required":false,"type":[ProfileUpsertWithWhereUniqueWithoutUserInput]}),
   set: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
@@ -1982,7 +1982,7 @@ export const ProfileUpdateManyWithoutUserNestedInput = builder.inputRef<PrismaUp
 });
 
 export const FollowUpdateManyWithoutToNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":FollowCreateWithoutToInput}),
+  create: t.field({"required":false,"type":[FollowCreateWithoutToInput]}),
   connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutToInput]}),
   upsert: t.field({"required":false,"type":[FollowUpsertWithWhereUniqueWithoutToInput]}),
   set: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
@@ -1998,7 +1998,7 @@ export const FollowUpdateManyWithoutToNestedInput = builder.inputRef<PrismaUpdat
 });
 
 export const FollowUpdateManyWithoutFromNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":FollowCreateWithoutFromInput}),
+  create: t.field({"required":false,"type":[FollowCreateWithoutFromInput]}),
   connectOrCreate: t.field({"required":false,"type":[FollowCreateOrConnectWithoutFromInput]}),
   upsert: t.field({"required":false,"type":[FollowUpsertWithWhereUniqueWithoutFromInput]}),
   set: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
@@ -2034,7 +2034,7 @@ export const UserCreateNestedOneWithoutPostsInput = builder.inputRef<PrismaUpdat
 });
 
 export const CommentCreateNestedManyWithoutPostInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
+  create: t.field({"required":false,"type":[CommentCreateWithoutPostInput]}),
   connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
   connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
 });
@@ -2054,7 +2054,7 @@ export const UserUpdateOneRequiredWithoutPostsNestedInput = builder.inputRef<Pri
 });
 
 export const CommentUpdateManyWithoutPostNestedInputFields = (t: any) => ({
-  create: t.field({"required":false,"type":CommentCreateWithoutPostInput}),
+  create: t.field({"required":false,"type":[CommentCreateWithoutPostInput]}),
   connectOrCreate: t.field({"required":false,"type":[CommentCreateOrConnectWithoutPostInput]}),
   upsert: t.field({"required":false,"type":[CommentUpsertWithWhereUniqueWithoutPostInput]}),
   set: t.field({"required":false,"type":[CommentWhereUniqueInput]}),

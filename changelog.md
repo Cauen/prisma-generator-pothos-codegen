@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.7
+
+- [x] Fix: correctly priorize list on inputs (generated again, code changes serves as an example)
+
 # 0.5.6
 
 - [x] Fix: autocrud generating buggy updateMany mutations #37

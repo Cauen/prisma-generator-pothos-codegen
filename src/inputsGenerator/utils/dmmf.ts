@@ -45,11 +45,11 @@ export function getMainInput() {
     return undefined;
   };
 
-  // If one list, priorize it
+  // If has list, priorize it
   const priorizeList = (inputs: DMMF.SchemaArgInputType[]) => {
     const listInputs = inputs.filter((el) => el.isList);
-    const exactlyOneIsList = listInputs.length === 1;
-    if (exactlyOneIsList) {
+    const hasList = listInputs.length >= 1;
+    if (hasList) {
       return listInputs[0];
     }
     return undefined;
@@ -84,8 +84,8 @@ export function getMainInput() {
   };
 
   const run = (inputs: DMMF.SchemaArgInputType[]): DMMF.SchemaArgInputType => {
-    if (inputs.length === 0) throw new Error('No input type found');
-    const first = inputs[0]!;
+    const first = inputs[0];
+    if (!first) throw new Error('No input type found');
     const second = inputs[1];
     if (first && !second) return first;
 

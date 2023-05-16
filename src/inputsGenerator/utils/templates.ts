@@ -22,7 +22,7 @@ export const dateTimeScalar = `export const DateTime = builder.scalarType('DateT
 });`;
 
 export const decimalScalar = `export const Decimal = builder.scalarType('Decimal', {
-  serialize: (value) => value,
+  serialize: (value) => parseFloat(value),
   parseValue: (value) => {
     if (typeof value === 'object') {
       try {
