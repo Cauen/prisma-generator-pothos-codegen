@@ -35,12 +35,13 @@ type PrismaUpdateOperationsInputFilter<T extends object> = {
 
 export const DateTime = builder.scalarType('DateTime', {
   parseValue: (value) => {
-    const isDateParsable = typeof value === 'string' || typeof value === 'number';
-    if (!isDateParsable) throw new Error('Invalid Date type');
-    const date = new Date(value);
-    const isInvalidDate = date.toString() === 'Invalid Date';
-    if (isInvalidDate) throw new Error('Invalid Date');
-    return new Date(value);
+    try {
+      const date = new Date(value)
+      if (date.toString() === 'Invalid Date') throw new Error('Invalid Date')
+      return date
+    } catch (error) {
+      throw new Error('Invalid Date');
+    }
   },
   serialize: (value) => value ? new Date(value) : null,
 });
@@ -48,8 +49,11 @@ export const DateTime = builder.scalarType('DateTime', {
 export const Decimal = builder.scalarType('Decimal', {
   serialize: (value) => parseFloat(value),
   parseValue: (value) => {
-    if (typeof value !== 'number' && typeof value !== 'string') throw new Error('Invalid Decimal');
-    return new Prisma.Decimal(value);
+    try {
+      return new Prisma.Decimal(parseFloat(value));
+    } catch (error) {
+      throw new Error('Invalid Decimal');
+    }
   },
 });
 
@@ -65,8 +69,11 @@ export const Bytes = builder.scalarType('Bytes', {
 export const Bigint = builder.scalarType('BigInt', {
   serialize: (value) => value.toString(),
   parseValue: (value) => {
-    if (typeof value !== 'string' && typeof value !== 'number') throw new Error('Invalid Bigint');
-    return BigInt(value);
+    try {
+      return BigInt(value);
+    } catch (error) {
+      throw new Error('Invalid Bigint');
+    } 
   },
 });
 
