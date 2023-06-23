@@ -1,4 +1,4 @@
-import * as Inputs from '../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
 import {
   defineExposeObject,
   definePrismaObject,

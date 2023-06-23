@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryObject } from '../../utils';
 
 export const countCommentQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const countCommentQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.CommentScalarFieldEnum], required: false }),
     },
     resolve: async (_root, args, _context, _info) =>
-      await _context.db.comment.count({
+      await db.comment.count({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

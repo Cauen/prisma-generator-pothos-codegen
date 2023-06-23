@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
 
 export const findManyWithoutIDQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const findManyWithoutIDQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.WithoutIDScalarFieldEnum], required: false }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.withoutID.findMany({
+      await db.withoutID.findMany({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

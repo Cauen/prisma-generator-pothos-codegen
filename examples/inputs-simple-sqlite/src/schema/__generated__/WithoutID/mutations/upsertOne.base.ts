@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationPrismaObject } from '../../utils';
 
 export const upsertOneWithoutIDMutationObject = defineMutationFunction((t) =>
@@ -11,7 +12,7 @@ export const upsertOneWithoutIDMutationObject = defineMutationFunction((t) =>
       update: t.arg({ type: Inputs.WithoutIDUpdateInput, required: true }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.withoutID.upsert({
+      await db.withoutID.upsert({
         where: args.where,
         create: args.create,
         update: args.update,

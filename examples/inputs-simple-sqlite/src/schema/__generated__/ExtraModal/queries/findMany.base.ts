@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
 
 export const findManyExtraModalQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const findManyExtraModalQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.ExtraModalScalarFieldEnum], required: false }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.extraModal.findMany({
+      await db.extraModal.findMany({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

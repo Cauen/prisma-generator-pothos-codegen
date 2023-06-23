@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationPrismaObject } from '../../utils';
 
 export const createManyWithScalarsMutationObject = defineMutationFunction((t) =>
@@ -7,7 +8,7 @@ export const createManyWithScalarsMutationObject = defineMutationFunction((t) =>
     nullable: false,
     args: { data: t.arg({ type: [Inputs.WithScalarsCreateInput], required: true }) },
     resolve: async (_query, _root, args, _context, _info) =>
-      await _context.db.$transaction(args.data.map((data) => _context.db.withScalars.create({ data }))),
+      await db.$transaction(args.data.map((data) => db.withScalars.create({ data }))),
   }),
 );
 

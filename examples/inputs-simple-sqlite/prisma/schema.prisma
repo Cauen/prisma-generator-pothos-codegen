@@ -55,7 +55,7 @@ model Post {
 model ExtraModal {
   id        Int       @id @default(autoincrement())
   /// The title of extramodal
-  title    String
+  title     String
   /// @Pothos.omit(create, update) createdAt description
   createdAt DateTime  @default(now())
   /// @Pothos.omit(create, update)

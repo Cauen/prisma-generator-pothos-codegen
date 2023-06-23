@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryObject } from '../../utils';
 
 export const countPostQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const countPostQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.PostScalarFieldEnum], required: false }),
     },
     resolve: async (_root, args, _context, _info) =>
-      await _context.db.post.count({
+      await db.post.count({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationPrismaObject } from '../../utils';
 
 export const updateOneWithoutIDMutationObject = defineMutationFunction((t) =>
@@ -10,7 +11,7 @@ export const updateOneWithoutIDMutationObject = defineMutationFunction((t) =>
       data: t.arg({ type: Inputs.WithoutIDUpdateInput, required: true }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.withoutID.update({ where: args.where, data: args.data, ...query }),
+      await db.withoutID.update({ where: args.where, data: args.data, ...query }),
   }),
 );
 

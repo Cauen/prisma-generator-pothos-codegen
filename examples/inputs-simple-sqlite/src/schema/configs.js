@@ -8,13 +8,14 @@ module.exports = {
     //   return `// THIS CONTENT WAS INSERTED AT REPLACE. THE POSITION IS ${position}\n${generated}`
     // },
     excludeResolversContain: ["User"],
-    prismaCaller: '_context.db',
+    prismaCaller: 'db',
     disabled: false,
     builderImporter: "import { builder } from '../builder';",
-    // inputsImporter: "import * as Inputs from '@/schema/inputs'",
+    inputsImporter: "import * as Inputs from '@/schema/__generated__/inputs'",
     deleteOutputDirBeforeGenerate: true,
     exportEverythingInObjectsDotTs: true,
     prismaImporter: `import { Prisma } from '@prisma/client';`,
+    resolverImports: `\nimport { db } from '@/db';`,
   },
   inputs: {
     builderImporter: "import { builder } from '../builder';",

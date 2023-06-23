@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
 
 export const findUniquePostQueryObject = defineQueryFunction((t) =>
@@ -7,7 +8,7 @@ export const findUniquePostQueryObject = defineQueryFunction((t) =>
     nullable: true,
     args: { where: t.arg({ type: Inputs.PostWhereUniqueInput, required: true }) },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.post.findUnique({ where: args.where, ...query }),
+      await db.post.findUnique({ where: args.where, ...query }),
   }),
 );
 

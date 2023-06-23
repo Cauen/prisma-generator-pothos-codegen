@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryObject } from '../../utils';
 
 export const countFollowQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const countFollowQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.FollowScalarFieldEnum], required: false }),
     },
     resolve: async (_root, args, _context, _info) =>
-      await _context.db.follow.count({
+      await db.follow.count({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

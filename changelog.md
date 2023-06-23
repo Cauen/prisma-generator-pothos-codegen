@@ -3,6 +3,7 @@
 # 0.5.8
 
 - [x] Improve: Input scalar some improves at parseValue
+- [x] Docs: Some docs improves based on #45
 
 # 0.5.7
 

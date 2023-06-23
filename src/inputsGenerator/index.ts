@@ -5,8 +5,7 @@ import { writeFile } from '../utils/filesystem';
 import { getEnums, getImports, getScalars, getInputs, getUtil } from './utils/parts';
 
 /** Types may vary between Prisma versions */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Scalars<DecimalType = number, JsonInput = any, JsonOutput = any> = {
+export type Scalars<DecimalType, JsonInput, JsonOutput> = {
   DateTime: {
     Input: Date;
     Output: Date;

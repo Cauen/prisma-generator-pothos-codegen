@@ -1,5 +1,6 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
 import { BatchPayload } from '../../objects';
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationObject } from '../../utils';
 
 export const updateManyCommentMutationObject = defineMutationFunction((t) =>
@@ -11,7 +12,7 @@ export const updateManyCommentMutationObject = defineMutationFunction((t) =>
       data: t.arg({ type: Inputs.CommentUpdateManyMutationInput, required: true }),
     },
     resolve: async (_root, args, _context, _info) =>
-      await _context.db.comment.updateMany({ where: args.where || undefined, data: args.data }),
+      await db.comment.updateMany({ where: args.where || undefined, data: args.data }),
   }),
 );
 

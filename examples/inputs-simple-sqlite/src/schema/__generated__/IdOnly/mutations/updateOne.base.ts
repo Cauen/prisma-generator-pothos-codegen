@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationPrismaObject } from '../../utils';
 
 export const updateOneIdOnlyMutationObject = defineMutationFunction((t) =>
@@ -10,7 +11,7 @@ export const updateOneIdOnlyMutationObject = defineMutationFunction((t) =>
       data: t.arg({ type: Inputs.IdOnlyUpdateInput, required: true }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.idOnly.update({ where: args.where, data: args.data, ...query }),
+      await db.idOnly.update({ where: args.where, data: args.data, ...query }),
   }),
 );
 

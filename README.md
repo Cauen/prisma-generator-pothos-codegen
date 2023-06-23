@@ -100,7 +100,9 @@ import { Scalars } from 'prisma-generator-pothos-codegen';
 import { Prisma } from '.prisma/client';
 
 export const builder = new SchemaBuilder<{
-  Scalars: Scalars<Prisma.Decimal, Prisma.InputJsonValue | null, Prisma.InputJsonValue>;
+  // ... Context, plugins? ...
+  PrismaTypes: PrismaTypes; // required for @pothos/plugin-prisma integration (which is required)
+  Scalars: Scalars<Prisma.Decimal, Prisma.InputJsonValue | null, Prisma.InputJsonValue>; // required to define correct types for created scalars.
 }>({
   // Other builder config
 });
@@ -118,7 +120,7 @@ module.exports = {
   },
   crud: {
     outputDir: './src/graphql/__generated__/',
-    inputsImporter: `export * as Inputs from '@graphql/__generated__/inputs';`,
+    inputsImporter: `import * as Inputs from '@graphql/__generated__/inputs';`,
     resolversImports: `import prisma from '@lib/prisma';`,
     prismaCaller: 'prisma',
   },

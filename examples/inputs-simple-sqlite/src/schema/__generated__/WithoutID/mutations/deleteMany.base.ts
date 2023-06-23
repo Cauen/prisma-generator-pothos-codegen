@@ -1,5 +1,6 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
 import { BatchPayload } from '../../objects';
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationObject } from '../../utils';
 
 export const deleteManyWithoutIDMutationObject = defineMutationFunction((t) =>
@@ -8,7 +9,7 @@ export const deleteManyWithoutIDMutationObject = defineMutationFunction((t) =>
     nullable: true,
     args: { where: t.arg({ type: Inputs.WithoutIDWhereInput, required: true }) },
     resolve: async (_root, args, _context, _info) =>
-      await _context.db.withoutID.deleteMany({ where: args.where }),
+      await db.withoutID.deleteMany({ where: args.where }),
   }),
 );
 

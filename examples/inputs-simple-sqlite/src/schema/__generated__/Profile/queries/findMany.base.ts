@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
 
 export const findManyProfileQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const findManyProfileQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.ProfileScalarFieldEnum], required: false }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.profile.findMany({
+      await db.profile.findMany({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

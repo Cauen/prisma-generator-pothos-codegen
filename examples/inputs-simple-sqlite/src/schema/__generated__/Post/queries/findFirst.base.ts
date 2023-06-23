@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
 
 export const findFirstPostQueryObject = defineQueryFunction((t) =>
@@ -14,7 +15,7 @@ export const findFirstPostQueryObject = defineQueryFunction((t) =>
       distinct: t.arg({ type: [Inputs.PostScalarFieldEnum], required: false }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.post.findFirst({
+      await db.post.findFirst({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,

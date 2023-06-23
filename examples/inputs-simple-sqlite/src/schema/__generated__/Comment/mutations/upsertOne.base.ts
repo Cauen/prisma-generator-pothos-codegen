@@ -1,4 +1,5 @@
-import * as Inputs from '../../inputs';
+import * as Inputs from '@/schema/__generated__/inputs'
+import { db } from '@/db';
 import { defineMutation, defineMutationFunction, defineMutationPrismaObject } from '../../utils';
 
 export const upsertOneCommentMutationObject = defineMutationFunction((t) =>
@@ -11,7 +12,7 @@ export const upsertOneCommentMutationObject = defineMutationFunction((t) =>
       update: t.arg({ type: Inputs.CommentUpdateInput, required: true }),
     },
     resolve: async (query, _root, args, _context, _info) =>
-      await _context.db.comment.upsert({
+      await db.comment.upsert({
         where: args.where,
         create: args.create,
         update: args.update,
