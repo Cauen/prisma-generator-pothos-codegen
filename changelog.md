@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.8
+
+- [x] Improve: Input scalar some improves at parseValue
+
 # 0.5.7
 
 - [x] Fix: correctly priorize list on inputs (generated again, code changes serves as an example)
