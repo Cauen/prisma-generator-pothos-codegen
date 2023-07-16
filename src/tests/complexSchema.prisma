@@ -75,6 +75,11 @@ model WithoutID {
   name String @unique
 }
 
+model Bird {
+  id    String @id
+  name  String
+}
+
 enum Role {
   USER
   ADMIN

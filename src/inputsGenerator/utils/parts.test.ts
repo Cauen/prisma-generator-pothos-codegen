@@ -10,4 +10,14 @@ describe('getInputs', () => {
     const includedInputs = getInputs(defaultConfig, dmmf);
     expect(includedInputs.includes(builtString)).toBe(true);
   });
+
+  test("should map String with @id attribute to 'ID' scalar", async () => {
+    const dmmf = await getSampleDMMF('complex');
+    const defaultConfig = getDefaultConfig();
+    const builtString = `export const BirdWhereUniqueInputFields = (t: any) => ({
+  id: t.id({"required":false}),
+});`;
+    const includedInputs = getInputs(defaultConfig, dmmf);
+    expect(includedInputs.includes(builtString)).toBe(true);
+  });
 });

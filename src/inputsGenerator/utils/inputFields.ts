@@ -61,9 +61,20 @@ export const getInputFieldsString = (
           const { isList, type, location } = getMainInput().run(field.inputTypes);
           const props = { required: field.isRequired, description: undefined };
 
+          const getFieldType = () => {
+            const fieldDetails = model?.fields.find((f) => f.name === field.name);
+            if (isList) {
+              return `${type}List`;
+            }
+            if (fieldDetails?.type === 'String' && fieldDetails?.isId) {
+              return 'id';
+            }
+            return type.toString();
+          };
+
           const getScalar = () => {
             // TODO parse date to string ??
-            const fieldType = isList ? `${type}List` : type.toString();
+            const fieldType = getFieldType();
             return `${firstLetterLowerCase(fieldType)}(${JSON.stringify(props)})`;
           };
 
