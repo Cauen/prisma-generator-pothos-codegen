@@ -66,7 +66,10 @@ export const getInputFieldsString = (
             if (isList) {
               return `${type}List`;
             }
-            if (fieldDetails?.type === 'String' && fieldDetails?.isId) {
+            if (
+              (fieldDetails?.type === 'String' || fieldDetails?.type === 'Int') &&
+              fieldDetails?.isId
+            ) {
               return 'id';
             }
             return type.toString();
