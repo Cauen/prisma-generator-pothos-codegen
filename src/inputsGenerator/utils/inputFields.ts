@@ -60,16 +60,15 @@ export const getInputFieldsString = (
       : filtered.map((field) => {
           const { isList, type, location } = getMainInput().run(field.inputTypes);
           const props = { required: field.isRequired, description: undefined };
+          const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
+          const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
 
           const getFieldType = () => {
             const fieldDetails = model?.fields.find((f) => f.name === field.name);
             if (isList) {
               return `${type}List`;
             }
-            if (
-              (fieldDetails?.type === 'String' || fieldDetails?.type === 'Int') &&
-              fieldDetails?.isId
-            ) {
+            if (fieldDetails?.isId && isScalar) {
               return 'id';
             }
             return type.toString();
@@ -89,9 +88,6 @@ export const getInputFieldsString = (
             // "type":"CommentCreateInput" -> "type":CommentCreateInput
             return `field(${JSON.stringify(relationProps).replace(/(type.+:)"(.+)"/, '$1$2')})`;
           };
-
-          const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
-          const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
 
           return `${field.name}: t.${isScalar ? getScalar() : getField()},`;
         });
