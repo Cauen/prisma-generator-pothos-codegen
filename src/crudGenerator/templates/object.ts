@@ -1,7 +1,6 @@
 // TODO only import what is necessary
 export const objectTemplate = `#{inputsImporter}
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -19,16 +18,11 @@ export const #{modelName}Object = definePrismaObject('#{modelName}', {
 #{exportFields}
 `;
 
-export const exposeObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineExposeObject('#{type}', {
-  description: #{description},
-  nullable: #{nullable},
-});`;
-
 export const fieldObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineFieldObject('#{modelName}', {
-  type: #{bracketOptionalOpening}Inputs.#{type}#{bracketOptionalClosing},
+  type: #{conditionalType},
   description: #{description},
   nullable: #{nullable},
-  resolve: (parent) => parent.#{name},
+  resolve: (parent) => #{conditionalResolve},
 });`;
 
 export const listRelationObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineRelationFunction('#{modelName}', (t) =>

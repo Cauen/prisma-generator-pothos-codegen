@@ -101,7 +101,7 @@ model WithoutID {
 }
 
 model WithScalars {
-  id       Int       @id @default(autoincrement())
+  id       BigInt    @id @default(autoincrement())
   string   String?
   boolean  Boolean?
   int      Int?

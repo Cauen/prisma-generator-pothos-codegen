@@ -1,6 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,23 +10,27 @@ export const CommentObject = definePrismaObject('Comment', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', CommentIdFieldObject),
-    comment: t.exposeString('comment', CommentCommentFieldObject),
+    id: t.field(CommentIdFieldObject),
+    comment: t.field(CommentCommentFieldObject),
     Author: t.relation('Author', CommentAuthorFieldObject),
     Post: t.relation('Post', CommentPostFieldObject),
-    authorId: t.exposeInt('authorId', CommentAuthorIdFieldObject),
-    postId: t.exposeInt('postId', CommentPostIdFieldObject),
+    authorId: t.field(CommentAuthorIdFieldObject),
+    postId: t.field(CommentPostIdFieldObject),
   }),
 });
 
-export const CommentIdFieldObject = defineExposeObject('Int', {
+export const CommentIdFieldObject = defineFieldObject('Comment', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const CommentCommentFieldObject = defineExposeObject('String', {
+export const CommentCommentFieldObject = defineFieldObject('Comment', {
+  type: "String",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.comment,
 });
 
 export const CommentAuthorFieldObject = defineRelationObject('Comment', 'Author', {
@@ -44,12 +47,16 @@ export const CommentPostFieldObject = defineRelationObject('Comment', 'Post', {
   query: undefined,
 });
 
-export const CommentAuthorIdFieldObject = defineExposeObject('Int', {
+export const CommentAuthorIdFieldObject = defineFieldObject('Comment', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.authorId,
 });
 
-export const CommentPostIdFieldObject = defineExposeObject('Int', {
+export const CommentPostIdFieldObject = defineFieldObject('Comment', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.postId,
 });

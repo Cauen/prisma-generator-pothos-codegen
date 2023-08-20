@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.5.10
+
+- [x] Fix: Fix Typescript errors for non Pothos exposable fields ('String', 'Int', 'Float', 'Boolean'), like "BigInt" used as @id. Fixes: #45
+ - Replace exposes in generated object.base files with unified t.field
+
 # 0.5.9
 
 - [x] Improve: Add config config.crud.mapIdFieldsToGraphqlId to allow disable Objects ID fields from being parsed to Graphql ID scalar.

@@ -1,6 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,21 +10,25 @@ export const ProfileObject = definePrismaObject('Profile', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', ProfileIdFieldObject),
-    bio: t.exposeString('bio', ProfileBioFieldObject),
+    id: t.field(ProfileIdFieldObject),
+    bio: t.field(ProfileBioFieldObject),
     User: t.relation('User', ProfileUserFieldObject),
-    userId: t.exposeInt('userId', ProfileUserIdFieldObject),
+    userId: t.field(ProfileUserIdFieldObject),
   }),
 });
 
-export const ProfileIdFieldObject = defineExposeObject('Int', {
+export const ProfileIdFieldObject = defineFieldObject('Profile', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const ProfileBioFieldObject = defineExposeObject('String', {
+export const ProfileBioFieldObject = defineFieldObject('Profile', {
+  type: "String",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.bio,
 });
 
 export const ProfileUserFieldObject = defineRelationObject('Profile', 'User', {
@@ -35,7 +38,9 @@ export const ProfileUserFieldObject = defineRelationObject('Profile', 'User', {
   query: undefined,
 });
 
-export const ProfileUserIdFieldObject = defineExposeObject('Int', {
+export const ProfileUserIdFieldObject = defineFieldObject('Profile', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.userId,
 });

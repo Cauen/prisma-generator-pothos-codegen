@@ -1,6 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,28 +10,34 @@ export const PostObject = definePrismaObject('Post', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', PostIdFieldObject),
-    title: t.exposeString('title', PostTitleFieldObject),
-    content: t.exposeString('content', PostContentFieldObject),
+    id: t.field(PostIdFieldObject),
+    title: t.field(PostTitleFieldObject),
+    content: t.field(PostContentFieldObject),
     Author: t.relation('Author', PostAuthorFieldObject),
     Comments: t.relation('Comments', PostCommentsFieldObject(t)),
-    authorId: t.exposeInt('authorId', PostAuthorIdFieldObject),
+    authorId: t.field(PostAuthorIdFieldObject),
   }),
 });
 
-export const PostIdFieldObject = defineExposeObject('Int', {
+export const PostIdFieldObject = defineFieldObject('Post', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const PostTitleFieldObject = defineExposeObject('String', {
+export const PostTitleFieldObject = defineFieldObject('Post', {
+  type: "String",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.title,
 });
 
-export const PostContentFieldObject = defineExposeObject('String', {
+export const PostContentFieldObject = defineFieldObject('Post', {
+  type: "String",
   description: 'createdAt description',
   nullable: false,
+  resolve: (parent) => parent.content,
 });
 
 export const PostAuthorFieldObject = defineRelationObject('Post', 'Author', {
@@ -65,7 +70,9 @@ export const PostCommentsFieldObject = defineRelationFunction('Post', (t) =>
   }),
 );
 
-export const PostAuthorIdFieldObject = defineExposeObject('Int', {
+export const PostAuthorIdFieldObject = defineFieldObject('Post', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.authorId,
 });

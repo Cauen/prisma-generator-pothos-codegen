@@ -1,6 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,12 +10,12 @@ export const UserObject = definePrismaObject('User', {
   description: 'User of prisma',
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', UserIdFieldObject),
-    firstName: t.exposeString('firstName', UserFirstNameFieldObject),
-    lastName: t.exposeString('lastName', UserLastNameFieldObject),
+    id: t.field(UserIdFieldObject),
+    firstName: t.field(UserFirstNameFieldObject),
+    lastName: t.field(UserLastNameFieldObject),
     birthdate: t.field(UserBirthdateFieldObject),
-    login: t.exposeString('login', UserLoginFieldObject),
-    password: t.exposeString('password', UserPasswordFieldObject),
+    login: t.field(UserLoginFieldObject),
+    password: t.field(UserPasswordFieldObject),
     Posts: t.relation('Posts', UserPostsFieldObject(t)),
     Comments: t.relation('Comments', UserCommentsFieldObject(t)),
     createdAt: t.field(UserCreatedAtFieldObject),
@@ -27,19 +26,25 @@ export const UserObject = definePrismaObject('User', {
   }),
 });
 
-export const UserIdFieldObject = defineExposeObject('Int', {
+export const UserIdFieldObject = defineFieldObject('User', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const UserFirstNameFieldObject = defineExposeObject('String', {
+export const UserFirstNameFieldObject = defineFieldObject('User', {
+  type: "String",
   description: 'firstname description',
   nullable: false,
+  resolve: (parent) => parent.firstName,
 });
 
-export const UserLastNameFieldObject = defineExposeObject('String', {
+export const UserLastNameFieldObject = defineFieldObject('User', {
+  type: "String",
   description: 'lastname description',
   nullable: false,
+  resolve: (parent) => parent.lastName,
 });
 
 export const UserBirthdateFieldObject = defineFieldObject('User', {
@@ -49,14 +54,18 @@ export const UserBirthdateFieldObject = defineFieldObject('User', {
   resolve: (parent) => parent.birthdate,
 });
 
-export const UserLoginFieldObject = defineExposeObject('String', {
+export const UserLoginFieldObject = defineFieldObject('User', {
+  type: "String",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.login,
 });
 
-export const UserPasswordFieldObject = defineExposeObject('String', {
+export const UserPasswordFieldObject = defineFieldObject('User', {
+  type: "String",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.password,
 });
 
 export const UserPostsFieldObject = defineRelationFunction('User', (t) =>

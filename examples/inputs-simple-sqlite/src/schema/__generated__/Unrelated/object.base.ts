@@ -1,6 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,17 +10,21 @@ export const UnrelatedObject = definePrismaObject('Unrelated', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', UnrelatedIdFieldObject),
-    name: t.exposeString('name', UnrelatedNameFieldObject),
+    id: t.field(UnrelatedIdFieldObject),
+    name: t.field(UnrelatedNameFieldObject),
   }),
 });
 
-export const UnrelatedIdFieldObject = defineExposeObject('Int', {
+export const UnrelatedIdFieldObject = defineFieldObject('Unrelated', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const UnrelatedNameFieldObject = defineExposeObject('String', {
+export const UnrelatedNameFieldObject = defineFieldObject('Unrelated', {
+  type: "String",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.name,
 });
