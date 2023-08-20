@@ -125,7 +125,6 @@ module.exports = {
     prismaCaller: 'prisma',
   },
   global: {
-    builderImporter: `import { builder } from '@graphql/builder';`,
   },
 };
 ```
@@ -141,8 +140,6 @@ module.exports = {
       simple?: boolean;
       /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
       prismaImporter?: string;
-      /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
-      builderImporter?: string;
       /** Path to generate the inputs file to from project root. Default: `'./generated/inputs.ts'` */
       outputFilePath?: string;
       /** List of excluded scalars from generated output */
@@ -158,8 +155,6 @@ module.exports = {
     crud?: {
       /** Disable generaton of crud. Default: `false` */
       disabled?: boolean;
-      /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
-      builderImporter?: string;
       /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
       inputsImporter?: string;
       /** How to import the Prisma namespace at the objects.ts file. Default `"import { Prisma } from '.prisma/client';"`. Please use "resolverImports" to import prismaClient at resolvers. */

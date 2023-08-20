@@ -1,4 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
   definePrismaObject,
   defineFieldObject,
@@ -68,18 +69,20 @@ export const UserPasswordFieldObject = defineFieldObject('User', {
   resolve: (parent) => parent.password,
 });
 
+export const UserPostsFieldArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.PostWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.PostOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.PostWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.PostScalarFieldEnum], required: false }),
+}))
+
 export const UserPostsFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Posts', {
     description: 'relation desc ',
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.PostWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.PostOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.PostWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.PostScalarFieldEnum], required: false }),
-    },
+    args: UserPostsFieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,
@@ -91,18 +94,20 @@ export const UserPostsFieldObject = defineRelationFunction('User', (t) =>
   }),
 );
 
+export const UserCommentsFieldArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.CommentWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.CommentOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.CommentWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.CommentScalarFieldEnum], required: false }),
+}))
+
 export const UserCommentsFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Comments', {
     description: undefined,
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.CommentWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.CommentOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.CommentWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.CommentScalarFieldEnum], required: false }),
-    },
+    args: UserCommentsFieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,
@@ -128,18 +133,20 @@ export const UserUpdatedAtFieldObject = defineFieldObject('User', {
   resolve: (parent) => parent.updatedAt,
 });
 
+export const UserProfileFieldArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.ProfileWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.ProfileOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.ProfileWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.ProfileScalarFieldEnum], required: false }),
+}))
+
 export const UserProfileFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Profile', {
     description: undefined,
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.ProfileWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.ProfileOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.ProfileWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.ProfileScalarFieldEnum], required: false }),
-    },
+    args: UserProfileFieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,
@@ -150,19 +157,21 @@ export const UserProfileFieldObject = defineRelationFunction('User', (t) =>
     }),
   }),
 );
+
+export const UserFollowersFieldArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.FollowWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.FollowOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.FollowWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.FollowScalarFieldEnum], required: false }),
+}))
 
 export const UserFollowersFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Followers', {
     description: undefined,
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.FollowWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.FollowOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.FollowWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.FollowScalarFieldEnum], required: false }),
-    },
+    args: UserFollowersFieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,
@@ -174,18 +183,20 @@ export const UserFollowersFieldObject = defineRelationFunction('User', (t) =>
   }),
 );
 
+export const UserFollowingFieldArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.FollowWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.FollowOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.FollowWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.FollowScalarFieldEnum], required: false }),
+}))
+
 export const UserFollowingFieldObject = defineRelationFunction('User', (t) =>
   defineRelationObject('User', 'Following', {
     description: undefined,
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.FollowWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.FollowOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.FollowWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.FollowScalarFieldEnum], required: false }),
-    },
+    args: UserFollowingFieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,

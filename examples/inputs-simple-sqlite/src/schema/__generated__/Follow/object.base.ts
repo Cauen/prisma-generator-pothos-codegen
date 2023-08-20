@@ -1,4 +1,5 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
   definePrismaObject,
   defineFieldObject,

@@ -10,7 +10,6 @@ module.exports = {
     excludeResolversContain: ["User"],
     prismaCaller: 'db',
     disabled: false,
-    builderImporter: "import { builder } from '../builder';",
     inputsImporter: "import * as Inputs from '@/schema/__generated__/inputs'",
     deleteOutputDirBeforeGenerate: true,
     exportEverythingInObjectsDotTs: true,
@@ -18,11 +17,11 @@ module.exports = {
     resolverImports: `\nimport { db } from '@/db';`,
   },
   inputs: {
-    builderImporter: "import { builder } from '../builder';",
     prismaImporter: `import { Prisma } from '@prisma/client';`,
     outputFilePath: './src/schema/__generated__/inputs.ts',
   },
   global: {
+    builderLocation: "./src/schema/builder"
     // replacer: (str, section) => {
     //   if (section === 'crud.model.resolver') {
     //     return str.replace(

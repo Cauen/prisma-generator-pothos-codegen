@@ -23,17 +23,19 @@ export const makeResolver = (
       resolve,
       field: isPrisma ? 'prismaField' : 'field',
     },
-    ['modelName', 'inputsImporter', 'resolverImports'],
+    ['modelName', 'inputsImporter', 'resolverImports', 'builderCalculatedImport'],
   );
 
-export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}
+export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}#{builderCalculatedImport}
 import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils';
+
+export const #{operation}#{modelName}#{root}Args = builder.args((t) => (#{args}))
 
 export const #{operation}#{modelName}#{root}Object = define#{root}Function((t) =>
   define#{root}#{object}({
     type: #{type},
     nullable: #{nullable},
-    args: #{args},
+    args: #{operation}#{modelName}#{root}Args,
     resolve: #{resolve},
   }),
 );

@@ -1,4 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
+import { getBuilderCalculatedImport } from '../../crudGenerator/utils/parts';
 import { ConfigInternal } from '../../utils/config';
 import { useTemplate } from '../../utils/template';
 import { getUsedScalars } from './dmmf';
@@ -16,9 +17,13 @@ export const getEnums = (dmmf: DMMF.Document) => {
     .join('\n\n');
 };
 
-export const getImports = (config: ConfigInternal) =>
+export const getImports = (config: ConfigInternal, fileLocation: string) =>
   // Add ts-nocheck command to get rid of "Excessive stack depth comparing types" error.
-  ['// @ts-nocheck', config.inputs.prismaImporter, config.inputs.builderImporter].join('\n');
+  [
+    '// @ts-nocheck',
+    config.inputs.prismaImporter,
+    getBuilderCalculatedImport({ config, fileLocation }),
+  ].join('\n');
 
 export const getScalars = ({ inputs: { excludeScalars } }: ConfigInternal, dmmf: DMMF.Document) => {
   const usedScalars = getUsedScalars(dmmf.schema.inputObjectTypes.prisma);

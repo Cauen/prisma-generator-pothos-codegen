@@ -33,13 +33,13 @@ const makeQuery = (
   );
 
 const queryListArgsTemplate = `{
-      where: t.arg({ type: Inputs.#{modelName}WhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.#{modelName}OrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.#{modelNameUpper}ScalarFieldEnum], required: false }),
-    }`;
+  where: t.field({ type: Inputs.#{modelName}WhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.#{modelName}OrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.#{modelNameUpper}ScalarFieldEnum], required: false }),
+}`;
 
 const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.#{operation}({
@@ -51,7 +51,7 @@ const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _inf
         orderBy: args.orderBy || undefined,#{query}
       })`;
 
-const querySingleArgsTemplate = `{ where: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }`;
+const querySingleArgsTemplate = `{ where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }`;
 
 const querySingleResolveTemplate = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.findUnique({ where: args.where, ...query })`;

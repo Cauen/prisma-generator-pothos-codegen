@@ -1,4 +1,3 @@
-import { builder } from '../builder';
 import * as User from './User';
 import * as Post from './Post';
 import * as ExtraModal from './ExtraModal';
@@ -9,6 +8,7 @@ import * as Unrelated from './Unrelated';
 import * as IdOnly from './IdOnly';
 import * as WithoutID from './WithoutID';
 import * as WithScalars from './WithScalars';
+import { builder } from '../builder';
 import * as Objects from './objects';
 
 type Model = Objects.Model;

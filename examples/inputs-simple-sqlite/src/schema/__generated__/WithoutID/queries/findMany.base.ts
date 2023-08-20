@@ -1,19 +1,22 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import { db } from '@/db';
+import { builder } from '../../../builder';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
+
+export const findManyWithoutIDQueryArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.WithoutIDWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.WithoutIDOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.WithoutIDWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.WithoutIDScalarFieldEnum], required: false }),
+}))
 
 export const findManyWithoutIDQueryObject = defineQueryFunction((t) =>
   defineQueryPrismaObject({
     type: ['WithoutID'],
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.WithoutIDWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.WithoutIDOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.WithoutIDWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.WithoutIDScalarFieldEnum], required: false }),
-    },
+    args: findManyWithoutIDQueryArgs,
     resolve: async (query, _root, args, _context, _info) =>
       await db.withoutID.findMany({
         where: args.where || undefined,

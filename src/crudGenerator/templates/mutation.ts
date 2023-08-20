@@ -9,7 +9,7 @@ const mutationNames = [
   'updateOne',
   'upsertOne',
 ];
-type OperationOptions = typeof mutationNames[number];
+type OperationOptions = (typeof mutationNames)[number];
 
 const makeMutation = (
   operation: OperationOptions,
@@ -31,7 +31,7 @@ const makeMutation = (
   );
 
 const createManyArgs =
-  '{ data: t.arg({ type: [Inputs.#{modelName}CreateInput], required: true }) }';
+  '{ data: t.field({ type: [Inputs.#{modelName}CreateInput], required: true }) }';
 
 const createManyResolver = `async (_query, _root, args, _context, _info) =>
       await #{prisma}.$transaction(args.data.map((data) => #{prisma}.#{modelNameLower}.create({ data })))`;
@@ -44,7 +44,7 @@ const createMany = makeMutation(
   createManyResolver,
 );
 
-const createOneArgs = '{ data: t.arg({ type: Inputs.#{modelName}CreateInput, required: true }) }';
+const createOneArgs = '{ data: t.field({ type: Inputs.#{modelName}CreateInput, required: true }) }';
 
 const createOneResolver = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.create({ data: args.data, ...query })`;
@@ -57,7 +57,8 @@ const createOne = makeMutation(
   createOneResolver,
 );
 
-const deleteManyArgs = '{ where: t.arg({ type: Inputs.#{modelName}WhereInput, required: true }) }';
+const deleteManyArgs =
+  '{ where: t.field({ type: Inputs.#{modelName}WhereInput, required: true }) }';
 
 const deleteManyResolver = `async (_root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.deleteMany({ where: args.where })`;
@@ -72,7 +73,7 @@ const deleteMany = makeMutation(
 );
 
 const delteOneArgs =
-  '{ where: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }';
+  '{ where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }';
 
 const deleteOneResolver = `async (query, _root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.delete({ where: args.where, ...query })`;
@@ -86,8 +87,8 @@ const deleteOne = makeMutation(
 );
 
 const updateManyArgs = `{
-      where: t.arg({ type: Inputs.#{modelName}WhereInput, required: false }),
-      data: t.arg({ type: Inputs.#{modelName}UpdateManyMutationInput, required: true }),
+      where: t.field({ type: Inputs.#{modelName}WhereInput, required: false }),
+      data: t.field({ type: Inputs.#{modelName}UpdateManyMutationInput, required: true }),
     }`;
 
 const updateManyResolver = `async (_root, args, _context, _info) =>
@@ -103,8 +104,8 @@ const updateMany = makeMutation(
 );
 
 const updateOneArgs = `{
-      where: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: true }),
-      data: t.arg({ type: Inputs.#{modelName}UpdateInput, required: true }),
+      where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }),
+      data: t.field({ type: Inputs.#{modelName}UpdateInput, required: true }),
     }`;
 
 const updateOneResolver = `async (query, _root, args, _context, _info) =>
@@ -119,9 +120,9 @@ const updateOne = makeMutation(
 );
 
 const upsertOneArgs = `{
-      where: t.arg({ type: Inputs.#{modelName}WhereUniqueInput, required: true }),
-      create: t.arg({ type: Inputs.#{modelName}CreateInput, required: true }),
-      update: t.arg({ type: Inputs.#{modelName}UpdateInput, required: true }),
+      where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }),
+      create: t.field({ type: Inputs.#{modelName}CreateInput, required: true }),
+      update: t.field({ type: Inputs.#{modelName}UpdateInput, required: true }),
     }`;
 
 const upsertOneResolver = `async (query, _root, args, _context, _info) =>

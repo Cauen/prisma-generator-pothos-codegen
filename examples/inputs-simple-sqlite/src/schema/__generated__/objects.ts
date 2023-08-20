@@ -1,5 +1,3 @@
-
-import { builder } from '../builder';
 import { Prisma } from '@prisma/client';
 export {
   UserObject,
@@ -279,6 +277,7 @@ export {
   countWithScalarsQueryObject,
   findUniqueWithScalarsQueryObject
 } from './WithScalars';
+import { builder } from '../builder';
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
   description: 'Batch payloads from prisma.',
