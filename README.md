@@ -149,6 +149,10 @@ module.exports = {
       excludeScalars?: string[];
       /** A function to replace generated source. Combined with global replacer config */
       replacer?: Replacer<'inputs'>;
+      /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar.
+       *
+       * ATTENTION: Mapping non String requires a conversion inside resolver, once GraphQl ID Input are coerced to String by definition. Default: false */
+      mapIdFieldsToGraphqlId?: false | 'WhereUniqueInputs';
     };
     /** CRUD generation config */
     crud?: {
@@ -158,7 +162,7 @@ module.exports = {
       builderImporter?: string;
       /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
       inputsImporter?: string;
-      /** How to import the Prisma namespace. Default `"import { Prisma } from '.prisma/client';"` */
+      /** How to import the Prisma namespace at the objects.ts file. Default `"import { Prisma } from '.prisma/client';"`. Please use "resolverImports" to import prismaClient at resolvers. */
       prismaImporter?: string;
       /** How to call the prisma client. Default `'_context.prisma'` */
       prismaCaller?: string;
@@ -182,6 +186,8 @@ module.exports = {
       deleteOutputDirBeforeGenerate?: boolean;
       /** Export all crud queries/mutations/objects in objects.ts at root dir. Default: true */
       exportEverythingInObjectsDotTs?: boolean;
+      /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar. Default: 'Objects' */
+      mapIdFieldsToGraphqlId?: false | 'Objects';
     };
     /** Global config */
     global?: {

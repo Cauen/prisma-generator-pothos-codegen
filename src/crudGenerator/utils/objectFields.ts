@@ -1,4 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
+import { ConfigInternal } from '../../utils/config';
 import { firstLetterUpperCase } from '../../utils/string';
 import { useTemplate } from '../../utils/template';
 import {
@@ -13,6 +14,7 @@ const cleanifyDocumentation = (str?: string) => str?.replace(/\s*@Pothos\.omit\(
 export const getObjectFieldsString = (
   modelName: string,
   fields: DMMF.Field[],
+  config: ConfigInternal,
 ): { fields: string[]; exportFields: string[] } =>
   fields.reduce(
     (
@@ -31,7 +33,7 @@ export const getObjectFieldsString = (
       let expose: string | null = null;
       if (type === 'String' || type === 'Int' || type === 'Float' || type === 'Boolean')
         expose = type;
-      if (isId) expose = 'ID';
+      if (isId && config.crud.mapIdFieldsToGraphqlId === 'Objects') expose = 'ID';
       if (expose) {
         fields.push(`${name}: t.expose${expose}${isList ? 'List' : ''}('${name}', ${obj}),`);
         exportFields.push(useTemplate(exposeObjectTemplate, templateOpts));

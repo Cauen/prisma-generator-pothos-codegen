@@ -84,10 +84,7 @@ const makeInputs = (
       return useTemplate(T.inputTemplate, {
         inputName: input.name.replace('Unchecked', ''),
         prismaInputName: input.name,
-        fields: getInputFieldsString(input, model?.[1], config.inputs.simple).replaceAll(
-          'Unchecked',
-          '',
-        ),
+        fields: getInputFieldsString(input, model?.[1], config).replaceAll('Unchecked', ''),
       });
     })
     .join('\n\n');

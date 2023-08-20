@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.5.9
+
+- [x] Improve: Add config config.crud.mapIdFieldsToGraphqlId to allow disable Objects ID fields from being parsed to Graphql ID scalar.
+- [x] Improve: Add config config.inputs.mapIdFieldsToGraphqlId to allow parsing WhereUniqueInput ID fields to Graphql ID scalar.
+
+
 # 0.5.8
 
 - [x] Improve: Input scalar some improves at parseValue

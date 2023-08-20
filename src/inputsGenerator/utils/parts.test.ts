@@ -11,7 +11,7 @@ describe('getInputs', () => {
     expect(includedInputs.includes(builtString)).toBe(true);
   });
 
-  test("should map String or Int with @id attribute to 'ID' scalar", async () => {
+  test("should map @id attribute to 'ID' scalar on whereUniqueInputs if option enabled", async () => {
     const dmmf = await getSampleDMMF('complex');
     const defaultConfig = getDefaultConfig();
     const builtStrings = [
@@ -22,9 +22,23 @@ describe('getInputs', () => {
   id: t.id({"required":false}),
 });`,
     ];
-    const includedInputs = getInputs(defaultConfig, dmmf);
+    const includedInputs = getInputs(
+      {
+        ...defaultConfig,
+        inputs: {
+          ...defaultConfig.inputs,
+          mapIdFieldsToGraphqlId: 'WhereUniqueInputs',
+        },
+      },
+      dmmf,
+    );
     builtStrings.forEach((builtString) => {
       expect(includedInputs.includes(builtString)).toBe(true);
+    });
+
+    const excludedInputs = getInputs(defaultConfig, dmmf);
+    builtStrings.forEach((builtString) => {
+      expect(excludedInputs.includes(builtString)).toBe(false);
     });
   });
 });

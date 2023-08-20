@@ -1,4 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
+import { ConfigInternal } from '../../utils/config';
 import { firstLetterLowerCase, firstLetterUpperCase } from '../../utils/string';
 import { getMainInput } from './dmmf';
 import { parseComment } from './parser';
@@ -6,10 +7,11 @@ import { parseComment } from './parser';
 /** Convert array of fields to a string code representation */
 export const getInputFieldsString = (
   input: DMMF.InputType,
-  model?: DMMF.Model,
-  simple?: boolean,
+  model: DMMF.Model | undefined,
+  config: ConfigInternal,
 ): string => {
   const omitted: { name: string; reason: string }[] = [];
+  const simple = config.inputs.simple;
 
   const filtered = input.fields.filter((field) => {
     // Fields are filtered for simple mode if this is enabled
@@ -60,16 +62,20 @@ export const getInputFieldsString = (
       : filtered.map((field) => {
           const { isList, type, location } = getMainInput().run(field.inputTypes);
           const props = { required: field.isRequired, description: undefined };
+
           const defaultScalarList = ['String', 'Int', 'Float', 'Boolean'];
           const isScalar = location === 'scalar' && defaultScalarList.includes(type.toString());
 
           const getFieldType = () => {
-            const fieldDetails = model?.fields.find((f) => f.name === field.name);
             if (isList) {
               return `${type}List`;
             }
-            if (fieldDetails?.isId && isScalar) {
-              return 'id';
+
+            if (isScalar && config.inputs.mapIdFieldsToGraphqlId === 'WhereUniqueInputs') {
+              const fieldDetails = model?.fields.find((f) => f.name === field.name);
+              if (fieldDetails?.isId) {
+                return 'id';
+              }
             }
             return type.toString();
           };

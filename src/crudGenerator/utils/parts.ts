@@ -64,7 +64,7 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
     }: fields })`;
 
   // Fields
-  const { fields, exportFields } = getObjectFieldsString(model.name, model.fields);
+  const { fields, exportFields } = getObjectFieldsString(model.name, model.fields, config);
 
   // Write output
   await writeFile(

@@ -19,6 +19,10 @@ export interface Config {
     excludeScalars?: string[];
     /** A function to replace generated source. Combined with global replacer config */
     replacer?: Replacer<'inputs'>;
+    /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar.
+     *
+     * ATTENTION: Mapping non String requires a conversion inside resolver, once GraphQl ID Input are coerced to String by definition. Default: false */
+    mapIdFieldsToGraphqlId?: false | 'WhereUniqueInputs';
   };
   /** CRUD generation config */
   crud?: {
@@ -52,6 +56,8 @@ export interface Config {
     deleteOutputDirBeforeGenerate?: boolean;
     /** Export all crud queries/mutations/objects in objects.ts at root dir. Default: true */
     exportEverythingInObjectsDotTs?: boolean;
+    /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar. Default: 'Objects' */
+    mapIdFieldsToGraphqlId?: false | 'Objects';
   };
   /** Global config */
   global?: {
@@ -108,6 +114,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
     replacer: (str: string) => str,
+    mapIdFieldsToGraphqlId: false,
   },
   crud: {
     disabled: false,
@@ -125,6 +132,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     includeResolversExact: [],
     deleteOutputDirBeforeGenerate: false,
     exportEverythingInObjectsDotTs: true,
+    mapIdFieldsToGraphqlId: 'Objects',
   },
   global: {
     replacer: (str: string) => str,
