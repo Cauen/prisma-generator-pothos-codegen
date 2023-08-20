@@ -66,6 +66,9 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
   // Fields
   const { fields, exportFields } = getObjectFieldsString(model.name, model.fields, config);
 
+  const fileLocation = path.join(config.crud.outputDir, model.name, 'object.base.ts');
+  const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation });
+
   // Write output
   await writeFile(
     config,
@@ -77,8 +80,9 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
       inputsImporter: config.crud.inputsImporter,
       fields: fields.join('\n    '),
       exportFields: exportFields.join('\n\n'),
+      builderCalculatedImport,
     }),
-    path.join(config.crud.outputDir, model.name, 'object.base.ts'),
+    fileLocation,
   );
 }
 
@@ -103,6 +107,23 @@ const isExcludedResolver = (options: ConfigInternal, name: string) => {
     return true;
   }
   return false;
+};
+
+export const getBuilderCalculatedImport = ({
+  config,
+  fileLocation,
+}: {
+  fileLocation: string;
+  config: ConfigInternal;
+}) => {
+  const builderRelative = path.relative(
+    process.cwd(),
+    path.join(process.cwd(), config.global.builderLocation),
+  );
+  const relativeImport = path.relative(path.dirname(fileLocation), builderRelative);
+
+  const importer = `\nimport { builder } from '${relativeImport}';`;
+  return importer;
 };
 
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
@@ -130,6 +151,9 @@ export async function writeResolvers(
   // Generate files
   await Promise.all(
     resolvers.map(([name, template]) => {
+      const fileLocation = path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`);
+      const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation });
+
       return writeFile(
         config,
         'crud.model.resolver',
@@ -140,8 +164,9 @@ export async function writeResolvers(
           prisma: config.crud.prismaCaller,
           resolverImports: config.crud.resolverImports,
           inputsImporter: resolverInputsImporter,
+          builderCalculatedImport,
         }),
-        path.join(config.crud.outputDir, model.name, type, `${name}.base.ts`),
+        fileLocation,
       );
     }),
   );

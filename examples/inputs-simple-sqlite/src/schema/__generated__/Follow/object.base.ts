@@ -1,6 +1,6 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,21 +11,25 @@ export const FollowObject = definePrismaObject('Follow', {
   description: undefined,
   findUnique: (fields) => ({ compositeID: fields }),
   fields: (t) => ({
-    fromId: t.exposeInt('fromId', FollowFromIdFieldObject),
-    toId: t.exposeInt('toId', FollowToIdFieldObject),
+    fromId: t.field(FollowFromIdFieldObject),
+    toId: t.field(FollowToIdFieldObject),
     From: t.relation('From', FollowFromFieldObject),
     To: t.relation('To', FollowToFieldObject),
   }),
 });
 
-export const FollowFromIdFieldObject = defineExposeObject('Int', {
+export const FollowFromIdFieldObject = defineFieldObject('Follow', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.fromId,
 });
 
-export const FollowToIdFieldObject = defineExposeObject('Int', {
+export const FollowToIdFieldObject = defineFieldObject('Follow', {
+  type: "Int",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.toId,
 });
 
 export const FollowFromFieldObject = defineRelationObject('Follow', 'From', {

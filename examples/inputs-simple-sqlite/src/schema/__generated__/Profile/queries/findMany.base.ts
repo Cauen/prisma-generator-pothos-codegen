@@ -1,19 +1,22 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import { db } from '@/db';
+import { builder } from '../../../builder';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
+
+export const findManyProfileQueryArgs = builder.args((t) => ({
+  where: t.field({ type: Inputs.ProfileWhereInput, required: false }),
+  orderBy: t.field({ type: [Inputs.ProfileOrderByWithRelationInput], required: false }),
+  cursor: t.field({ type: Inputs.ProfileWhereUniqueInput, required: false }),
+  take: t.field({ type: 'Int', required: false }),
+  skip: t.field({ type: 'Int', required: false }),
+  distinct: t.field({ type: [Inputs.ProfileScalarFieldEnum], required: false }),
+}))
 
 export const findManyProfileQueryObject = defineQueryFunction((t) =>
   defineQueryPrismaObject({
     type: ['Profile'],
     nullable: false,
-    args: {
-      where: t.arg({ type: Inputs.ProfileWhereInput, required: false }),
-      orderBy: t.arg({ type: [Inputs.ProfileOrderByWithRelationInput], required: false }),
-      cursor: t.arg({ type: Inputs.ProfileWhereUniqueInput, required: false }),
-      take: t.arg({ type: 'Int', required: false }),
-      skip: t.arg({ type: 'Int', required: false }),
-      distinct: t.arg({ type: [Inputs.ProfileScalarFieldEnum], required: false }),
-    },
+    args: findManyProfileQueryArgs,
     resolve: async (query, _root, args, _context, _info) =>
       await db.profile.findMany({
         where: args.where || undefined,

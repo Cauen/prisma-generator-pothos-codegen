@@ -1,6 +1,4 @@
-export const objectsTemplate = `
-#{builderImporter}
-#{prismaImporter}#{crudExportRoot}
+export const objectsTemplate = `#{prismaImporter}#{crudExportRoot}#{builderCalculatedImport}
 
 export const BatchPayload = builder.objectType(builder.objectRef<Prisma.BatchPayload>('BatchPayload'), {
   description: 'Batch payloads from prisma.',
@@ -31,8 +29,7 @@ import {
   PrismaFieldOptions,
   PrismaObjectTypeOptions,
   RelatedFieldOptions,
-} from '@pothos/plugin-prisma';
-#{builderImporter}
+} from '@pothos/plugin-prisma';#{builderCalculatedImport}
 
 type Types = typeof builder extends PothosSchemaTypes.SchemaBuilder<infer T> ? T : unknown;
 
@@ -124,11 +121,6 @@ export const defineFieldObject = <
 ) =>
   obj as { type: Type; nullable: Nullable; description?: string; resolve: typeof obj['resolve'] };
 
-export const defineExposeObject = <Type extends TypeParam<Types>, Nullable extends boolean>(
-  _: Type,
-  obj: { description: string | undefined; nullable: Nullable },
-) => obj;
-
 export const defineRelationObject = <
   ModelName extends keyof Types['PrismaTypes'],
   RelationName extends keyof Types['PrismaTypes'][ModelName]['Relations'],
@@ -202,8 +194,7 @@ export const definePrismaObject = <
     },
   },
  */
-export const autoCrudTemplate = `#{builderImporter}
-#{imports}
+export const autoCrudTemplate = `#{imports}#{builderCalculatedImport}
 import * as Objects from './objects';
 
 type Model = Objects.Model;

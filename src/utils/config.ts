@@ -11,8 +11,6 @@ export interface Config {
     simple?: boolean;
     /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
     prismaImporter?: string;
-    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
-    builderImporter?: string;
     /** Path to generate the inputs file to from project root. Default: `'./generated/inputs.ts'` */
     outputFilePath?: string;
     /** List of excluded scalars from generated output */
@@ -28,8 +26,6 @@ export interface Config {
   crud?: {
     /** Disable generaton of crud. Default: `false` */
     disabled?: boolean;
-    /** How to import the Pothos builder. Overrides global builderImporter config. Default: `"import { builder } from './builder';"` */
-    builderImporter?: string;
     /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
     inputsImporter?: string;
     /** How to import the Prisma namespace at the objects.ts file. Default `"import { Prisma } from '.prisma/client';"`. Please use "resolverImports" to import prismaClient at resolvers. */
@@ -63,12 +59,12 @@ export interface Config {
   global?: {
     /** A function to replace generated source */
     replacer?: Replacer;
-    /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
-    builderImporter?: string;
     /** Run function before generate */
     beforeGenerate?: (dmmf: DMMF.Document) => void;
     /** Run function after generate */
     afterGenerate?: (dmmf: DMMF.Document) => void;
+    /** Location of builder. Default: './builder', */
+    builderLocation?: string;
   };
 }
 
@@ -110,7 +106,6 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   inputs: {
     simple: false,
     prismaImporter: `import { Prisma } from '.prisma/client';`,
-    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     outputFilePath: './generated/inputs.ts',
     excludeScalars: [],
     replacer: (str: string) => str,
@@ -118,7 +113,6 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   },
   crud: {
     disabled: false,
-    builderImporter: global?.builderImporter || `import { builder } from './builder';`,
     inputsImporter: `import * as Inputs from '../inputs';`,
     prismaImporter: `import { Prisma } from '.prisma/client';`,
     prismaCaller: '_context.prisma',
@@ -137,6 +131,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   global: {
     replacer: (str: string) => str,
     builderImporter: '',
+    builderLocation: './builder',
     beforeGenerate: () => {
       // noop
     },

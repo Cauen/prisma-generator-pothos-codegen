@@ -106,11 +106,6 @@ export const defineFieldObject = <
 ) =>
   obj as { type: Type; nullable: Nullable; description?: string; resolve: typeof obj['resolve'] };
 
-export const defineExposeObject = <Type extends TypeParam<Types>, Nullable extends boolean>(
-  _: Type,
-  obj: { description: string | undefined; nullable: Nullable },
-) => obj;
-
 export const defineRelationObject = <
   ModelName extends keyof Types['PrismaTypes'],
   RelationName extends keyof Types['PrismaTypes'][ModelName]['Relations'],

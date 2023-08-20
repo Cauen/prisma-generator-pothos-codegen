@@ -1,6 +1,6 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,11 +11,11 @@ export const WithScalarsObject = definePrismaObject('WithScalars', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', WithScalarsIdFieldObject),
-    string: t.exposeString('string', WithScalarsStringFieldObject),
-    boolean: t.exposeBoolean('boolean', WithScalarsBooleanFieldObject),
-    int: t.exposeInt('int', WithScalarsIntFieldObject),
-    float: t.exposeFloat('float', WithScalarsFloatFieldObject),
+    id: t.field(WithScalarsIdFieldObject),
+    string: t.field(WithScalarsStringFieldObject),
+    boolean: t.field(WithScalarsBooleanFieldObject),
+    int: t.field(WithScalarsIntFieldObject),
+    float: t.field(WithScalarsFloatFieldObject),
     decimal: t.field(WithScalarsDecimalFieldObject),
     bigint: t.field(WithScalarsBigintFieldObject),
     datetime: t.field(WithScalarsDatetimeFieldObject),
@@ -23,29 +23,39 @@ export const WithScalarsObject = definePrismaObject('WithScalars', {
   }),
 });
 
-export const WithScalarsIdFieldObject = defineExposeObject('Int', {
+export const WithScalarsIdFieldObject = defineFieldObject('WithScalars', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const WithScalarsStringFieldObject = defineExposeObject('String', {
+export const WithScalarsStringFieldObject = defineFieldObject('WithScalars', {
+  type: "String",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.string,
 });
 
-export const WithScalarsBooleanFieldObject = defineExposeObject('Boolean', {
+export const WithScalarsBooleanFieldObject = defineFieldObject('WithScalars', {
+  type: "Boolean",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.boolean,
 });
 
-export const WithScalarsIntFieldObject = defineExposeObject('Int', {
+export const WithScalarsIntFieldObject = defineFieldObject('WithScalars', {
+  type: "Int",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.int,
 });
 
-export const WithScalarsFloatFieldObject = defineExposeObject('Float', {
+export const WithScalarsFloatFieldObject = defineFieldObject('WithScalars', {
+  type: "Float",
   description: undefined,
   nullable: true,
+  resolve: (parent) => parent.float,
 });
 
 export const WithScalarsDecimalFieldObject = defineFieldObject('WithScalars', {

@@ -5,7 +5,6 @@ import { useTemplate } from '../../utils/template';
 import {
   relationObjectTemplate,
   listRelationObjectTemplate,
-  exposeObjectTemplate,
   fieldObjectTemplate,
 } from '../templates/object';
 
@@ -29,17 +28,6 @@ export const getObjectFieldsString = (
       const obj = `${modelName}${nameUpper}FieldObject`;
       const templateOpts = { modelName, name, nameUpper, description, nullable, type };
 
-      // Expose
-      let expose: string | null = null;
-      if (type === 'String' || type === 'Int' || type === 'Float' || type === 'Boolean')
-        expose = type;
-      if (isId && config.crud.mapIdFieldsToGraphqlId === 'Objects') expose = 'ID';
-      if (expose) {
-        fields.push(`${name}: t.expose${expose}${isList ? 'List' : ''}('${name}', ${obj}),`);
-        exportFields.push(useTemplate(exposeObjectTemplate, templateOpts));
-        return { fields, exportFields };
-      }
-
       // Relation
       if (relationName) {
         fields.push(`${name}: t.relation('${name}', ${obj}${isList ? '(t)' : ''}),`);
@@ -56,11 +44,29 @@ export const getObjectFieldsString = (
 
       // Scalar (DateTime, Json, Enums, etc.)
       fields.push(`${name}: t.field(${obj}),`);
+
+      const shouldBeGraphqlId = isId && config.crud.mapIdFieldsToGraphqlId === 'Objects';
+
       exportFields.push(
         useTemplate(fieldObjectTemplate, {
           ...templateOpts,
-          bracketOptionalOpening: isList ? '[' : '',
-          bracketOptionalClosing: isList ? ']' : '',
+          conditionalType: (() => {
+            const type = templateOpts.type;
+            const isNativeType = ['String', 'Int', 'Float', 'Boolean'].includes(type);
+            const importedType = (() => {
+              if (shouldBeGraphqlId) return `"ID"`;
+              return isNativeType ? `"${type}"` : `Inputs.${type}`;
+            })();
+            const bracketify = (str: string) => `[${str}]`;
+            return isList ? bracketify(importedType) : importedType;
+          })(),
+          conditionalResolve: (() => {
+            const name = templateOpts.name;
+            const value = `parent.${name}`;
+            const stringParsefy = (str: string) => `String(${str})`;
+            const final = shouldBeGraphqlId ? stringParsefy(value) : value;
+            return final;
+          })(),
         }),
       );
       return { fields, exportFields };

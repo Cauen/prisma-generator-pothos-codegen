@@ -5,6 +5,7 @@ import { deleteFolder, writeFile } from '../utils/filesystem';
 import { useTemplate } from '../utils/template';
 import { utilsTemplate, objectsTemplate, autoCrudTemplate } from './templates/root';
 import { generateModel } from './utils/generator';
+import { getBuilderCalculatedImport } from './utils/parts';
 
 export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document): Promise<void> {
   if (config.crud.disabled) return;
@@ -32,6 +33,12 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
 
   // Generate root objects.ts file (export all models + prisma objects)
   const modelNamesEachLine = modelNames.map((model) => `'${model}',`).join('\n  ');
+  const fileLocationObjects = path.join(config.crud.outputDir, 'objects.ts');
+  const builderCalculatedImportObjects = getBuilderCalculatedImport({
+    config,
+    fileLocation: fileLocationObjects,
+  });
+
   await writeFile(
     config,
     'crud.objects',
@@ -43,16 +50,22 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
         : '',
       ...config.crud,
       modelNames: modelNamesEachLine,
+      builderCalculatedImport: builderCalculatedImportObjects,
     }),
-    path.join(config.crud.outputDir, 'objects.ts'),
+    fileLocationObjects,
   );
+
+  const fileLocation = path.join(config.crud.outputDir, 'utils.ts');
+  const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation });
 
   // Generate root utils.ts file
   await writeFile(
     config,
     'crud.utils',
-    useTemplate(utilsTemplate, config.crud),
-    path.join(config.crud.outputDir, 'utils.ts'),
+    useTemplate(utilsTemplate, {
+      builderCalculatedImport,
+    }),
+    fileLocation,
   );
 
   // Generate root autocrud.ts file
@@ -97,11 +110,19 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
       })
       .join('\n');
 
+    const fileLocation = path.join(config.crud.outputDir, 'autocrud.ts');
+    const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation });
+
     await writeFile(
       config,
       'crud.autocrud',
-      useTemplate(autoCrudTemplate, { ...config.crud, imports, modelsGenerated }),
-      path.join(config.crud.outputDir, 'autocrud.ts'),
+      useTemplate(autoCrudTemplate, {
+        ...config.crud,
+        imports,
+        modelsGenerated,
+        builderCalculatedImport,
+      }),
+      fileLocation,
     );
   }
 }

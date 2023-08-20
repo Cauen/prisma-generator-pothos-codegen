@@ -1,6 +1,6 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,21 +11,25 @@ export const ExtraModalObject = definePrismaObject('ExtraModal', {
   description: undefined,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
-    id: t.exposeID('id', ExtraModalIdFieldObject),
-    title: t.exposeString('title', ExtraModalTitleFieldObject),
+    id: t.field(ExtraModalIdFieldObject),
+    title: t.field(ExtraModalTitleFieldObject),
     createdAt: t.field(ExtraModalCreatedAtFieldObject),
     updatedAt: t.field(ExtraModalUpdatedAtFieldObject),
   }),
 });
 
-export const ExtraModalIdFieldObject = defineExposeObject('Int', {
+export const ExtraModalIdFieldObject = defineFieldObject('ExtraModal', {
+  type: "ID",
   description: undefined,
   nullable: false,
+  resolve: (parent) => String(parent.id),
 });
 
-export const ExtraModalTitleFieldObject = defineExposeObject('String', {
+export const ExtraModalTitleFieldObject = defineFieldObject('ExtraModal', {
+  type: "String",
   description: 'The title of extramodal',
   nullable: false,
+  resolve: (parent) => parent.title,
 });
 
 export const ExtraModalCreatedAtFieldObject = defineFieldObject('ExtraModal', {

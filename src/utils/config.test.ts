@@ -127,7 +127,6 @@ describe('parseConfig', () => {
 
     expect(configs).toEqual({
       crud: expect.objectContaining({
-        builderImporter: matchImport,
         deleteOutputDirBeforeGenerate: expect.any(Boolean),
         disabled: expect.any(Boolean),
         excludeResolversContain: expect.arrayContaining([expect.any(String)]),
@@ -136,7 +135,6 @@ describe('parseConfig', () => {
       }),
       global: {},
       inputs: expect.objectContaining({
-        builderImporter: matchImport,
         outputFilePath: matchRelativePath,
         prismaImporter: matchImport,
       }),
@@ -155,7 +153,6 @@ describe('getConfig', () => {
     expect(getDefaultConfigMock).toHaveBeenCalledWith();
     expect(configs).toEqual({
       crud: expect.objectContaining({
-        builderImporter: `import { builder } from './builder';`,
         deleteOutputDirBeforeGenerate: false,
         disabled: false,
         excludeResolversContain: [],
@@ -172,11 +169,9 @@ describe('getConfig', () => {
       global: expect.objectContaining({
         afterGenerate: expect.any(Function),
         beforeGenerate: expect.any(Function),
-        builderImporter: '',
         replacer: expect.any(Function),
       }),
       inputs: expect.objectContaining({
-        builderImporter: `import { builder } from './builder';`,
         excludeScalars: [],
         outputFilePath: './generated/inputs.ts',
         prismaImporter: `import { Prisma } from '.prisma/client';`,
@@ -192,7 +187,6 @@ describe('getConfig', () => {
     expect(getDefaultConfigMock).toHaveBeenCalledWith({});
     expect(configs).toEqual({
       crud: expect.objectContaining({
-        builderImporter: `import { builder } from '../builder';`,
         deleteOutputDirBeforeGenerate: true,
         disabled: false,
         excludeResolversContain: ['User'],
@@ -210,11 +204,9 @@ describe('getConfig', () => {
       global: expect.objectContaining({
         afterGenerate: expect.any(Function),
         beforeGenerate: expect.any(Function),
-        builderImporter: '',
         replacer: expect.any(Function),
       }),
       inputs: expect.objectContaining({
-        builderImporter: `import { builder } from '../builder';`,
         excludeScalars: [],
         outputFilePath: './src/schema/__generated__/inputs.ts',
         prismaImporter: `import { Prisma } from '.prisma/client';`,

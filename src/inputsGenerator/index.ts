@@ -39,12 +39,14 @@ export async function generateInputs(config: ConfigInternal, dmmf: DMMF.Document
   if (env.isTesting)
     await writeFile(config, 'debug.dmmf', JSON.stringify(dmmf, null, 2), 'dmmf.json');
 
-  const imports = getImports(config);
+  const fileLocation = config.inputs.outputFilePath;
+
+  const imports = getImports(config, fileLocation);
   const util = getUtil();
   const scalars = getScalars(config, dmmf);
   const enums = getEnums(dmmf);
   const inputs = getInputs(config, dmmf);
   const content = [imports, util, scalars, enums, inputs].join('\n\n');
 
-  await writeFile(config, 'inputs', content, config.inputs.outputFilePath);
+  await writeFile(config, 'inputs', content, fileLocation);
 }

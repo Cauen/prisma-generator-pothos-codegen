@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Prisma } from '@prisma/client';
+
 import { builder } from '../builder';
 
 type Filters = {
@@ -651,7 +652,7 @@ export const WithScalarsWhereInputFields = (t: any) => ({
   AND: t.field({"required":false,"type":[WithScalarsWhereInput]}),
   OR: t.field({"required":false,"type":[WithScalarsWhereInput]}),
   NOT: t.field({"required":false,"type":[WithScalarsWhereInput]}),
-  id: t.field({"required":false,"type":IntFilter}),
+  id: t.field({"required":false,"type":BigIntFilter}),
   string: t.field({"required":false,"type":StringNullableFilter}),
   boolean: t.field({"required":false,"type":BoolNullableFilter}),
   int: t.field({"required":false,"type":IntNullableFilter}),
@@ -681,7 +682,7 @@ export const WithScalarsOrderByWithRelationInput = builder.inputRef<PrismaUpdate
 });
 
 export const WithScalarsWhereUniqueInputFields = (t: any) => ({
-  id: t.int({"required":false}),
+  id: t.field({"required":false,"type":Bigint}),
 });
 export const WithScalarsWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsWhereUniqueInput>>('WithScalarsWhereUniqueInput').implement({
   fields: WithScalarsWhereUniqueInputFields,
@@ -711,7 +712,7 @@ export const WithScalarsScalarWhereWithAggregatesInputFields = (t: any) => ({
   AND: t.field({"required":false,"type":[WithScalarsScalarWhereWithAggregatesInput]}),
   OR: t.field({"required":false,"type":[WithScalarsScalarWhereWithAggregatesInput]}),
   NOT: t.field({"required":false,"type":[WithScalarsScalarWhereWithAggregatesInput]}),
-  id: t.field({"required":false,"type":IntWithAggregatesFilter}),
+  id: t.field({"required":false,"type":BigIntWithAggregatesFilter}),
   string: t.field({"required":false,"type":StringNullableWithAggregatesFilter}),
   boolean: t.field({"required":false,"type":BoolNullableWithAggregatesFilter}),
   int: t.field({"required":false,"type":IntNullableWithAggregatesFilter}),
@@ -964,6 +965,7 @@ export const WithoutIDUpdateManyMutationInput = builder.inputRef<PrismaUpdateOpe
 });
 
 export const WithScalarsCreateInputFields = (t: any) => ({
+  id: t.field({"required":false,"type":Bigint}),
   string: t.string({"required":false}),
   boolean: t.boolean({"required":false}),
   int: t.int({"required":false}),
@@ -978,6 +980,7 @@ export const WithScalarsCreateInput = builder.inputRef<PrismaUpdateOperationsInp
 });
 
 export const WithScalarsUpdateInputFields = (t: any) => ({
+  id: t.field({"required":false,"type":BigIntFieldUpdateOperationsInput}),
   string: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
   boolean: t.field({"required":false,"type":NullableBoolFieldUpdateOperationsInput}),
   int: t.field({"required":false,"type":NullableIntFieldUpdateOperationsInput}),
@@ -992,6 +995,7 @@ export const WithScalarsUpdateInput = builder.inputRef<PrismaUpdateOperationsInp
 });
 
 export const WithScalarsUpdateManyMutationInputFields = (t: any) => ({
+  id: t.field({"required":false,"type":BigIntFieldUpdateOperationsInput}),
   string: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
   boolean: t.field({"required":false,"type":NullableBoolFieldUpdateOperationsInput}),
   int: t.field({"required":false,"type":NullableIntFieldUpdateOperationsInput}),
@@ -1633,6 +1637,20 @@ export const WithoutIDMinOrderByAggregateInput = builder.inputRef<PrismaUpdateOp
   fields: WithoutIDMinOrderByAggregateInputFields,
 });
 
+export const BigIntFilterFields = (t: any) => ({
+  equals: t.field({"required":false,"type":Bigint}),
+  in: t.field({"required":false,"type":[Bigint]}),
+  notIn: t.field({"required":false,"type":[Bigint]}),
+  lt: t.field({"required":false,"type":Bigint}),
+  lte: t.field({"required":false,"type":Bigint}),
+  gt: t.field({"required":false,"type":Bigint}),
+  gte: t.field({"required":false,"type":Bigint}),
+  not: t.field({"required":false,"type":NestedBigIntFilter}),
+});
+export const BigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFilter>>('BigIntFilter').implement({
+  fields: BigIntFilterFields,
+});
+
 export const BoolNullableFilterFields = (t: any) => ({
   equals: t.boolean({"required":false}),
   not: t.field({"required":false,"type":NestedBoolNullableFilter}),
@@ -1772,6 +1790,25 @@ export const WithScalarsSumOrderByAggregateInputFields = (t: any) => ({
 });
 export const WithScalarsSumOrderByAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsSumOrderByAggregateInput>>('WithScalarsSumOrderByAggregateInput').implement({
   fields: WithScalarsSumOrderByAggregateInputFields,
+});
+
+export const BigIntWithAggregatesFilterFields = (t: any) => ({
+  equals: t.field({"required":false,"type":Bigint}),
+  in: t.field({"required":false,"type":[Bigint]}),
+  notIn: t.field({"required":false,"type":[Bigint]}),
+  lt: t.field({"required":false,"type":Bigint}),
+  lte: t.field({"required":false,"type":Bigint}),
+  gt: t.field({"required":false,"type":Bigint}),
+  gte: t.field({"required":false,"type":Bigint}),
+  not: t.field({"required":false,"type":NestedBigIntWithAggregatesFilter}),
+  _count: t.field({"required":false,"type":NestedIntFilter}),
+  _avg: t.field({"required":false,"type":NestedFloatFilter}),
+  _sum: t.field({"required":false,"type":NestedBigIntFilter}),
+  _min: t.field({"required":false,"type":NestedBigIntFilter}),
+  _max: t.field({"required":false,"type":NestedBigIntFilter}),
+});
+export const BigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntWithAggregatesFilter>>('BigIntWithAggregatesFilter').implement({
+  fields: BigIntWithAggregatesFilterFields,
 });
 
 export const BoolNullableWithAggregatesFilterFields = (t: any) => ({
@@ -2183,6 +2220,17 @@ export const UserUpdateOneRequiredWithoutFollowersNestedInput = builder.inputRef
   fields: UserUpdateOneRequiredWithoutFollowersNestedInputFields,
 });
 
+export const BigIntFieldUpdateOperationsInputFields = (t: any) => ({
+  set: t.field({"required":false,"type":Bigint}),
+  increment: t.field({"required":false,"type":Bigint}),
+  decrement: t.field({"required":false,"type":Bigint}),
+  multiply: t.field({"required":false,"type":Bigint}),
+  divide: t.field({"required":false,"type":Bigint}),
+});
+export const BigIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFieldUpdateOperationsInput>>('BigIntFieldUpdateOperationsInput').implement({
+  fields: BigIntFieldUpdateOperationsInputFields,
+});
+
 export const NullableBoolFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.boolean({"required":false}),
 });
@@ -2438,6 +2486,20 @@ export const NestedStringNullableWithAggregatesFilter = builder.inputRef<PrismaU
   fields: NestedStringNullableWithAggregatesFilterFields,
 });
 
+export const NestedBigIntFilterFields = (t: any) => ({
+  equals: t.field({"required":false,"type":Bigint}),
+  in: t.field({"required":false,"type":[Bigint]}),
+  notIn: t.field({"required":false,"type":[Bigint]}),
+  lt: t.field({"required":false,"type":Bigint}),
+  lte: t.field({"required":false,"type":Bigint}),
+  gt: t.field({"required":false,"type":Bigint}),
+  gte: t.field({"required":false,"type":Bigint}),
+  not: t.field({"required":false,"type":NestedBigIntFilter}),
+});
+export const NestedBigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntFilter>>('NestedBigIntFilter').implement({
+  fields: NestedBigIntFilterFields,
+});
+
 export const NestedBoolNullableFilterFields = (t: any) => ({
   equals: t.boolean({"required":false}),
   not: t.field({"required":false,"type":NestedBoolNullableFilter}),
@@ -2496,6 +2558,25 @@ export const NestedBytesNullableFilterFields = (t: any) => ({
 });
 export const NestedBytesNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBytesNullableFilter>>('NestedBytesNullableFilter').implement({
   fields: NestedBytesNullableFilterFields,
+});
+
+export const NestedBigIntWithAggregatesFilterFields = (t: any) => ({
+  equals: t.field({"required":false,"type":Bigint}),
+  in: t.field({"required":false,"type":[Bigint]}),
+  notIn: t.field({"required":false,"type":[Bigint]}),
+  lt: t.field({"required":false,"type":Bigint}),
+  lte: t.field({"required":false,"type":Bigint}),
+  gt: t.field({"required":false,"type":Bigint}),
+  gte: t.field({"required":false,"type":Bigint}),
+  not: t.field({"required":false,"type":NestedBigIntWithAggregatesFilter}),
+  _count: t.field({"required":false,"type":NestedIntFilter}),
+  _avg: t.field({"required":false,"type":NestedFloatFilter}),
+  _sum: t.field({"required":false,"type":NestedBigIntFilter}),
+  _min: t.field({"required":false,"type":NestedBigIntFilter}),
+  _max: t.field({"required":false,"type":NestedBigIntFilter}),
+});
+export const NestedBigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntWithAggregatesFilter>>('NestedBigIntWithAggregatesFilter').implement({
+  fields: NestedBigIntWithAggregatesFilterFields,
 });
 
 export const NestedBoolNullableWithAggregatesFilterFields = (t: any) => ({

@@ -1,5 +1,12 @@
 # Changelog
 
+# 0.6.0
+
+- [x] Fix: Fix Typescript errors for non Pothos exposable fields ('String', 'Int', 'Float', 'Boolean'), like "BigInt" used as @id. Fixes: #45
+ - Replace exposes in generated object.base files with unified t.field
+- [x] Feature(Breaking Change): It is no longer necessary to define multiple "builderImporter". Now define in config.global.builderLocation the location of the builder, and all imports will be defined automatically. 
+- [x] Feature: Break args apart to make code spliting better. Fixes #49
+
 # 0.5.9
 
 - [x] Improve: Add config config.crud.mapIdFieldsToGraphqlId to allow disable Objects ID fields from being parsed to Graphql ID scalar.

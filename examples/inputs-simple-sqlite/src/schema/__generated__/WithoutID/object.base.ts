@@ -1,6 +1,6 @@
 import * as Inputs from '@/schema/__generated__/inputs'
+import { builder } from '../../builder';
 import {
-  defineExposeObject,
   definePrismaObject,
   defineFieldObject,
   defineRelationFunction,
@@ -11,11 +11,13 @@ export const WithoutIDObject = definePrismaObject('WithoutID', {
   description: undefined,
   findUnique: (fields) => ({ ...fields }),
   fields: (t) => ({
-    name: t.exposeString('name', WithoutIDNameFieldObject),
+    name: t.field(WithoutIDNameFieldObject),
   }),
 });
 
-export const WithoutIDNameFieldObject = defineExposeObject('String', {
+export const WithoutIDNameFieldObject = defineFieldObject('WithoutID', {
+  type: "String",
   description: undefined,
   nullable: false,
+  resolve: (parent) => parent.name,
 });

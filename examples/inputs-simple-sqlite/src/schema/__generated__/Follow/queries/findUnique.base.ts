@@ -1,12 +1,15 @@
 import * as Inputs from '@/schema/__generated__/inputs'
 import { db } from '@/db';
+import { builder } from '../../../builder';
 import { defineQuery, defineQueryFunction, defineQueryPrismaObject } from '../../utils';
+
+export const findUniqueFollowQueryArgs = builder.args((t) => ({ where: t.field({ type: Inputs.FollowWhereUniqueInput, required: true }) }))
 
 export const findUniqueFollowQueryObject = defineQueryFunction((t) =>
   defineQueryPrismaObject({
     type: 'Follow',
     nullable: true,
-    args: { where: t.arg({ type: Inputs.FollowWhereUniqueInput, required: true }) },
+    args: findUniqueFollowQueryArgs,
     resolve: async (query, _root, args, _context, _info) =>
       await db.follow.findUnique({ where: args.where, ...query }),
   }),

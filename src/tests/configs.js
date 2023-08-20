@@ -7,12 +7,10 @@ module.exports = {
     excludeResolversContain: ['User'],
     prismaCaller: '_context.db',
     disabled: false,
-    builderImporter: "import { builder } from '../builder';",
     // inputsImporter: "import * as Inputs from '@/schema/inputs'",
     deleteOutputDirBeforeGenerate: true,
   },
   inputs: {
-    builderImporter: "import { builder } from '../builder';",
     prismaImporter: `import { Prisma } from '.prisma/client';`,
     outputFilePath: './src/schema/__generated__/inputs.ts',
   },
