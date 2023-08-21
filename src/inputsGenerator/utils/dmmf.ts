@@ -83,7 +83,10 @@ export function getMainInput() {
     return undefined;
   };
 
-  const run = (inputs: DMMF.SchemaArgInputType[]): DMMF.SchemaArgInputType => {
+  const run = (rawInputs: DMMF.SchemaArgInputType[]): DMMF.SchemaArgInputType => {
+    // Ignore fieldRefTypes
+    const inputs = rawInputs.filter((el) => el.location !== 'fieldRefTypes');
+
     const first = inputs[0];
     if (!first) throw new Error('No input type found');
     const second = inputs[1];

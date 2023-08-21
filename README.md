@@ -58,10 +58,10 @@ The package was developed and tested using the following peer dependencies:
 
 ```
 "@pothos/core": "^3.23.0",
-"@pothos/plugin-prisma": "^3.37.0",
-"@prisma/client": "^4.7.0",
+"@pothos/plugin-prisma": "^3.37.0" ~ "^3.57.0",
+"@prisma/client": "4.7.0" - "5.1.1",
 "graphql": "^16.6.0",
-"prisma": "^4.7.0"
+"prisma": "4.7.0" - "5.1.1"
 ```
 
 Using different versions of these dependencies may result in undefined behavior or unintended TypeScript errors.

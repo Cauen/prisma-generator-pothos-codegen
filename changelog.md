@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.6.1
+
+- [x] Upgrade: Expand supports to new Prisma Version 5.1.1. Fixes #53
+ -Ignore fieldRefTypes at "generate inputs" to enable support of new prisma version
+
 # 0.6.0
 
 - [x] Fix: Fix Typescript errors for non Pothos exposable fields ('String', 'Int', 'Float', 'Boolean'), like "BigInt" used as @id. Fixes: #45
