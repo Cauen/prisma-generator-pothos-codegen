@@ -1,5 +1,8 @@
 // /** @type {import('prisma-generator-pothos-codegen').Config} */
 
+const fs = require("fs")
+const path = require("path")
+
 /** @type {import('../../../../src').Config} */
 module.exports = {
   crud: {
@@ -19,9 +22,10 @@ module.exports = {
   inputs: {
     prismaImporter: `import { Prisma } from '@prisma/client';`,
     outputFilePath: './src/schema/__generated__/inputs.ts',
+    simple: true,
   },
   global: {
-    builderLocation: "./src/schema/builder"
+    builderLocation: "./src/schema/builder",
     // replacer: (str, section) => {
     //   if (section === 'crud.model.resolver') {
     //     return str.replace(
@@ -31,9 +35,15 @@ module.exports = {
     //   }
     //   return str;
     // },
-    // afterGenerate: (dmmf) => {
-    //   console.log(dmmf)
-    //   throw new Error("Owpa")
-    // }
+    afterGenerate: (dmmf) => {
+      fs.writeFile(
+        path.join(__dirname, `./dmmf.json`),
+        JSON.stringify(dmmf, null, 2),
+        {},
+        (err) => {
+          console.log({ err });
+        }
+      );
+    }
   },
 };

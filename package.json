@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-pothos-codegen",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "license": "MIT",
   "description": "A prisma generator that generate input types for Pothos. And optionally generate all crud.",
   "main": "./src/index.js",
@@ -32,7 +32,8 @@
     "postbuild": "shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
     "clean": "shx rm -rf dist",
     "pub": "cd dist && npm publish",
-    "format": "eslint --fix ./src"
+    "format": "eslint --fix ./src",
+    "check-src-and-examples": "yarn test && yarn tscheck && cd examples/inputs-simple-sqlite && yarn generate && yarn tscheck"
   },
   "bin": {
     "prisma-generator-pothos-codegen": "./src/bin.js"
@@ -46,8 +47,8 @@
   },
   "devDependencies": {
     "@pothos/core": "3.23.0",
-    "@pothos/plugin-prisma": "3.37.0",
-    "@prisma/client": "4.7.0",
+    "@pothos/plugin-prisma": "^3.57.0",
+    "@prisma/client": "^5.1.1",
     "@types/fs-extra": "9.0.13",
     "@types/jest": "29.0.0",
     "@types/node": "18.7.14",
@@ -60,7 +61,7 @@
     "graphql": "16.6.0",
     "jest": "<29.0.0",
     "prettier": "2.8.2",
-    "prisma": "4.7.0",
+    "prisma": "^5.1.1",
     "shx": "0.3.4",
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
