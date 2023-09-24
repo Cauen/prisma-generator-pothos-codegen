@@ -120,7 +120,11 @@ export const getBuilderCalculatedImport = ({
     process.cwd(),
     path.join(process.cwd(), config.global.builderLocation),
   );
-  const relativeImport = path.relative(path.dirname(fileLocation), builderRelative);
+  let relativeImport = path.relative(path.dirname(fileLocation), builderRelative);
+
+  if (path.sep === '\\') {
+    relativeImport = relativeImport.replace(/\\/g, '/');
+  }
 
   const importer = `\nimport { builder } from '${relativeImport}';`;
   return importer;
