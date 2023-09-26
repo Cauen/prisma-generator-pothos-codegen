@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.6.2
+
+- [x] Fix: The builder path is incorrect in Windows #55
+
 # 0.6.1
 
 - [x] Upgrade: Expand supports to new Prisma Version 5.1.1. Fixes #53
