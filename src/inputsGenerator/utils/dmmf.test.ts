@@ -1,30 +1,30 @@
-import { getSampleDMMF } from '../../tests/getPrismaSchema';
-import { getUsedScalars, getMainInput } from './dmmf';
-import type { DMMF } from '@prisma/generator-helper';
+import { getSampleDMMF } from '../../tests/getPrismaSchema'
+import { getUsedScalars, getMainInput } from './dmmf'
+import type { DMMF } from '@prisma/generator-helper'
 
 describe('getUsedScalars', () => {
   test('should return all complex scalars', async () => {
-    const dmmf = await getSampleDMMF('complex');
-    const used = getUsedScalars(dmmf.schema.inputObjectTypes.prisma);
-    expect(used.hasBigInt).toBe(true);
-    expect(used.hasDateTime).toBe(true);
-    expect(used.hasBigInt).toBe(true);
-    expect(used.hasDecimal).toBe(true);
-    expect(used.hasNEVER).toBe(true);
-    expect(used.hasJson).toBe(true);
-  });
+    const dmmf = await getSampleDMMF('complex')
+    const used = getUsedScalars(dmmf.schema.inputObjectTypes.prisma)
+    expect(used.hasBigInt).toBe(true)
+    expect(used.hasDateTime).toBe(true)
+    expect(used.hasBigInt).toBe(true)
+    expect(used.hasDecimal).toBe(true)
+    expect(used.hasNEVER).toBe(true)
+    expect(used.hasJson).toBe(true)
+  })
 
   test('should return only simple scalars', async () => {
-    const dmmf = await getSampleDMMF('simple');
-    const used = getUsedScalars(dmmf.schema.inputObjectTypes.prisma);
-    expect(used.hasBigInt).toBe(false);
-    expect(used.hasDateTime).toBe(true);
-    expect(used.hasBigInt).toBe(false);
-    expect(used.hasDecimal).toBe(false);
-    expect(used.hasNEVER).toBe(false);
-    expect(used.hasJson).toBe(false);
-  });
-});
+    const dmmf = await getSampleDMMF('simple')
+    const used = getUsedScalars(dmmf.schema.inputObjectTypes.prisma)
+    expect(used.hasBigInt).toBe(false)
+    expect(used.hasDateTime).toBe(true)
+    expect(used.hasBigInt).toBe(false)
+    expect(used.hasDecimal).toBe(false)
+    expect(used.hasNEVER).toBe(false)
+    expect(used.hasJson).toBe(false)
+  })
+})
 
 describe('getMainInput', () => {
   test('should priorize list', () => {
@@ -43,10 +43,10 @@ describe('getMainInput', () => {
         location: 'inputObjectTypes',
         isList: true,
       },
-    ];
+    ]
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
-    expect(getMainInput().priorizeList(list)?.isList).toBe(true);
-  });
+    expect(getMainInput().priorizeList(list)?.isList).toBe(true)
+  })
 
   test('should priorize not scalar', () => {
     // prisma.user.findFirst({ where: { OR: { name: "Emanuel" } } })
@@ -63,9 +63,9 @@ describe('getMainInput', () => {
         location: 'scalar',
         isList: false,
       },
-    ];
+    ]
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
-    expect(getMainInput().priorizeNotScalar(list)?.namespace).toBe('prisma');
+    expect(getMainInput().priorizeNotScalar(list)?.namespace).toBe('prisma')
     const list2: DMMF.InputTypeRef[] = [
       {
         type: 'DateTimeNullableWithAggregatesFilter',
@@ -83,10 +83,10 @@ describe('getMainInput', () => {
         location: 'scalar',
         isList: false,
       },
-    ];
+    ]
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
-    expect(getMainInput().priorizeNotScalar(list2)?.namespace).toBe('prisma');
-  });
+    expect(getMainInput().priorizeNotScalar(list2)?.namespace).toBe('prisma')
+  })
 
   test('should priorize json', () => {
     const list: DMMF.InputTypeRef[] = [
@@ -100,8 +100,8 @@ describe('getMainInput', () => {
         location: 'scalar',
         isList: false,
       },
-    ];
-    expect(getMainInput().priorizeJson(list)?.type).toBe('Json');
+    ]
+    expect(getMainInput().priorizeJson(list)?.type).toBe('Json')
     const list2: DMMF.InputTypeRef[] = [
       {
         type: 'NullableJsonNullValueInput',
@@ -114,9 +114,9 @@ describe('getMainInput', () => {
         location: 'scalar',
         isList: false,
       },
-    ];
-    expect(getMainInput().priorizeJson(list2)?.type).toBe('Json');
-  });
+    ]
+    expect(getMainInput().priorizeJson(list2)?.type).toBe('Json')
+  })
 
   test('should priorize WhereInput over RelationFilter', () => {
     const list: DMMF.InputTypeRef[] = [
@@ -137,10 +137,10 @@ describe('getMainInput', () => {
         location: 'scalar',
         isList: false,
       },
-    ];
-    expect(getMainInput().priorizeWhereInput(list)?.type).toBe('ProfileWhereInput');
-    expect(getMainInput().run(list)?.type).toBe('ProfileWhereInput');
-  });
+    ]
+    expect(getMainInput().priorizeWhereInput(list)?.type).toBe('ProfileWhereInput')
+    expect(getMainInput().run(list)?.type).toBe('ProfileWhereInput')
+  })
 
   test('in update, should priorize "set" instead of directly set', () => {
     const list: DMMF.InputTypeRef[] = [
@@ -156,10 +156,8 @@ describe('getMainInput', () => {
         location: 'inputObjectTypes',
         isList: false,
       },
-    ];
-    expect(getMainInput().priorizeSetUpdateAlternative(list)?.type).toBe(
-      'EnumPAYMENT_METHODFieldUpdateOperationsInput',
-    );
-    expect(getMainInput().run(list)?.type).toBe('EnumPAYMENT_METHODFieldUpdateOperationsInput');
-  });
-});
+    ]
+    expect(getMainInput().priorizeSetUpdateAlternative(list)?.type).toBe('EnumPAYMENT_METHODFieldUpdateOperationsInput')
+    expect(getMainInput().run(list)?.type).toBe('EnumPAYMENT_METHODFieldUpdateOperationsInput')
+  })
+})

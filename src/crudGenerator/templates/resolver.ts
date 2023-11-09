@@ -1,4 +1,4 @@
-import { useTemplate } from '../../utils/template';
+import { useTemplate } from '../../utils/template'
 
 export const makeResolver = (
   root: 'Query' | 'Mutation',
@@ -24,7 +24,7 @@ export const makeResolver = (
       field: isPrisma ? 'prismaField' : 'field',
     },
     ['modelName', 'inputsImporter', 'resolverImports', 'builderCalculatedImport'],
-  );
+  )
 
 export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}#{builderCalculatedImport}
 import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils';
@@ -43,4 +43,4 @@ export const #{operation}#{modelName}#{root}Object = define#{root}Function((t) =
 export const #{operation}#{modelName}#{root} = define#{root}((t) => ({
   #{operation}#{modelName}: t.#{field}(#{operation}#{modelName}#{root}Object(t)),
 }));
-`;
+`

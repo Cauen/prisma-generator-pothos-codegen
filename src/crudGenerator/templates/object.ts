@@ -16,14 +16,14 @@ export const #{modelName}Object = definePrismaObject('#{modelName}', {
 });
 
 #{exportFields}
-`;
+`
 
 export const fieldObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineFieldObject('#{modelName}', {
   type: #{conditionalType},
   description: #{description},
   nullable: #{nullable},
   resolve: (parent) => #{conditionalResolve},
-});`;
+});`
 
 export const listRelationObjectTemplate = `export const #{modelName}#{nameUpper}FieldArgs = builder.args((t) => ({
   where: t.field({ type: Inputs.#{type}WhereInput, required: false }),
@@ -48,11 +48,11 @@ export const #{modelName}#{nameUpper}FieldObject = defineRelationFunction('#{mod
       orderBy: args.orderBy || undefined,
     }),
   }),
-);`;
+);`
 
 export const relationObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineRelationObject('#{modelName}', '#{name}', {
   description: #{description},
   nullable: #{nullable},
   args: undefined,
   query: undefined,
-});`;
+});`

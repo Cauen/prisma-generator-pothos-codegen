@@ -8,8 +8,8 @@
     "prettier/prettier": [
       "error",
       {
-        "semi": true,
-        "printWidth": 100,
+        "semi": false,
+        "printWidth": 120,
         "tabWidth": 2,
         "tabs": false,
         "singleQuote": true,

@@ -1,8 +1,8 @@
-import { useTemplate } from '../../utils/template';
-import { makeResolver } from './resolver';
+import { useTemplate } from '../../utils/template'
+import { makeResolver } from './resolver'
 
-const queryNames = ['findFirst', 'findMany', 'count', 'findUnique'] as const;
-type OperationOptions = (typeof queryNames)[number];
+const queryNames = ['findFirst', 'findMany', 'count', 'findUnique'] as const
+type OperationOptions = (typeof queryNames)[number]
 
 const makeQuery = (
   operation: OperationOptions,
@@ -31,7 +31,7 @@ const makeQuery = (
         ['prisma', 'modelNameLower'],
       ),
     isPrisma,
-  );
+  )
 
 const queryListArgsTemplate = `{
   where: t.field({ type: Inputs.#{modelName}WhereInput, required: false }),
@@ -40,7 +40,7 @@ const queryListArgsTemplate = `{
   take: t.field({ type: 'Int', required: false }),
   skip: t.field({ type: 'Int', required: false }),
   distinct: t.field({ type: [Inputs.#{modelNameUpper}ScalarFieldEnum], required: false }),
-}`;
+}`
 
 const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _info) =>
       await #{prisma}.#{modelNameLower}.#{operation}({
@@ -49,18 +49,18 @@ const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _inf
         take: args.take || undefined,#{distinct}
         skip: args.skip || undefined,
         orderBy: args.orderBy || undefined,#{query}
-      })`;
+      })`
 
-const querySingleArgsTemplate = `{ where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }`;
+const querySingleArgsTemplate = `{ where: t.field({ type: Inputs.#{modelName}WhereUniqueInput, required: true }) }`
 
 const querySingleResolveTemplate = `async (query, _root, args, _context, _info) =>
-      await #{prisma}.#{modelNameLower}.findUnique({ where: args.where, ...query })`;
+      await #{prisma}.#{modelNameLower}.findUnique({ where: args.where, ...query })`
 
-const findFirst = makeQuery('findFirst', "'#{modelName}'", 'true');
+const findFirst = makeQuery('findFirst', "'#{modelName}'", 'true')
 
-const findMany = makeQuery('findMany', "['#{modelName}']", 'false');
+const findMany = makeQuery('findMany', "['#{modelName}']", 'false')
 
-const count = makeQuery('count', "'Int'", 'false', false);
+const count = makeQuery('count', "'Int'", 'false', false)
 
 const findUnique = makeQuery(
   'findUnique',
@@ -69,6 +69,6 @@ const findUnique = makeQuery(
   true,
   useTemplate(querySingleArgsTemplate, {}, ['modelName']),
   useTemplate(querySingleResolveTemplate, {}, ['prisma', 'modelNameLower']),
-);
+)
 
-export const queries = { findFirst, findMany, count, findUnique };
+export const queries = { findFirst, findMany, count, findUnique }
