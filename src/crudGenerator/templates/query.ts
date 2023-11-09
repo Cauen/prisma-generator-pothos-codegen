@@ -23,6 +23,7 @@ const makeQuery = (
       useTemplate(
         queryListResolveTemplate,
         {
+          distinct: operation === 'count' ? '' : '\n        distinct: args.distinct || undefined,',
           operation,
           query: isPrisma ? '\n        ...query,' : '',
           argsQuery: isPrisma ? 'query, ' : '',
@@ -45,8 +46,7 @@ const queryListResolveTemplate = `async (#{argsQuery}_root, args, _context, _inf
       await #{prisma}.#{modelNameLower}.#{operation}({
         where: args.where || undefined,
         cursor: args.cursor || undefined,
-        take: args.take || undefined,
-        distinct: args.distinct || undefined,
+        take: args.take || undefined,#{distinct}
         skip: args.skip || undefined,
         orderBy: args.orderBy || undefined,#{query}
       })`;

@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { mutations as MutationTemplates } from '../templates/mutation';
 import { queries as QueryTemplates } from '../templates/query';

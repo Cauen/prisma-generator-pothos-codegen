@@ -1,5 +1,13 @@
 # Changelog
 
+# 0.6.3
+
+- [x] Upgrade: Update prisma to latest version
+ - Remove distinct from count https://github.com/prisma/prisma/issues/4228
+- [x] Improve: Remove tokenizr dep
+ - Add tests for comments parser
+- [x] Upgrade: Update dependancies and peerDependancies
+
 # 0.6.2
 
 - [x] Fix: The builder path is incorrect in Windows #55

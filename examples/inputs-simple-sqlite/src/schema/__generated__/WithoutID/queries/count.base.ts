@@ -22,7 +22,6 @@ export const countWithoutIDQueryObject = defineQueryFunction((t) =>
         where: args.where || undefined,
         cursor: args.cursor || undefined,
         take: args.take || undefined,
-        distinct: args.distinct || undefined,
         skip: args.skip || undefined,
         orderBy: args.orderBy || undefined,
       }),

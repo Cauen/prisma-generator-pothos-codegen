@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
 

@@ -13,6 +13,7 @@
     "noImplicitReturns": true,
     "pretty": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "removeComments": false,
     "skipLibCheck": false,
     "sourceMap": true,

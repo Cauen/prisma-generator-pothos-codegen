@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 import { getSampleDMMF } from '../../tests/getPrismaSchema';
 import { getUsedScalars, getMainInput } from './dmmf';
 
@@ -30,7 +30,7 @@ describe('getMainInput', () => {
   test('should priorize list', () => {
     // prisma.user.findFirst({ where: { OR: { name: "Emanuel" } } })
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
-    const list: DMMF.SchemaArgInputType[] = [
+    const list: DMMF.InputTypeRef[] = [
       {
         type: 'UserWhereInput',
         namespace: 'prisma',
@@ -51,7 +51,7 @@ describe('getMainInput', () => {
   test('should priorize not scalar', () => {
     // prisma.user.findFirst({ where: { OR: { name: "Emanuel" } } })
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
-    const list: DMMF.SchemaArgInputType[] = [
+    const list: DMMF.InputTypeRef[] = [
       {
         type: 'IntFilter',
         namespace: 'prisma',
@@ -66,7 +66,7 @@ describe('getMainInput', () => {
     ];
     // prisma.user.findFirst({ where: { OR: [{ name: "Emanuel" }] } })
     expect(getMainInput().priorizeNotScalar(list)?.namespace).toBe('prisma');
-    const list2: DMMF.SchemaArgInputType[] = [
+    const list2: DMMF.InputTypeRef[] = [
       {
         type: 'DateTimeNullableWithAggregatesFilter',
         namespace: 'prisma',
@@ -89,7 +89,7 @@ describe('getMainInput', () => {
   });
 
   test('should priorize json', () => {
-    const list: DMMF.SchemaArgInputType[] = [
+    const list: DMMF.InputTypeRef[] = [
       {
         type: 'Json',
         location: 'scalar',
@@ -102,7 +102,7 @@ describe('getMainInput', () => {
       },
     ];
     expect(getMainInput().priorizeJson(list)?.type).toBe('Json');
-    const list2: DMMF.SchemaArgInputType[] = [
+    const list2: DMMF.InputTypeRef[] = [
       {
         type: 'NullableJsonNullValueInput',
         namespace: 'prisma',
@@ -119,7 +119,7 @@ describe('getMainInput', () => {
   });
 
   test('should priorize WhereInput over RelationFilter', () => {
-    const list: DMMF.SchemaArgInputType[] = [
+    const list: DMMF.InputTypeRef[] = [
       {
         type: 'ProfileRelationFilter',
         namespace: 'prisma',
@@ -143,7 +143,7 @@ describe('getMainInput', () => {
   });
 
   test('in update, should priorize "set" instead of directly set', () => {
-    const list: DMMF.SchemaArgInputType[] = [
+    const list: DMMF.InputTypeRef[] = [
       {
         type: 'PAYMENT_METHOD',
         namespace: 'model',

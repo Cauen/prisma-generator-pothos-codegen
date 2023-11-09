@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { firstLetterUpperCase } from '../../utils/string';
 import { useTemplate } from '../../utils/template';

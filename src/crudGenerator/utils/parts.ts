@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { writeFile } from '../../utils/filesystem';
 import { firstLetterLowerCase, firstLetterUpperCase, getCompositeName } from '../../utils/string';

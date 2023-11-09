@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/generator-helper';
+import type { DMMF } from '@prisma/generator-helper';
 
 export type UsedScalars = {
   hasDateTime: boolean;
@@ -37,7 +37,7 @@ export function getUsedScalars(inputs: DMMF.InputType[]): UsedScalars {
 /** Find main input type (list or not, since GraphQL input types don't allow unions) */
 export function getMainInput() {
   // If one list, priorize it
-  const priorizeJson = (inputs: DMMF.SchemaArgInputType[]) => {
+  const priorizeJson = (inputs: DMMF.InputTypeRef[]) => {
     const listInputs = inputs.find((el) => el.type === 'Json');
     if (listInputs) {
       return listInputs;
@@ -46,7 +46,7 @@ export function getMainInput() {
   };
 
   // If has list, priorize it
-  const priorizeList = (inputs: DMMF.SchemaArgInputType[]) => {
+  const priorizeList = (inputs: DMMF.InputTypeRef[]) => {
     const listInputs = inputs.filter((el) => el.isList);
     const hasList = listInputs.length >= 1;
     if (hasList) {
@@ -56,7 +56,7 @@ export function getMainInput() {
   };
 
   // If not list, priorize not scalar
-  const priorizeNotScalar = (inputs: DMMF.SchemaArgInputType[]) => {
+  const priorizeNotScalar = (inputs: DMMF.InputTypeRef[]) => {
     const listInputs = inputs.filter((el) => el.isList);
     const exactlyOneIsList = listInputs.length === 0;
     if (exactlyOneIsList) {
@@ -66,7 +66,7 @@ export function getMainInput() {
   };
 
   // If one list, priorize it
-  const priorizeWhereInput = (inputs: DMMF.SchemaArgInputType[]) => {
+  const priorizeWhereInput = (inputs: DMMF.InputTypeRef[]) => {
     const listInputs = inputs.find((el) => el.type.toString().includes('WhereInput'));
     if (listInputs) {
       return listInputs;
@@ -75,7 +75,7 @@ export function getMainInput() {
   };
 
   // If one list, priorize it
-  const priorizeSetUpdateAlternative = (inputs: DMMF.SchemaArgInputType[]) => {
+  const priorizeSetUpdateAlternative = (inputs: DMMF.InputTypeRef[]) => {
     const setType = inputs.find((el) => el.type.toString().includes('FieldUpdateOperationsInput'));
     if (setType) {
       return setType;
@@ -83,7 +83,7 @@ export function getMainInput() {
     return undefined;
   };
 
-  const run = (rawInputs: DMMF.SchemaArgInputType[]): DMMF.SchemaArgInputType => {
+  const run = (rawInputs: DMMF.InputTypeRef[]): DMMF.InputTypeRef => {
     // Ignore fieldRefTypes
     const inputs = rawInputs.filter((el) => el.location !== 'fieldRefTypes');
 
