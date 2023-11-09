@@ -1,108 +1,110 @@
-import path from 'node:path';
-import { DMMF } from '@prisma/generator-helper';
-import { ExtendedGeneratorOptions } from '../generator';
-import { Replacer } from './replacer';
+import path from 'node:path'
+import { ExtendedGeneratorOptions } from '../generator'
+import { Replacer } from './replacer'
+import type { DMMF } from '@prisma/generator-helper'
 
 /** Interface used to configure generator behavior */
 export interface Config {
   /** Input type generation config */
   inputs?: {
     /** Create simpler inputs for easier customization and ~65% less generated code. Default: `false` */
-    simple?: boolean;
+    simple?: boolean
     /** How to import the Prisma namespace. Default: `"import { Prisma } from '.prisma/client';"` */
-    prismaImporter?: string;
+    prismaImporter?: string
     /** Path to generate the inputs file to from project root. Default: `'./generated/inputs.ts'` */
-    outputFilePath?: string;
+    outputFilePath?: string
     /** List of excluded scalars from generated output */
-    excludeScalars?: string[];
+    excludeScalars?: string[]
     /** A function to replace generated source. Combined with global replacer config */
-    replacer?: Replacer<'inputs'>;
+    replacer?: Replacer<'inputs'>
     /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar.
      *
      * ATTENTION: Mapping non String requires a conversion inside resolver, once GraphQl ID Input are coerced to String by definition. Default: false */
-    mapIdFieldsToGraphqlId?: false | 'WhereUniqueInputs';
-  };
+    mapIdFieldsToGraphqlId?: false | 'WhereUniqueInputs'
+  }
   /** CRUD generation config */
   crud?: {
     /** Disable generaton of crud. Default: `false` */
-    disabled?: boolean;
+    disabled?: boolean
     /** How to import the inputs. Default `"import * as Inputs from '../inputs';"` */
-    inputsImporter?: string;
+    inputsImporter?: string
     /** How to import the Prisma namespace at the objects.ts file. Default `"import { Prisma } from '.prisma/client';"`. Please use "resolverImports" to import prismaClient at resolvers. */
-    prismaImporter?: string;
+    prismaImporter?: string
     /** How to call the prisma client. Default `'_context.prisma'` */
-    prismaCaller?: string;
+    prismaCaller?: string
     /** Any additional imports you might want to add to the resolvers (e.g. your prisma client). Default: `''` */
-    resolverImports?: string;
+    resolverImports?: string
     /** Directory to generate crud code into from project root. Default: `'./generated'` */
-    outputDir?: string;
+    outputDir?: string
     /** A function to replace generated source. Combined with global replacer config */
-    replacer?: Replacer<'crud'>;
+    replacer?: Replacer<'crud'>
     /** A boolean to enable/disable generation of `autocrud.ts` which can be imported in schema root to auto generate all crud objects, queries and mutations. Default: `true` */
-    generateAutocrud?: boolean;
+    generateAutocrud?: boolean
     /** An array of parts of resolver names to be excluded from generation. Ie: ["User"] Default: [] */
-    excludeResolversContain?: string[];
+    excludeResolversContain?: string[]
     /** An array of resolver names to be excluded from generation. Ie: ["upsertOneComment"] Default: [] */
-    excludeResolversExact?: string[];
+    excludeResolversExact?: string[]
     /** An array of parts of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
-    includeResolversContain?: string[];
+    includeResolversContain?: string[]
     /** An array of resolver names to be included from generation (to bypass exclude contain). Ie: if exclude ["User"], include ["UserReputation"] Default: [] */
-    includeResolversExact?: string[];
+    includeResolversExact?: string[]
     /** Caution: This delete the whole folder (Only use if the folder only has auto generated contents). A boolean to delete output dir before generate. Default: False */
-    deleteOutputDirBeforeGenerate?: boolean;
+    deleteOutputDirBeforeGenerate?: boolean
     /** Export all crud queries/mutations/objects in objects.ts at root dir. Default: true */
-    exportEverythingInObjectsDotTs?: boolean;
+    exportEverythingInObjectsDotTs?: boolean
     /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar. Default: 'Objects' */
-    mapIdFieldsToGraphqlId?: false | 'Objects';
-  };
+    mapIdFieldsToGraphqlId?: false | 'Objects'
+    /** Change the generated variables from object.base.ts from something like `UserName` to `User_Name`. This avoids generated duplicated names in some cases. See [issue #58](https://github.com/Cauen/prisma-generator-pothos-codegen/issues/58). Default: False */
+    underscoreBetweenObjectVariableNames?: false | 'Objects'
+  }
   /** Global config */
   global?: {
     /** A function to replace generated source */
-    replacer?: Replacer;
+    replacer?: Replacer
     /** Run function before generate */
-    beforeGenerate?: (dmmf: DMMF.Document) => void;
+    beforeGenerate?: (dmmf: DMMF.Document) => void
     /** Run function after generate */
-    afterGenerate?: (dmmf: DMMF.Document) => void;
+    afterGenerate?: (dmmf: DMMF.Document) => void
     /** Location of builder. Default: './builder', */
-    builderLocation?: string;
-  };
+    builderLocation?: string
+  }
 }
 
 /** Type representing a configuration filled with default values where the original config was missing them, for internal purposes */
 export type ConfigInternal = {
-  inputs: NonNullable<Required<Config['inputs']>>;
-  crud: NonNullable<Required<Config['crud']>>;
-  global: NonNullable<Required<Config['global']>>;
-};
+  inputs: NonNullable<Required<Config['inputs']>>
+  crud: NonNullable<Required<Config['crud']>>
+  global: NonNullable<Required<Config['global']>>
+}
 
 /** Parses the configuration file path */
 export const getConfigPath = ({
   generatorConfigPath,
   schemaPath,
 }: {
-  generatorConfigPath?: string;
-  schemaPath: string;
+  generatorConfigPath?: string
+  schemaPath: string
 }): string | undefined => {
-  const envConfigPath = process.env.POTHOS_CRUD_CONFIG_PATH;
-  const configPath = envConfigPath || generatorConfigPath; // use env var if set
+  const envConfigPath = process.env.POTHOS_CRUD_CONFIG_PATH
+  const configPath = envConfigPath || generatorConfigPath // use env var if set
 
-  if (!configPath) return undefined;
+  if (!configPath) return undefined
 
-  const schemaDirName = path.dirname(schemaPath);
-  const optionsPath = path.join(schemaDirName, configPath);
+  const schemaDirName = path.dirname(schemaPath)
+  const optionsPath = path.join(schemaDirName, configPath)
 
-  return optionsPath;
-};
+  return optionsPath
+}
 
 /** Parses the configuration file based on the provided schema and config paths */
 export const parseConfig = async (configPath: string): Promise<Config> => {
-  const importedFile = await import(configPath); // throw error if dont exist
-  const { crud, global, inputs }: Config = importedFile || {};
+  const importedFile = await import(configPath) // throw error if dont exist
+  const { crud, global, inputs }: Config = importedFile || {}
 
-  return { crud, global, inputs };
-};
+  return { crud, global, inputs }
+}
 
-export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
+export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = () => ({
   inputs: {
     simple: false,
     prismaImporter: `import { Prisma } from '.prisma/client';`,
@@ -127,6 +129,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     deleteOutputDirBeforeGenerate: false,
     exportEverythingInObjectsDotTs: true,
     mapIdFieldsToGraphqlId: 'Objects',
+    underscoreBetweenObjectVariableNames: false,
   },
   global: {
     replacer: (str: string) => str,
@@ -139,23 +142,21 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
       // noop
     },
   },
-});
+})
 
 /** Receives the config path from generator options, loads the config from file, fills out the default values, and returns it */
-export const getConfig = async (
-  extendedGeneratorOptions: ExtendedGeneratorOptions,
-): Promise<ConfigInternal> => {
-  const { generatorConfigPath, schemaPath } = extendedGeneratorOptions;
-  const configPath = getConfigPath({ generatorConfigPath, schemaPath });
+export const getConfig = async (extendedGeneratorOptions: ExtendedGeneratorOptions): Promise<ConfigInternal> => {
+  const { generatorConfigPath, schemaPath } = extendedGeneratorOptions
+  const configPath = getConfigPath({ generatorConfigPath, schemaPath })
 
-  if (!configPath) return getDefaultConfig();
+  if (!configPath) return getDefaultConfig()
 
-  const { inputs, crud, global } = await parseConfig(configPath);
-  const defaultConfig = getDefaultConfig(global);
+  const { inputs, crud, global } = await parseConfig(configPath)
+  const defaultConfig = getDefaultConfig(global)
 
   return {
     inputs: { ...defaultConfig.inputs, ...inputs },
     crud: { ...defaultConfig.crud, ...crud },
     global: { ...defaultConfig.global, ...global },
-  } satisfies ConfigInternal;
-};
+  } satisfies ConfigInternal
+}

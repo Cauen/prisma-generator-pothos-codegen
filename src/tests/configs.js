@@ -15,4 +15,4 @@ module.exports = {
     outputFilePath: './src/schema/__generated__/inputs.ts',
   },
   global: {},
-};
+}

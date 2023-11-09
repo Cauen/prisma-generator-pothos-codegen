@@ -91,6 +91,10 @@ export const UserScalarFieldEnum = builder.enumType('UserScalarFieldEnum', {
   values: ["id","firstName","lastName","birthdate","login","password","createdAt","updatedAt"] as const,
 });
 
+export const UserLastScalarFieldEnum = builder.enumType('UserLastScalarFieldEnum', {
+  values: ["id","name"] as const,
+});
+
 export const PostScalarFieldEnum = builder.enumType('PostScalarFieldEnum', {
   values: ["id","title","content","authorId"] as const,
 });
@@ -196,6 +200,36 @@ export const UserWhereUniqueInputFields = (t: any) => ({
 });
 export const UserWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserWhereUniqueInput>>('UserWhereUniqueInput').implement({
   fields: UserWhereUniqueInputFields,
+});
+
+export const UserLastWhereInputFields = (t: any) => ({
+  AND: t.field({"required":false,"type":[UserLastWhereInput]}),
+  OR: t.field({"required":false,"type":[UserLastWhereInput]}),
+  NOT: t.field({"required":false,"type":[UserLastWhereInput]}),
+  id: t.field({"required":false,"type":IntFilter}),
+  name: t.field({"required":false,"type":StringFilter}),
+});
+export const UserLastWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereInput>>('UserLastWhereInput').implement({
+  fields: UserLastWhereInputFields,
+});
+
+export const UserLastOrderByWithRelationInputFields = (t: any) => ({
+  id: t.field({"required":false,"type":SortOrder}),
+  name: t.field({"required":false,"type":SortOrder}),
+});
+export const UserLastOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastOrderByWithRelationInput>>('UserLastOrderByWithRelationInput').implement({
+  fields: UserLastOrderByWithRelationInputFields,
+});
+
+export const UserLastWhereUniqueInputFields = (t: any) => ({
+  id: t.int({"required":false}),
+  AND: t.field({"required":false,"type":[UserLastWhereInput]}),
+  OR: t.field({"required":false,"type":[UserLastWhereInput]}),
+  NOT: t.field({"required":false,"type":[UserLastWhereInput]}),
+  name: t.field({"required":false,"type":StringFilter}),
+});
+export const UserLastWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereUniqueInput>>('UserLastWhereUniqueInput').implement({
+  fields: UserLastWhereUniqueInputFields,
 });
 
 export const PostWhereInputFields = (t: any) => ({
@@ -575,6 +609,29 @@ export const UserUpdateManyMutationInputFields = (t: any) => ({
 });
 export const UserUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUpdateManyMutationInput>>('UserUpdateManyMutationInput').implement({
   fields: UserUpdateManyMutationInputFields,
+});
+
+export const UserLastCreateInputFields = (t: any) => ({
+  id: t.int({"required":false}),
+  name: t.string({"required":true}),
+});
+export const UserLastCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedCreateInput>>('UserLastCreateInput').implement({
+  fields: UserLastCreateInputFields,
+});
+
+export const UserLastUpdateInputFields = (t: any) => ({
+  id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
+  name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+});
+export const UserLastUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedUpdateInput>>('UserLastUpdateInput').implement({
+  fields: UserLastUpdateInputFields,
+});
+
+export const UserLastUpdateManyMutationInputFields = (t: any) => ({
+  name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
+});
+export const UserLastUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUpdateManyMutationInput>>('UserLastUpdateManyMutationInput').implement({
+  fields: UserLastUpdateManyMutationInputFields,
 });
 
 export const PostCreateInputFields = (t: any) => ({

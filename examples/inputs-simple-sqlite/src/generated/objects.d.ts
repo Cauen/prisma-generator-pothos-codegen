@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { Prisma, User, Post, ExtraModal, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
+import type { Prisma, User, UserLast, Post, ExtraModal, Comment, Profile, Follow, Unrelated, IdOnly, WithoutID, WithScalars } from ".prisma/client";
 export default interface PrismaTypes {
     User: {
         Name: "User";
@@ -35,6 +35,20 @@ export default interface PrismaTypes {
                 Name: "Follow";
             };
         };
+    };
+    UserLast: {
+        Name: "UserLast";
+        Shape: UserLast;
+        Include: never;
+        Select: Prisma.UserLastSelect;
+        OrderBy: Prisma.UserLastOrderByWithRelationInput;
+        WhereUnique: Prisma.UserLastWhereUniqueInput;
+        Where: Prisma.UserLastWhereInput;
+        Create: {};
+        Update: {};
+        RelationName: never;
+        ListRelations: never;
+        Relations: {};
     };
     Post: {
         Name: "Post";

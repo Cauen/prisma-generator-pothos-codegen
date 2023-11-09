@@ -1,11 +1,11 @@
-import { ExtendedGeneratorOptions } from '../generator';
-import { getSampleDMMF } from '../tests/getPrismaSchema';
-import * as config from './config';
+import { ExtendedGeneratorOptions } from '../generator'
+import { getSampleDMMF } from '../tests/getPrismaSchema'
+import * as config from './config'
 
-const cwd = process.cwd();
+const cwd = process.cwd()
 
 const generateOptions = async (generatorConfigPath?: string): Promise<ExtendedGeneratorOptions> => {
-  const dmmf = await getSampleDMMF('simple');
+  const dmmf = await getSampleDMMF('simple')
 
   return {
     datamodel: '',
@@ -54,18 +54,18 @@ const generateOptions = async (generatorConfigPath?: string): Promise<ExtendedGe
     schemaPath: `${cwd}/src/tests/simpleSchema.prisma`,
     version: '272861e07ab64f234d3ffc4094e32bd61775599c',
     dataProxy: false,
-  } satisfies ExtendedGeneratorOptions;
-};
+  } satisfies ExtendedGeneratorOptions
+}
 
-const matchImport = expect.stringMatching(/^import /);
-const matchRelativePath = expect.stringMatching(/^\.\//);
+const matchImport = expect.stringMatching(/^import /)
+const matchRelativePath = expect.stringMatching(/^\.\//)
 
 afterEach(() => {
-  delete process.env.POTHOS_CRUD_CONFIG_PATH;
-});
+  delete process.env.POTHOS_CRUD_CONFIG_PATH
+})
 
 describe('getConfigPath', () => {
-  const { getConfigPath } = config;
+  const { getConfigPath } = config
 
   it('should return undefined', async () => {
     expect(
@@ -73,57 +73,57 @@ describe('getConfigPath', () => {
         generatorConfigPath: undefined,
         schemaPath: '.',
       }),
-    ).toBeUndefined();
-  });
+    ).toBeUndefined()
+  })
 
   it('should return `POTHOS_CRUD_CONFIG_PATH`', async () => {
-    const configPath = '../config-file-env';
-    process.env.POTHOS_CRUD_CONFIG_PATH = configPath;
+    const configPath = '../config-file-env'
+    process.env.POTHOS_CRUD_CONFIG_PATH = configPath
 
     expect(
       getConfigPath({
         generatorConfigPath: undefined,
         schemaPath: '.',
       }),
-    ).toBe(configPath);
-  });
+    ).toBe(configPath)
+  })
 
   it('should return `generatorConfigPath`', async () => {
-    const generatorConfigPath = '../config-file-path';
+    const generatorConfigPath = '../config-file-path'
 
     expect(
       getConfigPath({
-        generatorConfigPath: generatorConfigPath,
+        generatorConfigPath,
         schemaPath: '.',
       }),
-    ).toBe(generatorConfigPath);
-  });
+    ).toBe(generatorConfigPath)
+  })
 
   it('should return `POTHOS_CRUD_CONFIG_PATH` over `generatorConfigPath`', async () => {
-    const configPath = '../config-file-env';
-    process.env.POTHOS_CRUD_CONFIG_PATH = configPath;
+    const configPath = '../config-file-env'
+    process.env.POTHOS_CRUD_CONFIG_PATH = configPath
 
     expect(
       getConfigPath({
         generatorConfigPath: '../config-file',
         schemaPath: '.',
       }),
-    ).toBe(configPath);
-  });
-});
+    ).toBe(configPath)
+  })
+})
 
 describe('parseConfig', () => {
-  const { parseConfig } = config;
+  const { parseConfig } = config
 
   it(`should throw error if the file doesn't exist`, async () => {
-    const fileName = './does-not-exist';
-    const regexp = new RegExp(`^Cannot find module '${fileName}'`);
+    const fileName = './does-not-exist'
+    const regexp = new RegExp(`^Cannot find module '${fileName}'`)
 
-    await expect(parseConfig(fileName)).rejects.toThrow(regexp);
-  });
+    await expect(parseConfig(fileName)).rejects.toThrow(regexp)
+  })
 
   it(`should parse the config file`, async () => {
-    const configs = await parseConfig('../tests/configs');
+    const configs = await parseConfig('../tests/configs')
 
     expect(configs).toEqual({
       crud: expect.objectContaining({
@@ -138,19 +138,19 @@ describe('parseConfig', () => {
         outputFilePath: matchRelativePath,
         prismaImporter: matchImport,
       }),
-    });
-  });
-});
+    })
+  })
+})
 
 describe('getConfig', () => {
-  const { getConfig } = config;
-  const getDefaultConfigMock = jest.spyOn(config, 'getDefaultConfig');
+  const { getConfig } = config
+  const getDefaultConfigMock = jest.spyOn(config, 'getDefaultConfig')
 
   it(`should return the default config if a configPath doesn't exist`, async () => {
-    const options = await generateOptions();
-    const configs = await getConfig(options);
+    const options = await generateOptions()
+    const configs = await getConfig(options)
 
-    expect(getDefaultConfigMock).toHaveBeenCalledWith();
+    expect(getDefaultConfigMock).toHaveBeenCalledWith()
     expect(configs).toEqual({
       crud: expect.objectContaining({
         deleteOutputDirBeforeGenerate: false,
@@ -177,14 +177,14 @@ describe('getConfig', () => {
         prismaImporter: `import { Prisma } from '.prisma/client';`,
         replacer: expect.any(Function),
       }),
-    });
-  });
+    })
+  })
 
   it(`should return custom configuration merged with the defaults`, async () => {
-    const options = await generateOptions('../tests/configs.js');
-    const configs = await getConfig(options);
+    const options = await generateOptions('../tests/configs.js')
+    const configs = await getConfig(options)
 
-    expect(getDefaultConfigMock).toHaveBeenCalledWith({});
+    expect(getDefaultConfigMock).toHaveBeenCalledWith({})
     expect(configs).toEqual({
       crud: expect.objectContaining({
         deleteOutputDirBeforeGenerate: true,
@@ -212,6 +212,6 @@ describe('getConfig', () => {
         prismaImporter: `import { Prisma } from '.prisma/client';`,
         replacer: expect.any(Function),
       }),
-    });
-  });
-});
+    })
+  })
+})

@@ -1,4 +1,5 @@
 import * as User from './User';
+import * as UserLast from './UserLast';
 import * as Post from './Post';
 import * as ExtraModal from './ExtraModal';
 import * as Comment from './Comment';
@@ -23,6 +24,15 @@ export const Cruds: Record<
 > = {
   User: {
     Object: User.UserObject,
+    queries: {
+
+    },
+    mutations: {
+
+    },
+  },
+  UserLast: {
+    Object: UserLast.UserLastObject,
     queries: {
 
     },

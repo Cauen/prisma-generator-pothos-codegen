@@ -1,16 +1,15 @@
 type Variables<T extends string> = T extends `${infer _}#{${infer VarName}}${infer Tail}`
   ? VarName | Variables<Tail>
-  : never;
+  : never
 
 export const useTemplate = <T extends string, S extends Variables<T> | null = null>(
   template: T,
   variables: Omit<{ [V in Variables<T>]: string }, S extends null ? '' : S>,
   skip?: S[],
 ): string => {
-  let newTemplate: string = template;
+  let newTemplate: string = template
   Object.entries(variables).forEach(([name, value]) => {
-    if (!skip?.includes(name as S))
-      newTemplate = newTemplate.replace(new RegExp(`#{${name}}`, 'g'), value as string);
-  });
-  return newTemplate;
-};
+    if (!skip?.includes(name as S)) newTemplate = newTemplate.replace(new RegExp(`#{${name}}`, 'g'), value as string)
+  })
+  return newTemplate
+}

@@ -7,7 +7,7 @@ import {
   defineRelationObject,
 } from '../utils';
 
-export const #{modelName}Object = definePrismaObject('#{modelName}', {
+export const #{modelName}#{optionalUnderscore}Object = definePrismaObject('#{modelName}', {
   description: #{description},
   findUnique: #{findUnique},
   fields: (t) => ({
@@ -16,16 +16,16 @@ export const #{modelName}Object = definePrismaObject('#{modelName}', {
 });
 
 #{exportFields}
-`;
+`
 
-export const fieldObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineFieldObject('#{modelName}', {
+export const fieldObjectTemplate = `export const #{modelName}#{optionalUnderscore}#{nameUpper}#{optionalUnderscore}FieldObject = defineFieldObject('#{modelName}', {
   type: #{conditionalType},
   description: #{description},
   nullable: #{nullable},
   resolve: (parent) => #{conditionalResolve},
-});`;
+});`
 
-export const listRelationObjectTemplate = `export const #{modelName}#{nameUpper}FieldArgs = builder.args((t) => ({
+export const listRelationObjectTemplate = `export const #{modelName}#{optionalUnderscore}#{nameUpper}#{optionalUnderscore}FieldArgs = builder.args((t) => ({
   where: t.field({ type: Inputs.#{type}WhereInput, required: false }),
   orderBy: t.field({ type: [Inputs.#{type}OrderByWithRelationInput], required: false }),
   cursor: t.field({ type: Inputs.#{type}WhereUniqueInput, required: false }),
@@ -34,11 +34,11 @@ export const listRelationObjectTemplate = `export const #{modelName}#{nameUpper}
   distinct: t.field({ type: [Inputs.#{typeUpper}ScalarFieldEnum], required: false }),
 }))
 
-export const #{modelName}#{nameUpper}FieldObject = defineRelationFunction('#{modelName}', (t) =>
+export const #{modelName}#{optionalUnderscore}#{nameUpper}#{optionalUnderscore}FieldObject = defineRelationFunction('#{modelName}', (t) =>
   defineRelationObject('#{modelName}', '#{name}', {
     description: #{description},
     nullable: #{nullable},
-    args: #{modelName}#{nameUpper}FieldArgs,
+    args: #{modelName}#{optionalUnderscore}#{nameUpper}#{optionalUnderscore}FieldArgs,
     query: (args) => ({
       where: args.where || undefined,
       cursor: args.cursor || undefined,
@@ -48,11 +48,11 @@ export const #{modelName}#{nameUpper}FieldObject = defineRelationFunction('#{mod
       orderBy: args.orderBy || undefined,
     }),
   }),
-);`;
+);`
 
-export const relationObjectTemplate = `export const #{modelName}#{nameUpper}FieldObject = defineRelationObject('#{modelName}', '#{name}', {
+export const relationObjectTemplate = `export const #{modelName}#{optionalUnderscore}#{nameUpper}#{optionalUnderscore}FieldObject = defineRelationObject('#{modelName}', '#{name}', {
   description: #{description},
   nullable: #{nullable},
   args: undefined,
   query: undefined,
-});`;
+});`

@@ -15,7 +15,7 @@ module.exports = {
     disabled: false,
     inputsImporter: "import * as Inputs from '@/schema/__generated__/inputs'",
     deleteOutputDirBeforeGenerate: true,
-    exportEverythingInObjectsDotTs: true,
+    exportEverythingInObjectsDotTs: false,
     prismaImporter: `import { Prisma } from '@prisma/client';`,
     resolverImports: `\nimport { db } from '@/db';`,
   },
