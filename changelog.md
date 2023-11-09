@@ -9,6 +9,7 @@
 - [x] Upgrade: Update dependancies and peerDependancies
 - [x] Improve: Update prettier and eslint (to remove some conflicts)
 - [x] Chore: Eslint remove semicolon
+- [x] Feature: New option `config.crud.underscoreBetweenObjectVariableNames` change the generated variables from object.base.ts from something like `UserName` to `User_Name`. This avoids generated duplicated names in some cases. Fixes #58
 
 # 0.6.2
 

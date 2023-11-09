@@ -42,6 +42,12 @@ model User {
   Following Follow[]  @relation("following")
 }
 
+/// Its for check for duplicating User.LastName and UserLast.Name
+model UserLast {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
 model Post {
   id       Int       @id @default(autoincrement())
   title    String

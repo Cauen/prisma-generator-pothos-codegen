@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { ConfigInternal } from '../../utils/config'
+import { getConfigCrudUnderscore } from '../../utils/configUtils'
 import { writeFile } from '../../utils/filesystem'
 import { firstLetterLowerCase, firstLetterUpperCase, getCompositeName } from '../../utils/string'
 import { useTemplate } from '../../utils/template'
@@ -27,13 +28,16 @@ export async function writeIndex(
 ) {
   const queriesExports = queries.map((el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`)
   const mutationsExports = mutations.map((el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`)
+  const optionalUnderscore = getConfigCrudUnderscore(config)
 
   const exportsWithName = [
     {
       name: './object.base',
       exports: [
-        `${model.name}Object`,
-        ...model.fields.map((el) => `${model.name}${firstLetterUpperCase(el.name)}FieldObject`),
+        `${model.name}${optionalUnderscore}Object`,
+        ...model.fields.map(
+          (el) => `${model.name}${optionalUnderscore}${firstLetterUpperCase(el.name)}${optionalUnderscore}FieldObject`,
+        ),
       ],
     },
     {
@@ -83,6 +87,7 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
       fields: fields.join('\n    '),
       exportFields: exportFields.join('\n\n'),
       builderCalculatedImport,
+      optionalUnderscore: getConfigCrudUnderscore(config),
     }),
     fileLocation,
   )

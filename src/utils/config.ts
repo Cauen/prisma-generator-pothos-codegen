@@ -54,6 +54,8 @@ export interface Config {
     exportEverythingInObjectsDotTs?: boolean
     /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar. Default: 'Objects' */
     mapIdFieldsToGraphqlId?: false | 'Objects'
+    /** Change the generated variables from object.base.ts from something like `UserName` to `User_Name`. This avoids generated duplicated names in some cases. See [issue #58](https://github.com/Cauen/prisma-generator-pothos-codegen/issues/58). Default: False */
+    underscoreBetweenObjectVariableNames?: false | 'Objects'
   }
   /** Global config */
   global?: {
@@ -127,6 +129,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     deleteOutputDirBeforeGenerate: false,
     exportEverythingInObjectsDotTs: true,
     mapIdFieldsToGraphqlId: 'Objects',
+    underscoreBetweenObjectVariableNames: false,
   },
   global: {
     replacer: (str: string) => str,

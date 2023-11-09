@@ -1,4 +1,5 @@
 import { ConfigInternal } from '../../utils/config'
+import { getConfigCrudUnderscore } from '../../utils/configUtils'
 import { firstLetterUpperCase } from '../../utils/string'
 import { useTemplate } from '../../utils/template'
 import { relationObjectTemplate, listRelationObjectTemplate, fieldObjectTemplate } from '../templates/object'
@@ -18,8 +19,9 @@ export const getObjectFieldsString = (
       const description = cleanDocumentation ? `'${cleanDocumentation}'` : 'undefined' // field description defined in schema.prisma
       const nullable = isRequired ? 'false' : 'true'
       const type = fieldType === 'BigInt' ? 'Bigint' : fieldType
-      const obj = `${modelName}${nameUpper}FieldObject`
-      const templateOpts = { modelName, name, nameUpper, description, nullable, type }
+      const optionalUnderscore = getConfigCrudUnderscore(config)
+      const obj = `${modelName}${optionalUnderscore}${nameUpper}${optionalUnderscore}FieldObject`
+      const templateOpts = { modelName, name, nameUpper, description, nullable, type, optionalUnderscore }
 
       // Relation
       if (relationName) {

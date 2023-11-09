@@ -183,6 +183,8 @@ module.exports = {
       exportEverythingInObjectsDotTs?: boolean;
       /** Map all Prisma fields with "@id" attribute to Graphql "ID" Scalar. Default: 'Objects' */
       mapIdFieldsToGraphqlId?: false | 'Objects';
+      /** Change the generated variables from object.base.ts from something like `UserName` to `User_Name`. This avoids generated duplicated names in some cases. See [issue #58](https://github.com/Cauen/prisma-generator-pothos-codegen/issues/58). Default: false */
+      underscoreBetweenObjectVariableNames?: false | 'Objects';
     };
     /** Global config */
     global?: {

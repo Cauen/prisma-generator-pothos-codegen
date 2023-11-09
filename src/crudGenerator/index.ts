@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { ConfigInternal } from '../utils/config'
+import { getConfigCrudUnderscore } from '../utils/configUtils'
 import { deleteFolder, writeFile } from '../utils/filesystem'
 import { useTemplate } from '../utils/template'
 import { utilsTemplate, objectsTemplate, autoCrudTemplate } from './templates/root'
@@ -80,7 +81,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
       .map((model) => {
         const { name } = model
         return `  ${name}: {
-    Object: ${name}.${name}Object,
+    Object: ${name}.${name}${getConfigCrudUnderscore(config)}Object,
     queries: ${(() => {
       const queries = models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'queries') || []
       return `{\n${queries
