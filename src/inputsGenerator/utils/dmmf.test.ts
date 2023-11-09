@@ -1,6 +1,6 @@
-import type { DMMF } from '@prisma/generator-helper';
 import { getSampleDMMF } from '../../tests/getPrismaSchema';
 import { getUsedScalars, getMainInput } from './dmmf';
+import type { DMMF } from '@prisma/generator-helper';
 
 describe('getUsedScalars', () => {
   test('should return all complex scalars', async () => {

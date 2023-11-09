@@ -93,7 +93,7 @@ describe('getConfigPath', () => {
 
     expect(
       getConfigPath({
-        generatorConfigPath: generatorConfigPath,
+        generatorConfigPath,
         schemaPath: '.',
       }),
     ).toBe(generatorConfigPath);

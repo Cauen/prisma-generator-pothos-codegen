@@ -1,7 +1,7 @@
 import path from 'node:path';
-import type { DMMF } from '@prisma/generator-helper';
 import { ExtendedGeneratorOptions } from '../generator';
 import { Replacer } from './replacer';
+import type { DMMF } from '@prisma/generator-helper';
 
 /** Interface used to configure generator behavior */
 export interface Config {
@@ -102,7 +102,7 @@ export const parseConfig = async (configPath: string): Promise<Config> => {
   return { crud, global, inputs };
 };
 
-export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (global) => ({
+export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = () => ({
   inputs: {
     simple: false,
     prismaImporter: `import { Prisma } from '.prisma/client';`,

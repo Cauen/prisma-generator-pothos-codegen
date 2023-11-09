@@ -1,8 +1,8 @@
-import type { DMMF } from '@prisma/generator-helper';
 import { env } from '../env';
 import { ConfigInternal } from '../utils/config';
 import { writeFile } from '../utils/filesystem';
 import { getEnums, getImports, getScalars, getInputs, getUtil } from './utils/parts';
+import type { DMMF } from '@prisma/generator-helper';
 
 /** Types may vary between Prisma versions */
 export type Scalars<DecimalType, JsonInput, JsonOutput> = {

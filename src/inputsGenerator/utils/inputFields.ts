@@ -1,8 +1,8 @@
-import type { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { firstLetterLowerCase, firstLetterUpperCase } from '../../utils/string';
 import { getMainInput } from './dmmf';
 import { parseComment } from './parser';
+import type { DMMF } from '@prisma/generator-helper';
 
 /** Convert array of fields to a string code representation */
 export const getInputFieldsString = (

@@ -7,6 +7,7 @@
 - [x] Improve: Remove tokenizr dep
  - Add tests for comments parser
 - [x] Upgrade: Update dependancies and peerDependancies
+- [x] Improve: Update prettier and eslint (to remove some conflicts)
 
 # 0.6.2
 

@@ -1,14 +1,22 @@
 import path from 'node:path';
-import type { DMMF } from '@prisma/generator-helper';
 import { ConfigInternal } from '../../utils/config';
 import { writeFile } from '../../utils/filesystem';
 import { firstLetterLowerCase, firstLetterUpperCase, getCompositeName } from '../../utils/string';
 import { useTemplate } from '../../utils/template';
 import { objectTemplate } from '../templates/object';
 import { getObjectFieldsString } from './objectFields';
+import type { DMMF } from '@prisma/generator-helper';
+
+type ResolverType = 'queries' | 'mutations';
 
 const getResolverTypeName = (type: ResolverType) => {
   return type === 'mutations' ? 'Mutation' : 'Query';
+};
+
+export type GeneratedResolver = {
+  resolverName: string;
+  modelName: string;
+  type: ResolverType;
 };
 
 /** Write index.ts */
@@ -128,12 +136,6 @@ export const getBuilderCalculatedImport = ({
 };
 
 /** Write resolvers (e.g. findFirst, findUnique, createOne, etc) */
-type ResolverType = 'queries' | 'mutations';
-export type GeneratedResolver = {
-  resolverName: string;
-  modelName: string;
-  type: ResolverType;
-};
 export async function writeResolvers(
   config: ConfigInternal,
   model: DMMF.Model,

@@ -100,48 +100,54 @@ export const getInputs = (config: ConfigInternal, dmmf: DMMF.Document) => {
       config,
       dmmf,
       // Map from possible input names to their related model
-      dmmf.datamodel.models.reduce((prev, curr) => {
-        return {
-          ...prev,
-          [`${curr.name}UncheckedCreateInput`]: curr,
-          [`${curr.name}CreateNestedManyWithout`]: curr,
-          [`${curr.name}UncheckedUpdateInput`]: curr,
-          [`${curr.name}UpdateManyMutationInput`]: curr,
-          [`${curr.name}UpdateManyWithout`]: curr,
-          [`${curr.name}OrderByWithRelationInput`]: curr,
-          [`${curr.name}OrderByRelationAggregateInput`]: curr,
-          [`${curr.name}Where`]: curr,
-        };
-      }, {} as Record<string, DMMF.Model>),
+      dmmf.datamodel.models.reduce(
+        (prev, curr) => {
+          return {
+            ...prev,
+            [`${curr.name}UncheckedCreateInput`]: curr,
+            [`${curr.name}CreateNestedManyWithout`]: curr,
+            [`${curr.name}UncheckedUpdateInput`]: curr,
+            [`${curr.name}UpdateManyMutationInput`]: curr,
+            [`${curr.name}UpdateManyWithout`]: curr,
+            [`${curr.name}OrderByWithRelationInput`]: curr,
+            [`${curr.name}OrderByRelationAggregateInput`]: curr,
+            [`${curr.name}Where`]: curr,
+          };
+        },
+        {} as Record<string, DMMF.Model>,
+      ),
     );
   else
     return makeInputs(
       config,
       dmmf,
       // Map from possible input names to their related model
-      dmmf.datamodel.models.reduce((prev, curr) => {
-        return {
-          ...prev,
-          ...[
-            'Where',
-            'ScalarWhere',
-            'Create',
-            'Update',
-            'Upsert',
-            'OrderBy',
-            'CountOrderBy',
-            'MaxOrderBy',
-            'MinOrderBy',
-            'AvgOrderBy',
-            'SumOrderBy',
-          ].reduce(
-            (prev, keyword) => ({
-              ...prev,
-              [`${curr.name}${keyword}`]: curr,
-            }),
-            {},
-          ),
-        };
-      }, {} as Record<string, DMMF.Model>),
+      dmmf.datamodel.models.reduce(
+        (prev, curr) => {
+          return {
+            ...prev,
+            ...[
+              'Where',
+              'ScalarWhere',
+              'Create',
+              'Update',
+              'Upsert',
+              'OrderBy',
+              'CountOrderBy',
+              'MaxOrderBy',
+              'MinOrderBy',
+              'AvgOrderBy',
+              'SumOrderBy',
+            ].reduce(
+              (prev, keyword) => ({
+                ...prev,
+                [`${curr.name}${keyword}`]: curr,
+              }),
+              {},
+            ),
+          };
+        },
+        {} as Record<string, DMMF.Model>,
+      ),
     );
 };
