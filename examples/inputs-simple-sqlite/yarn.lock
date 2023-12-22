@@ -200,10 +200,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@pothos/core@^3.23.0":
-  version "3.23.0"
-  resolved "https://registry.npmjs.org/@pothos/core/-/core-3.23.0.tgz"
-  integrity sha512-UIpidfMYu6+Y1yjET+h4uIMwt2mtSDKG6iHvdyXFAzB/HSksbm1IG2SyDKtR7o22U17CkDrpc3kGrflss4Oyaw==
+"@pothos/core@^3.41.0":
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/@pothos/core/-/core-3.41.0.tgz#992bf91665f9aabf328f7cbbf12f1819c1888b07"
+  integrity sha512-Nb7uPDTXVjdrWqHs5aoD1r6JEdQ9FnJYlf7gv47o1b/bb8rVDAZQaviVvaChal7YQcyFGgCFb0/YNNHLNBEjNw==
 
 "@pothos/plugin-prisma@^3.63.0":
   version "3.63.0"

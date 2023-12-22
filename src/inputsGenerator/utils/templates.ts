@@ -5,7 +5,7 @@ export const enumTemplate = `export const #{enumName} = builder.enumType('#{enum
 export const inputTemplate = `export const #{inputName}Fields = (t: any) => ({
   #{fields}
 });
-export const #{inputName} = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.#{prismaInputName}>>('#{inputName}').implement({
+export const #{inputName} = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.#{prismaInputName}>, false>('#{inputName}').implement({
   fields: #{inputName}Fields,
 });`
 

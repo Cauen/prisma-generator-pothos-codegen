@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-pothos-codegen",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "license": "MIT",
   "description": "A prisma generator that generate input types for Pothos. And optionally generate all crud.",
   "main": "./src/index.js",
@@ -39,13 +39,12 @@
     "prisma-generator-pothos-codegen": "./src/bin.js"
   },
   "peerDependencies": {
-    "@pothos/core": "3.23.0",
-    "@pothos/plugin-prisma": "3.37.0 || 3.57.0",
-    "@prisma/client": "^4.7.0 || ^5.1.1 || ^5.5.2",
-    "prisma": "^4.7.0 || ^5.1.1 || ^5.5.2"
+    "@pothos/core": "^3.23.0",
+    "@pothos/plugin-prisma": "^3.37.0",
+    "@prisma/client": "^4.7.0 || ^5.1.1",
+    "prisma": "^4.7.0 || ^5.1.1"
   },
   "devDependencies": {
-    "@pothos/core": "3.23.0",
     "@pothos/plugin-prisma": "^3.57.0",
     "@prisma/client": "^5.1.1",
     "@prisma/internals": "^4.7.0 || ^5.1.1 || ^5.5.2",

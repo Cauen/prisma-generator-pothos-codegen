@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.6.4
+
+- [x] Feature: From now: new generations uses new version of @pothos/core to disable input normalization: https://github.com/hayes/pothos/issues/1111. It fixes: #57.
+- [x] Chore/Example-Update: Update Pothos/Prisma/Others to latest versions
+- [x] Chore/Peer-deps: Remove @pothos/core exact version restriction
+
 # 0.6.3
 
 - [x] Upgrade: Update prisma to latest version

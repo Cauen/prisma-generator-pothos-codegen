@@ -9,8 +9,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.UserOrderByWithRelationInput;
         WhereUnique: Prisma.UserWhereUniqueInput;
         Where: Prisma.UserWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.UserCreateInput;
+        Update: Prisma.UserUpdateInput;
         RelationName: "Posts" | "Comments" | "Profile" | "Followers" | "Following";
         ListRelations: "Posts" | "Comments" | "Profile" | "Followers" | "Following";
         Relations: {
@@ -44,8 +44,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.UserLastOrderByWithRelationInput;
         WhereUnique: Prisma.UserLastWhereUniqueInput;
         Where: Prisma.UserLastWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.UserLastCreateInput;
+        Update: Prisma.UserLastUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -58,8 +58,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.PostOrderByWithRelationInput;
         WhereUnique: Prisma.PostWhereUniqueInput;
         Where: Prisma.PostWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.PostCreateInput;
+        Update: Prisma.PostUpdateInput;
         RelationName: "Author" | "Comments";
         ListRelations: "Comments";
         Relations: {
@@ -81,8 +81,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.ExtraModalOrderByWithRelationInput;
         WhereUnique: Prisma.ExtraModalWhereUniqueInput;
         Where: Prisma.ExtraModalWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.ExtraModalCreateInput;
+        Update: Prisma.ExtraModalUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -95,8 +95,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.CommentOrderByWithRelationInput;
         WhereUnique: Prisma.CommentWhereUniqueInput;
         Where: Prisma.CommentWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.CommentCreateInput;
+        Update: Prisma.CommentUpdateInput;
         RelationName: "Author" | "Post";
         ListRelations: never;
         Relations: {
@@ -118,8 +118,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.ProfileOrderByWithRelationInput;
         WhereUnique: Prisma.ProfileWhereUniqueInput;
         Where: Prisma.ProfileWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.ProfileCreateInput;
+        Update: Prisma.ProfileUpdateInput;
         RelationName: "User";
         ListRelations: never;
         Relations: {
@@ -137,8 +137,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.FollowOrderByWithRelationInput;
         WhereUnique: Prisma.FollowWhereUniqueInput;
         Where: Prisma.FollowWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.FollowCreateInput;
+        Update: Prisma.FollowUpdateInput;
         RelationName: "From" | "To";
         ListRelations: never;
         Relations: {
@@ -160,8 +160,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.UnrelatedOrderByWithRelationInput;
         WhereUnique: Prisma.UnrelatedWhereUniqueInput;
         Where: Prisma.UnrelatedWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.UnrelatedCreateInput;
+        Update: Prisma.UnrelatedUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -174,8 +174,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.IdOnlyOrderByWithRelationInput;
         WhereUnique: Prisma.IdOnlyWhereUniqueInput;
         Where: Prisma.IdOnlyWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.IdOnlyCreateInput;
+        Update: Prisma.IdOnlyUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -188,8 +188,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.WithoutIDOrderByWithRelationInput;
         WhereUnique: Prisma.WithoutIDWhereUniqueInput;
         Where: Prisma.WithoutIDWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.WithoutIDCreateInput;
+        Update: Prisma.WithoutIDUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};
@@ -202,8 +202,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.WithScalarsOrderByWithRelationInput;
         WhereUnique: Prisma.WithScalarsWhereUniqueInput;
         Where: Prisma.WithScalarsWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.WithScalarsCreateInput;
+        Update: Prisma.WithScalarsUpdateInput;
         RelationName: never;
         ListRelations: never;
         Relations: {};

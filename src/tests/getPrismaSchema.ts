@@ -1,11 +1,13 @@
 import path from 'path'
-import { getDMMF, getSchemaSync } from '@prisma/internals'
+import { getDMMF, getSchema } from '@prisma/internals'
 
-const simplePrismaSchema = getSchemaSync(path.join(__dirname, './simpleSchema.prisma'))
-const complexPrismaSchema = getSchemaSync(path.join(__dirname, './complexSchema.prisma'))
+const simplePrismaSchema = getSchema(path.join(__dirname, './simpleSchema.prisma'))
+const complexPrismaSchema = getSchema(path.join(__dirname, './complexSchema.prisma'))
 
 export const getSampleDMMF = async (type: 'complex' | 'simple') => {
+  const datamodelSchema = type === 'complex' ? complexPrismaSchema : simplePrismaSchema
+
   return getDMMF({
-    datamodel: type === 'complex' ? complexPrismaSchema : simplePrismaSchema,
+    datamodel: await datamodelSchema,
   })
 }
