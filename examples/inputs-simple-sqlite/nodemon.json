@@ -1,0 +1,5 @@
+{
+  "watch": ["src", ".env"],
+  "ext": "ts",
+  "exec": "yarn build && yarn start"
+}

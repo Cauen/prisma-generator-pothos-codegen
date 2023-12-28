@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "lib": ["ES2023"],
+    "module": "node16",
+    "target": "ES2022",
     "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "skipLibCheck": true,
@@ -11,15 +11,9 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "baseUrl": ".",
-    "lib": ["es2021"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@prisma-generator-pothos-codegen": [
-        "../../src/*"
-      ],
-    },
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
