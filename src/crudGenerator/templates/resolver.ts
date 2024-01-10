@@ -27,7 +27,7 @@ export const makeResolver = (
   )
 
 export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}#{builderCalculatedImport}
-import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils';
+import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils.js';
 
 export const #{operation}#{modelName}#{root}Args = builder.args((t) => (#{args}))
 

@@ -13,7 +13,7 @@ const makeMutation = (
 ) =>
   makeResolver(
     'Mutation',
-    isPrisma ? '' : "\nimport { BatchPayload } from '../../objects';",
+    isPrisma ? '' : "\nimport { BatchPayload } from '../../objects.js';",
     operation,
     type,
     nullable,

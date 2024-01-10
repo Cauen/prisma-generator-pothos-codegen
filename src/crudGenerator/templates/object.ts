@@ -5,7 +5,7 @@ import {
   defineFieldObject,
   defineRelationFunction,
   defineRelationObject,
-} from '../utils';
+} from '../utils.js';
 
 export const #{modelName}#{optionalUnderscore}Object = definePrismaObject('#{modelName}', {
   description: #{description},
