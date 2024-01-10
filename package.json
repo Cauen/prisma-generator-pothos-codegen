@@ -35,9 +35,7 @@
     "format": "eslint --fix ./src",
     "check-src-and-examples": "yarn test && yarn tscheck && cd examples/inputs-simple-sqlite && yarn generate && yarn tscheck"
   },
-  "bin": {
-    "prisma-generator-pothos-codegen": "./src/bin.js"
-  },
+  "bin": "./src/bin.js",
   "peerDependencies": {
     "@pothos/core": "^3.23.0",
     "@pothos/plugin-prisma": "^3.37.0",
@@ -66,5 +64,6 @@
   },
   "dependencies": {
     "@prisma/generator-helper": "^4.7.0 || ^5.1.1 || ^5.5.2"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
