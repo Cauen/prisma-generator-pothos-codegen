@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        prisma-version: [4.7.0, 4.8.0]
-        node-version: [16, 18]
+        prisma-version: [5.5.2]
+        node-version: [16.13.0, 18, 20]
 
     name: Node ${{ matrix.node-version }} with Prisma ${{ matrix.prisma-version }}
     steps:
