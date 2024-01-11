@@ -45,8 +45,13 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     useTemplate(objectsTemplate, {
       crudExportRoot: config.crud.exportEverythingInObjectsDotTs
         ? `\n${exportAllInObjects
-          .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from './${el.model}.js';`)
-          .join('\n')}`
+            .map(
+              (el) =>
+                `export {\n  ${el.exports.join(',\n  ')}\n} from './${el.model}${
+                  config.global.esm ? '/index.js' : ''
+                }';`,
+            )
+            .join('\n')}`
         : '',
       ...config.crud,
       modelNames: modelNamesEachLine,
@@ -56,7 +61,10 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   )
 
   const fileLocation = path.join(config.crud.outputDir, 'utils.ts')
-  const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation })
+  const builderCalculatedImport = getBuilderCalculatedImport({
+    config,
+    fileLocation,
+  })
 
   // Generate root utils.ts file
   await writeFile(
@@ -72,7 +80,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   // TODO REFACTOR AND TESTS
   if (config.crud.generateAutocrud) {
     const imports = dmmf.datamodel.models
-      .map((model) => `import * as ${model.name} from './${model.name}/index.js';`)
+      .map((model) => `import * as ${model.name} from './${model.name}${config.global.esm ? '/index.js' : ''}';`)
       .join('\n')
     const models = generatedModels.map((el) => ({
       model: el.model,
@@ -85,23 +93,26 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
         return `  ${name}: {
     Object: ${name}.${name}${getConfigCrudUnderscore(config)}Object,
     queries: ${(() => {
-            const queries = models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'queries') || []
-            return `{\n${queries
-              .map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}QueryObject,`)
-              .join('\n')}\n    }`
-          })()},
+      const queries = models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'queries') || []
+      return `{\n${queries
+        .map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}QueryObject,`)
+        .join('\n')}\n    }`
+    })()},
     mutations: ${(() => {
-            const mutations = models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'mutations') || []
-            return `{\n${mutations
-              .map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}MutationObject,`)
-              .join('\n')}\n    }`
-          })()},
+      const mutations = models.find((el) => el.model === name)?.generated.filter((el) => el.type === 'mutations') || []
+      return `{\n${mutations
+        .map((el) => `      ${el.resolverName}: ${el.modelName}.${el.resolverName}${el.modelName}MutationObject,`)
+        .join('\n')}\n    }`
+    })()},
   },`
       })
       .join('\n')
 
     const fileLocation = path.join(config.crud.outputDir, 'autocrud.ts')
-    const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation })
+    const builderCalculatedImport = getBuilderCalculatedImport({
+      config,
+      fileLocation,
+    })
 
     await writeFile(
       config,

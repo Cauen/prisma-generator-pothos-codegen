@@ -177,8 +177,9 @@ export async function writeResolvers(
         .map(
           ([name]) =>
             `export ${(() => {
-              return `{ ${name}${model.name}${type === 'mutations' ? 'Mutation' : 'Query'}, ${name}${model.name
-                }${getResolverTypeName(type)}Object }`
+              return `{ ${name}${model.name}${type === 'mutations' ? 'Mutation' : 'Query'}, ${name}${
+                model.name
+              }${getResolverTypeName(type)}Object }`
             })()} from './${name}.base${config.global.esm ? '.js' : ''}';`,
         )
         .join('\n') + '\n',
