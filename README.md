@@ -125,6 +125,7 @@ module.exports = {
     prismaCaller: 'prisma',
   },
   global: {
+    esm: false,
   },
 };
 ```
@@ -196,6 +197,8 @@ module.exports = {
       beforeGenerate?: (dmmf: DMMF.Document) => void;
       /** Run function after generate */
       afterGenerate?: (dmmf: DMMF.Document) => void;
+      /** Make generated file esm compatible */
+      esm?: boolean;
     };
   }
   ```
