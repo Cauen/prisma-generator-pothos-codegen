@@ -43,6 +43,7 @@ module.exports = {
           console.log({ err });
         }
       );
-    }
+    },
+    esm: true
   },
 };
