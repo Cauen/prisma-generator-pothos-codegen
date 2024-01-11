@@ -111,6 +111,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
         imports,
         modelsGenerated,
         builderCalculatedImport,
+        importExt: config.global.esm ? '.js' : '',
       }),
       fileLocation,
     )

@@ -23,11 +23,11 @@ export const makeResolver = (
       resolve,
       field: isPrisma ? 'prismaField' : 'field',
     },
-    ['modelName', 'inputsImporter', 'resolverImports', 'builderCalculatedImport'],
+    ['modelName', 'inputsImporter', 'resolverImports', 'builderCalculatedImport', 'importExt'],
   )
 
 export const resolverTemplate = `#{inputsImporter}#{imports}#{resolverImports}#{builderCalculatedImport}
-import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils.js';
+import { define#{root}, define#{root}Function, define#{root}#{object} } from '../../utils#{importExt}';
 
 export const #{operation}#{modelName}#{root}Args = builder.args((t) => (#{args}))
 

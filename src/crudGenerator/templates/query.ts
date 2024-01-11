@@ -11,6 +11,7 @@ const makeQuery = (
   isPrisma = true,
   args?: string,
   resolve?: string,
+  esm?: boolean,
 ) =>
   makeResolver(
     'Query',
@@ -20,17 +21,18 @@ const makeQuery = (
     nullable,
     args ?? useTemplate(queryListArgsTemplate, {}, ['modelName', 'modelNameUpper']),
     resolve ??
-      useTemplate(
-        queryListResolveTemplate,
-        {
-          distinct: operation === 'count' ? '' : '\n        distinct: args.distinct || undefined,',
-          operation,
-          query: isPrisma ? '\n        ...query,' : '',
-          argsQuery: isPrisma ? 'query, ' : '',
-        },
-        ['prisma', 'modelNameLower'],
-      ),
+    useTemplate(
+      queryListResolveTemplate,
+      {
+        distinct: operation === 'count' ? '' : '\n        distinct: args.distinct || undefined,',
+        operation,
+        query: isPrisma ? '\n        ...query,' : '',
+        argsQuery: isPrisma ? 'query, ' : '',
+      },
+      ['prisma', 'modelNameLower'],
+    ),
     isPrisma,
+    esm,
   )
 
 const queryListArgsTemplate = `{

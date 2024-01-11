@@ -67,6 +67,8 @@ export interface Config {
     afterGenerate?: (dmmf: DMMF.Document) => void
     /** Location of builder. Default: './builder', */
     builderLocation?: string
+    /** Generate ECMAScript modules (ESM) module code. Default: false */
+    esm?: boolean
   }
 }
 
@@ -141,6 +143,7 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
     afterGenerate: () => {
       // noop
     },
+    esm: false,
   },
 })
 
