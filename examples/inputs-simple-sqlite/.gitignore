@@ -1,0 +1,19 @@
+node_modules
+coverage
+__snapshots__
+generated/*
+dmmf.json
+log.txt
+yarn*.log
+dist
+tsconfig.tsbuildinfo
+TEST-*
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
