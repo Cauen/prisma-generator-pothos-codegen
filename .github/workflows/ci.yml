@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         prisma-version: [4.7.0, 4.8.0]
-        node-version: [16, 18]
+        node-version: [18]
 
     name: Node ${{ matrix.node-version }} with Prisma ${{ matrix.prisma-version }}
     steps:
@@ -45,4 +45,3 @@ jobs:
 
       - name: 🧪 Run tests
         run: yarn test
-
