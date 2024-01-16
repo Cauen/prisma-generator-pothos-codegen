@@ -1,0 +1,119 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider     = "prisma-pothos-types"
+  // Match client output location from above
+  clientOutput = ".prisma/client"
+  output       = "../src/generated/objects.d.ts"
+}
+
+generator pothosCrud {
+  provider            = "ts-node --transpile-only ../../src/generator.ts"
+  generatorConfigPath = "../src/schema/configs.cjs"
+}
+
+/// User of prisma
+model User {
+  id        Int       @id @default(autoincrement())
+  /// firstname description
+  firstName String
+  /// lastname description
+  lastName  String
+  birthdate DateTime
+  login     String
+  /// @Pothos.omit()
+  password  String
+  /// relation desc 
+  Posts     Post[]
+  Comments  Comment[]
+  /// @Pothos.omit(create, update) createdAt description
+  createdAt DateTime  @default(now())
+  /// @Pothos.omit(create, update)
+  updatedAt DateTime? @updatedAt
+  Profile   Profile[]
+  Followers Follow[]  @relation("followers")
+  Following Follow[]  @relation("following")
+}
+
+/// Its for check for duplicating User.LastName and UserLast.Name
+model UserLast {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Post {
+  id       Int       @id @default(autoincrement())
+  title    String
+  /// createdAt description
+  content  String
+  Author   User      @relation(fields: [authorId], references: [id])
+  Comments Comment[]
+  authorId Int
+}
+
+model ExtraModal {
+  id        Int       @id @default(autoincrement())
+  /// The title of extramodal
+  title     String
+  /// @Pothos.omit(create, update) createdAt description
+  createdAt DateTime  @default(now())
+  /// @Pothos.omit(create, update)
+  updatedAt DateTime? @updatedAt
+}
+
+model Comment {
+  id       Int    @id @default(autoincrement())
+  comment  String
+  Author   User   @relation(fields: [authorId], references: [id])
+  Post     Post   @relation(fields: [postId], references: [id])
+  authorId Int
+  postId   Int
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  User   User    @relation(fields: [userId], references: [id])
+  userId Int     @unique
+}
+
+model Follow {
+  fromId Int
+  toId   Int
+  From   User @relation("following", fields: [fromId], references: [id])
+  To     User @relation("followers", fields: [toId], references: [id])
+
+  @@id([fromId, toId], name: "compositeID")
+}
+
+model Unrelated {
+  id   Int     @id @default(autoincrement())
+  name String?
+}
+
+model IdOnly {
+  id Int @id @default(autoincrement())
+}
+
+model WithoutID {
+  name String @unique
+}
+
+model WithScalars {
+  id       BigInt    @id @default(autoincrement())
+  string   String?
+  boolean  Boolean?
+  int      Int?
+  float    Float?
+  decimal  Decimal?
+  bigint   BigInt?
+  datetime DateTime?
+  bytes    Bytes?
+}

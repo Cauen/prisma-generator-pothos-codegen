@@ -45,7 +45,12 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
     useTemplate(objectsTemplate, {
       crudExportRoot: config.crud.exportEverythingInObjectsDotTs
         ? `\n${exportAllInObjects
-            .map((el) => `export {\n  ${el.exports.join(',\n  ')}\n} from './${el.model}';`)
+            .map(
+              (el) =>
+                `export {\n  ${el.exports.join(',\n  ')}\n} from './${el.model}${
+                  config.global.esm ? '/index.js' : ''
+                }';`,
+            )
             .join('\n')}`
         : '',
       ...config.crud,
@@ -56,7 +61,10 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   )
 
   const fileLocation = path.join(config.crud.outputDir, 'utils.ts')
-  const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation })
+  const builderCalculatedImport = getBuilderCalculatedImport({
+    config,
+    fileLocation,
+  })
 
   // Generate root utils.ts file
   await writeFile(
@@ -71,7 +79,9 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
   // Generate root autocrud.ts file
   // TODO REFACTOR AND TESTS
   if (config.crud.generateAutocrud) {
-    const imports = dmmf.datamodel.models.map((model) => `import * as ${model.name} from './${model.name}';`).join('\n')
+    const imports = dmmf.datamodel.models
+      .map((model) => `import * as ${model.name} from './${model.name}${config.global.esm ? '/index.js' : ''}';`)
+      .join('\n')
     const models = generatedModels.map((el) => ({
       model: el.model,
       generated: el.generated.resolvers,
@@ -99,7 +109,10 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
       .join('\n')
 
     const fileLocation = path.join(config.crud.outputDir, 'autocrud.ts')
-    const builderCalculatedImport = getBuilderCalculatedImport({ config, fileLocation })
+    const builderCalculatedImport = getBuilderCalculatedImport({
+      config,
+      fileLocation,
+    })
 
     await writeFile(
       config,
@@ -109,6 +122,7 @@ export async function generateCrud(config: ConfigInternal, dmmf: DMMF.Document):
         imports,
         modelsGenerated,
         builderCalculatedImport,
+        importExt: config.global.esm ? '.js' : '',
       }),
       fileLocation,
     )

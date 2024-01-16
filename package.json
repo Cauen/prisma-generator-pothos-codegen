@@ -32,8 +32,10 @@
     "postbuild": "shx cp ./README.md ./dist && shx chmod +x ./dist/src/bin.js",
     "clean": "shx rm -rf dist",
     "pub": "cd dist && npm publish",
+    "lint": "eslint ./src",
     "format": "eslint --fix ./src",
-    "check-src-and-examples": "yarn test && yarn tscheck && cd examples/inputs-simple-sqlite && yarn generate && yarn tscheck"
+    "checksrc": "yarn test && yarn tscheck && yarn lint",
+    "fullcheck": "yarn checksrc && cd examples/inputs-simple-sqlite && yarn generate && yarn tscheck"
   },
   "bin": {
     "prisma-generator-pothos-codegen": "./src/bin.js"

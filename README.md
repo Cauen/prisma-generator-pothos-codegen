@@ -83,6 +83,7 @@ generator pothosCrud {
   generatorConfigPath = "./pothos.config.js"
   // You may also set the `generatorConfigPath` via the `POTHOS_CRUD_CONFIG_PATH` environment variable.
   // The environment variable will override the path hardcoded here.
+  // Use .cjs if you are using ESM module.
 }
 
 /// This is a user!
@@ -119,11 +120,12 @@ module.exports = {
   },
   crud: {
     outputDir: './src/graphql/__generated__/',
-    inputsImporter: `import * as Inputs from '@graphql/__generated__/inputs';`,
+    inputsImporter: `import * as Inputs from '@graphql/__generated__/inputs';`, // "inputs.js" if using ESM module
     resolversImports: `import prisma from '@lib/prisma';`,
     prismaCaller: 'prisma',
   },
   global: {
+    esm: false,
   },
 };
 ```
@@ -195,6 +197,8 @@ module.exports = {
       beforeGenerate?: (dmmf: DMMF.Document) => void;
       /** Run function after generate */
       afterGenerate?: (dmmf: DMMF.Document) => void;
+      /** Make generated file esm compatible */
+      esm?: boolean;
     };
   }
   ```
@@ -260,8 +264,8 @@ export const UserUpdateInputCustom = builder
 ```ts
 // ./src/graphql/User/object.ts
 
-import { UserObject } from '@/graphql/__generated__/User';
-import { builder } from '@/graphql/builder'; // Pothos schema builder
+import { UserObject } from '@/graphql/__generated__/User/index.js';
+import { builder } from '@/graphql/builder.js'; // Pothos schema builder
 
 // Use the Object export to accept all default generated query code
 builder.prismaObject('User', UserObject);
@@ -296,8 +300,8 @@ builder.prismaObject('User', {
 ```ts
 // ./src/graphql/User/query.ts
 
-import { findManyUserQuery, findManyUserQueryObject } from '@/graphql/__generated__/User';
-import { builder } from '@/graphql/builder'; // Pothos schema builder
+import { findManyUserQuery, findManyUserQueryObject } from '@/graphql/__generated__/User/index.js';
+import { builder } from '@/graphql/builder.js'; // Pothos schema builder
 
 // Use the Query exports to accept all default generated query code
 builder.queryFields(findManyUserQuery);
@@ -336,8 +340,8 @@ import {
   generateAllObjects,
   generateAllQueries,
   generateAllMutations
-} from '@/graphql/__generated__/autocrud.ts',
-import { builder } from '@/graphql/builder'; // Pothos schema builder
+} from '@/graphql/__generated__/autocrud.js',
+import { builder } from '@/graphql/builder.js'; // Pothos schema builder
 
 // (option 1) generate all objects, queries and mutations
 generateAllCrud()

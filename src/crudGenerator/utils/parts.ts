@@ -29,10 +29,12 @@ export async function writeIndex(
   const queriesExports = queries.map((el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`)
   const mutationsExports = mutations.map((el) => `${el.resolverName}${el.modelName}${getResolverTypeName(el.type)}`)
   const optionalUnderscore = getConfigCrudUnderscore(config)
+  const importExt = config.global.esm ? '.js' : ''
+  const importDirWithExt = config.global.esm ? '/index.js' : ''
 
   const exportsWithName = [
     {
-      name: './object.base',
+      name: './object.base' + importExt,
       exports: [
         `${model.name}${optionalUnderscore}Object`,
         ...model.fields.map(
@@ -41,11 +43,11 @@ export async function writeIndex(
       ],
     },
     {
-      name: './mutations',
+      name: './mutations' + importDirWithExt,
       exports: [...mutationsExports, ...mutationsExports.map((el) => `${el}Object`)],
     },
     {
-      name: './queries',
+      name: './queries' + importDirWithExt,
       exports: [...queriesExports, ...queriesExports.map((el) => `${el}Object`)],
     },
   ]
@@ -88,6 +90,7 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
       exportFields: exportFields.join('\n\n'),
       builderCalculatedImport,
       optionalUnderscore: getConfigCrudUnderscore(config),
+      importExt: config.global.esm ? '.js' : '',
     }),
     fileLocation,
   )
@@ -123,7 +126,7 @@ export const getBuilderCalculatedImport = ({
   const relativeImport = path.relative(path.dirname(fileLocation), builderRelative)
   const stringImport = path.sep === '\\' ? relativeImport.replace(/\\/g, '/') : relativeImport
 
-  const importer = `\nimport { builder } from '${stringImport}';`
+  const importer = `\nimport { builder } from '${stringImport}${config.global.esm ? '.js' : ''}';`
   return importer
 }
 
@@ -158,6 +161,7 @@ export async function writeResolvers(
           resolverImports: config.crud.resolverImports,
           inputsImporter: resolverInputsImporter,
           builderCalculatedImport,
+          importExt: config.global.esm ? '.js' : '',
         }),
         fileLocation,
       )
@@ -176,7 +180,7 @@ export async function writeResolvers(
               return `{ ${name}${model.name}${type === 'mutations' ? 'Mutation' : 'Query'}, ${name}${
                 model.name
               }${getResolverTypeName(type)}Object }`
-            })()} from './${name}.base';`,
+            })()} from './${name}.base${config.global.esm ? '.js' : ''}';`,
         )
         .join('\n') + '\n',
       path.join(config.crud.outputDir, model.name, type, 'index.ts'),

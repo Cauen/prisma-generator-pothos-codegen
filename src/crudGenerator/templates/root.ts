@@ -195,7 +195,7 @@ export const definePrismaObject = <
   },
  */
 export const autoCrudTemplate = `#{imports}#{builderCalculatedImport}
-import * as Objects from './objects';
+import * as Objects from './objects#{importExt}';
 
 type Model = Objects.Model;
 
