@@ -121,7 +121,7 @@ module.exports = {
   crud: {
     outputDir: './src/graphql/__generated__/',
     inputsImporter: `import * as Inputs from '@graphql/__generated__/inputs';`,
-    resolversImports: `import prisma from '@lib/prisma';`,
+    resolverImports: `import prisma from '@lib/prisma';`,
     prismaCaller: 'prisma',
   },
   global: {
