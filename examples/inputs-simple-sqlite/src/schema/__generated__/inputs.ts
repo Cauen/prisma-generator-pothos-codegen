@@ -157,7 +157,7 @@ export const UserWhereInputFields = (t: any) => ({
   Following: t.field({"required":false,"type":FollowListRelationFilter}),
   // 'password' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserWhereInput>>('UserWhereInput').implement({
+export const UserWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserWhereInput>, false>('UserWhereInput').implement({
   fields: UserWhereInputFields,
 });
 
@@ -176,7 +176,7 @@ export const UserOrderByWithRelationInputFields = (t: any) => ({
   Following: t.field({"required":false,"type":FollowOrderByRelationAggregateInput}),
   // 'password' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserOrderByWithRelationInput>>('UserOrderByWithRelationInput').implement({
+export const UserOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserOrderByWithRelationInput>, false>('UserOrderByWithRelationInput').implement({
   fields: UserOrderByWithRelationInputFields,
 });
 
@@ -198,7 +198,7 @@ export const UserWhereUniqueInputFields = (t: any) => ({
   Following: t.field({"required":false,"type":FollowListRelationFilter}),
   // 'password' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserWhereUniqueInput>>('UserWhereUniqueInput').implement({
+export const UserWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserWhereUniqueInput>, false>('UserWhereUniqueInput').implement({
   fields: UserWhereUniqueInputFields,
 });
 
@@ -209,7 +209,7 @@ export const UserLastWhereInputFields = (t: any) => ({
   id: t.field({"required":false,"type":IntFilter}),
   name: t.field({"required":false,"type":StringFilter}),
 });
-export const UserLastWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereInput>>('UserLastWhereInput').implement({
+export const UserLastWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereInput>, false>('UserLastWhereInput').implement({
   fields: UserLastWhereInputFields,
 });
 
@@ -217,7 +217,7 @@ export const UserLastOrderByWithRelationInputFields = (t: any) => ({
   id: t.field({"required":false,"type":SortOrder}),
   name: t.field({"required":false,"type":SortOrder}),
 });
-export const UserLastOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastOrderByWithRelationInput>>('UserLastOrderByWithRelationInput').implement({
+export const UserLastOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastOrderByWithRelationInput>, false>('UserLastOrderByWithRelationInput').implement({
   fields: UserLastOrderByWithRelationInputFields,
 });
 
@@ -228,7 +228,7 @@ export const UserLastWhereUniqueInputFields = (t: any) => ({
   NOT: t.field({"required":false,"type":[UserLastWhereInput]}),
   name: t.field({"required":false,"type":StringFilter}),
 });
-export const UserLastWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereUniqueInput>>('UserLastWhereUniqueInput').implement({
+export const UserLastWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastWhereUniqueInput>, false>('UserLastWhereUniqueInput').implement({
   fields: UserLastWhereUniqueInputFields,
 });
 
@@ -243,7 +243,7 @@ export const PostWhereInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserWhereInput}),
   Comments: t.field({"required":false,"type":CommentListRelationFilter}),
 });
-export const PostWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostWhereInput>>('PostWhereInput').implement({
+export const PostWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostWhereInput>, false>('PostWhereInput').implement({
   fields: PostWhereInputFields,
 });
 
@@ -255,7 +255,7 @@ export const PostOrderByWithRelationInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserOrderByWithRelationInput}),
   Comments: t.field({"required":false,"type":CommentOrderByRelationAggregateInput}),
 });
-export const PostOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostOrderByWithRelationInput>>('PostOrderByWithRelationInput').implement({
+export const PostOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostOrderByWithRelationInput>, false>('PostOrderByWithRelationInput').implement({
   fields: PostOrderByWithRelationInputFields,
 });
 
@@ -270,7 +270,7 @@ export const PostWhereUniqueInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserWhereInput}),
   Comments: t.field({"required":false,"type":CommentListRelationFilter}),
 });
-export const PostWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostWhereUniqueInput>>('PostWhereUniqueInput').implement({
+export const PostWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostWhereUniqueInput>, false>('PostWhereUniqueInput').implement({
   fields: PostWhereUniqueInputFields,
 });
 
@@ -283,7 +283,7 @@ export const ExtraModalWhereInputFields = (t: any) => ({
   createdAt: t.field({"required":false,"type":DateTimeFilter}),
   updatedAt: t.field({"required":false,"type":DateTimeNullableFilter}),
 });
-export const ExtraModalWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalWhereInput>>('ExtraModalWhereInput').implement({
+export const ExtraModalWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalWhereInput>, false>('ExtraModalWhereInput').implement({
   fields: ExtraModalWhereInputFields,
 });
 
@@ -293,7 +293,7 @@ export const ExtraModalOrderByWithRelationInputFields = (t: any) => ({
   createdAt: t.field({"required":false,"type":SortOrder}),
   updatedAt: t.field({"required":false,"type":SortOrder}),
 });
-export const ExtraModalOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalOrderByWithRelationInput>>('ExtraModalOrderByWithRelationInput').implement({
+export const ExtraModalOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalOrderByWithRelationInput>, false>('ExtraModalOrderByWithRelationInput').implement({
   fields: ExtraModalOrderByWithRelationInputFields,
 });
 
@@ -306,7 +306,7 @@ export const ExtraModalWhereUniqueInputFields = (t: any) => ({
   createdAt: t.field({"required":false,"type":DateTimeFilter}),
   updatedAt: t.field({"required":false,"type":DateTimeNullableFilter}),
 });
-export const ExtraModalWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalWhereUniqueInput>>('ExtraModalWhereUniqueInput').implement({
+export const ExtraModalWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalWhereUniqueInput>, false>('ExtraModalWhereUniqueInput').implement({
   fields: ExtraModalWhereUniqueInputFields,
 });
 
@@ -321,7 +321,7 @@ export const CommentWhereInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserWhereInput}),
   Post: t.field({"required":false,"type":PostWhereInput}),
 });
-export const CommentWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentWhereInput>>('CommentWhereInput').implement({
+export const CommentWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentWhereInput>, false>('CommentWhereInput').implement({
   fields: CommentWhereInputFields,
 });
 
@@ -333,7 +333,7 @@ export const CommentOrderByWithRelationInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserOrderByWithRelationInput}),
   Post: t.field({"required":false,"type":PostOrderByWithRelationInput}),
 });
-export const CommentOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentOrderByWithRelationInput>>('CommentOrderByWithRelationInput').implement({
+export const CommentOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentOrderByWithRelationInput>, false>('CommentOrderByWithRelationInput').implement({
   fields: CommentOrderByWithRelationInputFields,
 });
 
@@ -348,7 +348,7 @@ export const CommentWhereUniqueInputFields = (t: any) => ({
   Author: t.field({"required":false,"type":UserWhereInput}),
   Post: t.field({"required":false,"type":PostWhereInput}),
 });
-export const CommentWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentWhereUniqueInput>>('CommentWhereUniqueInput').implement({
+export const CommentWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentWhereUniqueInput>, false>('CommentWhereUniqueInput').implement({
   fields: CommentWhereUniqueInputFields,
 });
 
@@ -361,7 +361,7 @@ export const ProfileWhereInputFields = (t: any) => ({
   userId: t.field({"required":false,"type":IntFilter}),
   User: t.field({"required":false,"type":UserWhereInput}),
 });
-export const ProfileWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileWhereInput>>('ProfileWhereInput').implement({
+export const ProfileWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileWhereInput>, false>('ProfileWhereInput').implement({
   fields: ProfileWhereInputFields,
 });
 
@@ -371,7 +371,7 @@ export const ProfileOrderByWithRelationInputFields = (t: any) => ({
   userId: t.field({"required":false,"type":SortOrder}),
   User: t.field({"required":false,"type":UserOrderByWithRelationInput}),
 });
-export const ProfileOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileOrderByWithRelationInput>>('ProfileOrderByWithRelationInput').implement({
+export const ProfileOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileOrderByWithRelationInput>, false>('ProfileOrderByWithRelationInput').implement({
   fields: ProfileOrderByWithRelationInputFields,
 });
 
@@ -384,7 +384,7 @@ export const ProfileWhereUniqueInputFields = (t: any) => ({
   bio: t.field({"required":false,"type":StringNullableFilter}),
   User: t.field({"required":false,"type":UserWhereInput}),
 });
-export const ProfileWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileWhereUniqueInput>>('ProfileWhereUniqueInput').implement({
+export const ProfileWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileWhereUniqueInput>, false>('ProfileWhereUniqueInput').implement({
   fields: ProfileWhereUniqueInputFields,
 });
 
@@ -397,7 +397,7 @@ export const FollowWhereInputFields = (t: any) => ({
   From: t.field({"required":false,"type":UserWhereInput}),
   To: t.field({"required":false,"type":UserWhereInput}),
 });
-export const FollowWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowWhereInput>>('FollowWhereInput').implement({
+export const FollowWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowWhereInput>, false>('FollowWhereInput').implement({
   fields: FollowWhereInputFields,
 });
 
@@ -407,7 +407,7 @@ export const FollowOrderByWithRelationInputFields = (t: any) => ({
   From: t.field({"required":false,"type":UserOrderByWithRelationInput}),
   To: t.field({"required":false,"type":UserOrderByWithRelationInput}),
 });
-export const FollowOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowOrderByWithRelationInput>>('FollowOrderByWithRelationInput').implement({
+export const FollowOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowOrderByWithRelationInput>, false>('FollowOrderByWithRelationInput').implement({
   fields: FollowOrderByWithRelationInputFields,
 });
 
@@ -421,7 +421,7 @@ export const FollowWhereUniqueInputFields = (t: any) => ({
   From: t.field({"required":false,"type":UserWhereInput}),
   To: t.field({"required":false,"type":UserWhereInput}),
 });
-export const FollowWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowWhereUniqueInput>>('FollowWhereUniqueInput').implement({
+export const FollowWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowWhereUniqueInput>, false>('FollowWhereUniqueInput').implement({
   fields: FollowWhereUniqueInputFields,
 });
 
@@ -432,7 +432,7 @@ export const UnrelatedWhereInputFields = (t: any) => ({
   id: t.field({"required":false,"type":IntFilter}),
   name: t.field({"required":false,"type":StringNullableFilter}),
 });
-export const UnrelatedWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedWhereInput>>('UnrelatedWhereInput').implement({
+export const UnrelatedWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedWhereInput>, false>('UnrelatedWhereInput').implement({
   fields: UnrelatedWhereInputFields,
 });
 
@@ -440,7 +440,7 @@ export const UnrelatedOrderByWithRelationInputFields = (t: any) => ({
   id: t.field({"required":false,"type":SortOrder}),
   name: t.field({"required":false,"type":SortOrder}),
 });
-export const UnrelatedOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedOrderByWithRelationInput>>('UnrelatedOrderByWithRelationInput').implement({
+export const UnrelatedOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedOrderByWithRelationInput>, false>('UnrelatedOrderByWithRelationInput').implement({
   fields: UnrelatedOrderByWithRelationInputFields,
 });
 
@@ -451,7 +451,7 @@ export const UnrelatedWhereUniqueInputFields = (t: any) => ({
   NOT: t.field({"required":false,"type":[UnrelatedWhereInput]}),
   name: t.field({"required":false,"type":StringNullableFilter}),
 });
-export const UnrelatedWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedWhereUniqueInput>>('UnrelatedWhereUniqueInput').implement({
+export const UnrelatedWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedWhereUniqueInput>, false>('UnrelatedWhereUniqueInput').implement({
   fields: UnrelatedWhereUniqueInputFields,
 });
 
@@ -461,14 +461,14 @@ export const IdOnlyWhereInputFields = (t: any) => ({
   NOT: t.field({"required":false,"type":[IdOnlyWhereInput]}),
   id: t.field({"required":false,"type":IntFilter}),
 });
-export const IdOnlyWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyWhereInput>>('IdOnlyWhereInput').implement({
+export const IdOnlyWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyWhereInput>, false>('IdOnlyWhereInput').implement({
   fields: IdOnlyWhereInputFields,
 });
 
 export const IdOnlyOrderByWithRelationInputFields = (t: any) => ({
   id: t.field({"required":false,"type":SortOrder}),
 });
-export const IdOnlyOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyOrderByWithRelationInput>>('IdOnlyOrderByWithRelationInput').implement({
+export const IdOnlyOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyOrderByWithRelationInput>, false>('IdOnlyOrderByWithRelationInput').implement({
   fields: IdOnlyOrderByWithRelationInputFields,
 });
 
@@ -478,7 +478,7 @@ export const IdOnlyWhereUniqueInputFields = (t: any) => ({
   OR: t.field({"required":false,"type":[IdOnlyWhereInput]}),
   NOT: t.field({"required":false,"type":[IdOnlyWhereInput]}),
 });
-export const IdOnlyWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyWhereUniqueInput>>('IdOnlyWhereUniqueInput').implement({
+export const IdOnlyWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyWhereUniqueInput>, false>('IdOnlyWhereUniqueInput').implement({
   fields: IdOnlyWhereUniqueInputFields,
 });
 
@@ -488,14 +488,14 @@ export const WithoutIDWhereInputFields = (t: any) => ({
   NOT: t.field({"required":false,"type":[WithoutIDWhereInput]}),
   name: t.field({"required":false,"type":StringFilter}),
 });
-export const WithoutIDWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDWhereInput>>('WithoutIDWhereInput').implement({
+export const WithoutIDWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDWhereInput>, false>('WithoutIDWhereInput').implement({
   fields: WithoutIDWhereInputFields,
 });
 
 export const WithoutIDOrderByWithRelationInputFields = (t: any) => ({
   name: t.field({"required":false,"type":SortOrder}),
 });
-export const WithoutIDOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDOrderByWithRelationInput>>('WithoutIDOrderByWithRelationInput').implement({
+export const WithoutIDOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDOrderByWithRelationInput>, false>('WithoutIDOrderByWithRelationInput').implement({
   fields: WithoutIDOrderByWithRelationInputFields,
 });
 
@@ -505,7 +505,7 @@ export const WithoutIDWhereUniqueInputFields = (t: any) => ({
   OR: t.field({"required":false,"type":[WithoutIDWhereInput]}),
   NOT: t.field({"required":false,"type":[WithoutIDWhereInput]}),
 });
-export const WithoutIDWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDWhereUniqueInput>>('WithoutIDWhereUniqueInput').implement({
+export const WithoutIDWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDWhereUniqueInput>, false>('WithoutIDWhereUniqueInput').implement({
   fields: WithoutIDWhereUniqueInputFields,
 });
 
@@ -523,7 +523,7 @@ export const WithScalarsWhereInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":DateTimeNullableFilter}),
   bytes: t.field({"required":false,"type":BytesNullableFilter}),
 });
-export const WithScalarsWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsWhereInput>>('WithScalarsWhereInput').implement({
+export const WithScalarsWhereInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsWhereInput>, false>('WithScalarsWhereInput').implement({
   fields: WithScalarsWhereInputFields,
 });
 
@@ -538,7 +538,7 @@ export const WithScalarsOrderByWithRelationInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":SortOrder}),
   bytes: t.field({"required":false,"type":SortOrder}),
 });
-export const WithScalarsOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsOrderByWithRelationInput>>('WithScalarsOrderByWithRelationInput').implement({
+export const WithScalarsOrderByWithRelationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsOrderByWithRelationInput>, false>('WithScalarsOrderByWithRelationInput').implement({
   fields: WithScalarsOrderByWithRelationInputFields,
 });
 
@@ -556,7 +556,7 @@ export const WithScalarsWhereUniqueInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":DateTimeNullableFilter}),
   bytes: t.field({"required":false,"type":BytesNullableFilter}),
 });
-export const WithScalarsWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsWhereUniqueInput>>('WithScalarsWhereUniqueInput').implement({
+export const WithScalarsWhereUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsWhereUniqueInput>, false>('WithScalarsWhereUniqueInput').implement({
   fields: WithScalarsWhereUniqueInputFields,
 });
 
@@ -575,7 +575,7 @@ export const UserCreateInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUncheckedCreateInput>>('UserCreateInput').implement({
+export const UserCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUncheckedCreateInput>, false>('UserCreateInput').implement({
   fields: UserCreateInputFields,
 });
 
@@ -594,7 +594,7 @@ export const UserUpdateInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUncheckedUpdateInput>>('UserUpdateInput').implement({
+export const UserUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUncheckedUpdateInput>, false>('UserUpdateInput').implement({
   fields: UserUpdateInputFields,
 });
 
@@ -607,7 +607,7 @@ export const UserUpdateManyMutationInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const UserUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUpdateManyMutationInput>>('UserUpdateManyMutationInput').implement({
+export const UserUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserUpdateManyMutationInput>, false>('UserUpdateManyMutationInput').implement({
   fields: UserUpdateManyMutationInputFields,
 });
 
@@ -615,7 +615,7 @@ export const UserLastCreateInputFields = (t: any) => ({
   id: t.int({"required":false}),
   name: t.string({"required":true}),
 });
-export const UserLastCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedCreateInput>>('UserLastCreateInput').implement({
+export const UserLastCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedCreateInput>, false>('UserLastCreateInput').implement({
   fields: UserLastCreateInputFields,
 });
 
@@ -623,14 +623,14 @@ export const UserLastUpdateInputFields = (t: any) => ({
   id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const UserLastUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedUpdateInput>>('UserLastUpdateInput').implement({
+export const UserLastUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUncheckedUpdateInput>, false>('UserLastUpdateInput').implement({
   fields: UserLastUpdateInputFields,
 });
 
 export const UserLastUpdateManyMutationInputFields = (t: any) => ({
   name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const UserLastUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUpdateManyMutationInput>>('UserLastUpdateManyMutationInput').implement({
+export const UserLastUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserLastUpdateManyMutationInput>, false>('UserLastUpdateManyMutationInput').implement({
   fields: UserLastUpdateManyMutationInputFields,
 });
 
@@ -641,7 +641,7 @@ export const PostCreateInputFields = (t: any) => ({
   authorId: t.int({"required":true}),
   Comments: t.field({"required":false,"type":CommentCreateNestedManyWithoutPostInput}),
 });
-export const PostCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUncheckedCreateInput>>('PostCreateInput').implement({
+export const PostCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUncheckedCreateInput>, false>('PostCreateInput').implement({
   fields: PostCreateInputFields,
 });
 
@@ -652,7 +652,7 @@ export const PostUpdateInputFields = (t: any) => ({
   authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   Comments: t.field({"required":false,"type":CommentUpdateManyWithoutPostNestedInput}),
 });
-export const PostUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUncheckedUpdateInput>>('PostUpdateInput').implement({
+export const PostUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUncheckedUpdateInput>, false>('PostUpdateInput').implement({
   fields: PostUpdateInputFields,
 });
 
@@ -660,7 +660,7 @@ export const PostUpdateManyMutationInputFields = (t: any) => ({
   title: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
   content: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const PostUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUpdateManyMutationInput>>('PostUpdateManyMutationInput').implement({
+export const PostUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUpdateManyMutationInput>, false>('PostUpdateManyMutationInput').implement({
   fields: PostUpdateManyMutationInputFields,
 });
 
@@ -670,7 +670,7 @@ export const ExtraModalCreateInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const ExtraModalCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUncheckedCreateInput>>('ExtraModalCreateInput').implement({
+export const ExtraModalCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUncheckedCreateInput>, false>('ExtraModalCreateInput').implement({
   fields: ExtraModalCreateInputFields,
 });
 
@@ -680,7 +680,7 @@ export const ExtraModalUpdateInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const ExtraModalUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUncheckedUpdateInput>>('ExtraModalUpdateInput').implement({
+export const ExtraModalUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUncheckedUpdateInput>, false>('ExtraModalUpdateInput').implement({
   fields: ExtraModalUpdateInputFields,
 });
 
@@ -689,7 +689,7 @@ export const ExtraModalUpdateManyMutationInputFields = (t: any) => ({
   // 'createdAt' was omitted due to @Pothos.omit found in schema comment
   // 'updatedAt' was omitted due to @Pothos.omit found in schema comment
 });
-export const ExtraModalUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUpdateManyMutationInput>>('ExtraModalUpdateManyMutationInput').implement({
+export const ExtraModalUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ExtraModalUpdateManyMutationInput>, false>('ExtraModalUpdateManyMutationInput').implement({
   fields: ExtraModalUpdateManyMutationInputFields,
 });
 
@@ -699,7 +699,7 @@ export const CommentCreateInputFields = (t: any) => ({
   authorId: t.int({"required":true}),
   postId: t.int({"required":true}),
 });
-export const CommentCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUncheckedCreateInput>>('CommentCreateInput').implement({
+export const CommentCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUncheckedCreateInput>, false>('CommentCreateInput').implement({
   fields: CommentCreateInputFields,
 });
 
@@ -709,14 +709,14 @@ export const CommentUpdateInputFields = (t: any) => ({
   authorId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   postId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
 });
-export const CommentUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUncheckedUpdateInput>>('CommentUpdateInput').implement({
+export const CommentUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUncheckedUpdateInput>, false>('CommentUpdateInput').implement({
   fields: CommentUpdateInputFields,
 });
 
 export const CommentUpdateManyMutationInputFields = (t: any) => ({
   comment: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const CommentUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyMutationInput>>('CommentUpdateManyMutationInput').implement({
+export const CommentUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyMutationInput>, false>('CommentUpdateManyMutationInput').implement({
   fields: CommentUpdateManyMutationInputFields,
 });
 
@@ -725,7 +725,7 @@ export const ProfileCreateInputFields = (t: any) => ({
   bio: t.string({"required":false}),
   userId: t.int({"required":true}),
 });
-export const ProfileCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUncheckedCreateInput>>('ProfileCreateInput').implement({
+export const ProfileCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUncheckedCreateInput>, false>('ProfileCreateInput').implement({
   fields: ProfileCreateInputFields,
 });
 
@@ -734,14 +734,14 @@ export const ProfileUpdateInputFields = (t: any) => ({
   bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
   userId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
 });
-export const ProfileUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUncheckedUpdateInput>>('ProfileUpdateInput').implement({
+export const ProfileUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUncheckedUpdateInput>, false>('ProfileUpdateInput').implement({
   fields: ProfileUpdateInputFields,
 });
 
 export const ProfileUpdateManyMutationInputFields = (t: any) => ({
   bio: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
 });
-export const ProfileUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUpdateManyMutationInput>>('ProfileUpdateManyMutationInput').implement({
+export const ProfileUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUpdateManyMutationInput>, false>('ProfileUpdateManyMutationInput').implement({
   fields: ProfileUpdateManyMutationInputFields,
 });
 
@@ -749,7 +749,7 @@ export const FollowCreateInputFields = (t: any) => ({
   fromId: t.int({"required":true}),
   toId: t.int({"required":true}),
 });
-export const FollowCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUncheckedCreateInput>>('FollowCreateInput').implement({
+export const FollowCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUncheckedCreateInput>, false>('FollowCreateInput').implement({
   fields: FollowCreateInputFields,
 });
 
@@ -757,14 +757,14 @@ export const FollowUpdateInputFields = (t: any) => ({
   fromId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   toId: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
 });
-export const FollowUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUncheckedUpdateInput>>('FollowUpdateInput').implement({
+export const FollowUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUncheckedUpdateInput>, false>('FollowUpdateInput').implement({
   fields: FollowUpdateInputFields,
 });
 
 export const FollowUpdateManyMutationInputFields = (t: any) => ({
   _: t.field({ type: NEVER }),
 });
-export const FollowUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyMutationInput>>('FollowUpdateManyMutationInput').implement({
+export const FollowUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyMutationInput>, false>('FollowUpdateManyMutationInput').implement({
   fields: FollowUpdateManyMutationInputFields,
 });
 
@@ -772,7 +772,7 @@ export const UnrelatedCreateInputFields = (t: any) => ({
   id: t.int({"required":false}),
   name: t.string({"required":false}),
 });
-export const UnrelatedCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUncheckedCreateInput>>('UnrelatedCreateInput').implement({
+export const UnrelatedCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUncheckedCreateInput>, false>('UnrelatedCreateInput').implement({
   fields: UnrelatedCreateInputFields,
 });
 
@@ -780,56 +780,56 @@ export const UnrelatedUpdateInputFields = (t: any) => ({
   id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
   name: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
 });
-export const UnrelatedUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUncheckedUpdateInput>>('UnrelatedUpdateInput').implement({
+export const UnrelatedUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUncheckedUpdateInput>, false>('UnrelatedUpdateInput').implement({
   fields: UnrelatedUpdateInputFields,
 });
 
 export const UnrelatedUpdateManyMutationInputFields = (t: any) => ({
   name: t.field({"required":false,"type":NullableStringFieldUpdateOperationsInput}),
 });
-export const UnrelatedUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUpdateManyMutationInput>>('UnrelatedUpdateManyMutationInput').implement({
+export const UnrelatedUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UnrelatedUpdateManyMutationInput>, false>('UnrelatedUpdateManyMutationInput').implement({
   fields: UnrelatedUpdateManyMutationInputFields,
 });
 
 export const IdOnlyCreateInputFields = (t: any) => ({
   id: t.int({"required":false}),
 });
-export const IdOnlyCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUncheckedCreateInput>>('IdOnlyCreateInput').implement({
+export const IdOnlyCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUncheckedCreateInput>, false>('IdOnlyCreateInput').implement({
   fields: IdOnlyCreateInputFields,
 });
 
 export const IdOnlyUpdateInputFields = (t: any) => ({
   id: t.field({"required":false,"type":IntFieldUpdateOperationsInput}),
 });
-export const IdOnlyUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUncheckedUpdateInput>>('IdOnlyUpdateInput').implement({
+export const IdOnlyUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUncheckedUpdateInput>, false>('IdOnlyUpdateInput').implement({
   fields: IdOnlyUpdateInputFields,
 });
 
 export const IdOnlyUpdateManyMutationInputFields = (t: any) => ({
   _: t.field({ type: NEVER }),
 });
-export const IdOnlyUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUpdateManyMutationInput>>('IdOnlyUpdateManyMutationInput').implement({
+export const IdOnlyUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IdOnlyUpdateManyMutationInput>, false>('IdOnlyUpdateManyMutationInput').implement({
   fields: IdOnlyUpdateManyMutationInputFields,
 });
 
 export const WithoutIDCreateInputFields = (t: any) => ({
   name: t.string({"required":true}),
 });
-export const WithoutIDCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUncheckedCreateInput>>('WithoutIDCreateInput').implement({
+export const WithoutIDCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUncheckedCreateInput>, false>('WithoutIDCreateInput').implement({
   fields: WithoutIDCreateInputFields,
 });
 
 export const WithoutIDUpdateInputFields = (t: any) => ({
   name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const WithoutIDUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUncheckedUpdateInput>>('WithoutIDUpdateInput').implement({
+export const WithoutIDUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUncheckedUpdateInput>, false>('WithoutIDUpdateInput').implement({
   fields: WithoutIDUpdateInputFields,
 });
 
 export const WithoutIDUpdateManyMutationInputFields = (t: any) => ({
   name: t.field({"required":false,"type":StringFieldUpdateOperationsInput}),
 });
-export const WithoutIDUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUpdateManyMutationInput>>('WithoutIDUpdateManyMutationInput').implement({
+export const WithoutIDUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithoutIDUpdateManyMutationInput>, false>('WithoutIDUpdateManyMutationInput').implement({
   fields: WithoutIDUpdateManyMutationInputFields,
 });
 
@@ -844,7 +844,7 @@ export const WithScalarsCreateInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":DateTime}),
   bytes: t.field({"required":false,"type":Bytes}),
 });
-export const WithScalarsCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUncheckedCreateInput>>('WithScalarsCreateInput').implement({
+export const WithScalarsCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUncheckedCreateInput>, false>('WithScalarsCreateInput').implement({
   fields: WithScalarsCreateInputFields,
 });
 
@@ -859,7 +859,7 @@ export const WithScalarsUpdateInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
   bytes: t.field({"required":false,"type":NullableBytesFieldUpdateOperationsInput}),
 });
-export const WithScalarsUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUncheckedUpdateInput>>('WithScalarsUpdateInput').implement({
+export const WithScalarsUpdateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUncheckedUpdateInput>, false>('WithScalarsUpdateInput').implement({
   fields: WithScalarsUpdateInputFields,
 });
 
@@ -874,7 +874,7 @@ export const WithScalarsUpdateManyMutationInputFields = (t: any) => ({
   datetime: t.field({"required":false,"type":NullableDateTimeFieldUpdateOperationsInput}),
   bytes: t.field({"required":false,"type":NullableBytesFieldUpdateOperationsInput}),
 });
-export const WithScalarsUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUpdateManyMutationInput>>('WithScalarsUpdateManyMutationInput').implement({
+export const WithScalarsUpdateManyMutationInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.WithScalarsUpdateManyMutationInput>, false>('WithScalarsUpdateManyMutationInput').implement({
   fields: WithScalarsUpdateManyMutationInputFields,
 });
 
@@ -888,7 +888,7 @@ export const IntFilterFields = (t: any) => ({
   gte: t.int({"required":false}),
   not: t.field({"required":false,"type":NestedIntFilter}),
 });
-export const IntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntFilter>>('IntFilter').implement({
+export const IntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntFilter>, false>('IntFilter').implement({
   fields: IntFilterFields,
 });
 
@@ -905,7 +905,7 @@ export const StringFilterFields = (t: any) => ({
   endsWith: t.string({"required":false}),
   not: t.field({"required":false,"type":NestedStringFilter}),
 });
-export const StringFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringFilter>>('StringFilter').implement({
+export const StringFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringFilter>, false>('StringFilter').implement({
   fields: StringFilterFields,
 });
 
@@ -919,7 +919,7 @@ export const DateTimeFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":DateTime}),
   not: t.field({"required":false,"type":NestedDateTimeFilter}),
 });
-export const DateTimeFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeFilter>>('DateTimeFilter').implement({
+export const DateTimeFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeFilter>, false>('DateTimeFilter').implement({
   fields: DateTimeFilterFields,
 });
 
@@ -933,7 +933,7 @@ export const DateTimeNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":DateTime}),
   not: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
 });
-export const DateTimeNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeNullableFilter>>('DateTimeNullableFilter').implement({
+export const DateTimeNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeNullableFilter>, false>('DateTimeNullableFilter').implement({
   fields: DateTimeNullableFilterFields,
 });
 
@@ -942,7 +942,7 @@ export const PostListRelationFilterFields = (t: any) => ({
   some: t.field({"required":false,"type":PostWhereInput}),
   none: t.field({"required":false,"type":PostWhereInput}),
 });
-export const PostListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostListRelationFilter>>('PostListRelationFilter').implement({
+export const PostListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostListRelationFilter>, false>('PostListRelationFilter').implement({
   fields: PostListRelationFilterFields,
 });
 
@@ -951,7 +951,7 @@ export const CommentListRelationFilterFields = (t: any) => ({
   some: t.field({"required":false,"type":CommentWhereInput}),
   none: t.field({"required":false,"type":CommentWhereInput}),
 });
-export const CommentListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentListRelationFilter>>('CommentListRelationFilter').implement({
+export const CommentListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentListRelationFilter>, false>('CommentListRelationFilter').implement({
   fields: CommentListRelationFilterFields,
 });
 
@@ -960,7 +960,7 @@ export const ProfileListRelationFilterFields = (t: any) => ({
   some: t.field({"required":false,"type":ProfileWhereInput}),
   none: t.field({"required":false,"type":ProfileWhereInput}),
 });
-export const ProfileListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileListRelationFilter>>('ProfileListRelationFilter').implement({
+export const ProfileListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileListRelationFilter>, false>('ProfileListRelationFilter').implement({
   fields: ProfileListRelationFilterFields,
 });
 
@@ -969,35 +969,35 @@ export const FollowListRelationFilterFields = (t: any) => ({
   some: t.field({"required":false,"type":FollowWhereInput}),
   none: t.field({"required":false,"type":FollowWhereInput}),
 });
-export const FollowListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowListRelationFilter>>('FollowListRelationFilter').implement({
+export const FollowListRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowListRelationFilter>, false>('FollowListRelationFilter').implement({
   fields: FollowListRelationFilterFields,
 });
 
 export const PostOrderByRelationAggregateInputFields = (t: any) => ({
   _count: t.field({"required":false,"type":SortOrder}),
 });
-export const PostOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostOrderByRelationAggregateInput>>('PostOrderByRelationAggregateInput').implement({
+export const PostOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostOrderByRelationAggregateInput>, false>('PostOrderByRelationAggregateInput').implement({
   fields: PostOrderByRelationAggregateInputFields,
 });
 
 export const CommentOrderByRelationAggregateInputFields = (t: any) => ({
   _count: t.field({"required":false,"type":SortOrder}),
 });
-export const CommentOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentOrderByRelationAggregateInput>>('CommentOrderByRelationAggregateInput').implement({
+export const CommentOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentOrderByRelationAggregateInput>, false>('CommentOrderByRelationAggregateInput').implement({
   fields: CommentOrderByRelationAggregateInputFields,
 });
 
 export const ProfileOrderByRelationAggregateInputFields = (t: any) => ({
   _count: t.field({"required":false,"type":SortOrder}),
 });
-export const ProfileOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileOrderByRelationAggregateInput>>('ProfileOrderByRelationAggregateInput').implement({
+export const ProfileOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileOrderByRelationAggregateInput>, false>('ProfileOrderByRelationAggregateInput').implement({
   fields: ProfileOrderByRelationAggregateInputFields,
 });
 
 export const FollowOrderByRelationAggregateInputFields = (t: any) => ({
   _count: t.field({"required":false,"type":SortOrder}),
 });
-export const FollowOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowOrderByRelationAggregateInput>>('FollowOrderByRelationAggregateInput').implement({
+export const FollowOrderByRelationAggregateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowOrderByRelationAggregateInput>, false>('FollowOrderByRelationAggregateInput').implement({
   fields: FollowOrderByRelationAggregateInputFields,
 });
 
@@ -1016,7 +1016,7 @@ export const IntWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedIntFilter}),
   _max: t.field({"required":false,"type":NestedIntFilter}),
 });
-export const IntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntWithAggregatesFilter>>('IntWithAggregatesFilter').implement({
+export const IntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntWithAggregatesFilter>, false>('IntWithAggregatesFilter').implement({
   fields: IntWithAggregatesFilterFields,
 });
 
@@ -1036,7 +1036,7 @@ export const StringWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedStringFilter}),
   _max: t.field({"required":false,"type":NestedStringFilter}),
 });
-export const StringWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringWithAggregatesFilter>>('StringWithAggregatesFilter').implement({
+export const StringWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringWithAggregatesFilter>, false>('StringWithAggregatesFilter').implement({
   fields: StringWithAggregatesFilterFields,
 });
 
@@ -1053,7 +1053,7 @@ export const DateTimeWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDateTimeFilter}),
   _max: t.field({"required":false,"type":NestedDateTimeFilter}),
 });
-export const DateTimeWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeWithAggregatesFilter>>('DateTimeWithAggregatesFilter').implement({
+export const DateTimeWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeWithAggregatesFilter>, false>('DateTimeWithAggregatesFilter').implement({
   fields: DateTimeWithAggregatesFilterFields,
 });
 
@@ -1070,7 +1070,7 @@ export const DateTimeNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
   _max: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
 });
-export const DateTimeNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeNullableWithAggregatesFilter>>('DateTimeNullableWithAggregatesFilter').implement({
+export const DateTimeNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeNullableWithAggregatesFilter>, false>('DateTimeNullableWithAggregatesFilter').implement({
   fields: DateTimeNullableWithAggregatesFilterFields,
 });
 
@@ -1078,7 +1078,7 @@ export const UserRelationFilterFields = (t: any) => ({
   is: t.field({"required":false,"type":UserWhereInput}),
   isNot: t.field({"required":false,"type":UserWhereInput}),
 });
-export const UserRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserRelationFilter>>('UserRelationFilter').implement({
+export const UserRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserRelationFilter>, false>('UserRelationFilter').implement({
   fields: UserRelationFilterFields,
 });
 
@@ -1086,7 +1086,7 @@ export const PostRelationFilterFields = (t: any) => ({
   is: t.field({"required":false,"type":PostWhereInput}),
   isNot: t.field({"required":false,"type":PostWhereInput}),
 });
-export const PostRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostRelationFilter>>('PostRelationFilter').implement({
+export const PostRelationFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostRelationFilter>, false>('PostRelationFilter').implement({
   fields: PostRelationFilterFields,
 });
 
@@ -1103,7 +1103,7 @@ export const StringNullableFilterFields = (t: any) => ({
   endsWith: t.string({"required":false}),
   not: t.field({"required":false,"type":NestedStringNullableFilter}),
 });
-export const StringNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringNullableFilter>>('StringNullableFilter').implement({
+export const StringNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringNullableFilter>, false>('StringNullableFilter').implement({
   fields: StringNullableFilterFields,
 });
 
@@ -1123,7 +1123,7 @@ export const StringNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedStringNullableFilter}),
   _max: t.field({"required":false,"type":NestedStringNullableFilter}),
 });
-export const StringNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringNullableWithAggregatesFilter>>('StringNullableWithAggregatesFilter').implement({
+export const StringNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringNullableWithAggregatesFilter>, false>('StringNullableWithAggregatesFilter').implement({
   fields: StringNullableWithAggregatesFilterFields,
 });
 
@@ -1131,7 +1131,7 @@ export const FollowCompositeIDCompoundUniqueInputFields = (t: any) => ({
   fromId: t.int({"required":true}),
   toId: t.int({"required":true}),
 });
-export const FollowCompositeIDCompoundUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCompositeIDCompoundUniqueInput>>('FollowCompositeIDCompoundUniqueInput').implement({
+export const FollowCompositeIDCompoundUniqueInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCompositeIDCompoundUniqueInput>, false>('FollowCompositeIDCompoundUniqueInput').implement({
   fields: FollowCompositeIDCompoundUniqueInputFields,
 });
 
@@ -1145,7 +1145,7 @@ export const BigIntFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Bigint}),
   not: t.field({"required":false,"type":NestedBigIntFilter}),
 });
-export const BigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFilter>>('BigIntFilter').implement({
+export const BigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFilter>, false>('BigIntFilter').implement({
   fields: BigIntFilterFields,
 });
 
@@ -1153,7 +1153,7 @@ export const BoolNullableFilterFields = (t: any) => ({
   equals: t.boolean({"required":false}),
   not: t.field({"required":false,"type":NestedBoolNullableFilter}),
 });
-export const BoolNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BoolNullableFilter>>('BoolNullableFilter').implement({
+export const BoolNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BoolNullableFilter>, false>('BoolNullableFilter').implement({
   fields: BoolNullableFilterFields,
 });
 
@@ -1167,7 +1167,7 @@ export const IntNullableFilterFields = (t: any) => ({
   gte: t.int({"required":false}),
   not: t.field({"required":false,"type":NestedIntNullableFilter}),
 });
-export const IntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntNullableFilter>>('IntNullableFilter').implement({
+export const IntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntNullableFilter>, false>('IntNullableFilter').implement({
   fields: IntNullableFilterFields,
 });
 
@@ -1181,7 +1181,7 @@ export const FloatNullableFilterFields = (t: any) => ({
   gte: t.float({"required":false}),
   not: t.field({"required":false,"type":NestedFloatNullableFilter}),
 });
-export const FloatNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FloatNullableFilter>>('FloatNullableFilter').implement({
+export const FloatNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FloatNullableFilter>, false>('FloatNullableFilter').implement({
   fields: FloatNullableFilterFields,
 });
 
@@ -1195,7 +1195,7 @@ export const DecimalNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Decimal}),
   not: t.field({"required":false,"type":NestedDecimalNullableFilter}),
 });
-export const DecimalNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DecimalNullableFilter>>('DecimalNullableFilter').implement({
+export const DecimalNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DecimalNullableFilter>, false>('DecimalNullableFilter').implement({
   fields: DecimalNullableFilterFields,
 });
 
@@ -1209,7 +1209,7 @@ export const BigIntNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Bigint}),
   not: t.field({"required":false,"type":NestedBigIntNullableFilter}),
 });
-export const BigIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntNullableFilter>>('BigIntNullableFilter').implement({
+export const BigIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntNullableFilter>, false>('BigIntNullableFilter').implement({
   fields: BigIntNullableFilterFields,
 });
 
@@ -1219,7 +1219,7 @@ export const BytesNullableFilterFields = (t: any) => ({
   notIn: t.field({"required":false,"type":[Bytes]}),
   not: t.field({"required":false,"type":NestedBytesNullableFilter}),
 });
-export const BytesNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BytesNullableFilter>>('BytesNullableFilter').implement({
+export const BytesNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BytesNullableFilter>, false>('BytesNullableFilter').implement({
   fields: BytesNullableFilterFields,
 });
 
@@ -1238,7 +1238,7 @@ export const BigIntWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBigIntFilter}),
   _max: t.field({"required":false,"type":NestedBigIntFilter}),
 });
-export const BigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntWithAggregatesFilter>>('BigIntWithAggregatesFilter').implement({
+export const BigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntWithAggregatesFilter>, false>('BigIntWithAggregatesFilter').implement({
   fields: BigIntWithAggregatesFilterFields,
 });
 
@@ -1249,7 +1249,7 @@ export const BoolNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBoolNullableFilter}),
   _max: t.field({"required":false,"type":NestedBoolNullableFilter}),
 });
-export const BoolNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BoolNullableWithAggregatesFilter>>('BoolNullableWithAggregatesFilter').implement({
+export const BoolNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BoolNullableWithAggregatesFilter>, false>('BoolNullableWithAggregatesFilter').implement({
   fields: BoolNullableWithAggregatesFilterFields,
 });
 
@@ -1268,7 +1268,7 @@ export const IntNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedIntNullableFilter}),
   _max: t.field({"required":false,"type":NestedIntNullableFilter}),
 });
-export const IntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntNullableWithAggregatesFilter>>('IntNullableWithAggregatesFilter').implement({
+export const IntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntNullableWithAggregatesFilter>, false>('IntNullableWithAggregatesFilter').implement({
   fields: IntNullableWithAggregatesFilterFields,
 });
 
@@ -1287,7 +1287,7 @@ export const FloatNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedFloatNullableFilter}),
   _max: t.field({"required":false,"type":NestedFloatNullableFilter}),
 });
-export const FloatNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FloatNullableWithAggregatesFilter>>('FloatNullableWithAggregatesFilter').implement({
+export const FloatNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FloatNullableWithAggregatesFilter>, false>('FloatNullableWithAggregatesFilter').implement({
   fields: FloatNullableWithAggregatesFilterFields,
 });
 
@@ -1306,7 +1306,7 @@ export const DecimalNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDecimalNullableFilter}),
   _max: t.field({"required":false,"type":NestedDecimalNullableFilter}),
 });
-export const DecimalNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DecimalNullableWithAggregatesFilter>>('DecimalNullableWithAggregatesFilter').implement({
+export const DecimalNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DecimalNullableWithAggregatesFilter>, false>('DecimalNullableWithAggregatesFilter').implement({
   fields: DecimalNullableWithAggregatesFilterFields,
 });
 
@@ -1325,7 +1325,7 @@ export const BigIntNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBigIntNullableFilter}),
   _max: t.field({"required":false,"type":NestedBigIntNullableFilter}),
 });
-export const BigIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntNullableWithAggregatesFilter>>('BigIntNullableWithAggregatesFilter').implement({
+export const BigIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntNullableWithAggregatesFilter>, false>('BigIntNullableWithAggregatesFilter').implement({
   fields: BigIntNullableWithAggregatesFilterFields,
 });
 
@@ -1338,7 +1338,7 @@ export const BytesNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBytesNullableFilter}),
   _max: t.field({"required":false,"type":NestedBytesNullableFilter}),
 });
-export const BytesNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BytesNullableWithAggregatesFilter>>('BytesNullableWithAggregatesFilter').implement({
+export const BytesNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BytesNullableWithAggregatesFilter>, false>('BytesNullableWithAggregatesFilter').implement({
   fields: BytesNullableWithAggregatesFilterFields,
 });
 
@@ -1347,7 +1347,7 @@ export const PostCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const PostCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostCreateNestedManyWithoutAuthorInput>>('PostCreateNestedManyWithoutAuthorInput').implement({
+export const PostCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostCreateNestedManyWithoutAuthorInput>, false>('PostCreateNestedManyWithoutAuthorInput').implement({
   fields: PostCreateNestedManyWithoutAuthorInputFields,
 });
 
@@ -1356,7 +1356,7 @@ export const CommentCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const CommentCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutAuthorInput>>('CommentCreateNestedManyWithoutAuthorInput').implement({
+export const CommentCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutAuthorInput>, false>('CommentCreateNestedManyWithoutAuthorInput').implement({
   fields: CommentCreateNestedManyWithoutAuthorInputFields,
 });
 
@@ -1365,7 +1365,7 @@ export const ProfileCreateNestedManyWithoutUserInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const ProfileCreateNestedManyWithoutUserInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileCreateNestedManyWithoutUserInput>>('ProfileCreateNestedManyWithoutUserInput').implement({
+export const ProfileCreateNestedManyWithoutUserInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileCreateNestedManyWithoutUserInput>, false>('ProfileCreateNestedManyWithoutUserInput').implement({
   fields: ProfileCreateNestedManyWithoutUserInputFields,
 });
 
@@ -1374,7 +1374,7 @@ export const FollowCreateNestedManyWithoutToInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const FollowCreateNestedManyWithoutToInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutToInput>>('FollowCreateNestedManyWithoutToInput').implement({
+export const FollowCreateNestedManyWithoutToInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutToInput>, false>('FollowCreateNestedManyWithoutToInput').implement({
   fields: FollowCreateNestedManyWithoutToInputFields,
 });
 
@@ -1383,28 +1383,28 @@ export const FollowCreateNestedManyWithoutFromInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const FollowCreateNestedManyWithoutFromInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutFromInput>>('FollowCreateNestedManyWithoutFromInput').implement({
+export const FollowCreateNestedManyWithoutFromInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutFromInput>, false>('FollowCreateNestedManyWithoutFromInput').implement({
   fields: FollowCreateNestedManyWithoutFromInputFields,
 });
 
 export const StringFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.string({"required":false}),
 });
-export const StringFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringFieldUpdateOperationsInput>>('StringFieldUpdateOperationsInput').implement({
+export const StringFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.StringFieldUpdateOperationsInput>, false>('StringFieldUpdateOperationsInput').implement({
   fields: StringFieldUpdateOperationsInputFields,
 });
 
 export const DateTimeFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.field({"required":false,"type":DateTime}),
 });
-export const DateTimeFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeFieldUpdateOperationsInput>>('DateTimeFieldUpdateOperationsInput').implement({
+export const DateTimeFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.DateTimeFieldUpdateOperationsInput>, false>('DateTimeFieldUpdateOperationsInput').implement({
   fields: DateTimeFieldUpdateOperationsInputFields,
 });
 
 export const NullableDateTimeFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.field({"required":false,"type":DateTime}),
 });
-export const NullableDateTimeFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableDateTimeFieldUpdateOperationsInput>>('NullableDateTimeFieldUpdateOperationsInput').implement({
+export const NullableDateTimeFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableDateTimeFieldUpdateOperationsInput>, false>('NullableDateTimeFieldUpdateOperationsInput').implement({
   fields: NullableDateTimeFieldUpdateOperationsInputFields,
 });
 
@@ -1420,7 +1420,7 @@ export const PostUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const PostUpdateManyWithoutAuthorNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUpdateManyWithoutAuthorNestedInput>>('PostUpdateManyWithoutAuthorNestedInput').implement({
+export const PostUpdateManyWithoutAuthorNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostUpdateManyWithoutAuthorNestedInput>, false>('PostUpdateManyWithoutAuthorNestedInput').implement({
   fields: PostUpdateManyWithoutAuthorNestedInputFields,
 });
 
@@ -1436,7 +1436,7 @@ export const CommentUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const CommentUpdateManyWithoutAuthorNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyWithoutAuthorNestedInput>>('CommentUpdateManyWithoutAuthorNestedInput').implement({
+export const CommentUpdateManyWithoutAuthorNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyWithoutAuthorNestedInput>, false>('CommentUpdateManyWithoutAuthorNestedInput').implement({
   fields: CommentUpdateManyWithoutAuthorNestedInputFields,
 });
 
@@ -1452,7 +1452,7 @@ export const ProfileUpdateManyWithoutUserNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const ProfileUpdateManyWithoutUserNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUpdateManyWithoutUserNestedInput>>('ProfileUpdateManyWithoutUserNestedInput').implement({
+export const ProfileUpdateManyWithoutUserNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileUpdateManyWithoutUserNestedInput>, false>('ProfileUpdateManyWithoutUserNestedInput').implement({
   fields: ProfileUpdateManyWithoutUserNestedInputFields,
 });
 
@@ -1468,7 +1468,7 @@ export const FollowUpdateManyWithoutToNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const FollowUpdateManyWithoutToNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyWithoutToNestedInput>>('FollowUpdateManyWithoutToNestedInput').implement({
+export const FollowUpdateManyWithoutToNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyWithoutToNestedInput>, false>('FollowUpdateManyWithoutToNestedInput').implement({
   fields: FollowUpdateManyWithoutToNestedInputFields,
 });
 
@@ -1484,7 +1484,7 @@ export const FollowUpdateManyWithoutFromNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const FollowUpdateManyWithoutFromNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyWithoutFromNestedInput>>('FollowUpdateManyWithoutFromNestedInput').implement({
+export const FollowUpdateManyWithoutFromNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowUpdateManyWithoutFromNestedInput>, false>('FollowUpdateManyWithoutFromNestedInput').implement({
   fields: FollowUpdateManyWithoutFromNestedInputFields,
 });
 
@@ -1495,7 +1495,7 @@ export const IntFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.int({"required":false}),
   divide: t.int({"required":false}),
 });
-export const IntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntFieldUpdateOperationsInput>>('IntFieldUpdateOperationsInput').implement({
+export const IntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.IntFieldUpdateOperationsInput>, false>('IntFieldUpdateOperationsInput').implement({
   fields: IntFieldUpdateOperationsInputFields,
 });
 
@@ -1504,7 +1504,7 @@ export const CommentCreateNestedManyWithoutPostInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
 });
-export const CommentCreateNestedManyWithoutPostInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutPostInput>>('CommentCreateNestedManyWithoutPostInput').implement({
+export const CommentCreateNestedManyWithoutPostInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutPostInput>, false>('CommentCreateNestedManyWithoutPostInput').implement({
   fields: CommentCreateNestedManyWithoutPostInputFields,
 });
 
@@ -1520,14 +1520,14 @@ export const CommentUpdateManyWithoutPostNestedInputFields = (t: any) => ({
   // 'updateMany' was omitted due to `simple mode: true` found in global config
   // 'deleteMany' was omitted due to `simple mode: true` found in global config
 });
-export const CommentUpdateManyWithoutPostNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyWithoutPostNestedInput>>('CommentUpdateManyWithoutPostNestedInput').implement({
+export const CommentUpdateManyWithoutPostNestedInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentUpdateManyWithoutPostNestedInput>, false>('CommentUpdateManyWithoutPostNestedInput').implement({
   fields: CommentUpdateManyWithoutPostNestedInputFields,
 });
 
 export const NullableStringFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.string({"required":false}),
 });
-export const NullableStringFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableStringFieldUpdateOperationsInput>>('NullableStringFieldUpdateOperationsInput').implement({
+export const NullableStringFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableStringFieldUpdateOperationsInput>, false>('NullableStringFieldUpdateOperationsInput').implement({
   fields: NullableStringFieldUpdateOperationsInputFields,
 });
 
@@ -1538,14 +1538,14 @@ export const BigIntFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.field({"required":false,"type":Bigint}),
   divide: t.field({"required":false,"type":Bigint}),
 });
-export const BigIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFieldUpdateOperationsInput>>('BigIntFieldUpdateOperationsInput').implement({
+export const BigIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.BigIntFieldUpdateOperationsInput>, false>('BigIntFieldUpdateOperationsInput').implement({
   fields: BigIntFieldUpdateOperationsInputFields,
 });
 
 export const NullableBoolFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.boolean({"required":false}),
 });
-export const NullableBoolFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBoolFieldUpdateOperationsInput>>('NullableBoolFieldUpdateOperationsInput').implement({
+export const NullableBoolFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBoolFieldUpdateOperationsInput>, false>('NullableBoolFieldUpdateOperationsInput').implement({
   fields: NullableBoolFieldUpdateOperationsInputFields,
 });
 
@@ -1556,7 +1556,7 @@ export const NullableIntFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.int({"required":false}),
   divide: t.int({"required":false}),
 });
-export const NullableIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableIntFieldUpdateOperationsInput>>('NullableIntFieldUpdateOperationsInput').implement({
+export const NullableIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableIntFieldUpdateOperationsInput>, false>('NullableIntFieldUpdateOperationsInput').implement({
   fields: NullableIntFieldUpdateOperationsInputFields,
 });
 
@@ -1567,7 +1567,7 @@ export const NullableFloatFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.float({"required":false}),
   divide: t.float({"required":false}),
 });
-export const NullableFloatFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableFloatFieldUpdateOperationsInput>>('NullableFloatFieldUpdateOperationsInput').implement({
+export const NullableFloatFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableFloatFieldUpdateOperationsInput>, false>('NullableFloatFieldUpdateOperationsInput').implement({
   fields: NullableFloatFieldUpdateOperationsInputFields,
 });
 
@@ -1578,7 +1578,7 @@ export const NullableDecimalFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.field({"required":false,"type":Decimal}),
   divide: t.field({"required":false,"type":Decimal}),
 });
-export const NullableDecimalFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableDecimalFieldUpdateOperationsInput>>('NullableDecimalFieldUpdateOperationsInput').implement({
+export const NullableDecimalFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableDecimalFieldUpdateOperationsInput>, false>('NullableDecimalFieldUpdateOperationsInput').implement({
   fields: NullableDecimalFieldUpdateOperationsInputFields,
 });
 
@@ -1589,14 +1589,14 @@ export const NullableBigIntFieldUpdateOperationsInputFields = (t: any) => ({
   multiply: t.field({"required":false,"type":Bigint}),
   divide: t.field({"required":false,"type":Bigint}),
 });
-export const NullableBigIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBigIntFieldUpdateOperationsInput>>('NullableBigIntFieldUpdateOperationsInput').implement({
+export const NullableBigIntFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBigIntFieldUpdateOperationsInput>, false>('NullableBigIntFieldUpdateOperationsInput').implement({
   fields: NullableBigIntFieldUpdateOperationsInputFields,
 });
 
 export const NullableBytesFieldUpdateOperationsInputFields = (t: any) => ({
   set: t.field({"required":false,"type":Bytes}),
 });
-export const NullableBytesFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBytesFieldUpdateOperationsInput>>('NullableBytesFieldUpdateOperationsInput').implement({
+export const NullableBytesFieldUpdateOperationsInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NullableBytesFieldUpdateOperationsInput>, false>('NullableBytesFieldUpdateOperationsInput').implement({
   fields: NullableBytesFieldUpdateOperationsInputFields,
 });
 
@@ -1610,7 +1610,7 @@ export const NestedIntFilterFields = (t: any) => ({
   gte: t.int({"required":false}),
   not: t.field({"required":false,"type":NestedIntFilter}),
 });
-export const NestedIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntFilter>>('NestedIntFilter').implement({
+export const NestedIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntFilter>, false>('NestedIntFilter').implement({
   fields: NestedIntFilterFields,
 });
 
@@ -1627,7 +1627,7 @@ export const NestedStringFilterFields = (t: any) => ({
   endsWith: t.string({"required":false}),
   not: t.field({"required":false,"type":NestedStringFilter}),
 });
-export const NestedStringFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringFilter>>('NestedStringFilter').implement({
+export const NestedStringFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringFilter>, false>('NestedStringFilter').implement({
   fields: NestedStringFilterFields,
 });
 
@@ -1641,7 +1641,7 @@ export const NestedDateTimeFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":DateTime}),
   not: t.field({"required":false,"type":NestedDateTimeFilter}),
 });
-export const NestedDateTimeFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeFilter>>('NestedDateTimeFilter').implement({
+export const NestedDateTimeFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeFilter>, false>('NestedDateTimeFilter').implement({
   fields: NestedDateTimeFilterFields,
 });
 
@@ -1655,7 +1655,7 @@ export const NestedDateTimeNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":DateTime}),
   not: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
 });
-export const NestedDateTimeNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeNullableFilter>>('NestedDateTimeNullableFilter').implement({
+export const NestedDateTimeNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeNullableFilter>, false>('NestedDateTimeNullableFilter').implement({
   fields: NestedDateTimeNullableFilterFields,
 });
 
@@ -1674,7 +1674,7 @@ export const NestedIntWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedIntFilter}),
   _max: t.field({"required":false,"type":NestedIntFilter}),
 });
-export const NestedIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntWithAggregatesFilter>>('NestedIntWithAggregatesFilter').implement({
+export const NestedIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntWithAggregatesFilter>, false>('NestedIntWithAggregatesFilter').implement({
   fields: NestedIntWithAggregatesFilterFields,
 });
 
@@ -1688,7 +1688,7 @@ export const NestedFloatFilterFields = (t: any) => ({
   gte: t.float({"required":false}),
   not: t.field({"required":false,"type":NestedFloatFilter}),
 });
-export const NestedFloatFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatFilter>>('NestedFloatFilter').implement({
+export const NestedFloatFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatFilter>, false>('NestedFloatFilter').implement({
   fields: NestedFloatFilterFields,
 });
 
@@ -1708,7 +1708,7 @@ export const NestedStringWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedStringFilter}),
   _max: t.field({"required":false,"type":NestedStringFilter}),
 });
-export const NestedStringWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringWithAggregatesFilter>>('NestedStringWithAggregatesFilter').implement({
+export const NestedStringWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringWithAggregatesFilter>, false>('NestedStringWithAggregatesFilter').implement({
   fields: NestedStringWithAggregatesFilterFields,
 });
 
@@ -1725,7 +1725,7 @@ export const NestedDateTimeWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDateTimeFilter}),
   _max: t.field({"required":false,"type":NestedDateTimeFilter}),
 });
-export const NestedDateTimeWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeWithAggregatesFilter>>('NestedDateTimeWithAggregatesFilter').implement({
+export const NestedDateTimeWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeWithAggregatesFilter>, false>('NestedDateTimeWithAggregatesFilter').implement({
   fields: NestedDateTimeWithAggregatesFilterFields,
 });
 
@@ -1742,7 +1742,7 @@ export const NestedDateTimeNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
   _max: t.field({"required":false,"type":NestedDateTimeNullableFilter}),
 });
-export const NestedDateTimeNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeNullableWithAggregatesFilter>>('NestedDateTimeNullableWithAggregatesFilter').implement({
+export const NestedDateTimeNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDateTimeNullableWithAggregatesFilter>, false>('NestedDateTimeNullableWithAggregatesFilter').implement({
   fields: NestedDateTimeNullableWithAggregatesFilterFields,
 });
 
@@ -1756,7 +1756,7 @@ export const NestedIntNullableFilterFields = (t: any) => ({
   gte: t.int({"required":false}),
   not: t.field({"required":false,"type":NestedIntNullableFilter}),
 });
-export const NestedIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntNullableFilter>>('NestedIntNullableFilter').implement({
+export const NestedIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntNullableFilter>, false>('NestedIntNullableFilter').implement({
   fields: NestedIntNullableFilterFields,
 });
 
@@ -1773,7 +1773,7 @@ export const NestedStringNullableFilterFields = (t: any) => ({
   endsWith: t.string({"required":false}),
   not: t.field({"required":false,"type":NestedStringNullableFilter}),
 });
-export const NestedStringNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringNullableFilter>>('NestedStringNullableFilter').implement({
+export const NestedStringNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringNullableFilter>, false>('NestedStringNullableFilter').implement({
   fields: NestedStringNullableFilterFields,
 });
 
@@ -1793,7 +1793,7 @@ export const NestedStringNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedStringNullableFilter}),
   _max: t.field({"required":false,"type":NestedStringNullableFilter}),
 });
-export const NestedStringNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringNullableWithAggregatesFilter>>('NestedStringNullableWithAggregatesFilter').implement({
+export const NestedStringNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedStringNullableWithAggregatesFilter>, false>('NestedStringNullableWithAggregatesFilter').implement({
   fields: NestedStringNullableWithAggregatesFilterFields,
 });
 
@@ -1807,7 +1807,7 @@ export const NestedBigIntFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Bigint}),
   not: t.field({"required":false,"type":NestedBigIntFilter}),
 });
-export const NestedBigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntFilter>>('NestedBigIntFilter').implement({
+export const NestedBigIntFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntFilter>, false>('NestedBigIntFilter').implement({
   fields: NestedBigIntFilterFields,
 });
 
@@ -1815,7 +1815,7 @@ export const NestedBoolNullableFilterFields = (t: any) => ({
   equals: t.boolean({"required":false}),
   not: t.field({"required":false,"type":NestedBoolNullableFilter}),
 });
-export const NestedBoolNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBoolNullableFilter>>('NestedBoolNullableFilter').implement({
+export const NestedBoolNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBoolNullableFilter>, false>('NestedBoolNullableFilter').implement({
   fields: NestedBoolNullableFilterFields,
 });
 
@@ -1829,7 +1829,7 @@ export const NestedFloatNullableFilterFields = (t: any) => ({
   gte: t.float({"required":false}),
   not: t.field({"required":false,"type":NestedFloatNullableFilter}),
 });
-export const NestedFloatNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatNullableFilter>>('NestedFloatNullableFilter').implement({
+export const NestedFloatNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatNullableFilter>, false>('NestedFloatNullableFilter').implement({
   fields: NestedFloatNullableFilterFields,
 });
 
@@ -1843,7 +1843,7 @@ export const NestedDecimalNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Decimal}),
   not: t.field({"required":false,"type":NestedDecimalNullableFilter}),
 });
-export const NestedDecimalNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDecimalNullableFilter>>('NestedDecimalNullableFilter').implement({
+export const NestedDecimalNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDecimalNullableFilter>, false>('NestedDecimalNullableFilter').implement({
   fields: NestedDecimalNullableFilterFields,
 });
 
@@ -1857,7 +1857,7 @@ export const NestedBigIntNullableFilterFields = (t: any) => ({
   gte: t.field({"required":false,"type":Bigint}),
   not: t.field({"required":false,"type":NestedBigIntNullableFilter}),
 });
-export const NestedBigIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntNullableFilter>>('NestedBigIntNullableFilter').implement({
+export const NestedBigIntNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntNullableFilter>, false>('NestedBigIntNullableFilter').implement({
   fields: NestedBigIntNullableFilterFields,
 });
 
@@ -1867,7 +1867,7 @@ export const NestedBytesNullableFilterFields = (t: any) => ({
   notIn: t.field({"required":false,"type":[Bytes]}),
   not: t.field({"required":false,"type":NestedBytesNullableFilter}),
 });
-export const NestedBytesNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBytesNullableFilter>>('NestedBytesNullableFilter').implement({
+export const NestedBytesNullableFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBytesNullableFilter>, false>('NestedBytesNullableFilter').implement({
   fields: NestedBytesNullableFilterFields,
 });
 
@@ -1886,7 +1886,7 @@ export const NestedBigIntWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBigIntFilter}),
   _max: t.field({"required":false,"type":NestedBigIntFilter}),
 });
-export const NestedBigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntWithAggregatesFilter>>('NestedBigIntWithAggregatesFilter').implement({
+export const NestedBigIntWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntWithAggregatesFilter>, false>('NestedBigIntWithAggregatesFilter').implement({
   fields: NestedBigIntWithAggregatesFilterFields,
 });
 
@@ -1897,7 +1897,7 @@ export const NestedBoolNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBoolNullableFilter}),
   _max: t.field({"required":false,"type":NestedBoolNullableFilter}),
 });
-export const NestedBoolNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBoolNullableWithAggregatesFilter>>('NestedBoolNullableWithAggregatesFilter').implement({
+export const NestedBoolNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBoolNullableWithAggregatesFilter>, false>('NestedBoolNullableWithAggregatesFilter').implement({
   fields: NestedBoolNullableWithAggregatesFilterFields,
 });
 
@@ -1916,7 +1916,7 @@ export const NestedIntNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedIntNullableFilter}),
   _max: t.field({"required":false,"type":NestedIntNullableFilter}),
 });
-export const NestedIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntNullableWithAggregatesFilter>>('NestedIntNullableWithAggregatesFilter').implement({
+export const NestedIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedIntNullableWithAggregatesFilter>, false>('NestedIntNullableWithAggregatesFilter').implement({
   fields: NestedIntNullableWithAggregatesFilterFields,
 });
 
@@ -1935,7 +1935,7 @@ export const NestedFloatNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedFloatNullableFilter}),
   _max: t.field({"required":false,"type":NestedFloatNullableFilter}),
 });
-export const NestedFloatNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatNullableWithAggregatesFilter>>('NestedFloatNullableWithAggregatesFilter').implement({
+export const NestedFloatNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedFloatNullableWithAggregatesFilter>, false>('NestedFloatNullableWithAggregatesFilter').implement({
   fields: NestedFloatNullableWithAggregatesFilterFields,
 });
 
@@ -1954,7 +1954,7 @@ export const NestedDecimalNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedDecimalNullableFilter}),
   _max: t.field({"required":false,"type":NestedDecimalNullableFilter}),
 });
-export const NestedDecimalNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDecimalNullableWithAggregatesFilter>>('NestedDecimalNullableWithAggregatesFilter').implement({
+export const NestedDecimalNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedDecimalNullableWithAggregatesFilter>, false>('NestedDecimalNullableWithAggregatesFilter').implement({
   fields: NestedDecimalNullableWithAggregatesFilterFields,
 });
 
@@ -1973,7 +1973,7 @@ export const NestedBigIntNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBigIntNullableFilter}),
   _max: t.field({"required":false,"type":NestedBigIntNullableFilter}),
 });
-export const NestedBigIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntNullableWithAggregatesFilter>>('NestedBigIntNullableWithAggregatesFilter').implement({
+export const NestedBigIntNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBigIntNullableWithAggregatesFilter>, false>('NestedBigIntNullableWithAggregatesFilter').implement({
   fields: NestedBigIntNullableWithAggregatesFilterFields,
 });
 
@@ -1986,6 +1986,6 @@ export const NestedBytesNullableWithAggregatesFilterFields = (t: any) => ({
   _min: t.field({"required":false,"type":NestedBytesNullableFilter}),
   _max: t.field({"required":false,"type":NestedBytesNullableFilter}),
 });
-export const NestedBytesNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBytesNullableWithAggregatesFilter>>('NestedBytesNullableWithAggregatesFilter').implement({
+export const NestedBytesNullableWithAggregatesFilter = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.NestedBytesNullableWithAggregatesFilter>, false>('NestedBytesNullableWithAggregatesFilter').implement({
   fields: NestedBytesNullableWithAggregatesFilterFields,
 });

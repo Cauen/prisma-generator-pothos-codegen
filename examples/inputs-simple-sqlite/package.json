@@ -10,7 +10,8 @@
     "type": "tsc --noEmit",
     "dev": "nodemon",
     "build": "tsup ./src/server.ts",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "tscheck": "tsc --noEmit"
   },
   "dependencies": {
     "@pothos/core": "^3.41.0",
@@ -20,8 +21,9 @@
     "graphql": "^16.8.1"
   },
   "devDependencies": {
-    "prisma": "^5.7.1",
     "nodemon": "^3.0.2",
+    "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }

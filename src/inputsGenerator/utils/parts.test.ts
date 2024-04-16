@@ -6,7 +6,7 @@ describe('getInputs', () => {
   test('should create input', async () => {
     const dmmf = await getSampleDMMF('complex')
     const defaultConfig = getDefaultConfig()
-    const builtString = `export const UserCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserCreateInput>>('UserCreateInput').implement({`
+    const builtString = `export const UserCreateInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.UserCreateInput>, false>('UserCreateInput').implement({`
     const includedInputs = getInputs(defaultConfig, dmmf)
     expect(includedInputs.includes(builtString)).toBe(true)
   })
@@ -16,11 +16,9 @@ describe('getInputs', () => {
     const defaultConfig = getDefaultConfig()
     const builtStrings = [
       `export const BirdWhereUniqueInputFields = (t: any) => ({
-  id: t.id({"required":false}),
-});`,
+  id: t.id({"required":false}),`,
       `export const IdOnlyCreateManyInputFields = (t: any) => ({
-  id: t.id({"required":false}),
-});`,
+  id: t.id({"required":false}),`,
     ]
     const includedInputs = getInputs(
       {
@@ -32,6 +30,7 @@ describe('getInputs', () => {
       },
       dmmf,
     )
+
     builtStrings.forEach((builtString) => {
       expect(includedInputs.includes(builtString)).toBe(true)
     })

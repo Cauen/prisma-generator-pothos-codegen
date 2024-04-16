@@ -52,19 +52,18 @@ npm install --save-dev prisma-generator-pothos-codegen
 
 ### Peer dependencies
 
-The package was developed and tested using the following peer dependencies:
+The package has been developed and tested up to the following peer dependencies (see updated [example](/examples/inputs-simple-sqlite)):
 
 <!-- TODO Maybe we could have some sort of automated pipeline that tests different versions of these peer deps? -->
 
 ```
-"@pothos/core": "^3.23.0",
-"@pothos/plugin-prisma": "^3.37.0" ~ "^3.57.0",
-"@prisma/client": "4.7.0" - "5.1.1",
-"graphql": "^16.6.0",
-"prisma": "4.7.0" - "5.1.1"
+"@pothos/core": "^3.41.0",
+"@pothos/plugin-prisma": "^3.63.0",
+"@prisma/client": "^5.7.1",
+"prisma": "^5.7.1",
 ```
 
-Using different versions of these dependencies may result in undefined behavior or unintended TypeScript errors.
+Using higher versions may break something. In these cases, please open a new issue.
 
 ### Set Up
 
