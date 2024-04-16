@@ -10,7 +10,7 @@ export type UsedScalars = {
 }
 
 /** Reads the input types and returns what scalars are used */
-export function getUsedScalars(inputs: DMMF.InputType[]): UsedScalars {
+export function getUsedScalars(inputs: readonly DMMF.InputType[]): UsedScalars {
   let hasDateTime = false
   let hasDecimal = false
   let hasBytes = false
@@ -83,7 +83,7 @@ export function getMainInput() {
     return undefined
   }
 
-  const run = (rawInputs: DMMF.InputTypeRef[]): DMMF.InputTypeRef => {
+  const run = (rawInputs: readonly DMMF.InputTypeRef[]): DMMF.InputTypeRef => {
     // Ignore fieldRefTypes
     const inputs = rawInputs.filter((el) => el.location !== 'fieldRefTypes')
 

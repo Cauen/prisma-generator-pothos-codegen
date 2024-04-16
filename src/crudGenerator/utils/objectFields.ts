@@ -9,7 +9,7 @@ const cleanifyDocumentation = (str?: string) => str?.replace(/\s*@Pothos\.omit\(
 
 export const getObjectFieldsString = (
   modelName: string,
-  fields: DMMF.Field[],
+  fields: readonly DMMF.Field[],
   config: ConfigInternal,
 ): { fields: string[]; exportFields: string[] } =>
   fields.reduce(
