@@ -1346,6 +1346,7 @@ export const PostCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[PostWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const PostCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.PostCreateNestedManyWithoutAuthorInput>, false>('PostCreateNestedManyWithoutAuthorInput').implement({
   fields: PostCreateNestedManyWithoutAuthorInputFields,
@@ -1355,6 +1356,7 @@ export const CommentCreateNestedManyWithoutAuthorInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const CommentCreateNestedManyWithoutAuthorInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutAuthorInput>, false>('CommentCreateNestedManyWithoutAuthorInput').implement({
   fields: CommentCreateNestedManyWithoutAuthorInputFields,
@@ -1364,6 +1366,7 @@ export const ProfileCreateNestedManyWithoutUserInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[ProfileWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const ProfileCreateNestedManyWithoutUserInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.ProfileCreateNestedManyWithoutUserInput>, false>('ProfileCreateNestedManyWithoutUserInput').implement({
   fields: ProfileCreateNestedManyWithoutUserInputFields,
@@ -1373,6 +1376,7 @@ export const FollowCreateNestedManyWithoutToInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const FollowCreateNestedManyWithoutToInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutToInput>, false>('FollowCreateNestedManyWithoutToInput').implement({
   fields: FollowCreateNestedManyWithoutToInputFields,
@@ -1382,6 +1386,7 @@ export const FollowCreateNestedManyWithoutFromInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[FollowWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const FollowCreateNestedManyWithoutFromInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.FollowCreateNestedManyWithoutFromInput>, false>('FollowCreateNestedManyWithoutFromInput').implement({
   fields: FollowCreateNestedManyWithoutFromInputFields,
@@ -1415,6 +1420,7 @@ export const PostUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config
@@ -1431,6 +1437,7 @@ export const CommentUpdateManyWithoutAuthorNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config
@@ -1447,6 +1454,7 @@ export const ProfileUpdateManyWithoutUserNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config
@@ -1463,6 +1471,7 @@ export const FollowUpdateManyWithoutToNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config
@@ -1479,6 +1488,7 @@ export const FollowUpdateManyWithoutFromNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config
@@ -1503,6 +1513,7 @@ export const CommentCreateNestedManyWithoutPostInputFields = (t: any) => ({
   connect: t.field({"required":false,"type":[CommentWhereUniqueInput]}),
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
 });
 export const CommentCreateNestedManyWithoutPostInput = builder.inputRef<PrismaUpdateOperationsInputFilter<Prisma.CommentCreateNestedManyWithoutPostInput>, false>('CommentCreateNestedManyWithoutPostInput').implement({
   fields: CommentCreateNestedManyWithoutPostInputFields,
@@ -1515,6 +1526,7 @@ export const CommentUpdateManyWithoutPostNestedInputFields = (t: any) => ({
   // 'create' was omitted due to `simple mode: true` found in global config
   // 'connectOrCreate' was omitted due to `simple mode: true` found in global config
   // 'upsert' was omitted due to `simple mode: true` found in global config
+  // 'createMany' was omitted due to `simple mode: true` found in global config
   // 'delete' was omitted due to `simple mode: true` found in global config
   // 'update' was omitted due to `simple mode: true` found in global config
   // 'updateMany' was omitted due to `simple mode: true` found in global config

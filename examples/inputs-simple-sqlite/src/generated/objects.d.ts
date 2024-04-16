@@ -17,22 +17,27 @@ export default interface PrismaTypes {
             Posts: {
                 Shape: Post[];
                 Name: "Post";
+                Nullable: false;
             };
             Comments: {
                 Shape: Comment[];
                 Name: "Comment";
+                Nullable: false;
             };
             Profile: {
                 Shape: Profile[];
                 Name: "Profile";
+                Nullable: false;
             };
             Followers: {
                 Shape: Follow[];
                 Name: "Follow";
+                Nullable: false;
             };
             Following: {
                 Shape: Follow[];
                 Name: "Follow";
+                Nullable: false;
             };
         };
     };
@@ -66,10 +71,12 @@ export default interface PrismaTypes {
             Author: {
                 Shape: User;
                 Name: "User";
+                Nullable: false;
             };
             Comments: {
                 Shape: Comment[];
                 Name: "Comment";
+                Nullable: false;
             };
         };
     };
@@ -103,10 +110,12 @@ export default interface PrismaTypes {
             Author: {
                 Shape: User;
                 Name: "User";
+                Nullable: false;
             };
             Post: {
                 Shape: Post;
                 Name: "Post";
+                Nullable: false;
             };
         };
     };
@@ -126,6 +135,7 @@ export default interface PrismaTypes {
             User: {
                 Shape: User;
                 Name: "User";
+                Nullable: false;
             };
         };
     };
@@ -145,10 +155,12 @@ export default interface PrismaTypes {
             From: {
                 Shape: User;
                 Name: "User";
+                Nullable: false;
             };
             To: {
                 Shape: User;
                 Name: "User";
+                Nullable: false;
             };
         };
     };
