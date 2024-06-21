@@ -61,8 +61,8 @@ The package has been developed and tested up to the following peer dependencies 
 ```
 "@pothos/core": "^3.41.0",
 "@pothos/plugin-prisma": "^3.65.0",
-"@prisma/client": "^5.12.1",
-"prisma": "^5.12.1",
+"@prisma/client": "^5.15.1",
+"prisma": "^5.15.1",
 ```
 
 Using higher versions may break something. In these cases, please open a new issue.
