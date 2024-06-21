@@ -3,6 +3,8 @@
 # 0.6.5
 
 - [x] Fix: Enables multiline comments and quotes in comments. It fixes: #69 and fixes #70.
+- [x] Chore: Update prisma to latest version 5.15.1
+- [x] Chore: remove global.builderImporter config from types and docs due to global.builderLocation. Fixes #68
 
 # 0.6.4
 
