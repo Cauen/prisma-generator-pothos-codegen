@@ -1,5 +1,7 @@
 # Prisma Generator Pothos Codegen
 
+![Group 1](https://github.com/Cauen/prisma-generator-pothos-codegen/assets/8796757/19f6cdbe-44f5-40ac-8b9b-326c49c1c281)
+
 A [prisma](https://www.prisma.io/) [generator](https://www.prisma.io/docs/concepts/components/prisma-schema/generators) plugin that auto-generates [Pothos](https://pothos-graphql.dev/) GraphQL input types and crud operations (all queries and mutations).
 
 Easily convert a prisma schema into a full graphql CRUD API.
@@ -59,8 +61,8 @@ The package has been developed and tested up to the following peer dependencies 
 ```
 "@pothos/core": "^3.41.0",
 "@pothos/plugin-prisma": "^3.65.0",
-"@prisma/client": "^5.12.1",
-"prisma": "^5.12.1",
+"@prisma/client": "^5.15.1",
+"prisma": "^5.15.1",
 ```
 
 Using higher versions may break something. In these cases, please open a new issue.
@@ -189,8 +191,8 @@ module.exports = {
     global?: {
       /** A function to replace generated source */
       replacer?: Replacer;
-      /** How to import the Pothos builder. Default: `'import { builder } from "./builder"'` */
-      builderImporter?: string;
+      /** Location of builder to replace in all files. Relative to package root. ie: './src/schema/builder'. Default: './builder' */
+      builderLocation?: string;
       /** Run function before generate */
       beforeGenerate?: (dmmf: DMMF.Document) => void;
       /** Run function after generate */

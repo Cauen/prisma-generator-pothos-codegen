@@ -1,11 +1,11 @@
 import { ConfigInternal } from '../../utils/config'
 import { getConfigCrudUnderscore } from '../../utils/configUtils'
-import { firstLetterUpperCase } from '../../utils/string'
+import { escapeQuotesAndMultilineSupport, firstLetterUpperCase } from '../../utils/string'
 import { useTemplate } from '../../utils/template'
 import { relationObjectTemplate, listRelationObjectTemplate, fieldObjectTemplate } from '../templates/object'
 import type { DMMF } from '@prisma/generator-helper'
 
-const cleanifyDocumentation = (str?: string) => str?.replace(/\s*@Pothos\.omit\(.*\)\s*/, '')
+export const cleanifyDocumentation = (str?: string) => str?.replace(/\s*@Pothos\.omit\(.*\)\s*/, '')
 
 export const getObjectFieldsString = (
   modelName: string,
@@ -15,8 +15,8 @@ export const getObjectFieldsString = (
   fields.reduce(
     ({ fields, exportFields }, { isId, type: fieldType, name, relationName, isRequired, documentation, isList }) => {
       const nameUpper = firstLetterUpperCase(name)
-      const cleanDocumentation = cleanifyDocumentation(documentation)
-      const description = cleanDocumentation ? `'${cleanDocumentation}'` : 'undefined' // field description defined in schema.prisma
+      const cleanDocumentation = escapeQuotesAndMultilineSupport(cleanifyDocumentation(documentation))
+      const description = `${cleanDocumentation}` || 'undefined' // field description defined in schema.prisma
       const nullable = isRequired ? 'false' : 'true'
       const type = fieldType === 'BigInt' ? 'Bigint' : fieldType
       const optionalUnderscore = getConfigCrudUnderscore(config)

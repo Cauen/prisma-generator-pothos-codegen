@@ -10,7 +10,7 @@ module.exports = {
     // replacer(generated, position) {
     //   return `// THIS CONTENT WAS INSERTED AT REPLACE. THE POSITION IS ${position}\n${generated}`
     // },
-    excludeResolversContain: ["User"],
+    excludeResolversContain: [],
     prismaCaller: 'db',
     disabled: false,
     inputsImporter: "import * as Inputs from '@/schema/__generated__/inputs'",

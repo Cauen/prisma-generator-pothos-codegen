@@ -133,7 +133,6 @@ export const getDefaultConfig: (global?: Config['global']) => ConfigInternal = (
   },
   global: {
     replacer: (str: string) => str,
-    builderImporter: '',
     builderLocation: './builder',
     beforeGenerate: () => {
       // noop
