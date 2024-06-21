@@ -8,7 +8,11 @@ import {
 } from '../utils';
 
 export const CommentObject = definePrismaObject('Comment', {
-  description: undefined,
+  description: `This is a comment
+This is a multiline comment
+This is a \'single quote\' comment
+This is a \"double quote\" comment
+This is a \`backtick\` comment`,
   findUnique: ({ id }) => ({ id }),
   fields: (t) => ({
     id: t.field(CommentIdFieldObject),
@@ -22,27 +26,31 @@ export const CommentObject = definePrismaObject('Comment', {
 
 export const CommentIdFieldObject = defineFieldObject('Comment', {
   type: "ID",
-  description: undefined,
+  description: `This is a comment
+This is a multiline comment
+This is a \'single quote\' comment
+This is a \"double quote\" comment
+This is a \`backtick\` comment`,
   nullable: false,
   resolve: (parent) => String(parent.id),
 });
 
 export const CommentCommentFieldObject = defineFieldObject('Comment', {
   type: "String",
-  description: undefined,
+  description: 'This is a \'single quote\' comment',
   nullable: false,
   resolve: (parent) => parent.comment,
 });
 
 export const CommentAuthorFieldObject = defineRelationObject('Comment', 'Author', {
-  description: undefined,
+  description: 'This is a \"double quote\" comment',
   nullable: false,
   args: undefined,
   query: undefined,
 });
 
 export const CommentPostFieldObject = defineRelationObject('Comment', 'Post', {
-  description: undefined,
+  description: 'This is a \`backtick\` comment',
   nullable: false,
   args: undefined,
   query: undefined,

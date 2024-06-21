@@ -68,10 +68,23 @@ model ExtraModal {
   updatedAt DateTime? @updatedAt
 }
 
+/// This is a comment
+/// This is a multiline comment
+/// This is a 'single quote' comment
+/// This is a "double quote" comment
+/// This is a `backtick` comment
 model Comment {
+  /// This is a comment
+  /// This is a multiline comment
+  /// This is a 'single quote' comment
+  /// This is a "double quote" comment
+  /// This is a `backtick` comment
   id       Int    @id @default(autoincrement())
+  /// This is a 'single quote' comment
   comment  String
+  /// This is a "double quote" comment
   Author   User   @relation(fields: [authorId], references: [id])
+  /// This is a `backtick` comment
   Post     Post   @relation(fields: [postId], references: [id])
   authorId Int
   postId   Int

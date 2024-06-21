@@ -2,7 +2,12 @@ import path from 'node:path'
 import { ConfigInternal } from '../../utils/config'
 import { getConfigCrudUnderscore } from '../../utils/configUtils'
 import { writeFile } from '../../utils/filesystem'
-import { firstLetterLowerCase, firstLetterUpperCase, getCompositeName } from '../../utils/string'
+import {
+  escapeQuotesAndMultilineSupport,
+  firstLetterLowerCase,
+  firstLetterUpperCase,
+  getCompositeName,
+} from '../../utils/string'
 import { useTemplate } from '../../utils/template'
 import { objectTemplate } from '../templates/object'
 import { getObjectFieldsString } from './objectFields'
@@ -81,7 +86,7 @@ export async function writeObject(config: ConfigInternal, model: DMMF.Model): Pr
     'crud.model.object',
     useTemplate(objectTemplate, {
       modelName: model.name,
-      description: model.documentation ? `'${model.documentation}'` : 'undefined', // Object description defined in schema.prisma
+      description: escapeQuotesAndMultilineSupport(model.documentation) || 'undefined', // Object description defined in schema.prisma
       findUnique,
       inputsImporter: config.crud.inputsImporter,
       fields: fields.join('\n    '),

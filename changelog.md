@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.6.5
+
+- [x] Fix: Enables multiline comments and quotes in comments. It fixes: #69 and fixes #70.
+
 # 0.6.4
 
 - [x] Feature: From now: new generations uses new version of @pothos/core to disable input normalization: https://github.com/hayes/pothos/issues/1111. It fixes: #57.
