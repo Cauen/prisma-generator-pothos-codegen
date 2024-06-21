@@ -25,19 +25,37 @@ export const Cruds: Record<
   User: {
     Object: User.UserObject,
     queries: {
-
+      findFirst: User.findFirstUserQueryObject,
+      findMany: User.findManyUserQueryObject,
+      count: User.countUserQueryObject,
+      findUnique: User.findUniqueUserQueryObject,
     },
     mutations: {
-
+      createMany: User.createManyUserMutationObject,
+      createOne: User.createOneUserMutationObject,
+      deleteMany: User.deleteManyUserMutationObject,
+      deleteOne: User.deleteOneUserMutationObject,
+      updateMany: User.updateManyUserMutationObject,
+      updateOne: User.updateOneUserMutationObject,
+      upsertOne: User.upsertOneUserMutationObject,
     },
   },
   UserLast: {
     Object: UserLast.UserLastObject,
     queries: {
-
+      findFirst: UserLast.findFirstUserLastQueryObject,
+      findMany: UserLast.findManyUserLastQueryObject,
+      count: UserLast.countUserLastQueryObject,
+      findUnique: UserLast.findUniqueUserLastQueryObject,
     },
     mutations: {
-
+      createMany: UserLast.createManyUserLastMutationObject,
+      createOne: UserLast.createOneUserLastMutationObject,
+      deleteMany: UserLast.deleteManyUserLastMutationObject,
+      deleteOne: UserLast.deleteOneUserLastMutationObject,
+      updateMany: UserLast.updateManyUserLastMutationObject,
+      updateOne: UserLast.updateOneUserLastMutationObject,
+      upsertOne: UserLast.upsertOneUserLastMutationObject,
     },
   },
   Post: {

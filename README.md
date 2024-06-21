@@ -1,5 +1,7 @@
 # Prisma Generator Pothos Codegen
 
+![Group 1](https://github.com/Cauen/prisma-generator-pothos-codegen/assets/8796757/19f6cdbe-44f5-40ac-8b9b-326c49c1c281)
+
 A [prisma](https://www.prisma.io/) [generator](https://www.prisma.io/docs/concepts/components/prisma-schema/generators) plugin that auto-generates [Pothos](https://pothos-graphql.dev/) GraphQL input types and crud operations (all queries and mutations).
 
 Easily convert a prisma schema into a full graphql CRUD API.
