@@ -58,7 +58,7 @@ export const defineQueryPrismaObject = <
     Types['Root'],
     Type,
     Model,
-    Type extends [unknown] ? [ObjectRef<Model['Shape']>] : ObjectRef<Model['Shape']>,
+    Type extends [unknown] ? [ObjectRef<Types, Model['Shape']>] : ObjectRef<Types, Model['Shape']>,
     Args,
     Nullable,
     unknown,
@@ -92,7 +92,7 @@ export const defineMutationPrismaObject = <
     Types['Root'],
     Type,
     Model,
-    Type extends [unknown] ? [ObjectRef<Model['Shape']>] : ObjectRef<Model['Shape']>,
+    Type extends [unknown] ? [ObjectRef<Types, Model['Shape']>] : ObjectRef<Types, Model['Shape']>,
     Args,
     Nullable,
     unknown,
@@ -136,7 +136,6 @@ export const defineRelationObject = <
     Nullable,
     Args,
     unknown,
-    false,
     Types['PrismaTypes'][ModelName]['Shape']
   >,
 ) =>
@@ -153,7 +152,6 @@ export const defineRelationFunction = <ModelName extends keyof Types['PrismaType
     t: PothosSchemaTypes.PrismaObjectFieldBuilder<
       Types,
       Types['PrismaTypes'][ModelName],
-      false,
       Types['PrismaTypes'][ModelName]['Shape']
     >,
   ) => O,
@@ -165,7 +163,6 @@ export const definePrismaObject = <
     Types,
     Types['PrismaTypes'][Name],
     InterfaceParam<Types>[],
-    unknown,
     unknown,
     unknown,
     Types['PrismaTypes'][Name]['Shape']
