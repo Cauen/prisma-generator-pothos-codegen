@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.7.0
+
+- [x] Upgrade: Support to new versions of Pothos and Pothos Prisma Plugin (v4+) Thanks to [hayes](https://github.com/Cauen/prisma-generator-pothos-codegen/pull/71)
+- [x] Chore: Update prisma to latest version 5.17.0
+
 # 0.6.5
 
 - [x] Fix: Enables multiline comments and quotes in comments. It fixes: #69 and fixes #70.

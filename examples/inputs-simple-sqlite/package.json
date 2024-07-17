@@ -16,13 +16,13 @@
   "dependencies": {
     "@pothos/core": "^4.0.2",
     "@pothos/plugin-prisma": "^4.0.3",
-    "@prisma/client": "^5.16.2",
+    "@prisma/client": "5.17.0",
     "apollo-server": "^3.13.0",
     "graphql": "^16.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0",
-    "prisma": "^5.16.2",
+    "prisma": "^5.17.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "^5.5.3"
