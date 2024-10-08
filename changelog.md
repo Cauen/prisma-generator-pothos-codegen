@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.7.1
+
+- [x] Chore: Update pothos packages of peerDependencies to v4
+
 # 0.7.0
 
 - [x] Upgrade: Support to new versions of Pothos and Pothos Prisma Plugin (v4+) Thanks to [hayes](https://github.com/Cauen/prisma-generator-pothos-codegen/pull/71)
