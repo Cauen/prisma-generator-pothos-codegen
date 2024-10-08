@@ -40,8 +40,8 @@
     "prisma-generator-pothos-codegen": "./src/bin.js"
   },
   "peerDependencies": {
-    "@pothos/core": "^3.23.0",
-    "@pothos/plugin-prisma": "^3.37.0",
+    "@pothos/core": "^4.0.2",
+    "@pothos/plugin-prisma": "^4.0.3",
     "@prisma/client": "^5.0.0",
     "prisma": "^5.0.0"
   },
